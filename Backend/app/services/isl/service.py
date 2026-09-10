@@ -5,6 +5,7 @@ from typing import List, Optional
 
 from app.services.isl.base import ISLServiceBase
 from app.services.isl.dictionary import get_dictionary_item_by_word
+from app.services.isl.grammar import ISLGrammarTransformer
 from app.schemas.isl import GlossTokenSchema, ISLTranslateResponse
 
 
@@ -34,11 +35,62 @@ class RuleBasedISLService(ISLServiceBase):
 
             # Greetings
             "வணக்கம்": "hello",
+            "நன்றி": "thank you",
+            "நன்றிகள்": "thank you",
+            "வரவேற்கிறேன்": "welcome",
+            "வரவேற்கின்றேன்": "welcome",
+            "வரவேற்பு": "welcome",
+            "தயவுசெய்து": "please",
+            "மன்னிக்கவும்": "sorry",
+            "காலை வணக்கம்": "good morning",
 
             # Pronouns
             "நான்": "i",
             "நீ": "you",
             "நீங்கள்": "you",
+            "நாம்": "we",
+            "நாங்கள்": "we",
+            "அவன்": "he",
+            "அவள்": "she",
+            "அவர்கள்": "they",
+
+            # People
+            "நண்பன்": "friend",
+            "தோழன்": "friend",
+            "ஆசிரியர்": "teacher",
+            "மாணவர்": "student",
+            "மருத்துவர்": "doctor",
+
+            # Actions
+            "போ": "go",
+            "போகிறேன்": "go",
+            "வா": "come",
+            "வருகிறேன்": "come",
+            "சாப்பிடு": "eat",
+            "உண்கிறேன்": "eat",
+            "குடி": "drink",
+            "குடிக்கிறேன்": "drink",
+            "உதவி": "help",
+            "உதவு": "help",
+            "கற்றுக்கொள்": "learn",
+            "புரிந்துகொள்": "understand",
+            "கொடு": "give",
+            "எடு": "take",
+            "வேண்டும்": "want",
+            "தேவை": "need",
+            "பிடிக்கும்": "like",
+            "பேச": "speak",
+            "பேசுகிறேன்": "speak",
+            "பேசுகிறோம்": "speak",
+            "பேசுகிறார்": "speak",
+
+            # Places
+            "வீடு": "home",
+            "பள்ளி": "school",
+            "கல்லூரி": "college",
+            "மருத்துவமனை": "hospital",
+            "அலுவலகம்": "office",
+            "வகுப்பறை": "classroom",
 
             # Questions
             "எப்படி": "how",
@@ -52,30 +104,8 @@ class RuleBasedISLService(ISLServiceBase):
             # How are you?
             "இருக்கிறீர்கள்": "are you",
             "இருக்கிறாய்": "are you",
-            "இருக்கிறீர்கள்": "are you",
             "இருக்கீர்கள்": "are you",
             "இருக்கீங்க": "are you",
-
-            # Thanks
-            "நன்றி": "thank you",
-            "நன்றிகள்": "thank you",
-
-            # Welcome
-            "வரவேற்கிறேன்": "welcome",
-            "வரவேற்கின்றேன்": "welcome",
-
-            # English
-            "ஆங்கிலம்": "english",
-
-            # Speaking
-            "பேச": "speak",
-            "பேசுகிறேன்": "speak",
-            "பேசுகிறோம்": "speak",
-            "பேசுகிறார்": "speak",
-
-            # Daily
-            "தினமும்": "every day",
-            "தினசரி": "every day",
 
             # Time
             "இன்று": "today",
@@ -83,21 +113,25 @@ class RuleBasedISLService(ISLServiceBase):
             "நேற்று": "yesterday",
             "இப்போது": "now",
             "பின்னர்": "later",
+            "காலை": "morning",
+            "இரவு": "night",
+            "நாள்": "day",
+            "தினமும்": "every day",
+            "தினசரி": "every day",
 
-            # Help
-            "உதவி": "help",
+            # Responses & Qualities
+            "ஆம்": "yes",
+            "இல்லை": "no",
+            "சரி": "okay",
+            "நல்லது": "good",
+            "நல்ல": "good",
+            "கெட்டது": "bad",
+            "தண்ணீர்": "water",
 
-            # Medical
-            "மருத்துவர்": "doctor",
-            "மருத்துவமனை": "hospital",
-
-            # India
+            # Accessibility & Domain
+            "ஆங்கிலம்": "english",
             "இந்தியா": "india",
-
-            # Accessibility
             "அணுகக்கூடிய": "accessible",
-
-            # Sign language
             "சைகை மொழி": "sign language",
             "சைகைமொழி": "sign language",
         }
@@ -512,12 +546,21 @@ class RuleBasedISLService(ISLServiceBase):
         # Normalize English concepts
         # ---------------------------------------------
 
-        words = self._normalize_english_words(
+        normalized_words = self._normalize_english_words(
             working_text
         )
 
+        # ---------------------------------------------
+        # ISL Grammar Transformation
+        # ---------------------------------------------
+
+        words = ISLGrammarTransformer.transform_tokens(
+            normalized_words,
+            dialect=dialect
+        )
+
         print(
-            f"[ISL] Tokens: {words}"
+            f"[ISL] Grammar-transformed Tokens: {words}"
         )
 
         # ---------------------------------------------

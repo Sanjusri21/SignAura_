@@ -5,10 +5,10 @@ import {
   Mic, 
   MicOff, 
   Sparkles, 
-  RotateCcw, 
   User, 
   Play, 
-  Layers
+  Copy, 
+  Check 
 } from 'lucide-react';
 import { ChatMessage, NavigationTab } from '../types';
 import { INITIAL_CHAT_MESSAGES } from '../data/mockData';
@@ -28,6 +28,7 @@ export const AssistantView: React.FC<AssistantViewProps> = ({
   const [inputValue, setInputValue] = useState('');
   const [isRecording, setIsRecording] = useState(false);
   const [isAiTyping, setIsAiTyping] = useState(false);
+  const [copiedId, setCopiedId] = useState<string | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const promptSuggestions = [
@@ -61,7 +62,6 @@ export const AssistantView: React.FC<AssistantViewProps> = ({
     setIsAiTyping(true);
 
     try {
-      // Call backend FastAPI endpoint
       const response = await signAuraApi.sendChatMessage(text.trim());
       const aiMsg: ChatMessage = {
         id: response.id || `ai-${Date.now()}`,
@@ -74,220 +74,246 @@ export const AssistantView: React.FC<AssistantViewProps> = ({
       setIsAiTyping(false);
       setMessages((prev) => [...prev, aiMsg]);
     } catch (err) {
-      // Graceful offline fallback
+      // Offline fallback
       let aiText = '';
       let glosses: string[] = [];
       let signs: string[] = [];
 
       const lower = text.toLowerCase();
       if (lower.includes('hospital') || lower.includes('medical') || lower.includes('doctor')) {
-        aiText = "In Indian Sign Language, medical questions place the location and question marker at the end. Here is the canonical ISL grammar breakdown:";
+        aiText = "In Indian Sign Language, medical questions place the location and question marker at the end:";
         glosses = ['HOSPITAL', 'NEARBY', 'WHERE', '[EYEBROW-RAISE]'];
         signs = ['DOCTOR', 'HELP', 'HOW_ARE_YOU'];
       } else if (lower.includes('non-manual') || lower.includes('facial') || lower.includes('marker')) {
-        aiText = "Non-manual markers (NMMs) in ISL include eyebrow raises for yes/no questions, head tilts for spatial relationships, and mouthing for lexical disambiguation.";
+        aiText = "Non-manual markers (NMMs) in ISL include eyebrow raises for questions and head tilts for spatial references.";
         glosses = ['FACIAL-EXPRESSION', 'HEAD-TILT', 'GRAMMAR-IMPORTANT'];
         signs = ['SIGN_LANGUAGE', 'ACCESSIBLE', 'WELCOME'];
       } else if (lower.includes('welcome') || lower.includes('india') || lower.includes('friend')) {
-        aiText = "Here is the natural ISL translation for welcoming someone to India with polite respect:";
+        aiText = "Here is the natural ISL translation for welcoming someone to India:";
         glosses = ['INDIA', 'FRIEND', 'WELCOME', '[SMILE]'];
         signs = ['INDIA', 'WELCOME', 'HELLO', 'THANK_YOU'];
       } else {
-        aiText = `Here is the Indian Sign Language (ISL) syntactic gloss translation for "${text}":`;
+        aiText = `Here is the Indian Sign Language (ISL) Subject-Object-Verb syntactic translation for "${text}":`;
         glosses = text.toUpperCase().replace(/[^A-Z ]/g, '').split(' ').filter(Boolean);
         if (glosses.length > 5) glosses = glosses.slice(0, 5);
         signs = ['WELCOME', 'ACCESSIBLE', 'THANK_YOU'];
       }
 
-      const aiMsg: ChatMessage = {
-        id: `ai-${Date.now()}`,
-        sender: 'ai',
-        text: aiText,
-        timestamp: 'Just now',
-        glossSequence: glosses,
-        recommendedSigns: signs
-      };
-
       setIsAiTyping(false);
-      setMessages((prev) => [...prev, aiMsg]);
+      setMessages((prev) => [
+        ...prev,
+        {
+          id: `ai-${Date.now()}`,
+          sender: 'ai',
+          text: aiText,
+          timestamp: 'Just now',
+          glossSequence: glosses,
+          recommendedSigns: signs
+        }
+      ]);
     }
   };
 
   const toggleRecording = () => {
-    if (!isRecording) {
+    if (isRecording) {
+      setIsRecording(false);
+    } else {
       setIsRecording(true);
       setTimeout(() => {
         setIsRecording(false);
-        setInputValue("Translate 'Please help me learn Indian Sign Language' to ISL");
-      }, 2500);
-    } else {
-      setIsRecording(false);
+        setInputValue('How do I sign emergency assistance in ISL?');
+      }, 2000);
     }
   };
 
+  const copyToClipboard = (text: string, id: string) => {
+    navigator.clipboard.writeText(text);
+    setCopiedId(id);
+    setTimeout(() => setCopiedId(null), 1500);
+  };
+
   return (
-    <div className="max-w-4xl mx-auto flex flex-col h-[calc(100vh-140px)] min-h-[580px] pb-4 space-y-4">
-      {/* Header */}
-      <div className="glass-card p-4 rounded-[28px] border border-white/14 flex items-center justify-between">
+    <div className="max-w-4xl mx-auto space-y-5 pb-20">
+      {/* 1. HEADER */}
+      <div className="bg-[#151D40] p-4 sm:p-5 rounded-2xl border border-[#273154] flex items-center justify-between shadow-md">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-2xl bg-white/10 flex items-center justify-center text-white border border-white/14">
+          <div className="w-10 h-10 rounded-xl bg-[#101735] border border-[#273154] flex items-center justify-center text-[#22D3EE]">
             <BotMessageSquare className="w-5 h-5" />
           </div>
           <div>
-            <div className="flex items-center gap-2">
-              <h1 className="text-sm font-bold text-white">SignAura AI Copilot</h1>
-              <span className="glass-badge text-[10px]">ISL Grammar Engine</span>
-            </div>
-            <p className="text-xs text-slate-400">Ask any sign language translation or syntax question</p>
+            <h1 className="text-xl font-bold text-white tracking-tight">SignAura AI</h1>
+            <p className="text-xs text-[#A8B2D1]">Multimodal Indian Sign Language Accessibility Copilot</p>
           </div>
         </div>
 
-        <GlassButton
-          variant="ghost"
-          size="sm"
-          onClick={() => setMessages(INITIAL_CHAT_MESSAGES)}
-          icon={<RotateCcw className="w-3.5 h-3.5 text-slate-400" />}
-        >
-          Clear
-        </GlassButton>
+        <div className="flex items-center gap-1.5 text-xs text-[#10B981] bg-[#101735] px-2.5 py-1 rounded-lg border border-[#273154]">
+          <span className="w-2 h-2 rounded-full bg-[#10B981] animate-pulse" />
+          <span>Active</span>
+        </div>
       </div>
 
-      {/* Messages Scroll Area */}
-      <div className="flex-1 glass-card rounded-[32px] p-4 sm:p-6 border border-white/14 overflow-y-auto space-y-4 backdrop-blur-2xl scrollbar-thin">
-        {messages.map((msg) => {
-          const isAi = msg.sender === 'ai';
-          return (
-            <div
-              key={msg.id}
-              className={`flex items-start gap-3 ${isAi ? '' : 'flex-row-reverse'}`}
+      {/* 2. CHAT CONTAINER & MESSAGES */}
+      <div className="bg-[#151D40] rounded-2xl border border-[#273154] flex flex-col h-[560px] shadow-xl overflow-hidden">
+        
+        {/* Messages List Area */}
+        <div className="flex-1 overflow-y-auto p-4 sm:p-6 space-y-4">
+          {messages.map((msg) => {
+            const isUser = msg.sender === 'user';
+
+            return (
+              <div
+                key={msg.id}
+                className={`flex gap-3 max-w-[85%] ${isUser ? 'ml-auto flex-row-reverse' : 'mr-auto'}`}
+              >
+                {/* Avatar Icon */}
+                <div
+                  className={`w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 text-xs font-bold border ${
+                    isUser
+                      ? 'bg-[#6366F1] text-white border-[#6366F1]'
+                      : 'bg-[#101735] text-[#22D3EE] border-[#273154]'
+                  }`}
+                >
+                  {isUser ? <User className="w-4 h-4" /> : <BotMessageSquare className="w-4 h-4" />}
+                </div>
+
+                {/* Message Bubble (Solid surfaces) */}
+                <div className="space-y-2">
+                  <div
+                    className={`p-3.5 rounded-2xl text-xs sm:text-sm leading-relaxed border shadow-sm ${
+                      isUser
+                        ? 'bg-[#6366F1] text-white border-[#6366F1] rounded-tr-none'
+                        : 'bg-[#101735] text-slate-100 border-[#273154] rounded-tl-none'
+                    }`}
+                  >
+                    <p>{msg.text}</p>
+
+                    {/* Syntactic ISL Gloss Chips */}
+                    {msg.glossSequence && msg.glossSequence.length > 0 && (
+                      <div className="mt-3 pt-3 border-t border-[#273154] space-y-1.5">
+                        <div className="flex items-center justify-between">
+                          <span className="text-[10px] font-bold uppercase tracking-wider text-[#22D3EE]">
+                            ISL Subject-Object-Verb Gloss:
+                          </span>
+                          <button
+                            onClick={() => copyToClipboard(msg.glossSequence!.join(' '), msg.id)}
+                            className="text-[10px] text-[#A8B2D1] hover:text-white flex items-center gap-1 transition-colors"
+                          >
+                            {copiedId === msg.id ? <Check className="w-3 h-3 text-[#10B981]" /> : <Copy className="w-3 h-3" />}
+                            <span>{copiedId === msg.id ? 'Copied' : 'Copy'}</span>
+                          </button>
+                        </div>
+
+                        <div className="flex flex-wrap gap-1.5">
+                          {msg.glossSequence.map((g, i) => (
+                            <span
+                              key={i}
+                              className="px-2 py-0.5 rounded bg-[#151D40] text-white text-[11px] font-mono font-bold border border-[#273154]"
+                            >
+                              {g}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+
+                    {/* Recommended Interactive Signs */}
+                    {msg.recommendedSigns && msg.recommendedSigns.length > 0 && (
+                      <div className="mt-2.5 pt-2.5 border-t border-[#273154] flex flex-wrap items-center gap-1.5">
+                        <span className="text-[10px] font-semibold text-[#A8B2D1]">Test in 3D Avatar:</span>
+                        {msg.recommendedSigns.map((s, i) => (
+                          <button
+                            key={i}
+                            onClick={() => {
+                              if (onTestSign) onTestSign(s);
+                              if (onNavigate) onNavigate('avatar');
+                            }}
+                            className="px-2 py-0.5 rounded bg-[#151D40] text-[#22D3EE] text-[10px] font-bold hover:bg-[#1A244D] border border-[#273154] flex items-center gap-1 transition-colors"
+                          >
+                            <Play className="w-2.5 h-2.5" />
+                            <span>{s}</span>
+                          </button>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+
+                  <span className="text-[10px] text-[#6B7A99] px-1">{msg.timestamp}</span>
+                </div>
+              </div>
+            );
+          })}
+
+          {/* Typing Indicator */}
+          {isAiTyping && (
+            <div className="flex gap-3 max-w-[80%] mr-auto">
+              <div className="w-8 h-8 rounded-lg bg-[#101735] text-[#22D3EE] border border-[#273154] flex items-center justify-center flex-shrink-0">
+                <BotMessageSquare className="w-4 h-4" />
+              </div>
+              <div className="bg-[#101735] p-3 rounded-2xl rounded-tl-none border border-[#273154] flex items-center gap-1.5">
+                <span className="w-2 h-2 rounded-full bg-[#22D3EE] animate-bounce" style={{ animationDelay: '0ms' }} />
+                <span className="w-2 h-2 rounded-full bg-[#22D3EE] animate-bounce" style={{ animationDelay: '150ms' }} />
+                <span className="w-2 h-2 rounded-full bg-[#22D3EE] animate-bounce" style={{ animationDelay: '300ms' }} />
+              </div>
+            </div>
+          )}
+
+          <div ref={messagesEndRef} />
+        </div>
+
+        {/* Prompt Suggestions */}
+        <div className="p-3 bg-[#101735] border-t border-[#273154] flex gap-2 overflow-x-auto select-none">
+          {promptSuggestions.map((prompt, idx) => (
+            <button
+              key={idx}
+              onClick={() => handleSendMessage(prompt)}
+              className="flex-shrink-0 text-left px-3 py-1.5 rounded-lg bg-[#151D40] text-[#A8B2D1] hover:text-white hover:bg-[#1A244D] border border-[#273154] text-xs transition-colors"
             >
-              <div className={`w-8 h-8 rounded-xl flex items-center justify-center flex-shrink-0 text-xs font-bold ${
-                isAi 
-                  ? 'bg-white/14 text-white border border-white/20' 
-                  : 'bg-white/25 text-white border border-white/30'
-              }`}>
-                {isAi ? <Sparkles className="w-4 h-4" /> : <User className="w-4 h-4" />}
-              </div>
+              {prompt}
+            </button>
+          ))}
+        </div>
 
-              <div className={`max-w-xl rounded-3xl p-4 border transition-all ${
-                isAi
-                  ? 'glass-subtle text-slate-200 border-white/14 shadow-lg'
-                  : 'bg-white/18 text-white border-white/28 shadow-md'
-              }`}>
-                <p className="text-sm leading-relaxed whitespace-pre-wrap">
-                  {msg.text}
-                </p>
-
-                {/* Embedded ISL Gloss Sequence */}
-                {msg.glossSequence && msg.glossSequence.length > 0 && (
-                  <div className="mt-3 pt-3 border-t border-white/10 space-y-2">
-                    <span className="text-[11px] font-bold text-white flex items-center gap-1">
-                      <Layers className="w-3.5 h-3.5" />
-                      Syntactic ISL Gloss Sequence:
-                    </span>
-
-                    <div className="flex flex-wrap gap-1.5 font-mono text-xs">
-                      {msg.glossSequence.map((g, i) => (
-                        <span 
-                          key={i} 
-                          className="px-2.5 py-1 rounded-xl bg-black/40 text-white border border-white/14"
-                        >
-                          {g}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                )}
-
-                {/* Recommended Signs to test */}
-                {msg.recommendedSigns && msg.recommendedSigns.length > 0 && (
-                  <div className="mt-3 pt-2 flex flex-wrap items-center gap-2">
-                    <span className="text-[10px] text-slate-400">Launch 3D Gesture:</span>
-                    {msg.recommendedSigns.map((s) => (
-                      <button
-                        key={s}
-                        onClick={() => {
-                          onTestSign?.(s);
-                          onNavigate?.('avatar');
-                        }}
-                        className="glass-subtle hover:bg-white/12 text-[11px] font-semibold py-1 px-2.5 rounded-xl border border-white/14 text-white flex items-center gap-1 transition-all"
-                      >
-                        <Play className="w-2.5 h-2.5" />
-                        <span>{s}</span>
-                      </button>
-                    ))}
-                  </div>
-                )}
-
-                <span className="text-[10px] text-slate-400 block mt-2 text-right">
-                  {msg.timestamp}
-                </span>
-              </div>
-            </div>
-          );
-        })}
-
-        {isAiTyping && (
-          <div className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded-xl bg-white/14 flex items-center justify-center text-white">
-              <Sparkles className="w-4 h-4 animate-spin" />
-            </div>
-            <div className="glass-subtle px-4 py-2.5 rounded-2xl border border-white/14 flex items-center gap-1.5">
-              <span className="w-2 h-2 rounded-full bg-white animate-bounce" style={{ animationDelay: '0ms' }} />
-              <span className="w-2 h-2 rounded-full bg-slate-300 animate-bounce" style={{ animationDelay: '150ms' }} />
-              <span className="w-2 h-2 rounded-full bg-slate-400 animate-bounce" style={{ animationDelay: '300ms' }} />
-            </div>
-          </div>
-        )}
-
-        <div ref={messagesEndRef} />
-      </div>
-
-      {/* Suggestion Chips */}
-      <div className="flex items-center gap-2 overflow-x-auto scrollbar-none select-none">
-        {promptSuggestions.map((prompt, i) => (
-          <button
-            key={i}
-            onClick={() => handleSendMessage(prompt)}
-            className="flex-shrink-0 glass-subtle hover:bg-white/10 px-3 py-1.5 rounded-xl text-xs text-slate-300 hover:text-white border border-white/10 transition-all truncate max-w-xs"
-          >
-            "{prompt}"
-          </button>
-        ))}
-      </div>
-
-      {/* Input Glass Bar */}
-      <div className="glass-card rounded-[28px] p-2 border border-white/18 shadow-xl flex items-center gap-2 backdrop-blur-3xl">
-        <button
-          onClick={toggleRecording}
-          className={`p-3 rounded-2xl transition-all ${
-            isRecording
-              ? 'bg-rose-500 text-white animate-pulse shadow-lg shadow-rose-500/40'
-              : 'glass-subtle hover:bg-white/10 text-slate-300 hover:text-white border border-white/10'
-          }`}
-          title={isRecording ? 'Listening... click to stop' : 'Record voice query'}
-        >
-          {isRecording ? <MicOff className="w-4 h-4" /> : <Mic className="w-4 h-4" />}
-        </button>
-
-        <input
-          type="text"
-          value={inputValue}
-          onChange={(e) => setInputValue(e.target.value)}
-          onKeyDown={(e) => {
-            if (e.key === 'Enter') handleSendMessage();
+        {/* Input Box & Mic Button */}
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            handleSendMessage();
           }}
-          placeholder={isRecording ? 'Listening to speech...' : 'Ask SignAura AI or type a sentence to translate...'}
-          className="flex-1 glass-input text-sm py-2 px-3 rounded-2xl border-none shadow-none focus:ring-0 bg-transparent"
-        />
+          className="p-3.5 bg-[#151D40] border-t border-[#273154] flex items-center gap-2"
+        >
+          <button
+            type="button"
+            onClick={toggleRecording}
+            className={`p-2.5 rounded-xl border transition-colors ${
+              isRecording
+                ? 'bg-rose-500/20 text-rose-400 border-rose-500/40 animate-pulse'
+                : 'bg-[#101735] text-[#A8B2D1] hover:text-white border-[#273154] hover:bg-[#1A244D]'
+            }`}
+            title={isRecording ? 'Stop voice recording' : 'Speak into microphone'}
+            aria-label={isRecording ? 'Stop voice recording' : 'Speak into microphone'}
+          >
+            {isRecording ? <MicOff className="w-4 h-4" /> : <Mic className="w-4 h-4" />}
+          </button>
 
-        <GlassButton
-          variant="primary"
-          size="icon"
-          onClick={() => handleSendMessage()}
-          disabled={!inputValue.trim()}
-          icon={<Send className="w-4 h-4 text-slate-900" />}
-        />
+          <input
+            type="text"
+            value={inputValue}
+            onChange={(e) => setInputValue(e.target.value)}
+            placeholder={isRecording ? 'Listening for speech...' : 'Type a question or sentence for ISL translation...'}
+            className="flex-1 bg-[#101735] text-xs sm:text-sm py-2.5 px-3.5 rounded-xl border border-[#273154] focus:border-[#22D3EE] text-white placeholder-[#6B7A99] outline-none"
+          />
+
+          <GlassButton
+            type="submit"
+            variant="primary"
+            size="md"
+            disabled={!inputValue.trim()}
+            icon={<Send className="w-4 h-4 text-[#080D24]" />}
+          >
+            Send
+          </GlassButton>
+        </form>
+
       </div>
     </div>
   );

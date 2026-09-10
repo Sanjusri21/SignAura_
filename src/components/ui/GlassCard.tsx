@@ -1,7 +1,6 @@
 import React from 'react';
-import { motion, HTMLMotionProps } from 'framer-motion';
 
-export interface GlassCardProps extends Omit<HTMLMotionProps<'div'>, 'children'> {
+export interface GlassCardProps extends React.HTMLAttributes<HTMLDivElement> {
   interactive?: boolean;
   className?: string;
   children: React.ReactNode;
@@ -13,23 +12,16 @@ export const GlassCard: React.FC<GlassCardProps> = ({
   children,
   ...props
 }) => {
-  if (interactive) {
-    return (
-      <motion.div
-        whileHover={{ y: -3, scale: 1.008 }}
-        whileTap={{ scale: 0.995 }}
-        transition={{ type: 'spring', stiffness: 400, damping: 28 }}
-        className={`glass-card cursor-pointer ${className}`}
-        {...props}
-      >
-        {children}
-      </motion.div>
-    );
-  }
-
   return (
-    <div className={`glass-card ${className}`} {...props as React.HTMLAttributes<HTMLDivElement>}>
+    <div
+      className={`bg-[#151D40] border border-[#273154] rounded-2xl shadow-md transition-all duration-200 ${
+        interactive ? 'hover:-translate-y-0.5 hover:border-[#3B4975] hover:shadow-lg cursor-pointer' : ''
+      } ${className}`}
+      {...props}
+    >
       {children}
     </div>
   );
 };
+
+export const SolidCard = GlassCard;

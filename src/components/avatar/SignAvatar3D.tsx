@@ -1,21 +1,98 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState, useCallback } from 'react';
 import * as THREE from 'three';
-import { 
-  Play, 
-  Pause, 
-  RotateCcw, 
+import {
+  Play,
+  Pause,
+  RotateCcw,
   ChevronLeft,
   ChevronRight,
-  Palette, 
-  Sparkles, 
-  Maximize2, 
+  Palette,
+  Sparkles,
+  Maximize2,
   Minimize2,
-  Sliders,
-  CheckCircle2
+  Loader2,
+  AlertCircle
 } from 'lucide-react';
 
 export type CameraPreset = 'front' | 'perspective' | 'hands' | 'top';
 export type LightingPreset = 'neon' | 'studio' | 'cyber' | 'sunset';
+
+export const SMPLX_VERTEX_COUNT = 10475;
+export const SMPLX_FACE_COUNT = 20908;
+export const DEFAULT_MOTION_FPS = 20;
+const SIGNAVATAR_API_URL = 'http://127.0.0.1:8001';
+
+interface TopologyData {
+  vertexCount?: number;
+  vertices?: number;
+  faceCount?: number;
+  faces: number[][] | number[];
+}
+
+interface NormalizedMotion {
+  frames: number;
+  vertices: number;
+  components: number;
+  fps: number;
+  data: Float32Array; // Flattened normalized coordinates: frames * 10475 * 3
+}
+
+// Map verified ISL signs to authentic BridgeConn motion keys
+const SIGN_TO_MOTION_MAP: Record<string, string> = {
+  GOOD: 'good',
+  DRINK: 'drink',
+  GO: 'go',
+  HELP: 'help_2',
+  TEACHER: 'teacher_2',
+  ISHBOSHETH: 'ishbosheth',
+  SAMPLE_1: 'sample_1',
+  WELCOME_HELP_YOU: 'welcome_help_you',
+  BOOK_DRINK_HOME: 'book_drink_home',
+};
+
+/** Parses the backend's globally converted and normalized Float32 motion binary. */
+function processAndNormalizeMotion(
+  buffer: ArrayBuffer,
+  headerFrames?: number,
+  headerFps?: number
+): NormalizedMotion {
+  if (!buffer || buffer.byteLength === 0) {
+    throw new Error('Motion buffer is empty.');
+  }
+
+  const floatView = new Float32Array(buffer);
+  const totalFloats = floatView.length;
+  const floatsPerFrame = SMPLX_VERTEX_COUNT * 3;
+
+  if (totalFloats % floatsPerFrame !== 0) {
+    throw new Error(
+      `Invalid motion binary length. Expected multiple of ${floatsPerFrame * 4} bytes (${floatsPerFrame} floats), received ${buffer.byteLength} bytes.`
+    );
+  }
+
+  const computedFrames = totalFloats / floatsPerFrame;
+  const frames = (headerFrames && headerFrames === computedFrames) ? headerFrames : computedFrames;
+
+  if (frames <= 0) {
+    throw new Error('Motion contains zero frames.');
+  }
+
+  for (let i = 0; i < totalFloats; i += 3) {
+    if (!Number.isFinite(floatView[i]) || !Number.isFinite(floatView[i + 1]) || !Number.isFinite(floatView[i + 2])) {
+      throw new Error('Motion data contains NaN or infinite coordinates.');
+    }
+  }
+
+  const normalizedData = new Float32Array(floatView);
+
+  return {
+    frames,
+    vertices: SMPLX_VERTEX_COUNT,
+    components: 3,
+    fps: headerFps || DEFAULT_MOTION_FPS,
+    data: normalizedData,
+  };
+}
 
 export interface SignAvatar3DProps {
   currentSign?: string;
@@ -28,12 +105,19 @@ export interface SignAvatar3DProps {
   onNextSign?: () => void;
   showISLControls?: boolean;
   availableSigns?: { label: string; sign: string }[];
+  generatedGifUrl?: string;
+  generatedGifStatus?: 'idle' | 'loading' | 'loaded' | 'error';
+  onGeneratedGifLoad?: () => void;
+  onGeneratedGifError?: () => void;
+  motionUrl?: string;
+  motionSegments?: { word: string; frames: number }[];
+  motionFps?: number;
   height?: string;
   className?: string;
 }
 
 export const SignAvatar3D: React.FC<SignAvatar3DProps> = ({
-  currentSign = 'HELLO',
+  currentSign = 'GOOD',
   playbackSpeed = 1,
   isPlaying = true,
   onTogglePlay,
@@ -42,65 +126,301 @@ export const SignAvatar3D: React.FC<SignAvatar3DProps> = ({
   onPreviousSign,
   onNextSign,
   showISLControls = true,
+  generatedGifUrl = '',
+  generatedGifStatus = 'idle',
+  onGeneratedGifLoad,
+  onGeneratedGifError,
+  motionUrl = '',
+  motionSegments = [],
+  motionFps = DEFAULT_MOTION_FPS,
   availableSigns = [
-    { label: 'Hello', sign: 'HELLO' },
-    { label: 'Welcome', sign: 'WELCOME' },
-    { label: 'Thank You', sign: 'THANK_YOU' },
-    { label: 'How Are You', sign: 'HOW_ARE_YOU' },
-    { label: 'Sign Language', sign: 'SIGN_LANGUAGE' },
-    { label: 'Accessible', sign: 'ACCESSIBLE' },
-    { label: 'India', sign: 'INDIA' },
+    { label: 'Good', sign: 'GOOD' },
+    { label: 'Drink', sign: 'DRINK' },
+    { label: 'Go', sign: 'GO' },
     { label: 'Help', sign: 'HELP' },
-    { label: 'Doctor', sign: 'DOCTOR' }
+    { label: 'Teacher', sign: 'TEACHER' },
+    { label: 'Ishbosheth', sign: 'ISHBOSHETH' },
+    { label: 'Sample 1', sign: 'SAMPLE_1' },
+    { label: 'Welcome Help You', sign: 'WELCOME_HELP_YOU' },
+    { label: 'Book Drink Home', sign: 'BOOK_DRINK_HOME' },
   ],
-  height = '440px',
+  height = '480px',
   className = ''
 }) => {
+  // Dedicated mount container for Three.js canvas only (no React children inside)
   const mountRef = useRef<HTMLDivElement>(null);
   const [cameraPreset, setCameraPreset] = useState<CameraPreset>('front');
-  const [lightingPreset, setLightingPreset] = useState<LightingPreset>('neon');
+  const [lightingPreset, setLightingPreset] = useState<LightingPreset>('studio');
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [internalSpeed, setInternalSpeed] = useState(playbackSpeed);
+  const [selectedSign, setSelectedSign] = useState(currentSign);
 
-  // References for Three.js state
+  // Status & Error state (pure React state, no direct DOM mutations)
+  const [modelStatus, setModelStatus] = useState<'loading' | 'ready' | 'error'>('loading');
+  const [modelError, setModelError] = useState<string>('');
+  const [motionInfo, setMotionInfo] = useState<{ frames: number; fps: number } | null>(null);
+
+  // Three.js Scene References
   const sceneRef = useRef<THREE.Scene | null>(null);
   const cameraRef = useRef<THREE.PerspectiveCamera | null>(null);
   const rendererRef = useRef<THREE.WebGLRenderer | null>(null);
   const avatarGroupRef = useRef<THREE.Group | null>(null);
-  const jointsRef = useRef<{ [key: string]: THREE.Object3D }>({});
-  const particlesRef = useRef<THREE.Points | null>(null);
+  const avatarMeshRef = useRef<THREE.Mesh | null>(null);
+  const geometryRef = useRef<THREE.BufferGeometry | null>(null);
   const lightsRef = useRef<{ [key: string]: THREE.Light }>({});
-  const animTimeRef = useRef<number>(0);
-  const activeSignRef = useRef<string>(currentSign);
+
+  // Animation & Motion State Refs (avoids scene recreation when props change)
+  const motionDataRef = useRef<NormalizedMotion | null>(null);
+  const topologyReadyRef = useRef<boolean>(false);
+  const isPlayingRef = useRef<boolean>(isPlaying);
+  const playbackSpeedRef = useRef<number>(playbackSpeed);
+  const currentSignRef = useRef<string>(currentSign);
+  const frameElapsedRef = useRef<number>(0);
+  const currentFrameRef = useRef<number>(-1);
+
+  const frameAvatarFromFront = () => {
+    const camera = cameraRef.current;
+    const avatar = avatarGroupRef.current;
+    if (!camera || !avatar) return;
+
+    const box = new THREE.Box3().setFromObject(avatar);
+    console.log('AVATAR BOUNDS', box.min, box.max);
+    const size = box.getSize(new THREE.Vector3());
+    const center = box.getCenter(new THREE.Vector3());
+    const verticalExtent = Math.max(size.y, 0.1);
+    const horizontalExtent = Math.max(size.x, 0.1);
+    const verticalDistance = verticalExtent / (2 * Math.tan(THREE.MathUtils.degToRad(camera.fov / 2)));
+    const horizontalDistance = horizontalExtent / (2 * Math.tan(THREE.MathUtils.degToRad(camera.fov / 2)) * Math.max(camera.aspect, 0.1));
+    const distance = Math.max(verticalDistance, horizontalDistance) * 1.2;
+    camera.position.set(0, 1.55, Math.max(distance, 4.5));
+    camera.lookAt(0, center.y, 0);
+    camera.updateProjectionMatrix();
+    console.log('[SignAvatar3D] CAMERA', {
+      position: camera.position.toArray(),
+      target: [0, center.y, 0],
+      fov: camera.fov,
+    });
+    console.log('[SignAvatar3D] AVATAR', {
+      position: avatar.position.toArray(),
+      rotation: avatar.rotation.toArray(),
+      scale: avatar.scale.toArray(),
+    });
+    console.log('[SignAvatar3D] BOUNDS', {
+      min: box.min.toArray(),
+      max: box.max.toArray(),
+      center: center.toArray(),
+      size: size.toArray(),
+    });
+  };
+
+  // Synchronize playback & sign props to refs without re-rendering Three scene
+  useEffect(() => {
+    isPlayingRef.current = isPlaying;
+  }, [isPlaying]);
 
   useEffect(() => {
-    activeSignRef.current = currentSign;
-  }, [currentSign]);
-
-  useEffect(() => {
+    playbackSpeedRef.current = playbackSpeed;
     setInternalSpeed(playbackSpeed);
   }, [playbackSpeed]);
 
   useEffect(() => {
+    currentSignRef.current = currentSign;
+    setSelectedSign(currentSign);
+  }, [currentSign]);
+
+  /**
+   * 1. LOAD TOPOLOGY (SMPL-X 10475 Vertices & 20908 Triangular Faces)
+   */
+  useEffect(() => {
+    let cancelled = false;
+
+    fetch('/models/smplx_neutral_topology.json')
+      .then(async (response) => {
+        if (!response.ok) {
+          throw new Error(`Failed to load SMPL-X topology: HTTP ${response.status}`);
+        }
+        return (await response.json()) as TopologyData;
+      })
+      .then((topology) => {
+        if (cancelled) return;
+
+        const vertexCount = topology.vertexCount || topology.vertices || SMPLX_VERTEX_COUNT;
+        let facesArray: number[] = [];
+
+        if (Array.isArray(topology.faces)) {
+          if (topology.faces.length > 0 && Array.isArray(topology.faces[0])) {
+            facesArray = (topology.faces as number[][]).flat();
+          } else {
+            facesArray = topology.faces as number[];
+          }
+        }
+
+        const faceCount = topology.faceCount || Math.floor(facesArray.length / 3);
+
+        if (vertexCount !== SMPLX_VERTEX_COUNT || faceCount !== SMPLX_FACE_COUNT) {
+          throw new Error(
+            `Invalid SMPL-X topology. Expected ${SMPLX_VERTEX_COUNT} vertices and ${SMPLX_FACE_COUNT} faces, received ${vertexCount} vertices and ${faceCount} faces.`
+          );
+        }
+
+        const geom = geometryRef.current;
+        if (geom) {
+          geom.setIndex(new THREE.BufferAttribute(new Uint32Array(facesArray), 1));
+          geom.computeVertexNormals();
+        }
+
+        topologyReadyRef.current = true;
+
+        // If motion was already loaded before topology finished, render initial frame
+        const motion = motionDataRef.current;
+        if (motion && geom) {
+          const posAttr = geom.getAttribute('position') as THREE.BufferAttribute;
+          if (posAttr) {
+            (posAttr.array as Float32Array).set(motion.data.subarray(0, SMPLX_VERTEX_COUNT * 3));
+            posAttr.needsUpdate = true;
+            geom.computeVertexNormals();
+          }
+          if (avatarMeshRef.current) avatarMeshRef.current.visible = true;
+          frameAvatarFromFront();
+          setModelStatus('ready');
+          setModelError('');
+        }
+      })
+      .catch((err) => {
+        if (!cancelled) {
+          console.error('[SignAvatar3D] Topology loading failed:', err);
+          setModelError(err instanceof Error ? err.message : 'SMPL-X topology could not be loaded.');
+          setModelStatus('error');
+        }
+      });
+
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  /**
+   * 2. LOAD MOTION DATA (Dynamic Float32 Binary from GET /motion/{motion_name})
+   */
+  useEffect(() => {
+    let cancelled = false;
+
+    // Resolve motion URL
+    const mapped = SIGN_TO_MOTION_MAP[selectedSign.toUpperCase()];
+    if (!motionUrl && !mapped) {
+      console.warn(`[SignAvatar3D] No real animation available for sign: ${selectedSign}`);
+      setModelStatus('error');
+      setModelError(`Sign animation unavailable for: ${selectedSign.toUpperCase()}`);
+      return;
+    }
+
+    let targetUrl = motionUrl || `${SIGNAVATAR_API_URL}/motion/${mapped}`;
+    if (targetUrl.startsWith('/motion/')) {
+      targetUrl = `${SIGNAVATAR_API_URL}${targetUrl}`;
+    } else if (targetUrl.startsWith('/api/')) {
+      targetUrl = `http://127.0.0.1:8000${targetUrl}`;
+    }
+
+    console.log('[SignAvatar3D] Selected sign:', selectedSign.toUpperCase());
+    console.log('[SignAvatar3D] Motion URL:', targetUrl);
+
+    setModelStatus('loading');
+    setModelError('');
+
+    fetch(targetUrl)
+      .then(async (res) => {
+        if (!res.ok) {
+          throw new Error(`HTTP ${res.status}: Unable to fetch motion from ${targetUrl}`);
+        }
+
+        const headerFrames = Number(res.headers.get('X-Frames')) || undefined;
+        const headerVertices = Number(res.headers.get('X-Vertices')) || undefined;
+        const headerComponents = Number(res.headers.get('X-Components')) || undefined;
+        const headerFpsVal = Number(res.headers.get('X-FPS')) || motionFps;
+
+        if (headerVertices && headerVertices !== SMPLX_VERTEX_COUNT) {
+          throw new Error(`Expected ${SMPLX_VERTEX_COUNT} vertices, received ${headerVertices}`);
+        }
+        if (headerComponents && headerComponents !== 3) {
+          throw new Error(`Expected 3 coordinates per vertex, received ${headerComponents}`);
+        }
+
+        const buffer = await res.arrayBuffer();
+        return { buffer, headerFrames, headerFpsVal };
+      })
+      .then(({ buffer, headerFrames, headerFpsVal }) => {
+        if (cancelled) return;
+
+        const motion = processAndNormalizeMotion(buffer, headerFrames, headerFpsVal);
+        motionDataRef.current = motion;
+        setMotionInfo({ frames: motion.frames, fps: motion.fps });
+        frameElapsedRef.current = 0;
+        currentFrameRef.current = -1;
+
+        console.log(
+          `[SignAvatar3D] Motion loaded successfully: ${motion.frames} frames × ${motion.vertices} vertices @ ${motion.fps} FPS (${buffer.byteLength} bytes)`
+        );
+        console.log('[SignAvatar3D] Frames:', motion.frames);
+        console.log('[SignAvatar3D] MOTION', {
+          frames: motion.frames,
+          vertices: motion.vertices,
+          fps: motion.fps,
+        });
+
+        const geom = geometryRef.current;
+        if (geom) {
+          const posAttr = geom.getAttribute('position') as THREE.BufferAttribute;
+          if (posAttr) {
+            (posAttr.array as Float32Array).set(motion.data.subarray(0, SMPLX_VERTEX_COUNT * 3));
+            posAttr.needsUpdate = true;
+            geom.computeVertexNormals();
+          }
+        }
+
+        if (topologyReadyRef.current) {
+          if (avatarMeshRef.current) avatarMeshRef.current.visible = true;
+          frameAvatarFromFront();
+          setModelStatus('ready');
+          setModelError('');
+        }
+      })
+      .catch((err) => {
+        if (!cancelled) {
+          console.error('[SignAvatar3D] Motion loading failed:', err);
+          setModelError(err instanceof Error ? err.message : 'Unable to load SignAvatar motion.');
+          setModelStatus('error');
+        }
+      });
+
+    return () => {
+      cancelled = true;
+    };
+  }, [motionUrl, selectedSign, motionFps]);
+
+  /**
+   * 3. INITIALIZE THREE.JS SCENE (FRONT-FACING SIGNING STAGE)
+   */
+  useEffect(() => {
     const container = mountRef.current;
     if (!container) return;
 
-    // 1. SCENE SETUP
+    // A. Scene setup
     const scene = new THREE.Scene();
     sceneRef.current = scene;
-    scene.fog = new THREE.FogExp2(0x04060a, 0.038);
+    scene.fog = new THREE.FogExp2(0x060918, 0.025);
 
-    // 2. CAMERA SETUP
+    // B. Fixed face-to-face FRONT camera. The viewer stays on the front Z axis.
     const camera = new THREE.PerspectiveCamera(
-      42,
+      40,
       container.clientWidth / (container.clientHeight || 1),
       0.1,
       100
     );
-    camera.position.set(0, 1.35, 2.7);
+    camera.position.set(0, 1.55, 4.5);
+    camera.lookAt(0, 0, 0);
     cameraRef.current = camera;
 
-    // 3. HIGH FIDELITY WEBGL RENDERER
+    // C. WebGL Renderer with High-Fidelity Tone Mapping & PCF Shadows
     const renderer = new THREE.WebGLRenderer({
       antialias: true,
       alpha: true,
@@ -111,443 +431,134 @@ export const SignAvatar3D: React.FC<SignAvatar3DProps> = ({
     renderer.shadowMap.enabled = true;
     renderer.shadowMap.type = THREE.PCFSoftShadowMap;
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
-    renderer.toneMappingExposure = 1.3;
-    container.replaceChildren(renderer.domElement);
+    renderer.toneMappingExposure = 1.35;
+
+    // Append ONLY renderer.domElement to dedicated empty mount container
+    container.appendChild(renderer.domElement);
     rendererRef.current = renderer;
 
-    // 4. LIGHTING RIG
-    const ambientLight = new THREE.AmbientLight(0xffffff, 0.75);
+    // D. ACCESSIBLE SIGNING LIGHTING RIG (Crisp illumination on face, torso, and hands)
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.95);
     scene.add(ambientLight);
 
-    const dirLight = new THREE.DirectionalLight(0xffffff, 1.9);
-    dirLight.position.set(2.5, 4.5, 3.5);
-    dirLight.castShadow = true;
-    dirLight.shadow.mapSize.width = 1024;
-    dirLight.shadow.mapSize.height = 1024;
-    scene.add(dirLight);
+    // Direct front key light illuminating face and hand gestures
+    const frontKeyLight = new THREE.DirectionalLight(0xffffff, 2.4);
+    frontKeyLight.position.set(0, 1.8, 4.0);
+    frontKeyLight.castShadow = true;
+    frontKeyLight.shadow.mapSize.width = 1024;
+    frontKeyLight.shadow.mapSize.height = 1024;
+    scene.add(frontKeyLight);
 
-    const purpleRimLight = new THREE.PointLight(0x8b5cf6, 3.2, 10);
-    purpleRimLight.position.set(-2.5, 2.2, -1.5);
-    scene.add(purpleRimLight);
+    // Left fill light for clear hand silhouette
+    const leftFillLight = new THREE.PointLight(0x38bdf8, 1.8, 10);
+    leftFillLight.position.set(-2.5, 1.2, 2.5);
+    scene.add(leftFillLight);
 
-    const cyanRimLight = new THREE.PointLight(0x38bdf8, 3.2, 10);
-    cyanRimLight.position.set(2.5, 2.2, -1.5);
-    scene.add(cyanRimLight);
+    // Right fill light
+    const rightFillLight = new THREE.PointLight(0x818cf8, 1.8, 10);
+    rightFillLight.position.set(2.5, 1.2, 2.5);
+    scene.add(rightFillLight);
 
-    const floorLight = new THREE.PointLight(0x06b6d4, 2.2, 6);
-    floorLight.position.set(0, 0.1, 0);
+    // Floor glow
+    const floorLight = new THREE.PointLight(0x06b6d4, 1.6, 6);
+    floorLight.position.set(0, -1.5, 1.5);
     scene.add(floorLight);
 
     lightsRef.current = {
       ambient: ambientLight,
-      dir: dirLight,
-      purple: purpleRimLight,
-      cyan: cyanRimLight,
+      dir: frontKeyLight,
+      leftFill: leftFillLight,
+      rightFill: rightFillLight,
       floor: floorLight
     };
 
-    // 5. HOLOGRAPHIC PRESENTATION PLATFORM & GLASS STAGE
+    // E. Holographic Stage Base at Ground Level
     const stageGroup = new THREE.Group();
+    stageGroup.position.set(0, -1.62, 0);
 
-    // Circular translucent glass stage base
-    const floorGeo = new THREE.CylinderGeometry(1.65, 1.7, 0.05, 64);
+    const floorGeo = new THREE.CylinderGeometry(1.6, 1.65, 0.04, 64);
     const floorMat = new THREE.MeshPhysicalMaterial({
       color: 0x0a0f24,
       metalness: 0.85,
-      roughness: 0.12,
-      transmission: 0.65,
+      roughness: 0.15,
+      transmission: 0.6,
       transparent: true,
-      opacity: 0.9,
-      reflectivity: 0.95,
+      opacity: 0.85,
+      reflectivity: 0.9,
       clearcoat: 1.0,
       clearcoatRoughness: 0.08
     });
     const floorMesh = new THREE.Mesh(floorGeo, floorMat);
-    floorMesh.position.y = -0.025;
     floorMesh.receiveShadow = true;
     stageGroup.add(floorMesh);
 
-    // Glowing concentric holographic rings
-    const ringGeo1 = new THREE.RingGeometry(1.58, 1.62, 64);
-    const ringMat1 = new THREE.MeshBasicMaterial({
-      color: 0x38bdf8,
-      side: THREE.DoubleSide,
-      transparent: true,
-      opacity: 0.85
-    });
-    const ringMesh1 = new THREE.Mesh(ringGeo1, ringMat1);
-    ringMesh1.rotation.x = Math.PI / 2;
-    ringMesh1.position.y = 0.005;
-    stageGroup.add(ringMesh1);
-
-    const ringGeo2 = new THREE.RingGeometry(1.15, 1.18, 64);
-    const ringMat2 = new THREE.MeshBasicMaterial({
-      color: 0x818cf8,
-      side: THREE.DoubleSide,
-      transparent: true,
-      opacity: 0.55
-    });
-    const ringMesh2 = new THREE.Mesh(ringGeo2, ringMat2);
-    ringMesh2.rotation.x = Math.PI / 2;
-    ringMesh2.position.y = 0.006;
-    stageGroup.add(ringMesh2);
-
     scene.add(stageGroup);
 
-    // 6. FLOATING SPATIAL PARTICLES
-    const particleCount = 100;
-    const particleGeo = new THREE.BufferGeometry();
-    const particlePositions = new Float32Array(particleCount * 3);
-    const particleColors = new Float32Array(particleCount * 3);
+    // F. SMPL-X Avatar Mesh & Geometry Creation (Upright & Front-Facing)
+    const avatarGroup = new THREE.Group();
+    avatarGroupRef.current = avatarGroup;
+    avatarGroup.position.set(0, 0, 0); // Positioned stably in world coordinates
+    avatarGroup.rotation.set(0, 0, 0); // Directly facing viewer
+    scene.add(avatarGroup);
 
-    for (let i = 0; i < particleCount; i++) {
-      particlePositions[i * 3] = (Math.random() - 0.5) * 3.6;
-      particlePositions[i * 3 + 1] = Math.random() * 2.8;
-      particlePositions[i * 3 + 2] = (Math.random() - 0.5) * 3.6;
+    const geometry = new THREE.BufferGeometry();
+    const initialPositions = new Float32Array(SMPLX_VERTEX_COUNT * 3);
+    geometry.setAttribute('position', new THREE.BufferAttribute(initialPositions, 3));
+    geometryRef.current = geometry;
 
-      const isCyan = Math.random() > 0.4;
-      particleColors[i * 3] = isCyan ? 0.3 : 0.6;
-      particleColors[i * 3 + 1] = isCyan ? 0.75 : 0.4;
-      particleColors[i * 3 + 2] = isCyan ? 0.98 : 0.95;
-    }
-
-    particleGeo.setAttribute('position', new THREE.BufferAttribute(particlePositions, 3));
-    particleGeo.setAttribute('color', new THREE.BufferAttribute(particleColors, 3));
-
-    const particleMat = new THREE.PointsMaterial({
-      size: 0.03,
-      vertexColors: true,
-      transparent: true,
-      opacity: 0.55,
-      blending: THREE.AdditiveBlending
+    // High-visibility human signer material with distinct hand/finger definition
+    const avatarMaterial = new THREE.MeshStandardMaterial({
+      color: 0x4fa8e8,
+      roughness: 0.55,
+      metalness: 0.08,
+      side: THREE.DoubleSide,
+      flatShading: false
     });
 
-    const particles = new THREE.Points(particleGeo, particleMat);
-    scene.add(particles);
-    particlesRef.current = particles;
-
-    // 7. ARTICULATED 3D HUMANOID SIGNAVATAR RIG
-    const avatar = new THREE.Group();
-    avatarGroupRef.current = avatar;
-    const joints: { [key: string]: THREE.Object3D } = {};
-
-    const skinMat = new THREE.MeshPhysicalMaterial({
-      color: 0x1e293b,
-      metalness: 0.2,
-      roughness: 0.35,
-      clearcoat: 0.7,
-      clearcoatRoughness: 0.15
-    });
-
-    const suitMat = new THREE.MeshPhysicalMaterial({
-      color: 0x0f172a,
-      metalness: 0.65,
-      roughness: 0.28,
-      clearcoat: 0.9,
-      clearcoatRoughness: 0.1
-    });
-
-    const glowAccentMat = new THREE.MeshBasicMaterial({
-      color: 0x38bdf8
-    });
-
-    const visorMat = new THREE.MeshPhysicalMaterial({
-      color: 0x22d3ee,
-      emissive: 0x0284c7,
-      emissiveIntensity: 0.7,
-      roughness: 0.08,
-      metalness: 0.95,
-      clearcoat: 1.0
-    });
-
-    // Root Pelvis
-    const pelvis = new THREE.Group();
-    pelvis.position.y = 0.85;
-    avatar.add(pelvis);
-    joints['pelvis'] = pelvis;
-
-    // Spine & Torso
-    const spine = new THREE.Group();
-    pelvis.add(spine);
-    joints['spine'] = spine;
-
-    const chestGeo = new THREE.CylinderGeometry(0.24, 0.18, 0.44, 20);
-    const chestMesh = new THREE.Mesh(chestGeo, suitMat);
-    chestMesh.position.y = 0.25;
-    chestMesh.castShadow = true;
-    spine.add(chestMesh);
-
-    // Glowing Chest Core Indicator
-    const coreGeo = new THREE.CylinderGeometry(0.06, 0.06, 0.02, 16);
-    const coreMesh = new THREE.Mesh(coreGeo, glowAccentMat);
-    coreMesh.rotation.x = Math.PI / 2;
-    coreMesh.position.set(0, 0.28, 0.18);
-    spine.add(coreMesh);
-
-    // Neck
-    const neck = new THREE.Group();
-    neck.position.y = 0.5;
-    spine.add(neck);
-    joints['neck'] = neck;
-
-    const neckGeo = new THREE.CylinderGeometry(0.07, 0.08, 0.1, 16);
-    const neckMesh = new THREE.Mesh(neckGeo, skinMat);
-    neckMesh.position.y = 0.05;
-    neck.add(neckMesh);
-
-    // Head
-    const head = new THREE.Group();
-    head.position.y = 0.12;
-    neck.add(head);
-    joints['head'] = head;
-
-    const headGeo = new THREE.SphereGeometry(0.14, 28, 28);
-    const headMesh = new THREE.Mesh(headGeo, skinMat);
-    headMesh.position.y = 0.1;
-    headMesh.castShadow = true;
-    head.add(headMesh);
-
-    // Visor / Spatial Optical Sensor
-    const visorGeo = new THREE.BoxGeometry(0.18, 0.05, 0.08);
-    const visorMesh = new THREE.Mesh(visorGeo, visorMat);
-    visorMesh.position.set(0, 0.11, 0.11);
-    head.add(visorMesh);
-
-    // 5-Finger Articulated Arm Generator
-    const createArm = (isRight: boolean) => {
-      const sideMult = isRight ? 1 : -1;
-      
-      const shoulder = new THREE.Group();
-      shoulder.position.set(0.24 * sideMult, 0.42, 0);
-      spine.add(shoulder);
-      joints[isRight ? 'rightShoulder' : 'leftShoulder'] = shoulder;
-
-      const shoulderArmorGeo = new THREE.SphereGeometry(0.09, 16, 16);
-      const shoulderArmor = new THREE.Mesh(shoulderArmorGeo, suitMat);
-      shoulderArmor.position.set(0.04 * sideMult, 0, 0);
-      shoulder.add(shoulderArmor);
-
-      const upperArm = new THREE.Group();
-      shoulder.add(upperArm);
-      joints[isRight ? 'rightUpperArm' : 'leftUpperArm'] = upperArm;
-
-      const upperArmGeo = new THREE.CylinderGeometry(0.055, 0.05, 0.28, 16);
-      const upperArmMesh = new THREE.Mesh(upperArmGeo, suitMat);
-      upperArmMesh.position.y = -0.14;
-      upperArmMesh.castShadow = true;
-      upperArm.add(upperArmMesh);
-
-      const elbow = new THREE.Group();
-      elbow.position.y = -0.28;
-      upperArm.add(elbow);
-      joints[isRight ? 'rightElbow' : 'leftElbow'] = elbow;
-
-      const forearmGeo = new THREE.CylinderGeometry(0.05, 0.042, 0.26, 16);
-      const forearmMesh = new THREE.Mesh(forearmGeo, skinMat);
-      forearmMesh.position.y = -0.13;
-      forearmMesh.castShadow = true;
-      elbow.add(forearmMesh);
-
-      const wrist = new THREE.Group();
-      wrist.position.y = -0.26;
-      elbow.add(wrist);
-      joints[isRight ? 'rightWrist' : 'leftWrist'] = wrist;
-
-      const palmGeo = new THREE.BoxGeometry(0.06, 0.08, 0.025);
-      const palmMesh = new THREE.Mesh(palmGeo, skinMat);
-      palmMesh.position.y = -0.04;
-      palmMesh.castShadow = true;
-      wrist.add(palmMesh);
-
-      const fingers: THREE.Group[] = [];
-      for (let f = 0; f < 5; f++) {
-        const finger = new THREE.Group();
-        if (f === 0) {
-          finger.position.set(0.035 * sideMult, -0.02, 0.01);
-        } else {
-          finger.position.set((-0.025 + (f - 1) * 0.016) * sideMult, -0.08, 0);
-        }
-        wrist.add(finger);
-
-        const fingerGeo = new THREE.CylinderGeometry(0.009, 0.008, f === 0 ? 0.04 : 0.05, 8);
-        const fingerMesh = new THREE.Mesh(fingerGeo, skinMat);
-        fingerMesh.position.y = -0.025;
-        finger.add(fingerMesh);
-        fingers.push(finger);
-      }
-      joints[isRight ? 'rightFingers' : 'leftFingers'] = fingers[1];
-    };
-
-    createArm(false);
-    createArm(true);
-
-    const hipsGeo = new THREE.CylinderGeometry(0.18, 0.14, 0.16, 16);
-    const hipsMesh = new THREE.Mesh(hipsGeo, suitMat);
-    hipsMesh.position.y = -0.08;
-    pelvis.add(hipsMesh);
-
-    scene.add(avatar);
-    jointsRef.current = joints;
-
-    // 8. INTERACTIVE ORBIT
-    let isDragging = false;
-    let prevMouseX = 0;
-
-    const onMouseDown = (e: MouseEvent) => {
-      isDragging = true;
-      prevMouseX = e.clientX;
-    };
-
-    const onMouseMove = (e: MouseEvent) => {
-      if (!isDragging || !avatarGroupRef.current) return;
-      const deltaX = e.clientX - prevMouseX;
-      avatarGroupRef.current.rotation.y += deltaX * 0.01;
-      prevMouseX = e.clientX;
-    };
-
-    const onMouseUp = () => {
-      isDragging = false;
-    };
+    const avatarMesh = new THREE.Mesh(geometry, avatarMaterial);
+    avatarMesh.castShadow = true;
+    avatarMesh.receiveShadow = true;
+    avatarMesh.visible = false; // Becomes visible once topology & motion are loaded
+    avatarGroup.add(avatarMesh);
+    avatarMeshRef.current = avatarMesh;
 
     const domElem = renderer.domElement;
-    domElem.addEventListener('mousedown', onMouseDown);
-    window.addEventListener('mousemove', onMouseMove);
-    window.addEventListener('mouseup', onMouseUp);
 
-    // 9. ANIMATION LOOP
+    // H. Stable Animation Loop (Only vertices update, camera/avatar stay fixed)
     let animationFrameId: number;
+    const clock = new THREE.Clock();
 
     const animate = () => {
       animationFrameId = requestAnimationFrame(animate);
+      const delta = Math.min(clock.getDelta(), 0.1);
 
-      if (isPlaying) {
-        animTimeRef.current += 0.035 * internalSpeed;
-      }
+      // Animate SMPL-X Mesh
+      const motion = motionDataRef.current;
+      const geom = geometryRef.current;
 
-      const t = animTimeRef.current;
-      const sign = activeSignRef.current.toUpperCase();
-      const j = jointsRef.current;
-
-      if (particlesRef.current) {
-        particlesRef.current.rotation.y = t * 0.04;
-        const positions = particlesRef.current.geometry.attributes.position.array as Float32Array;
-        for (let i = 1; i < positions.length; i += 3) {
-          positions[i] += Math.sin(t + i) * 0.0008;
+      if (motion && geom && topologyReadyRef.current) {
+        if (isPlayingRef.current) {
+          frameElapsedRef.current = (frameElapsedRef.current + delta * motion.fps * playbackSpeedRef.current) % motion.frames;
         }
-        particlesRef.current.geometry.attributes.position.needsUpdate = true;
-      }
 
-      if (j.spine && j.neck && j.head) {
-        j.spine.position.y = Math.sin(t * 1.5) * 0.008;
-        j.neck.rotation.x = Math.sin(t * 1.2) * 0.015;
-        j.head.rotation.y = Math.sin(t * 0.8) * 0.03;
-      }
+        const frameIndex = Math.min(Math.floor(frameElapsedRef.current), motion.frames - 1);
 
-      let rUpperRot = new THREE.Vector3(0.1, 0, -0.2);
-      let rElbowRot = new THREE.Vector3(-0.3, 0, -0.1);
-      let rWristRot = new THREE.Vector3(0, 0, 0);
+        if (frameIndex !== currentFrameRef.current) {
+          currentFrameRef.current = frameIndex;
+          const offset = frameIndex * SMPLX_VERTEX_COUNT * 3;
+          const posAttr = geom.getAttribute('position') as THREE.BufferAttribute;
 
-      let lUpperRot = new THREE.Vector3(0.1, 0, 0.2);
-      let lElbowRot = new THREE.Vector3(-0.3, 0, 0.1);
-      let lWristRot = new THREE.Vector3(0, 0, 0);
+          if (frameIndex % 20 === 0 || frameIndex === motion.frames - 1) {
+            console.log(`[SignAvatar3D] playback frame: ${frameIndex}`);
+          }
 
-      let headRot = new THREE.Vector3(0, 0, 0);
-
-      if (sign === 'HELLO' || sign.includes('GREET')) {
-        const wave = Math.sin(t * 5) * 0.25;
-        rUpperRot = new THREE.Vector3(-1.2, 0.3, 0.8);
-        rElbowRot = new THREE.Vector3(-1.4, 0.2, 0.4 + wave);
-        rWristRot = new THREE.Vector3(0.2, wave, 0.3);
-        headRot = new THREE.Vector3(-0.05, 0.1, 0.05);
-      } else if (sign === 'WELCOME') {
-        const sweep = Math.sin(t * 3) * 0.2;
-        rUpperRot = new THREE.Vector3(-0.8, -0.4, 0.6 + sweep);
-        rElbowRot = new THREE.Vector3(-1.2, -0.6, 0.2);
-        lUpperRot = new THREE.Vector3(-0.8, 0.4, -0.6 - sweep);
-        lElbowRot = new THREE.Vector3(-1.2, 0.6, -0.2);
-        headRot = new THREE.Vector3(-0.08, 0, 0);
-      } else if (sign === 'THANK_YOU' || sign === 'THANKS') {
-        const nod = Math.sin(t * 3.5);
-        const forward = (Math.sin(t * 3.5) + 1) * 0.5;
-        rUpperRot = new THREE.Vector3(-0.6 - forward * 0.6, 0.2, 0.3);
-        rElbowRot = new THREE.Vector3(-1.8 + forward * 0.8, 0, 0.2);
-        rWristRot = new THREE.Vector3(0.4, 0, 0);
-        headRot = new THREE.Vector3(nod * 0.08, 0, 0);
-      } else if (sign === 'HOW_ARE_YOU' || sign.includes('QUESTION')) {
-        const qPulse = Math.sin(t * 2.5) * 0.15;
-        rUpperRot = new THREE.Vector3(-0.7, -0.3, 0.5 + qPulse);
-        rElbowRot = new THREE.Vector3(-1.3, 0.2, 0.3);
-        lUpperRot = new THREE.Vector3(-0.7, 0.3, -0.5 - qPulse);
-        lElbowRot = new THREE.Vector3(-1.3, -0.2, -0.3);
-        headRot = new THREE.Vector3(-0.15, Math.sin(t * 2) * 0.08, 0);
-      } else if (sign === 'SIGN_LANGUAGE' || sign.includes('SIGN')) {
-        const rotR = Math.sin(t * 4);
-        const rotL = Math.cos(t * 4);
-        rUpperRot = new THREE.Vector3(-0.9, rotR * 0.4, 0.5);
-        rElbowRot = new THREE.Vector3(-1.5, rotL * 0.4, 0.2);
-        lUpperRot = new THREE.Vector3(-0.9, rotL * 0.4, -0.5);
-        lElbowRot = new THREE.Vector3(-1.5, rotR * 0.4, -0.2);
-      } else if (sign === 'ACCESSIBLE' || sign.includes('FUTURE')) {
-        const expand = (Math.sin(t * 3) + 1) * 0.5;
-        rUpperRot = new THREE.Vector3(-0.8, -0.2, 0.3 + expand * 0.6);
-        rElbowRot = new THREE.Vector3(-1.6 + expand * 0.5, 0, 0.3);
-        lUpperRot = new THREE.Vector3(-0.8, 0.2, -0.3 - expand * 0.6);
-        lElbowRot = new THREE.Vector3(-1.6 + expand * 0.5, 0, -0.3);
-      } else if (sign === 'INDIA' || sign === 'NAMASTE') {
-        rUpperRot = new THREE.Vector3(-1.4, 0.4, 0.4);
-        rElbowRot = new THREE.Vector3(-2.2, 0.2, 0.3);
-        rWristRot = new THREE.Vector3(0.5, 0.2, 0);
-        headRot = new THREE.Vector3(0.08, 0, 0);
-      } else if (sign === 'HELP') {
-        const lift = (Math.sin(t * 3) + 1) * 0.15;
-        rUpperRot = new THREE.Vector3(-0.8 - lift, 0.2, 0.2);
-        rElbowRot = new THREE.Vector3(-1.6, 0.4, 0.2);
-        lUpperRot = new THREE.Vector3(-0.8 - lift, -0.2, -0.2);
-        lElbowRot = new THREE.Vector3(-1.6, -0.4, -0.2);
-      } else if (sign === 'DOCTOR' || sign.includes('MEDICAL')) {
-        const tap = Math.sin(t * 6) * 0.1;
-        lUpperRot = new THREE.Vector3(-0.6, -0.2, -0.3);
-        lElbowRot = new THREE.Vector3(-1.4, 0.3, 0);
-        rUpperRot = new THREE.Vector3(-0.7, 0.3, 0.4 + tap);
-        rElbowRot = new THREE.Vector3(-1.5, 0.2, 0);
-      }
-
-      const lerpFactor = 0.12;
-      const rightUpper = j.rightUpperArm;
-      const rightElbow = j.rightElbow;
-      const rightWrist = j.rightWrist;
-      const leftUpper = j.leftUpperArm;
-      const leftElbow = j.leftElbow;
-      const headJ = j.head;
-
-      if (rightUpper) {
-        rightUpper.rotation.x = THREE.MathUtils.lerp(rightUpper.rotation.x, rUpperRot.x, lerpFactor);
-        rightUpper.rotation.y = THREE.MathUtils.lerp(rightUpper.rotation.y, rUpperRot.y, lerpFactor);
-        rightUpper.rotation.z = THREE.MathUtils.lerp(rightUpper.rotation.z, rUpperRot.z, lerpFactor);
-      }
-      if (rightElbow) {
-        rightElbow.rotation.x = THREE.MathUtils.lerp(rightElbow.rotation.x, rElbowRot.x, lerpFactor);
-        rightElbow.rotation.y = THREE.MathUtils.lerp(rightElbow.rotation.y, rElbowRot.y, lerpFactor);
-        rightElbow.rotation.z = THREE.MathUtils.lerp(rightElbow.rotation.z, rElbowRot.z, lerpFactor);
-      }
-      if (rightWrist) {
-        rightWrist.rotation.x = THREE.MathUtils.lerp(rightWrist.rotation.x, rWristRot.x, lerpFactor);
-        rightWrist.rotation.y = THREE.MathUtils.lerp(rightWrist.rotation.y, rWristRot.y, lerpFactor);
-        rightWrist.rotation.z = THREE.MathUtils.lerp(rightWrist.rotation.z, rWristRot.z, lerpFactor);
-      }
-      if (leftUpper) {
-        leftUpper.rotation.x = THREE.MathUtils.lerp(leftUpper.rotation.x, lUpperRot.x, lerpFactor);
-        leftUpper.rotation.y = THREE.MathUtils.lerp(leftUpper.rotation.y, lUpperRot.y, lerpFactor);
-        leftUpper.rotation.z = THREE.MathUtils.lerp(leftUpper.rotation.z, lUpperRot.z, lerpFactor);
-      }
-      if (leftElbow) {
-        leftElbow.rotation.x = THREE.MathUtils.lerp(leftElbow.rotation.x, lElbowRot.x, lerpFactor);
-        leftElbow.rotation.y = THREE.MathUtils.lerp(leftElbow.rotation.y, lElbowRot.y, lerpFactor);
-        leftElbow.rotation.z = THREE.MathUtils.lerp(leftElbow.rotation.z, lElbowRot.z, lerpFactor);
-      }
-      if (headJ) {
-        headJ.rotation.x = THREE.MathUtils.lerp(headJ.rotation.x, headRot.x, lerpFactor);
-        headJ.rotation.y = THREE.MathUtils.lerp(headJ.rotation.y, headRot.y, lerpFactor);
+          if (posAttr) {
+            (posAttr.array as Float32Array).set(
+              motion.data.subarray(offset, offset + SMPLX_VERTEX_COUNT * 3)
+            );
+            posAttr.needsUpdate = true;
+          }
+        }
       }
 
       renderer.render(scene, camera);
@@ -555,7 +566,7 @@ export const SignAvatar3D: React.FC<SignAvatar3DProps> = ({
 
     animate();
 
-    // 10. RESIZE HANDLER
+    // I. Responsive Resize Observer
     const handleResize = () => {
       if (!container || !renderer || !camera) return;
       camera.aspect = container.clientWidth / (container.clientHeight || 1);
@@ -563,70 +574,102 @@ export const SignAvatar3D: React.FC<SignAvatar3DProps> = ({
       renderer.setSize(container.clientWidth, container.clientHeight);
     };
 
-    window.addEventListener('resize', handleResize);
+    const resizeObserver = new ResizeObserver(handleResize);
+    resizeObserver.observe(container);
 
+    // J. Cleanup on unmount
     return () => {
       cancelAnimationFrame(animationFrameId);
-      window.removeEventListener('resize', handleResize);
-      domElem.removeEventListener('mousedown', onMouseDown);
-      window.removeEventListener('mousemove', onMouseMove);
-      window.removeEventListener('mouseup', onMouseUp);
+      resizeObserver.disconnect();
+
+      // Remove renderer element safely if still child of container
+      if (renderer.domElement.parentNode === container) {
+        container.removeChild(renderer.domElement);
+      }
+
+      scene.traverse((obj) => {
+        if (obj instanceof THREE.Mesh) {
+          obj.geometry?.dispose();
+          if (Array.isArray(obj.material)) {
+            obj.material.forEach((m) => m.dispose());
+          } else {
+            obj.material?.dispose();
+          }
+        }
+      });
       renderer.dispose();
     };
-  }, [internalSpeed, isPlaying]);
+  }, []);
 
-  const applyCameraPreset = (preset: CameraPreset) => {
+  /**
+   * CAMERA PRESETS (All Front/Face-to-Face focused, no overhead or distorted angles)
+   */
+  const applyCameraPreset = useCallback((preset: CameraPreset) => {
     setCameraPreset(preset);
-    if (!cameraRef.current || !avatarGroupRef.current) return;
+    const camera = cameraRef.current;
+    const avatar = avatarGroupRef.current;
+    if (!camera || !avatar) return;
 
     if (preset === 'front') {
-      cameraRef.current.position.set(0, 1.35, 2.7);
-      avatarGroupRef.current.rotation.y = 0;
+      camera.position.set(0, 1.55, 4.5);
+      camera.lookAt(0, 0, 0);
+      avatar.rotation.set(0, 0, 0);
     } else if (preset === 'perspective') {
-      cameraRef.current.position.set(1.1, 1.4, 2.3);
-      avatarGroupRef.current.rotation.y = -0.28;
+      // Mild natural perspective angle
+      camera.position.set(0.6, 0.5, 4.3);
+      camera.lookAt(0, 0.35, 0);
+      avatar.rotation.set(0, 0, 0);
     } else if (preset === 'hands') {
-      cameraRef.current.position.set(0, 1.15, 1.6);
-      avatarGroupRef.current.rotation.y = 0;
+      camera.position.set(0, 1.55, 3.2);
+      camera.lookAt(0, 1.45, 0);
+      avatar.rotation.set(0, 0, 0);
     } else if (preset === 'top') {
-      cameraRef.current.position.set(0, 2.3, 2.2);
-      avatarGroupRef.current.rotation.y = 0;
+      // Gentle high angle
+      camera.position.set(0, 2.0, 3.9);
+      camera.lookAt(0, 0.25, 0);
+      avatar.rotation.set(0, 0, 0);
     }
-  };
+  }, []);
 
-  const applyLightingPreset = (preset: LightingPreset) => {
+  /**
+   * LIGHTING PRESETS
+   */
+  const applyLightingPreset = useCallback((preset: LightingPreset) => {
     setLightingPreset(preset);
     const lights = lightsRef.current;
     if (!lights) return;
 
-    if (preset === 'neon') {
+    if (preset === 'studio') {
       (lights.ambient as THREE.AmbientLight).color.setHex(0xffffff);
-      (lights.purple as THREE.PointLight).color.setHex(0x8b5cf6);
-      (lights.cyan as THREE.PointLight).color.setHex(0x38bdf8);
-    } else if (preset === 'studio') {
+      (lights.dir as THREE.DirectionalLight).color.setHex(0xffffff);
+      (lights.leftFill as THREE.PointLight).color.setHex(0xe2e8f0);
+      (lights.rightFill as THREE.PointLight).color.setHex(0xffffff);
+    } else if (preset === 'neon') {
       (lights.ambient as THREE.AmbientLight).color.setHex(0xffffff);
-      (lights.purple as THREE.PointLight).color.setHex(0xe2e8f0);
-      (lights.cyan as THREE.PointLight).color.setHex(0xffffff);
+      (lights.dir as THREE.DirectionalLight).color.setHex(0xffffff);
+      (lights.leftFill as THREE.PointLight).color.setHex(0x38bdf8);
+      (lights.rightFill as THREE.PointLight).color.setHex(0x818cf8);
     } else if (preset === 'cyber') {
       (lights.ambient as THREE.AmbientLight).color.setHex(0x06b6d4);
-      (lights.purple as THREE.PointLight).color.setHex(0xec4899);
-      (lights.cyan as THREE.PointLight).color.setHex(0x10b981);
+      (lights.dir as THREE.DirectionalLight).color.setHex(0xffffff);
+      (lights.leftFill as THREE.PointLight).color.setHex(0xec4899);
+      (lights.rightFill as THREE.PointLight).color.setHex(0x10b981);
     } else if (preset === 'sunset') {
       (lights.ambient as THREE.AmbientLight).color.setHex(0xf59e0b);
-      (lights.purple as THREE.PointLight).color.setHex(0xf43f5e);
-      (lights.cyan as THREE.PointLight).color.setHex(0x8b5cf6);
+      (lights.dir as THREE.DirectionalLight).color.setHex(0xffffff);
+      (lights.leftFill as THREE.PointLight).color.setHex(0xf43f5e);
+      (lights.rightFill as THREE.PointLight).color.setHex(0x8b5cf6);
     }
-  };
+  }, []);
 
   const speeds = [0.5, 0.75, 1, 1.25, 1.5, 2];
 
-  // Handler for previous / next sign cycling
   const handlePrevSign = () => {
     if (onPreviousSign) {
       onPreviousSign();
       return;
     }
-    const idx = availableSigns.findIndex(s => s.sign.toUpperCase() === currentSign.toUpperCase());
+    const idx = availableSigns.findIndex((s) => s.sign.toUpperCase() === selectedSign.toUpperCase());
     const prevIdx = idx > 0 ? idx - 1 : availableSigns.length - 1;
     onSignChange?.(availableSigns[prevIdx].sign);
   };
@@ -636,32 +679,35 @@ export const SignAvatar3D: React.FC<SignAvatar3DProps> = ({
       onNextSign();
       return;
     }
-    const idx = availableSigns.findIndex(s => s.sign.toUpperCase() === currentSign.toUpperCase());
+    const idx = availableSigns.findIndex((s) => s.sign.toUpperCase() === selectedSign.toUpperCase());
     const nextIdx = idx < availableSigns.length - 1 ? idx + 1 : 0;
     onSignChange?.(availableSigns[nextIdx].sign);
   };
 
   return (
-    <div className={`w-full rounded-[32px] glass-card border border-white/16 shadow-2xl flex flex-col select-none overflow-hidden ${
-      isFullscreen ? 'fixed inset-4 z-50 h-[calc(100vh-32px)] max-w-none' : ''
-    } ${className}`}>
-      
+    <div
+      className={`w-full rounded-[32px] glass-card border border-white/16 shadow-2xl flex flex-col select-none overflow-hidden ${
+        isFullscreen ? 'fixed inset-4 z-50 h-[calc(100vh-32px)] max-w-none' : ''
+      } ${className}`}
+    >
       {/* 1. DEDICATED HEADER ROW */}
       <header className="px-6 py-4 border-b border-white/10 flex flex-wrap items-center justify-between gap-3 bg-white/[0.02]">
         <div className="flex items-center gap-3">
-          <div className="w-8 h-8 rounded-xl bg-white/10 border border-white/15 flex items-center justify-center">
-            <Sparkles className="w-4 h-4 text-white" />
+          <div className="w-8 h-8 rounded-xl bg-cyan-500/15 border border-cyan-400/30 flex items-center justify-center">
+            <Sparkles className="w-4 h-4 text-cyan-300" />
           </div>
           <div>
             <div className="flex items-center gap-2">
               <h2 className="text-sm font-bold text-white tracking-tight uppercase">
-                SignAvatar Stage
+                SignAvatar SMPL-X Stage
               </h2>
               <span className="text-[11px] font-mono text-cyan-300 font-semibold bg-white/8 px-2 py-0.5 rounded-md border border-white/10">
-                {currentSign}
+                {selectedSign.toUpperCase()}
               </span>
             </div>
-            <p className="text-[11px] text-slate-400">ISL 60 FPS Keyframe Rig</p>
+            <p className="text-[11px] text-slate-400">
+              {motionInfo ? `10,475 Vertices • ${motionInfo.frames} Frames @ ${motionInfo.fps} FPS` : 'SMPL-X 10,475 Vertex Neutral Mesh'}
+            </p>
           </div>
         </div>
 
@@ -688,7 +734,7 @@ export const SignAvatar3D: React.FC<SignAvatar3DProps> = ({
           {/* Lighting Preset Picker */}
           <button
             onClick={() => {
-              const presets: LightingPreset[] = ['neon', 'studio', 'cyber', 'sunset'];
+              const presets: LightingPreset[] = ['studio', 'neon', 'cyber', 'sunset'];
               const next = presets[(presets.indexOf(lightingPreset) + 1) % presets.length];
               applyLightingPreset(next);
             }}
@@ -708,19 +754,76 @@ export const SignAvatar3D: React.FC<SignAvatar3DProps> = ({
           </button>
 
           {/* Status Indicator */}
-          <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-[11px] font-semibold text-emerald-400">
-            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-            <span>Ready</span>
+          <div
+            className={`flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-semibold ${
+              modelStatus === 'error'
+                ? 'bg-rose-500/10 border border-rose-500/30 text-rose-300'
+                : modelStatus === 'loading'
+                ? 'bg-amber-500/10 border border-amber-500/30 text-amber-300'
+                : 'bg-emerald-500/10 border border-emerald-500/30 text-emerald-400'
+            }`}
+          >
+            <span
+              className={`w-2 h-2 rounded-full ${
+                modelStatus === 'error'
+                  ? 'bg-rose-400'
+                  : modelStatus === 'loading'
+                  ? 'bg-amber-300 animate-pulse'
+                  : 'bg-emerald-400 animate-pulse'
+              }`}
+            />
+            <span>{modelStatus === 'error' ? 'Error' : modelStatus === 'loading' ? 'Loading' : 'Ready'}</span>
           </div>
         </div>
       </header>
 
-      {/* 2. DEDICATED AVATAR CANVAS VIEWPORT (NO OVERLAPPING TEXT OR BUTTONS) */}
-      <main 
-        ref={mountRef} 
-        style={{ height }}
+      {/* 2. DEDICATED AVATAR CANVAS VIEWPORT */}
+      <div
+        style={{ height, minHeight: height, flex: '0 0 auto' }}
         className="w-full flex-1 cursor-grab active:cursor-grabbing overflow-hidden relative bg-black/20"
-      />
+      >
+        {/* Dedicated mount container for Three.js canvas ONLY (No React children) */}
+        <div ref={mountRef} className="w-full h-full absolute inset-0" />
+
+        {/* Loading Overlay (React-managed sibling) */}
+        {modelStatus === 'loading' && (
+          <div className="absolute inset-0 z-20 flex flex-col items-center justify-center bg-black/40 backdrop-blur-[2px] px-6 text-center pointer-events-none space-y-2">
+            <Loader2 className="w-6 h-6 text-cyan-400 animate-spin" />
+            <p className="text-sm font-semibold text-cyan-200">
+              Loading SignAvatar...
+            </p>
+            <p className="text-xs text-slate-400 font-mono">
+              Fetching SMPL-X Mesh & Motion Stream
+            </p>
+          </div>
+        )}
+
+        {/* Error Overlay (React-managed sibling) */}
+        {modelStatus === 'error' && (
+          <div className="absolute inset-0 z-20 flex flex-col items-center justify-center bg-black/60 backdrop-blur-[2px] px-6 text-center pointer-events-none space-y-2">
+            <AlertCircle className="w-7 h-7 text-rose-400" />
+            <p className="text-sm font-semibold text-rose-300">
+              {modelError || 'Unable to load SignAvatar motion.'}
+            </p>
+            <p className="text-xs text-slate-400">
+              Please check backend API at {SIGNAVATAR_API_URL}
+            </p>
+          </div>
+        )}
+
+        {/* Optional GIF Overlay if explicitly provided and loaded */}
+        {generatedGifUrl && generatedGifStatus !== 'error' && (
+          <div className="absolute inset-4 z-10 hidden items-center justify-center rounded-2xl overflow-hidden bg-black/40 pointer-events-none">
+            <img
+              src={generatedGifUrl}
+              alt={`Generated sign language animation for ${currentSign}`}
+              className="max-w-full max-h-full object-contain"
+              onLoad={onGeneratedGifLoad}
+              onError={onGeneratedGifError}
+            />
+          </div>
+        )}
+      </div>
 
       {/* 3. DEDICATED PLAYBACK TRANSPORT ROW */}
       <section className="px-6 py-3.5 border-t border-white/10 bg-white/[0.02] flex flex-wrap items-center justify-between gap-4">
@@ -738,10 +841,11 @@ export const SignAvatar3D: React.FC<SignAvatar3DProps> = ({
           {/* Reset Orientation */}
           <button
             onClick={() => {
-              if (avatarGroupRef.current) avatarGroupRef.current.rotation.y = 0;
+              if (avatarGroupRef.current) avatarGroupRef.current.rotation.set(0, 0, 0);
+              applyCameraPreset('front');
             }}
             className="p-2 rounded-xl glass-subtle hover:bg-white/10 text-slate-300 hover:text-white border border-white/10 transition-all"
-            title="Reset Avatar Orientation"
+            title="Reset Avatar Front Orientation"
           >
             <RotateCcw className="w-4 h-4" />
           </button>
@@ -767,7 +871,7 @@ export const SignAvatar3D: React.FC<SignAvatar3DProps> = ({
           </button>
         </div>
 
-        {/* 4. DEDICATED SPEED CONTROLS ROW IN TRANSPORT */}
+        {/* 4. SPEED CONTROLS ROW */}
         <div className="flex items-center gap-2">
           <span className="text-xs text-slate-400 font-semibold">Speed:</span>
           <div className="flex items-center gap-1">
@@ -791,7 +895,7 @@ export const SignAvatar3D: React.FC<SignAvatar3DProps> = ({
         </div>
       </section>
 
-      {/* 5. DEDICATED ISL TEST BUTTONS ROW */}
+      {/* 5. ISL TEST BUTTONS ROW */}
       {showISLControls && (
         <section className="px-6 py-4 border-t border-white/10 bg-white/[0.015] flex flex-col sm:flex-row sm:items-center gap-3">
           <span className="text-xs font-bold uppercase tracking-wider text-slate-400 flex-shrink-0">
@@ -804,9 +908,12 @@ export const SignAvatar3D: React.FC<SignAvatar3DProps> = ({
               return (
                 <button
                   key={item.sign}
-                  onClick={() => onSignChange?.(item.sign)}
+                  onClick={() => {
+                    setSelectedSign(item.sign);
+                    onSignChange?.(item.sign);
+                  }}
                   className={`flex-shrink-0 px-3.5 py-1.5 rounded-xl text-xs font-semibold transition-all duration-150 ${
-                    isCurrent
+                      selectedSign.toUpperCase() === item.sign.toUpperCase()
                       ? 'bg-white/20 text-white border border-white/35 shadow-[0_0_12px_rgba(255,255,255,0.25)] scale-105'
                       : 'glass-subtle text-slate-300 hover:text-white hover:bg-white/10 border border-white/10'
                   }`}
@@ -818,7 +925,6 @@ export const SignAvatar3D: React.FC<SignAvatar3DProps> = ({
           </div>
         </section>
       )}
-
     </div>
   );
 };

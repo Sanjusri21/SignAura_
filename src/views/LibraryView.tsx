@@ -3,14 +3,17 @@ import {
   Film, 
   Search, 
   Play, 
-  Calendar, 
+  Clock, 
   Sparkles, 
   X,
-  UserSquare2
+  UserSquare2,
+  Calendar,
+  Layers,
+  ArrowRight
 } from 'lucide-react';
 import { VideoProject, NavigationTab } from '../types';
-import { SignAvatar3D } from '../components/avatar/SignAvatar3D';
 import { GlassButton } from '../components/ui/GlassButton';
+import { StatusBadge } from '../components/ui/StatusBadge';
 
 interface LibraryViewProps {
   projects: VideoProject[];
@@ -25,7 +28,7 @@ export const LibraryView: React.FC<LibraryViewProps> = ({
 }) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [filterDialect, setFilterDialect] = useState<string>('all');
-  const [previewProject, setPreviewProject] = useState<VideoProject | null>(null);
+  const [selectedProjectPreview, setSelectedProjectPreview] = useState<VideoProject | null>(null);
 
   const filteredProjects = projects.filter((p) => {
     const matchesSearch = p.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -35,16 +38,18 @@ export const LibraryView: React.FC<LibraryViewProps> = ({
   });
 
   return (
-    <div className="space-y-6 pb-20">
+    <div className="space-y-6 pb-20 max-w-6xl mx-auto">
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <div className="flex items-center gap-2">
-            <h1 className="text-2xl font-bold text-white tracking-tight">Video Library</h1>
-            <span className="glass-badge text-xs">{projects.length} Processed</span>
+            <h1 className="text-2xl font-extrabold text-white tracking-tight">Translation History & Archive</h1>
+            <span className="text-xs font-semibold text-[#A8B2D1] bg-[#151D40] px-2.5 py-0.5 rounded-md border border-[#273154]">
+              {projects.length} Saved
+            </span>
           </div>
-          <p className="text-xs sm:text-sm text-slate-400">
-            Archive of your converted media with generated Indian Sign Language translations
+          <p className="text-xs sm:text-sm text-[#A8B2D1] mt-0.5">
+            Previous media conversions with transcribed audio, syntactic tokens, and synchronized 3D sign sequences.
           </p>
         </div>
 
@@ -52,22 +57,22 @@ export const LibraryView: React.FC<LibraryViewProps> = ({
           variant="primary"
           size="sm"
           onClick={() => onNavigate('convert')}
-          icon={<Sparkles className="w-3.5 h-3.5 text-slate-900" />}
+          icon={<Sparkles className="w-3.5 h-3.5 text-[#080D24]" />}
         >
-          Convert New Video
+          New Conversion
         </GlassButton>
       </div>
 
-      {/* Search & Filter Glass Bar */}
-      <div className="glass-card p-3 rounded-[24px] border border-white/14 flex flex-col sm:flex-row items-center gap-3">
+      {/* Search & Filter Bar */}
+      <div className="bg-[#151D40] p-3 rounded-2xl border border-[#273154] flex flex-col sm:flex-row items-center gap-3">
         <div className="relative flex-1 w-full">
-          <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
+          <Search className="w-4 h-4 text-[#6B7A99] absolute left-3.5 top-1/2 -translate-y-1/2" />
           <input
             type="text"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            placeholder="Search by title, keywords, or transcript content..."
-            className="w-full glass-input text-xs pl-10 pr-4 py-2 rounded-xl border-none shadow-none bg-black/30"
+            placeholder="Search archive by title, keywords, or transcript content..."
+            className="w-full text-xs pl-10 pr-4 py-2.5 rounded-xl border border-[#273154] bg-[#101735] text-white placeholder-[#6B7A99] outline-none focus:border-[#22D3EE]"
           />
         </div>
 
@@ -75,7 +80,7 @@ export const LibraryView: React.FC<LibraryViewProps> = ({
           <select
             value={filterDialect}
             onChange={(e) => setFilterDialect(e.target.value)}
-            className="glass-input text-xs py-2 px-3 rounded-xl bg-black/40 text-white w-full sm:w-auto"
+            className="text-xs py-2.5 px-3 rounded-xl bg-[#101735] text-white w-full sm:w-auto border border-[#273154] outline-none"
           >
             <option value="all">All Dialects</option>
             <option value="standard">ISL Standard</option>
@@ -90,111 +95,121 @@ export const LibraryView: React.FC<LibraryViewProps> = ({
         {filteredProjects.map((proj) => (
           <div
             key={proj.id}
-            className="glass-card p-5 rounded-[28px] border border-white/14 flex flex-col justify-between group hover:border-white/25 transition-all duration-300 shadow-xl"
+            className="bg-[#151D40] p-5 rounded-2xl border border-[#273154] flex flex-col justify-between group hover:border-[#3B4975] transition-colors shadow-md"
           >
-            {/* Card Stage Thumbnail */}
-            <div className="relative rounded-2xl h-36 bg-gradient-to-br from-white/8 via-white/4 to-transparent border border-white/10 overflow-hidden flex items-center justify-center mb-4 group-hover:shadow-[0_0_24px_rgba(255,255,255,0.1)] transition-all">
-              <div className="w-11 h-11 rounded-2xl bg-white/14 border border-white/20 flex items-center justify-center text-white shadow-lg group-hover:scale-110 transition-transform">
-                <Play className="w-4 h-4 ml-0.5" />
+            {/* Header / Info */}
+            <div className="space-y-3">
+              <div className="flex items-start justify-between gap-2">
+                <h3 className="text-sm font-bold text-white group-hover:text-[#22D3EE] transition-colors line-clamp-1">
+                  {proj.title}
+                </h3>
+                <StatusBadge status={proj.status} />
               </div>
 
-              {/* Badges */}
-              <div className="absolute top-2.5 left-2.5 flex items-center gap-1.5">
-                <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded-md bg-black/60 text-white border border-white/10 backdrop-blur-md">
-                  {proj.duration}s
-                </span>
-                <span className="text-[10px] font-bold px-2 py-0.5 rounded-md bg-white/10 text-slate-200 border border-white/10 backdrop-blur-md uppercase">
-                  {proj.dialect}
-                </span>
-              </div>
-
-              <div className="absolute bottom-2.5 right-2.5">
-                <span className="glass-badge text-[10px]">
-                  {proj.accuracy}% Precision
-                </span>
-              </div>
-            </div>
-
-            {/* Title & Info */}
-            <div className="space-y-2 mb-4 flex-1">
-              <h3 className="text-sm font-bold text-white group-hover:text-slate-100 transition-colors line-clamp-1">
-                {proj.title}
-              </h3>
-              <p className="text-xs text-slate-400 line-clamp-2 leading-relaxed">
+              <p className="text-xs text-[#A8B2D1] line-clamp-2 leading-relaxed">
                 "{proj.transcript}"
               </p>
-              <div className="flex items-center gap-2 text-[11px] text-slate-400 pt-1">
-                <Calendar className="w-3.5 h-3.5" />
-                <span>{proj.createdAt}</span>
-                <span>•</span>
-                <span className="text-white font-medium">{proj.glossTokens.length} ISL signs</span>
+
+              {/* Tokens Preview */}
+              <div className="flex flex-wrap items-center gap-1.5 pt-1">
+                {proj.glossTokens.slice(0, 4).map((t) => (
+                  <span
+                    key={t.id}
+                    className="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-[#101735] text-[#A8B2D1] border border-[#273154]"
+                  >
+                    {t.gloss}
+                  </span>
+                ))}
+                {proj.glossTokens.length > 4 && (
+                  <span className="text-[10px] text-[#6B7A99] font-mono">
+                    +{proj.glossTokens.length - 4} signs
+                  </span>
+                )}
               </div>
             </div>
 
-            {/* Actions Footer */}
-            <div className="pt-3 border-t border-white/10 flex items-center justify-between gap-2">
-              <GlassButton
-                variant="secondary"
-                size="sm"
-                onClick={() => setPreviewProject(proj)}
-                className="flex-1"
-              >
-                Quick Preview
-              </GlassButton>
+            {/* Footer Actions */}
+            <div className="pt-4 mt-4 border-t border-[#273154] flex items-center justify-between text-xs text-[#A8B2D1]">
+              <div className="flex items-center gap-2 text-[11px]">
+                <Clock className="w-3.5 h-3.5" />
+                <span>{proj.duration}s</span>
+                <span>•</span>
+                <span className="capitalize">{proj.dialect} ISL</span>
+              </div>
 
-              <GlassButton
-                variant="primary"
-                size="sm"
-                onClick={() => {
-                  onSelectProject(proj);
-                  onNavigate('avatar');
-                }}
-                className="flex-1"
-              >
-                Launch Studio
-              </GlassButton>
+              <div className="flex items-center gap-2">
+                <button
+                  onClick={() => setSelectedProjectPreview(proj)}
+                  className="p-1.5 rounded-lg bg-[#101735] hover:bg-[#1A244D] text-[#A8B2D1] hover:text-white border border-[#273154] transition-colors"
+                  title="Inspect details"
+                >
+                  <Layers className="w-3.5 h-3.5" />
+                </button>
+
+                <button
+                  onClick={() => {
+                    onSelectProject(proj);
+                    onNavigate('avatar');
+                  }}
+                  className="px-2.5 py-1.5 rounded-lg bg-[#101735] hover:bg-[#1A244D] text-[#22D3EE] font-semibold border border-[#273154] hover:border-[#22D3EE]/40 flex items-center gap-1 transition-colors"
+                >
+                  <Play className="w-3 h-3" />
+                  <span>Open 3D</span>
+                </button>
+              </div>
             </div>
           </div>
         ))}
       </div>
 
-      {/* QUICK PREVIEW MODAL */}
-      {previewProject && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-2xl">
-          <div className="glass-prominent rounded-[36px] p-6 max-w-3xl w-full border border-white/20 shadow-2xl relative space-y-4">
-            <div className="flex items-center justify-between pb-3 border-b border-white/10">
-              <div>
-                <h2 className="text-base font-bold text-white">{previewProject.title}</h2>
-                <p className="text-xs text-slate-400">Synchronized 3D SignAvatar + ISL Gloss Preview</p>
-              </div>
+      {/* Modal Detail Preview */}
+      {selectedProjectPreview && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+          <div
+            onClick={() => setSelectedProjectPreview(null)}
+            className="fixed inset-0 bg-black/75"
+          />
 
+          <div className="relative w-full max-w-2xl bg-[#151D40] rounded-2xl p-6 border border-[#273154] shadow-2xl space-y-5 z-10">
+            <div className="flex items-center justify-between pb-3 border-b border-[#273154]">
+              <div>
+                <h3 className="text-lg font-bold text-white">{selectedProjectPreview.title}</h3>
+                <p className="text-xs text-[#A8B2D1]">Conversion Details & Token Stream</p>
+              </div>
               <button
-                onClick={() => setPreviewProject(null)}
-                className="p-2 rounded-xl glass-subtle text-slate-400 hover:text-white border border-white/10"
+                onClick={() => setSelectedProjectPreview(null)}
+                className="p-1.5 rounded-lg text-[#A8B2D1] hover:text-white bg-[#101735] border border-[#273154]"
               >
                 <X className="w-4 h-4" />
               </button>
             </div>
 
-            <SignAvatar3D
-              currentSign={previewProject.glossTokens[0]?.gloss || 'WELCOME'}
-              isPlaying={true}
-              height="320px"
-            />
+            <div className="space-y-4">
+              <div>
+                <p className="text-xs font-semibold text-white mb-1">Full Transcript:</p>
+                <p className="text-xs text-[#A8B2D1] p-3 rounded-xl bg-[#101735] border border-[#273154] leading-relaxed">
+                  "{selectedProjectPreview.transcript}"
+                </p>
+              </div>
 
-            <div className="p-3 rounded-2xl bg-black/40 border border-white/10 flex flex-wrap gap-2 text-xs font-mono text-white">
-              {previewProject.glossTokens.map((t) => (
-                <span key={t.id} className="px-2 py-0.5 rounded-lg bg-white/6 border border-white/10">
-                  {t.gloss}
-                </span>
-              ))}
+              <div>
+                <p className="text-xs font-semibold text-white mb-1.5">ISL Gloss Sequence ({selectedProjectPreview.glossTokens.length} Tokens):</p>
+                <div className="flex flex-wrap gap-1.5 max-h-40 overflow-y-auto p-2 rounded-xl bg-[#101735] border border-[#273154]">
+                  {selectedProjectPreview.glossTokens.map((t) => (
+                    <div key={t.id} className="p-2 rounded bg-[#151D40] border border-[#273154] text-center">
+                      <p className="text-xs font-mono font-bold text-[#22D3EE]">{t.gloss}</p>
+                      <p className="text-[9px] text-[#A8B2D1]">{t.startTime}s - {t.endTime}s</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
             </div>
 
             <div className="flex items-center justify-end gap-3 pt-2">
               <GlassButton
                 variant="secondary"
                 size="sm"
-                onClick={() => setPreviewProject(null)}
+                onClick={() => setSelectedProjectPreview(null)}
               >
                 Close
               </GlassButton>
@@ -202,12 +217,13 @@ export const LibraryView: React.FC<LibraryViewProps> = ({
                 variant="primary"
                 size="sm"
                 onClick={() => {
-                  onSelectProject(previewProject);
-                  setPreviewProject(null);
+                  onSelectProject(selectedProjectPreview);
+                  setSelectedProjectPreview(null);
                   onNavigate('avatar');
                 }}
+                icon={<Play className="w-3.5 h-3.5 text-[#080D24]" />}
               >
-                Launch Studio
+                Launch in 3D Avatar
               </GlassButton>
             </div>
           </div>

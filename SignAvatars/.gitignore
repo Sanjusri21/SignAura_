@@ -1,0 +1,35 @@
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Virtual environments
+venv/
+.venv/
+env/
+
+# Generated BridgeConn data
+bridgeconn_samples/
+
+# Generated outputs
+outputs/
+diagnostics/
+
+# Generated datasets/indexes
+datasets/gloss_motion_index.json
+datasets/motion_index.json
+datasets/word_search_results.json
+
+# Large model/data files
+*.npz
+*.npy
+*.pkl
+
+# Generated test/render files
+*.bin
+*.mp4
+*.gif
+
+# Local/cache files
+.DS_Store
+*.log

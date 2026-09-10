@@ -33,6 +33,7 @@ class Settings(BaseSettings):
     GEMINI_API_KEY: str = ""
     OPENAI_API_KEY: str = ""
     OPENROUTER_API_KEY: str = ""
+    SIGNAVATAR_API_URL: str = "http://127.0.0.1:8001"
     
     # Demo & Operation Modes
     DEMO_MODE: bool = False

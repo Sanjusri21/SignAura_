@@ -1,0 +1,307 @@
+/* ==========================================================================
+   SignAura — Clean Modern AI Product Design System
+   Professional SaaS + AI Accessibility Interface
+   ========================================================================== */
+
+:root {
+  /* Core Color System */
+  --bg-primary: #080D24;
+  --bg-secondary: #101735;
+  --surface: #151D40;
+  --surface-hover: #1A244D;
+  --surface-active: #1E2952;
+  
+  /* Brand & Accents */
+  --accent-cyan: #22D3EE;
+  --accent-indigo: #6366F1;
+  --accent-purple: #8B5CF6;
+  --accent-emerald: #10B981;
+  
+  /* Typography Colors */
+  --text-primary: #FFFFFF;
+  --text-secondary: #A8B2D1;
+  --text-muted: #6B7A99;
+  
+  /* Borders */
+  --border-subtle: #273154;
+  --border-accent: #3B4975;
+  --border-focus: #22D3EE;
+  
+  /* Radius & Shadows */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 20px;
+  --radius-full: 9999px;
+  
+  --shadow-card: 0 4px 20px rgba(0, 0, 0, 0.4);
+  --shadow-card-hover: 0 10px 30px rgba(0, 0, 0, 0.55), 0 0 20px rgba(34, 211, 238, 0.1);
+}
+
+/* ==========================================================================
+   Solid Cards & Surfaces (Clean Solid SaaS with Top Specular Accent)
+   ========================================================================== */
+
+.solid-card,
+.glass-card {
+  position: relative;
+  background-color: #151D40;
+  border: 1px solid #273154;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+  transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1), 
+              border-color 0.22s ease, 
+              box-shadow 0.22s ease;
+}
+
+/* Top Subtle Specular Light Highlight on Card Surface */
+.solid-card::before,
+.glass-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 10%;
+  right: 10%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(34, 211, 238, 0.3), rgba(99, 102, 241, 0.3), transparent);
+  pointer-events: none;
+}
+
+.solid-card:hover,
+.glass-card:hover {
+  border-color: #3B4975;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.55), 0 0 24px rgba(34, 211, 238, 0.12);
+}
+
+.solid-surface,
+.glass-subtle,
+.glass-medium,
+.glass-prominent {
+  background-color: #151D40;
+  border: 1px solid #273154;
+  border-radius: 14px;
+}
+
+.surface-secondary {
+  background-color: #101735;
+  border: 1px solid #273154;
+}
+
+/* ==========================================================================
+   Clean Solid SaaS Buttons
+   ========================================================================== */
+
+.btn-primary,
+.glass-btn-primary,
+.glass-btn-cyan {
+  background-color: #22D3EE;
+  color: #080D24;
+  font-weight: 600;
+  border: 1px solid #22D3EE;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(34, 211, 238, 0.25);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.btn-primary:hover,
+.glass-btn-primary:hover,
+.glass-btn-cyan:hover {
+  background-color: #38BDF8;
+  border-color: #38BDF8;
+  transform: translateY(-1.5px);
+  box-shadow: 0 6px 20px rgba(34, 211, 238, 0.4);
+}
+
+.btn-primary:active,
+.glass-btn-primary:active {
+  transform: translateY(0);
+}
+
+.btn-secondary,
+.glass-btn-secondary {
+  background-color: #151D40;
+  color: #FFFFFF;
+  font-weight: 500;
+  border: 1px solid #273154;
+  border-radius: 10px;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.btn-secondary:hover,
+.glass-btn-secondary:hover {
+  background-color: #1A244D;
+  border-color: #3B4975;
+  color: #FFFFFF;
+  transform: translateY(-1.5px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+}
+
+.btn-indigo {
+  background: linear-gradient(135deg, #6366F1 0%, #8B5CF6 100%);
+  color: #FFFFFF;
+  font-weight: 600;
+  border: 1px solid #6366F1;
+  border-radius: 10px;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.btn-indigo:hover {
+  opacity: 0.95;
+  transform: translateY(-1.5px);
+  box-shadow: 0 6px 20px rgba(99, 102, 241, 0.4);
+}
+
+/* ==========================================================================
+   Badges & Pills
+   ========================================================================== */
+
+.badge-solid,
+.glass-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: 9999px;
+  font-size: 11px;
+  font-weight: 600;
+  background-color: #101735;
+  border: 1px solid #273154;
+  color: #A8B2D1;
+}
+
+.badge-cyan,
+.glass-badge-cyan {
+  background-color: rgba(34, 211, 238, 0.12);
+  border: 1px solid rgba(34, 211, 238, 0.35);
+  color: #22D3EE;
+}
+
+.badge-purple,
+.glass-badge-purple {
+  background-color: rgba(139, 92, 246, 0.12);
+  border: 1px solid rgba(139, 92, 246, 0.35);
+  color: #A78BFA;
+}
+
+.badge-emerald {
+  background-color: rgba(16, 185, 129, 0.12);
+  border: 1px solid rgba(16, 185, 129, 0.35);
+  color: #34D399;
+}
+
+/* ==========================================================================
+   Inputs & Controls
+   ========================================================================== */
+
+.input-solid,
+.glass-input {
+  background-color: #101735;
+  border: 1px solid #273154;
+  border-radius: 10px;
+  color: #FFFFFF;
+  padding: 10px 14px;
+  font-size: 13px;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  outline: none;
+}
+
+.input-solid:focus,
+.glass-input:focus {
+  border-color: #22D3EE;
+  box-shadow: 0 0 0 2px rgba(34, 211, 238, 0.2);
+}
+
+.input-solid::placeholder,
+.glass-input::placeholder {
+  color: #6B7A99;
+}
+
+/* ==========================================================================
+   Typography Gradients & Highlights
+   ========================================================================== */
+
+.text-gradient-cyan {
+  background: linear-gradient(135deg, #22D3EE 0%, #6366F1 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.text-gradient-spatial {
+  color: #FFFFFF;
+}
+
+.text-gradient-purple {
+  background: linear-gradient(135deg, #8B5CF6 0%, #22D3EE 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* ==========================================================================
+   Micro Animations & Transitions
+   ========================================================================== */
+
+@keyframes pulse-subtle {
+  0%, 100% { opacity: 0.22; transform: scale(1); }
+  50% { opacity: 0.32; transform: scale(1.06); }
+}
+
+@keyframes float-slow {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-8px) rotate(1deg); }
+}
+
+@keyframes orbit-motion {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes glow-pulse {
+  0%, 100% { box-shadow: 0 0 15px rgba(34, 211, 238, 0.2); }
+  50% { box-shadow: 0 0 25px rgba(34, 211, 238, 0.4); }
+}
+
+.animate-pulse-subtle {
+  animation: pulse-subtle 8s ease-in-out infinite;
+}
+
+.animate-float-slow {
+  animation: float-slow 6s ease-in-out infinite;
+}
+
+.animate-aura-spin {
+  animation: orbit-motion 24s linear infinite;
+}
+
+.animate-glow-pulse {
+  animation: glow-pulse 3s ease-in-out infinite;
+}
+
+/* Reduced Motion Override */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+/* Custom Scrollbar for clean SaaS look */
+::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+
+::-webkit-scrollbar-track {
+  background: #080D24;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #273154;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #3B4975;
+}

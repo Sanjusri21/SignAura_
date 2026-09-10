@@ -1,177 +1,153 @@
-# SignAura Frontend
+# SignAura — AI-Powered Indian Sign Language Accessibility Platform
 
-SignAura is an accessibility-focused web application that helps convert spoken or written content into Indian Sign Language (ISL) representations.
-
-The frontend provides a user-friendly interface for interacting with the SignAura backend, submitting text/video content, viewing translation results, and managing the sign-language conversion workflow.
-
-## 🚀 Features
-
-- 🎥 Video upload interface
-- 🔗 Video URL input support
-- 📝 Text-to-ISL translation
-- 🗣️ Speech/text interaction
-- 🤟 ISL gloss display
-- 🎬 Animation mapping support
-- 📊 Translation token information
-- ⚡ Real-time communication with FastAPI backend
-- 📱 Responsive user interface
-- ♿ Accessibility-focused design
-
-## 🛠️ Technologies Used
-
-- React.js
-- Vite
-- JavaScript / JSX
-- HTML5
-- CSS3
-- React Router
-- Fetch API
-- REST API
-
-## 📁 Project Structure
-
-```text
-SignAura/
-│
-├── Frontend/
-│   ├── public/
-│   ├── src/
-│   │   ├── components/
-│   │   ├── pages/
-│   │   ├── services/
-│   │   ├── assets/
-│   │   ├── App.jsx
-│   │   └── main.jsx
-│   │
-│   ├── package.json
-│   ├── vite.config.js
-│   └── README.md
-│
-└── Backend/
-    └── ...
-    # SignAura AI Backend 🌟
-
-Robust, production-ready FastAPI backend for **SignAura** — an AI-powered Indian Sign Language (ISL) conversion, video translation, and 3D Avatar orchestration engine.
+SignAura is an end-to-end accessibility platform that converts spoken audio, video media, English text, and Tamil text into authentic Indian Sign Language (ISL), presented through a real 3D SMPL-X signing avatar.
 
 ---
 
-## 🏗️ Architecture & Technology Stack
+## 📖 1. Project Overview & Problem Statement
 
-- **Python 3.13+**
-- **FastAPI** & **Uvicorn**: High performance async ASGI framework
-- **MongoDB** & **Motor**: Async document database for users, jobs, transcriptions, conversions, and chat
-- **Pydantic v2**: Type validation and schema serialization
-- **JWT & Passlib / Bcrypt**: Secure token authentication
-- **Redis & Celery**: Distributed asynchronous job queue
-- **FFmpeg**: Video audio extraction (16kHz PCM mono)
-- **Whisper**: Multi-lingual speech-to-text transcription
-- **yt-dlp**: Media stream downloading from YouTube / URLs
-- **ISL Abstraction Layer**: Rule-based grammar transformer (SVO to SOV) with pluggable interfaces for custom ISL datasets
-- **Demo Mode**: Zero-config instant readiness with fallback mocks
+### The Problem
+Over 60 million deaf and hard-of-hearing individuals worldwide — including over 18 million in India — face critical barriers in accessing spoken media, educational lectures, emergency healthcare instructions, and digital content. Indian Sign Language (ISL) has distinct grammatical structure (Subject-Object-Verb / Topic-Comment ordering), spatial reference frames, and manual/non-manual features that direct word-for-word substitutions fail to capture.
+
+### The SignAura Solution
+SignAura bridges this gap with an end-to-end pipeline:
+1. **ASR & NLP**: Real-time speech transcription via OpenAI Whisper and Tamil Unicode concept extraction.
+2. **ISL Grammar Transformer**: Deterministic semantic reordering into authentic ISL Topic-Comment / SOV structure.
+3. **Authentic Motion Inventory**: Direct integration with the **BridgeConn Sign Dictionary ISL** dataset, mapping glosses to real 3D motion captures.
+4. **Kinematic Sequencing Engine**: Temporal resampling to uniform 30 FPS, smooth cosine interpolation across sign boundaries, and strict SMPL-X topology enforcement.
+5. **Real-Time 3D WebGL Avatar**: Hardware-accelerated Three.js / React Three Fiber renderer playing Float32 vertex streams (10,475 vertices) with zero fabricated mock signs.
 
 ---
 
-## 📂 Project Structure
+## 🏛️ 2. Architecture & Pipeline
 
 ```
-Backend/
-├── app/
-│   ├── main.py                     # FastAPI app, CORS, routes & lifespan
-│   ├── api/
-│   │   ├── auth.py                 # POST /api/auth/register, /login, GET /me
-│   │   ├── users.py                # User profiles
-│   │   ├── video.py                # POST /api/video/upload, /api/video/process-url
-│   │   ├── transcription.py        # POST /api/transcription
-│   │   ├── translation.py          # POST /api/translation
-│   │   ├── isl.py                  # POST /api/isl/translate, GET /api/isl/dictionary
-│   │   ├── avatar.py               # GET /api/avatar/poses, /animations
-│   │   ├── jobs.py                 # GET /api/jobs/{job_id}
-│   │   ├── chat.py                 # POST /api/chat, GET /api/chat/history
-│   │   └── history.py              # GET /api/history
-│   │
-│   ├── core/
-│   │   ├── config.py               # Pydantic Settings & environment
-│   │   ├── database.py             # Motor MongoDB client + In-Memory Fallback
-│   │   └── security.py             # JWT token handling & Bcrypt hashing
-│   │
-│   ├── models/                     # MongoDB models
-│   ├── schemas/                    # Request/Response Pydantic schemas
-│   ├── services/
-│   │   ├── video/                  # FFmpeg extraction & yt-dlp
-│   │   ├── speech/                 # Whisper ASR
-│   │   ├── nlp/                    # Linguistic tokenization
-│   │   ├── isl/                    # ISL grammar rules & dictionary
-│   │   ├── avatar/                 # 3D Avatar skeleton pose mappings
-│   │   └── ai/                     # Conversational assistant
-│   │
-│   ├── workers/
-│   │   └── celery_app.py           # Celery pipeline worker task
-│   │
-│   └── utils/
-│
-├── animations/                     # 3D .glb animation assets
-├── uploads/                        # Processed media uploads
-├── models/                         # Local weights directory
-├── tests/                          # Automated Pytest suite
-├── requirements.txt
-├── .env.example
-└── README.md
+[ Input Source ]
+   ├── English / Tamil Text
+   ├── Audio File / Live Mic ──> [ Whisper ASR ] ──┐
+   └── Video File / YouTube URL ──> [ FFmpeg / yt-dlp ] ─┘
+                                       │
+                                       ▼
+                       [ RuleBasedISLService ]
+                                       │
+                                       ▼
+                       [ ISLGrammarTransformer ]
+                         (SOV / Topic-Comment)
+                                       │
+                                       ▼
+                      [ SignAvatarClient Resolver ]
+                 (Exact & Deterministic BridgeConn Variants)
+                                       │
+                                       ▼
+                     [ SMPL-X Animation Sequencer ]
+                   (30 FPS Resampling & Cosine Blending)
+                                       │
+                                       ▼
+                  [ FastAPI Binary Streaming Endpoint ]
+                    (Float32 10,475 Vertices / Frame)
+                                       │
+                                       ▼
+                       [ React + Three.js 3D Studio ]
+                     (Interactive 3D Signing Avatar)
 ```
 
 ---
 
-## ⚡ Video Processing Pipeline
+## 🛡️ 3. Non-Negotiable Data Integrity Policy
 
-$$\text{Video File / YouTube URL} \xrightarrow{\text{yt-dlp / Upload}} \text{Video} \xrightarrow{\text{FFmpeg}} \text{16kHz Audio} \xrightarrow{\text{Whisper}} \text{Text} \xrightarrow{\text{NLP}} \text{ISL Gloss} \xrightarrow{\text{Mapper}} \text{3D GLB Animations} \rightarrow \text{SignAvatar}$$
+SignAura strictly adheres to authentic data integrity:
+- **No Fabricated Animations**: If a sign is not in the confirmed BridgeConn motion inventory, the system returns `available: false` with structured missing gloss details.
+- **No Random Substitutions**: Missing signs (e.g. `HELLO`) will never be silently replaced with arbitrary animations.
+- **Deterministic Variant Resolution**: Variant naming in the dataset (e.g., `help_2` for `HELP` and `teacher_2` for `TEACHER`) is resolved automatically while preserving canonical gloss names in API responses.
 
 ---
 
-## 🚀 Quickstart & Commands
+## 💻 4. Technology Stack & Ports
 
-### 1. Install Dependencies
+| Component | Technology | Port |
+|---|---|---|
+| **Frontend UI** | React 18, Vite, TypeScript, Tailwind CSS, Lucide Icons | `5173` |
+| **3D Rendering** | Three.js, React Three Fiber, SMPL-X 10,475-vertex Topology | `5173` |
+| **Backend API** | FastAPI, Uvicorn, Pydantic v2, Motor (MongoDB), JWT | `8000` |
+| **SignAvatars Service** | Python, NumPy, SMPL-X Retargeter, MediaPipe/DWPose | `8001` |
+| **ASR & Media** | Whisper, FFmpeg, yt-dlp (`ejs:github` JS solver) | Backend |
+
+---
+
+## 📦 5. Installation & Setup
+
+### Prerequisites
+- Python 3.10+ (Python 3.11 / 3.12 / 3.13 supported)
+- Node.js 18+ and npm
+- FFmpeg installed and available in system `PATH`
+- MongoDB (optional for persistence; in-memory fallback enabled by default)
+
+### Step 1: Backend Setup
 ```bash
 cd Backend
 pip install -r requirements.txt
-```
-
-### 2. Environment Setup
-Copy `.env.example` to `.env`:
-```bash
 cp .env.example .env
+python -m uvicorn app.main:app --host 127.0.0.1 --port 8000 --reload
 ```
 
-### 3. Start Backend Server
+### Step 2: SignAvatars Motion Service Setup
 ```bash
-python -m uvicorn app.main:app --reload --port 8000
+cd SignAvatars
+pip install -r requirements.txt
+python api.py
 ```
-- Health Check: [http://127.0.0.1:8000/health](http://127.0.0.1:8000/health)
-- Swagger UI: [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs)
 
-### 4. (Optional) Start Redis & Celery Worker
-If running full asynchronous background processing:
+### Step 3: Frontend Setup
 ```bash
-# Start Redis (Docker or Local)
-docker run -d -p 6379:6379 redis:alpine
-
-# Start Celery Worker
-celery -A app.workers.celery_app.celery_app worker --loglevel=info -P solo
+npm install
+npm run dev
 ```
-*(Note: If Redis/Celery is not running, SignAura automatically falls back to in-process FastAPI BackgroundTasks seamlessly without failing).*
-
-### 5. (Optional) Start MongoDB
-```bash
-docker run -d -p 27017:27017 --name signaura-mongo mongo:latest
-```
-*(Note: If MongoDB is offline, the backend uses an internal thread-safe in-memory database mock so you can test all endpoints immediately).*
+Open [http://localhost:5173](http://localhost:5173) in your browser.
 
 ---
 
-## 🧪 Running Automated Tests
-```bash
-pytest tests/
-```
+## 📚 6. Dataset & BridgeConn ISL Attribution
+
+SignAura's authentic 3D signing motions are derived from the **BridgeConn Sign Dictionary ISL** dataset:
+- **Source**: BridgeConn Sign Dictionary ISL (HuggingFace: `bridgeconn/sign-dictionary-isl`)
+- **Landmarks**: MediaPipe 33-pose, 21-left hand, 21-right hand, 468-face landmarks
+- **Retargeting**: SMPL-X Neutral Body Model (10,475 vertices, 20,908 triangular faces)
+- **Inventory File**: `SignAvatars/outputs/bridgeconn_gloss_inventory.json`
 
 ---
 
-## ⚠️ ISL Disclaimer
-Demo animations and gloss sequence mappings provided in the demo mode are for technological representation and prototyping. They are not certified authentic ISL signs until connected with a validated Indian Sign Language dataset through the `ISLServiceBase` abstraction interface.
+## 🔌 7. Key API Endpoints
+
+### Translation & Animation
+- `POST /api/translate-to-signavatar`: Translates text to ISL glosses and generates a 30 FPS SMPL-X binary sequence if all signs are available.
+- `GET /api/signavatar/sequence/{sequence_id}`: Streams contiguous Float32 binary vertex buffer (`frames * 10475 * 3 * 4` bytes).
+- `GET /api/signavatar/sequence/{sequence_id}/metadata`: Returns sequence metadata, frame count, FPS, and gloss tokens.
+- `GET /api/signavatar/motions`: Lists all available validated BridgeConn ISL animations.
+- `GET /api/signavatar/motion/{gloss}`: Resolves single gloss metadata and direct streaming URL.
+
+### Speech & Video
+- `POST /api/video/upload`: Ingests video files, extracts audio via FFmpeg, and transcribes via Whisper.
+- `POST /api/video/process-url`: Downloads YouTube/web media via yt-dlp with JavaScript challenge resolution.
+- `POST /api/transcription`: Direct audio upload and Whisper speech-to-text.
+
+---
+
+## 🧪 8. Demo Workflows & Verified Phrases
+
+SignAura provides verified demonstration presets using confirmed real BridgeConn signs:
+
+| Input Text | ISL Gloss Sequence | Resolved BridgeConn Keys | Animation Result |
+|---|---|---|---|
+| `"good drink"` | `GOOD` + `DRINK` | `good` + `drink` | ✅ 30 FPS 3D Avatar |
+| `"help teacher"` | `HELP` + `TEACHER` | `help_2` + `teacher_2` | ✅ 30 FPS 3D Avatar |
+| `"go drink help"` | `GO` + `DRINK` + `HELP` | `go` + `drink` + `help_2` | ✅ 30 FPS 3D Avatar |
+| `"நல்ல தண்ணீர்"` | `GOOD` + `DRINK` | `good` + `drink` | ✅ 30 FPS 3D Avatar |
+| `"hello"` | `HELLO` | *None* | ⚠️ Structured Unavailable Alert |
+
+---
+
+## 🛡️ 9. Limitations & Future Improvements
+
+1. **Vocabulary Expansion**: The system currently includes validated motions for core vocabulary. Continued shard extraction from the BridgeConn dataset will systematically expand available ISL signs.
+2. **Facial Expressions**: Non-manual markers (eyebrow movement, mouthings) are in active development.
+3. **Continuous Sign Blending**: Current transitions use smooth cosine easing; future work includes deep learning-based motion blending.

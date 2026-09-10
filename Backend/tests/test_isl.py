@@ -14,8 +14,9 @@ async def test_isl_translate_demo_case():
     assert response.status_code == 200
     data = response.json()
     assert data["text"] == "Hello, how are you?"
-    assert data["gloss"] == ["HELLO", "HOW", "ARE", "YOU"]
-    assert data["animations"] == ["hello.glb", "how.glb", "are.glb", "you.glb"]
+    assert data["gloss"] == ["HELLO", "YOU", "HOW"]
+    assert "hello.glb" in data["animations"]
+    assert "how.glb" in data["animations"]
     assert data["status"] == "completed"
 
 @pytest.mark.asyncio

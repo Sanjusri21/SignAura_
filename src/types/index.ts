@@ -1,7 +1,11 @@
 export type NavigationTab = 
   | 'landing' 
+  | 'signin'
+  | 'signup'
+  | 'forgot-password'
   | 'dashboard' 
   | 'convert' 
+  | 'translator'
   | 'avatar' 
   | 'assistant' 
   | 'library' 
@@ -17,7 +21,7 @@ export interface GlossToken {
   endTime: number;
   confidence: number;
   category?: string;
-  grammarTag?: string; // e.g. 'SUBJECT', 'OBJECT', 'VERB', 'QUESTION_MARKER'
+  grammarTag?: string;
 }
 
 export interface VideoProject {
@@ -62,6 +66,15 @@ export interface ChatMessage {
   glossSequence?: string[];
   recommendedSigns?: string[];
   isStreaming?: boolean;
+}
+
+export interface UserProfile {
+  id: string;
+  email: string;
+  full_name: string;
+  role?: 'Student' | 'Educator' | 'General User' | 'Researcher';
+  created_at?: string;
+  is_active?: boolean;
 }
 
 export interface AccessibilitySettings {

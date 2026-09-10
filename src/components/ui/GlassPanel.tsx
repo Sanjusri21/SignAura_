@@ -15,24 +15,19 @@ export const GlassPanel: React.FC<GlassPanelProps> = ({
   ...props
 }) => {
   const levelClass = {
-    subtle: 'glass-subtle',
-    medium: 'glass-medium',
-    prominent: 'glass-prominent'
+    subtle: 'bg-[#101735] border border-[#273154]',
+    medium: 'bg-[#151D40] border border-[#273154]',
+    prominent: 'bg-[#151D40] border border-[#3B4975]'
   }[level];
-
-  const glowClass = {
-    none: '',
-    cyan: 'shadow-[0_0_30px_rgba(56,189,248,0.15)]',
-    purple: 'shadow-[0_0_30px_rgba(168,85,247,0.15)]',
-    blue: 'shadow-[0_0_30px_rgba(37,99,235,0.15)]'
-  }[glow];
 
   return (
     <div
-      className={`rounded-3xl transition-all duration-300 relative ${levelClass} ${glowClass} ${className}`}
+      className={`rounded-2xl shadow-md transition-all duration-200 relative ${levelClass} ${className}`}
       {...props}
     >
       {children}
     </div>
   );
 };
+
+export const SolidPanel = GlassPanel;

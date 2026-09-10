@@ -21,6 +21,8 @@ class VideoDownloader:
 
     @staticmethod
     def extract_youtube_id(url: str) -> Optional[str]:
+        """Extract the 11-character YouTube video ID from a URL."""
+
         patterns = [
             r"(?:v=)([0-9A-Za-z_-]{11})",
             r"(?:youtu\.be/)([0-9A-Za-z_-]{11})",
@@ -29,6 +31,7 @@ class VideoDownloader:
 
         for pattern in patterns:
             match = re.search(pattern, url)
+
             if match:
                 return match.group(1)
 
@@ -37,8 +40,10 @@ class VideoDownloader:
     @staticmethod
     def _safe_filename(value: str) -> str:
         """Make filename safe for Windows."""
+
         value = re.sub(r'[<>:"/\\|?*]', "_", value)
         value = re.sub(r"\s+", "_", value)
+
         return value[:100]
 
     async def download_media(
@@ -54,7 +59,9 @@ class VideoDownloader:
 
         url = url.strip()
 
+        # ---------------------------------------------------------
         # Validate YouTube URL
+        # ---------------------------------------------------------
         youtube_id = self.extract_youtube_id(url)
 
         if not youtube_id:
@@ -62,10 +69,19 @@ class VideoDownloader:
                 "Invalid YouTube URL. Please provide a valid YouTube video URL."
             )
 
+        # ---------------------------------------------------------
+        # Output directory
+        # ---------------------------------------------------------
         out_dir = output_dir or settings.UPLOADS_DIR
 
-        os.makedirs(out_dir, exist_ok=True)
+        os.makedirs(
+            out_dir,
+            exist_ok=True
+        )
 
+        # ---------------------------------------------------------
+        # Generate unique filename
+        # ---------------------------------------------------------
         file_id = uuid.uuid4().hex
 
         # IMPORTANT:
@@ -76,51 +92,96 @@ class VideoDownloader:
             f"{file_id}.%(ext)s"
         )
 
+        # ---------------------------------------------------------
+        # yt-dlp configuration
+        # ---------------------------------------------------------
         ydl_opts = {
-            # Prefer m4a because Whisper/FFmpeg can process it reliably.
+            # -----------------------------------------------------
+            # Audio
+            # -----------------------------------------------------
+            # Prefer M4A because Whisper/FFmpeg can process it.
             "format": "bestaudio[ext=m4a]/bestaudio/best",
 
+            # Output filename
             "outtmpl": output_template,
 
+            # Only one video
             "noplaylist": True,
 
-            # Windows-safe filenames
+            # -----------------------------------------------------
+            # YouTube JavaScript challenge solving
+            # -----------------------------------------------------
+            # This is required for current YouTube extraction.
+            # It corresponds to:
+            #
+            # yt-dlp --remote-components ejs:github
+            #
+            "remote_components": ["ejs:github"],
+
+            # -----------------------------------------------------
+            # Windows filename safety
+            # -----------------------------------------------------
             "windowsfilenames": True,
             "restrictfilenames": True,
 
-            # Do not download thumbnails/playlists/etc.
+            # -----------------------------------------------------
+            # Do not download unnecessary files
+            # -----------------------------------------------------
             "writethumbnail": False,
             "writesubtitles": False,
             "writeautomaticsub": False,
 
+            # -----------------------------------------------------
             # Network settings
+            # -----------------------------------------------------
             "socket_timeout": 60,
             "retries": 5,
             "fragment_retries": 5,
 
-            # Avoid unnecessary console output
+            # -----------------------------------------------------
+            # Logging
+            # -----------------------------------------------------
             "quiet": False,
             "no_warnings": False,
 
-            # Do not use browser cookies
+            # -----------------------------------------------------
+            # SSL
+            # -----------------------------------------------------
             "nocheckcertificate": True,
 
-            # Explicitly allow IPv4
+            # -----------------------------------------------------
+            # IPv4
+            # -----------------------------------------------------
             "source_address": "0.0.0.0",
 
-            # Avoid playlist processing
+            # -----------------------------------------------------
+            # Do not process playlists
+            # -----------------------------------------------------
             "extract_flat": False,
         }
 
+        # ---------------------------------------------------------
+        # Run yt-dlp in executor
+        # ---------------------------------------------------------
         loop = asyncio.get_running_loop()
 
         def _download() -> Dict[str, Any]:
 
             try:
-                logger.info("Starting YouTube download: %s", url)
 
+                logger.info(
+                    "Starting YouTube download: %s",
+                    url
+                )
+
+                # -------------------------------------------------
+                # Create yt-dlp instance
+                # -------------------------------------------------
                 with yt_dlp.YoutubeDL(ydl_opts) as ydl:
 
+                    # -------------------------------------------------
+                    # Extract information and download
+                    # -------------------------------------------------
                     info = ydl.extract_info(
                         url,
                         download=True
@@ -136,12 +197,16 @@ class VideoDownloader:
                         info.get("title")
                     )
 
-                    # Find the actual downloaded file.
+                    # -------------------------------------------------
+                    # Find downloaded file
+                    # -------------------------------------------------
                     requested_ext = info.get("ext")
 
                     possible_files = []
 
+                    # First check expected extension
                     if requested_ext:
+
                         possible_files.append(
                             os.path.join(
                                 out_dir,
@@ -149,11 +214,16 @@ class VideoDownloader:
                             )
                         )
 
-                    # Search for anything downloaded with our UUID.
+                    # -------------------------------------------------
+                    # Search for any file generated with UUID
+                    # -------------------------------------------------
                     if os.path.isdir(out_dir):
+
                         for filename in os.listdir(out_dir):
 
-                            if filename.startswith(file_id + "."):
+                            if filename.startswith(
+                                file_id + "."
+                            ):
 
                                 full_path = os.path.join(
                                     out_dir,
@@ -161,8 +231,14 @@ class VideoDownloader:
                                 )
 
                                 if os.path.isfile(full_path):
-                                    possible_files.append(full_path)
 
+                                    possible_files.append(
+                                        full_path
+                                    )
+
+                    # -------------------------------------------------
+                    # Find first valid downloaded file
+                    # -------------------------------------------------
                     downloaded_file = None
 
                     for candidate in possible_files:
@@ -170,35 +246,66 @@ class VideoDownloader:
                         if os.path.isfile(candidate):
 
                             if os.path.getsize(candidate) > 0:
+
                                 downloaded_file = candidate
+
                                 break
 
+                    # -------------------------------------------------
+                    # No file found
+                    # -------------------------------------------------
                     if not downloaded_file:
+
                         raise VideoDownloadError(
-                            "yt-dlp completed but the downloaded audio file "
-                            "could not be found."
+                            "yt-dlp completed but the downloaded audio "
+                            "file could not be found."
                         )
 
+                    # -------------------------------------------------
+                    # Log successful download
+                    # -------------------------------------------------
                     logger.info(
                         "Downloaded media: %s",
                         downloaded_file
                     )
 
+                    # -------------------------------------------------
+                    # Return download information
+                    # -------------------------------------------------
                     return {
-                        "title": info.get("title") or "Online Video",
-                        "duration": float(
-                            info.get("duration") or 0.0
+                        "title": (
+                            info.get("title")
+                            or "Online Video"
                         ),
+
+                        "duration": float(
+                            info.get("duration")
+                            or 0.0
+                        ),
+
                         "file_path": downloaded_file,
-                        "thumbnail": info.get("thumbnail") or "",
+
+                        "thumbnail": (
+                            info.get("thumbnail")
+                            or ""
+                        ),
+
                         "id": file_id,
+
                         "transcript": None,
+
                         "youtube_id": youtube_id,
                     }
 
+            # -----------------------------------------------------
+            # Known SignAura download error
+            # -----------------------------------------------------
             except VideoDownloadError:
                 raise
 
+            # -----------------------------------------------------
+            # Unexpected error
+            # -----------------------------------------------------
             except Exception as exc:
 
                 logger.exception(
@@ -206,13 +313,21 @@ class VideoDownloader:
                 )
 
                 raise VideoDownloadError(
-                    f"YouTube download failed: {type(exc).__name__}: {exc}"
+                    "YouTube download failed: "
+                    f"{type(exc).__name__}: {exc}"
                 ) from exc
 
+        # ---------------------------------------------------------
+        # Execute download without blocking FastAPI event loop
+        # ---------------------------------------------------------
         return await loop.run_in_executor(
             None,
             _download
         )
 
+
+# =============================================================
+# Global downloader instance
+# =============================================================
 
 video_downloader = VideoDownloader()

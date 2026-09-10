@@ -3,19 +3,18 @@ import {
   Upload, 
   Link2, 
   Sparkles, 
-  CheckCircle2, 
-  ArrowRight, 
-  Settings, 
-  PlaySquare,
-  Volume2,
+  FileVideo,
   Radio,
+  Volume2,
   Layers,
   UserSquare2,
-  FileVideo
+  ArrowRight,
+  Clock,
+  Play,
+  ArrowDown
 } from 'lucide-react';
 import { ISLDialect } from '../types';
 import { GlassButton } from '../components/ui/GlassButton';
-import { GlassCard } from '../components/ui/GlassCard';
 
 export interface ConvertPayload {
   file?: File;
@@ -36,6 +35,7 @@ export const ConvertView: React.FC<ConvertViewProps> = ({
   onDialectChange,
   onStartProcessing
 }) => {
+  const [activeMode, setActiveMode] = useState<'upload' | 'url'>('upload');
   const [isDragOver, setIsDragOver] = useState(false);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [videoUrl, setVideoUrl] = useState('');
@@ -43,12 +43,13 @@ export const ConvertView: React.FC<ConvertViewProps> = ({
   const [selectedPreset, setSelectedPreset] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const workflowSteps = [
-    { title: 'Video Ingest', desc: 'Audio Extraction', icon: FileVideo },
-    { title: 'Acoustics', desc: 'Noise Filtration', icon: Volume2 },
-    { title: 'Whisper AI', desc: 'Speech to Text', icon: Radio },
-    { title: 'ISL SOV', desc: 'Syntactic Gloss', icon: Layers },
-    { title: 'SignAvatar', desc: '3D Articulation', icon: UserSquare2 }
+  const pipelineSteps = [
+    { title: 'VIDEO', desc: 'Media Ingest', icon: FileVideo },
+    { title: 'SPEECH RECOGNITION', desc: 'Whisper ASR', icon: Radio },
+    { title: 'TEXT', desc: 'NLP Parser', icon: Volume2 },
+    { title: 'ISL TRANSLATION', desc: 'SOV Grammar', icon: Layers },
+    { title: 'SIGN MOTION', desc: 'SMPL-X Kinematics', icon: Sparkles },
+    { title: '3D AVATAR', desc: 'Interactive Rig', icon: UserSquare2 }
   ];
 
   const samplePresets = [
@@ -111,7 +112,7 @@ export const ConvertView: React.FC<ConvertViewProps> = ({
   const handleUrlChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const val = e.target.value;
     setVideoUrl(val);
-    setIsUrlValid(val.trim().length > 10 && (val.includes('http') || val.includes('youtu') || val.includes('vimeo')));
+    setIsUrlValid(val.trim().length > 8);
     if (val.trim()) {
       setSelectedFile(null);
       setSelectedPreset(null);
@@ -122,253 +123,245 @@ export const ConvertView: React.FC<ConvertViewProps> = ({
     setSelectedPreset(preset.id);
     setSelectedFile(null);
     setVideoUrl('');
+    setIsUrlValid(false);
   };
 
-  const handleSubmit = () => {
+  const handleLaunchPipeline = () => {
     if (selectedFile) {
       onStartProcessing({
         file: selectedFile,
         title: selectedFile.name.replace(/\.[^/.]+$/, ''),
-        duration: 30
+        duration: 25.0
       });
-    } else if (selectedPreset) {
-      const p = samplePresets.find(x => x.id === selectedPreset);
-      if (p) {
-        onStartProcessing({
-          presetText: p.desc,
-          title: p.title,
-          duration: p.duration
-        });
-      }
-    } else if (videoUrl) {
+    } else if (isUrlValid && videoUrl) {
       onStartProcessing({
         url: videoUrl,
-        title: 'Web Video Conversion',
-        duration: 45
+        title: 'Web Stream Video',
+        duration: 30.0
       });
+    } else if (selectedPreset) {
+      const found = samplePresets.find((p) => p.id === selectedPreset);
+      if (found) {
+        onStartProcessing({
+          title: found.title,
+          presetText: found.desc,
+          duration: found.duration
+        });
+      }
     }
   };
 
-  const isReady = !!selectedFile || !!selectedPreset || (videoUrl.trim().length > 0 && isUrlValid);
+  const canLaunch = !!selectedFile || isUrlValid || !!selectedPreset;
 
   return (
-    <div className="max-w-4xl mx-auto space-y-10 pb-20">
-      
-      {/* 1. HEADER */}
-      <div className="text-center space-y-3">
-        <div className="glass-subtle px-3.5 py-1.5 rounded-full inline-flex items-center gap-2 border border-white/14 mb-1">
-          <Sparkles className="w-3.5 h-3.5 text-white" />
-          <span className="text-xs font-semibold uppercase tracking-wider text-slate-200">
-            Multi-Modal Ingestion
+    <div className="space-y-8 pb-20 max-w-6xl mx-auto">
+      {/* 1. PIPELINE STEP FLOW INDICATOR */}
+      <section className="bg-[#151D40] rounded-2xl p-6 border border-[#273154] shadow-md">
+        <div className="text-center mb-5">
+          <span className="text-[11px] font-bold uppercase tracking-wider text-[#22D3EE]">
+            Multi-Modal Neural Pipeline
           </span>
+          <h2 className="text-lg font-bold text-white mt-0.5">
+            Automated Video to Sign Language Architecture
+          </h2>
         </div>
-        <h1 className="text-3xl sm:text-5xl font-extrabold text-white tracking-tight">
-          Convert Media to Sign Language
-        </h1>
-        <p className="text-sm sm:text-base text-slate-400 max-w-xl mx-auto leading-relaxed">
-          Upload any media file or paste a video URL. Our neural pipeline will transcribe speech, extract syntactic ISL gloss, and synthesize 3D SignAvatar gestures.
-        </p>
-      </div>
 
-      {/* 2. SPATIAL WORKFLOW PIPELINE VISUALIZER */}
-      <div className="glass-card p-5 sm:p-6 rounded-[28px] border border-white/14">
-        <p className="text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-3 text-center">
-          Multimodal Conversion Pipeline
-        </p>
-        <div className="flex items-center justify-between gap-1 sm:gap-2 overflow-x-auto pb-1">
-          {workflowSteps.map((step, i) => {
+        {/* Desktop Pipeline Steps (Horizontal) */}
+        <div className="hidden lg:grid grid-cols-6 gap-2 items-center">
+          {pipelineSteps.map((step, idx) => {
             const Icon = step.icon;
             return (
-              <React.Fragment key={i}>
-                <div className="flex flex-col items-center text-center p-2 rounded-2xl glass-subtle flex-1 min-w-[90px]">
-                  <div className="w-8 h-8 rounded-xl bg-white/10 flex items-center justify-center text-white mb-1.5">
-                    <Icon className="w-4 h-4" />
+              <React.Fragment key={idx}>
+                <div className="bg-[#101735] p-3 rounded-xl border border-[#273154] text-center flex flex-col items-center justify-between min-h-[96px] shadow-sm">
+                  <div className="w-7 h-7 rounded-lg bg-[#151D40] text-[#22D3EE] flex items-center justify-center mb-1">
+                    <Icon className="w-3.5 h-3.5" />
                   </div>
-                  <span className="text-xs font-bold text-white tracking-tight">{step.title}</span>
-                  <span className="text-[10px] text-slate-400">{step.desc}</span>
+                  <div>
+                    <p className="text-[11px] font-extrabold text-white tracking-wide">{step.title}</p>
+                    <p className="text-[9px] text-[#A8B2D1]">{step.desc}</p>
+                  </div>
                 </div>
-
-                {i < workflowSteps.length - 1 && (
-                  <div className="text-slate-600 px-0.5">→</div>
-                )}
               </React.Fragment>
             );
           })}
         </div>
-      </div>
 
-      {/* 3. MINIMAL LIQUID GLASS DROP ZONE */}
-      <div 
-        onDragOver={handleDragOver}
-        onDragLeave={handleDragLeave}
-        onDrop={handleDrop}
-        onClick={() => fileInputRef.current?.click()}
-        className={`glass-card p-10 sm:p-14 rounded-[36px] border-2 border-dashed text-center cursor-pointer transition-all duration-300 relative overflow-hidden select-none group ${
-          isDragOver 
-            ? 'border-white bg-white/12 scale-[1.01] shadow-[0_0_40px_rgba(255,255,255,0.25)]' 
-            : selectedFile 
-              ? 'border-white/40 bg-white/8' 
-              : 'border-white/18 hover:border-white/35 hover:bg-white/7'
-        }`}
-      >
-        <input 
-          ref={fileInputRef}
-          type="file" 
-          accept="video/mp4,video/quicktime,video/webm,audio/mp3,audio/wav" 
-          className="hidden" 
-          onChange={handleFileInput}
-        />
-
-        <div className="flex flex-col items-center justify-center space-y-4">
-          <div className="w-16 h-16 rounded-2xl bg-white/10 border border-white/20 flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
-            <Upload className="w-7 h-7 text-white" />
-          </div>
-
-          <div className="space-y-1">
-            <h2 className="text-lg sm:text-xl font-bold text-white">
-              {selectedFile ? selectedFile.name : 'Drop video or audio file here'}
-            </h2>
-            <p className="text-xs sm:text-sm text-slate-400">
-              {selectedFile 
-                ? `${(selectedFile.size / (1024 * 1024)).toFixed(1)} MB • Ready for neural conversion` 
-                : 'or click to browse files from your device'}
-            </p>
-          </div>
-
-          <div className="flex items-center gap-2 pt-2">
-            <span className="glass-badge text-[10px]">MP4</span>
-            <span className="glass-badge text-[10px]">MOV</span>
-            <span className="glass-badge text-[10px]">WEBM</span>
-            <span className="glass-badge text-[10px]">WAV</span>
-          </div>
-        </div>
-      </div>
-
-      {/* 4. INGEST FROM VIDEO URL */}
-      <div className="glass-card p-6 rounded-[28px] border border-white/14 space-y-3">
-        <div className="flex items-center gap-2">
-          <Link2 className="w-4 h-4 text-white" />
-          <h2 className="text-sm font-bold text-white">Or Ingest from Video URL</h2>
-        </div>
-
-        <div className="flex flex-col sm:flex-row items-center gap-2.5">
-          <input
-            type="url"
-            value={videoUrl}
-            onChange={handleUrlChange}
-            placeholder="Paste YouTube, Loom, Vimeo, or MP4 link..."
-            className="w-full glass-input text-sm py-2.5 px-4 rounded-2xl flex-1"
-          />
-
-          <GlassButton
-            variant="secondary"
-            size="md"
-            onClick={handleSubmit}
-            disabled={!isUrlValid}
-            className="w-full sm:w-auto"
-          >
-            Fetch Video
-          </GlassButton>
-        </div>
-      </div>
-
-      {/* 5. PRE-LOADED TEST CLIPS */}
-      <div className="space-y-3">
-        <div className="flex items-center justify-between">
-          <h2 className="text-xs font-bold text-slate-400 uppercase tracking-wider flex items-center gap-2">
-            <PlaySquare className="w-4 h-4 text-slate-300" />
-            Pre-Loaded Test Clips
-          </h2>
-          <span className="text-xs text-slate-400">1-Click Instant Demo</span>
-        </div>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-          {samplePresets.map((p) => {
-            const isSelected = selectedPreset === p.id;
+        {/* Mobile / Tablet Step Flow (Vertical List) */}
+        <div className="lg:hidden grid grid-cols-2 sm:grid-cols-3 gap-2">
+          {pipelineSteps.map((step, idx) => {
+            const Icon = step.icon;
             return (
-              <div
-                key={p.id}
-                onClick={() => handleSelectPreset(p)}
-                className={`p-4 rounded-2xl glass-subtle hover:bg-white/10 border transition-all cursor-pointer flex flex-col justify-between gap-2 ${
-                  isSelected
-                    ? 'border-white/40 bg-white/15 shadow-[0_0_20px_rgba(255,255,255,0.18)]'
-                    : 'border-white/10 hover:border-white/20'
-                }`}
-              >
-                <div>
-                  <div className="flex items-center justify-between mb-1">
-                    <span className="text-[10px] font-bold uppercase tracking-wider text-slate-300 bg-white/8 px-2 py-0.5 rounded-full border border-white/10">
-                      {p.type}
-                    </span>
-                    <span className="text-xs font-mono text-slate-400">{p.duration}s</span>
-                  </div>
-                  <h3 className="text-sm font-bold text-white">{p.title}</h3>
-                  <p className="text-xs text-slate-400 line-clamp-2 mt-1">{p.desc}</p>
+              <div key={idx} className="bg-[#101735] p-2.5 rounded-xl border border-[#273154] flex items-center gap-2">
+                <div className="w-7 h-7 rounded-lg bg-[#151D40] text-[#22D3EE] flex items-center justify-center flex-shrink-0">
+                  <Icon className="w-3.5 h-3.5" />
                 </div>
-
-                {isSelected && (
-                  <div className="text-[11px] text-white font-semibold flex items-center gap-1 mt-1">
-                    <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" /> Selected for Conversion
-                  </div>
-                )}
+                <div className="min-w-0">
+                  <p className="text-[10px] font-bold text-white truncate">{step.title}</p>
+                  <p className="text-[9px] text-[#A8B2D1] truncate">{step.desc}</p>
+                </div>
               </div>
             );
           })}
         </div>
-      </div>
+      </section>
 
-      {/* 6. CONVERSION PARAMETERS */}
-      <div className="glass-card p-6 rounded-[28px] border border-white/14 space-y-4">
-        <h3 className="text-sm font-bold text-white flex items-center gap-2">
-          <Settings className="w-4 h-4 text-slate-300" />
-          Synthesis Preferences
-        </h3>
-
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-          <div className="p-3 rounded-2xl glass-subtle border border-white/10 space-y-1">
-            <span className="text-xs font-semibold text-slate-300">Target Dialect</span>
-            <select
-              value={currentDialect}
-              onChange={(e) => onDialectChange(e.target.value as ISLDialect)}
-              className="w-full glass-input text-xs p-2 rounded-xl bg-black/40 text-white"
+      {/* 2. MAIN UPLOAD / INPUT PANEL */}
+      <section className="bg-[#151D40] rounded-2xl p-6 sm:p-8 border border-[#273154] shadow-xl space-y-6">
+        {/* Toggle Mode: Upload vs URL */}
+        <div className="flex items-center justify-between border-b border-[#273154] pb-4 flex-wrap gap-3">
+          <div className="flex items-center gap-2 bg-[#101735] p-1 rounded-xl border border-[#273154]">
+            <button
+              onClick={() => setActiveMode('upload')}
+              className={`px-4 py-2 rounded-lg text-xs font-semibold transition-colors flex items-center gap-2 ${
+                activeMode === 'upload'
+                  ? 'bg-[#151D40] text-white border border-[#273154] shadow-sm'
+                  : 'text-[#A8B2D1] hover:text-white'
+              }`}
             >
-              <option value="standard">ISL Standard (National)</option>
-              <option value="north">ISL Northern Variant</option>
-              <option value="south">ISL Southern Variant</option>
-            </select>
+              <Upload className="w-3.5 h-3.5" />
+              <span>Upload Video</span>
+            </button>
+
+            <button
+              onClick={() => setActiveMode('url')}
+              className={`px-4 py-2 rounded-lg text-xs font-semibold transition-colors flex items-center gap-2 ${
+                activeMode === 'url'
+                  ? 'bg-[#151D40] text-white border border-[#273154] shadow-sm'
+                  : 'text-[#A8B2D1] hover:text-white'
+              }`}
+            >
+              <Link2 className="w-3.5 h-3.5" />
+              <span>Paste Video URL</span>
+            </button>
           </div>
 
-          <div className="p-3 rounded-2xl glass-subtle border border-white/10 space-y-1">
-            <span className="text-xs font-semibold text-slate-300">Avatar Motion Engine</span>
-            <select className="w-full glass-input text-xs p-2 rounded-xl bg-black/40 text-white">
-              <option>Spatial 3D Articulated Rig (60 FPS)</option>
-              <option>Expressive Facial Non-Manual Markers</option>
-            </select>
+          <span className="text-xs text-[#A8B2D1]">
+            Dialect: <span className="text-[#22D3EE] font-bold capitalize">{currentDialect} ISL</span>
+          </span>
+        </div>
+
+        {/* Active Mode Input Area */}
+        {activeMode === 'upload' ? (
+          <div
+            onDragOver={handleDragOver}
+            onDragLeave={handleDragLeave}
+            onDrop={handleDrop}
+            onClick={() => fileInputRef.current?.click()}
+            className={`border-2 border-dashed rounded-2xl p-8 sm:p-12 text-center cursor-pointer transition-colors bg-[#101735] ${
+              isDragOver ? 'border-[#22D3EE] bg-[#151D40]' : 'border-[#273154] hover:border-[#3B4975]'
+            }`}
+          >
+            <input
+              ref={fileInputRef}
+              type="file"
+              accept="video/mp4,video/webm,video/ogg,video/quicktime,video/avi"
+              className="hidden"
+              onChange={handleFileInput}
+            />
+
+            <div className="w-14 h-14 rounded-2xl bg-[#151D40] border border-[#273154] flex items-center justify-center mx-auto text-[#22D3EE] mb-4">
+              <Upload className="w-7 h-7" />
+            </div>
+
+            {selectedFile ? (
+              <div className="space-y-1">
+                <p className="text-base font-bold text-white">{selectedFile.name}</p>
+                <p className="text-xs text-[#22D3EE]">
+                  {(selectedFile.size / (1024 * 1024)).toFixed(2)} MB • Ready for processing
+                </p>
+                <p className="text-[11px] text-[#A8B2D1] pt-1">Click to select a different video</p>
+              </div>
+            ) : (
+              <div className="space-y-2">
+                <p className="text-base font-bold text-white">Upload Video</p>
+                <p className="text-xs text-[#A8B2D1] max-w-sm mx-auto leading-relaxed">
+                  Drag and drop your video file here, or click to browse.
+                </p>
+                <p className="text-[11px] text-[#6B7A99]">Supports MP4, WEBM, MOV, AVI up to 500MB</p>
+              </div>
+            )}
+          </div>
+        ) : (
+          <div className="space-y-4 bg-[#101735] p-6 rounded-2xl border border-[#273154]">
+            <label className="block text-xs font-semibold text-[#A8B2D1]">
+              Video Stream or Media URL
+            </label>
+            <div className="relative flex items-center">
+              <Link2 className="w-4 h-4 text-[#6B7A99] absolute left-3.5 pointer-events-none" />
+              <input
+                type="url"
+                value={videoUrl}
+                onChange={handleUrlChange}
+                placeholder="https://example.com/lecture.mp4 or YouTube video link"
+                className="w-full bg-[#151D40] text-sm py-3 pl-10 pr-4 rounded-xl border border-[#273154] focus:border-[#22D3EE] text-white placeholder-[#6B7A99] outline-none"
+              />
+            </div>
+            <p className="text-xs text-[#6B7A99]">
+              Enter a direct video URL or supported streaming link to extract speech and translate to ISL.
+            </p>
+          </div>
+        )}
+
+        {/* 3. SAMPLE DATASET PRESETS */}
+        <div className="space-y-3 pt-2">
+          <div className="flex items-center justify-between">
+            <span className="text-xs font-semibold text-white">
+              Or Choose a Verified Benchmark Sample
+            </span>
+            <span className="text-[11px] text-[#A8B2D1]">Certified ISL Recordings</span>
           </div>
 
-          <div className="p-3 rounded-2xl glass-subtle border border-white/10 space-y-1">
-            <span className="text-xs font-semibold text-slate-300">Gloss Overlay Style</span>
-            <select className="w-full glass-input text-xs p-2 rounded-xl bg-black/40 text-white">
-              <option>Liquid Glass Subtitle Stream</option>
-              <option>Dual Spoken + ISL Timeline</option>
-            </select>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+            {samplePresets.map((p) => (
+              <div
+                key={p.id}
+                onClick={() => handleSelectPreset(p)}
+                className={`p-3.5 rounded-xl border transition-colors cursor-pointer text-left ${
+                  selectedPreset === p.id
+                    ? 'bg-[#101735] border-[#22D3EE] shadow-sm'
+                    : 'bg-[#101735] border-[#273154] hover:border-[#3B4975]'
+                }`}
+              >
+                <div className="flex items-center justify-between mb-1.5">
+                  <span className="text-[10px] font-semibold text-[#22D3EE] bg-[#151D40] px-2 py-0.5 rounded border border-[#273154]">
+                    {p.type}
+                  </span>
+                  <div className="flex items-center gap-1 text-[10px] text-[#A8B2D1]">
+                    <Clock className="w-3 h-3" />
+                    <span>{p.duration}s</span>
+                  </div>
+                </div>
+
+                <p className="text-xs font-bold text-white line-clamp-1">{p.title}</p>
+                <p className="text-[10px] text-[#A8B2D1] line-clamp-2 mt-1 leading-relaxed">
+                  {p.desc}
+                </p>
+              </div>
+            ))}
           </div>
         </div>
-      </div>
 
-      {/* 7. START CONVERTING BUTTON */}
-      <div className="pt-2 flex justify-center">
-        <GlassButton
-          variant="primary"
-          size="lg"
-          onClick={handleSubmit}
-          disabled={!isReady}
-          icon={<Sparkles className="w-4 h-4 text-slate-900" />}
-        >
-          Start Neural Conversion
-        </GlassButton>
-      </div>
+        {/* Launch Pipeline Action */}
+        <div className="pt-4 border-t border-[#273154] flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div className="text-xs text-[#A8B2D1]">
+            {selectedFile && <span>Selected: <strong className="text-white">{selectedFile.name}</strong></span>}
+            {isUrlValid && <span>Stream URL configured for conversion</span>}
+            {selectedPreset && <span>Selected benchmark dataset sample</span>}
+            {!canLaunch && <span>Please upload a video, enter a URL, or choose a benchmark sample.</span>}
+          </div>
 
+          <GlassButton
+            variant="primary"
+            size="lg"
+            disabled={!canLaunch}
+            onClick={handleLaunchPipeline}
+            icon={<ArrowRight className="w-4 h-4 text-[#080D24]" />}
+            iconPosition="right"
+          >
+            Start Conversion
+          </GlassButton>
+        </div>
+      </section>
     </div>
   );
 };

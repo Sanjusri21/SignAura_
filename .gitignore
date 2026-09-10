@@ -1,34 +1,78 @@
+# =========================
 # Python
+# =========================
 venv/
+.venv/
 __pycache__/
 *.py[cod]
 *.pyo
 .pytest_cache/
 .mypy_cache/
 
+# =========================
 # Environment
+# =========================
 .env
 .env.*
 !.env.example
 
+# =========================
 # Node
+# =========================
 node_modules/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
+# =========================
 # Build
+# =========================
 dist/
 build/
 .vite/
 
+# =========================
 # Backend generated files
+# =========================
 Backend/uploads/
 Backend/temp/
 Backend/output/
+Backend/outputs/
 Backend/cache/
 
-# Large binaries
+# =========================
+# SignAvatars generated files
+# =========================
+SignAvatars/outputs/
+SignAvatars/bridgeconn_samples/
+SignAvatars/diagnostics/
+
+# Generated dataset indexes
+SignAvatars/datasets/gloss_motion_index.json
+SignAvatars/datasets/motion_index.json
+SignAvatars/datasets/word_search_results.json
+
+# =========================
+# ML / model / cache files
+# =========================
+.cache/
+huggingface/
+models/
+
+# SMPL-X / large model files
+SignAvatars/common/utils/human_model_files/
+
+*.bin
+*.pt
+*.pth
+*.onnx
+*.pkl
+*.npz
+*.npy
+
+# =========================
+# Media / large binaries
+# =========================
 *.wav
 *.mp3
 *.mp4
@@ -40,20 +84,18 @@ Backend/cache/
 *.lib
 *.pyd
 
+# =========================
 # FFmpeg
+# =========================
 Backend/tools/ffmpeg/
 
-# ML/cache
-.cache/
-huggingface/
-models/
-*.bin
-*.pt
-*.pth
-*.onnx
-
+# =========================
 # OS / IDE
+# =========================
 .DS_Store
 Thumbs.db
 .vscode/
-.idea/
+.idea/*.timestamp-*.mjs
+SignAvatars/datasets/
+SignAvatars/visualizer/
+*.timestamp-*.mjs

@@ -47,6 +47,37 @@ export interface ChatResponse {
   sender: 'ai' | 'user';
 }
 
+export interface TranslateToSignAvatarResponse {
+  available: boolean;
+  text: string;
+  glosses: string[];
+  animation?: {
+    sequence_id: string;
+    animation_url: string;
+    metadata_url: string;
+    frames: number;
+    fps: number;
+    vertex_count: number;
+  };
+  unavailable?: { gloss: string; reason: string }[];
+  source?: string;
+  error?: string;
+}
+
+export interface SignAvatarResponse {
+  status: string;
+  sentence: string;
+  gif?: string;
+  motion?: string;
+  npy?: string;
+  animation_url?: string;
+  segments?: { word: string; motion_id: number; frames: number }[];
+  total_frames?: number;
+  fps?: number;
+  vertices?: number;
+  components?: number;
+}
+
 export const signAuraApi = {
   // Health
   checkHealth: async (): Promise<HealthResponse> => {
@@ -142,6 +173,23 @@ export const signAuraApi = {
   // Avatar Poser
   getAvatarPoses: async () => {
     const res = await apiClient.get('/api/avatar/poses');
+    return res.data;
+  },
+    // SignAvatar Animation Generation
+  generateSignAvatar: async (sentence: string): Promise<SignAvatarResponse> => {
+    const res = await apiClient.post<SignAvatarResponse>('/api/avatar/signavatar', {
+      sentence,
+    });
+
+    return res.data;
+  },
+
+  // Translate to SignAvatar Real Sequence Pipeline
+  translateToSignAvatar: async (text: string, dialect: ISLDialect = 'standard'): Promise<TranslateToSignAvatarResponse> => {
+    const res = await apiClient.post<TranslateToSignAvatarResponse>('/api/translate-to-signavatar', {
+      text,
+      dialect,
+    });
     return res.data;
   },
 };
