@@ -108,46 +108,58 @@ Open [http://localhost:5173](http://localhost:5173) in your browser.
 
 ## 📚 6. Dataset & BridgeConn ISL Attribution
 
-SignAura's authentic 3D signing motions are derived from the **BridgeConn Sign Dictionary ISL** dataset:
-- **Source**: BridgeConn Sign Dictionary ISL (HuggingFace: `bridgeconn/sign-dictionary-isl`)
-- **Landmarks**: MediaPipe 33-pose, 21-left hand, 21-right hand, 468-face landmarks
-- **Retargeting**: SMPL-X Neutral Body Model (10,475 vertices, 20,908 triangular faces)
-- **Inventory File**: `SignAvatars/outputs/bridgeconn_gloss_inventory.json`
+## 📚 6. Dataset & BridgeConn ISL Integration
+
+SignAura integrates the complete **BridgeConn Sign Dictionary ISL** dataset:
+- **Source**: BridgeConn Sign Dictionary ISL (HuggingFace: [`bridgeconn/sign-dictionary-isl`](https://huggingface.co/datasets/bridgeconn/sign-dictionary-isl))
+- **Scale**: All 7 TAR shards ingested: 1,227 authentic ISL samples across 1,206 unique glosses.
+- **External Storage Root**: Stored strictly outside git at `D:\SignAuraData\BridgeConn\` (configurable via `BRIDGECONN_DATA_DIR` environment variable).
+- **Directory Layout**:
+  - `shards/`: Raw downloaded TAR shards (7.18 GB).
+  - `extracted/poses/`: Compact landmark archives (`.npz`, 995 MB).
+  - `index/`: SQLite index (`bridgeconn.db`), gloss list text/JSON, and dataset statistics.
+  - `cache/smplx/`: On-demand cached Float32 SMPL-X vertex streams (10,475 vertices).
+- **Lazy Retargeting**: Signs are converted to SMPL-X on-demand in ~2.5 seconds via CUDA and cached persistently, avoiding tens of gigabytes of precomputed files.
+- **Preserved Baselines**: All verified baseline motions (`good`, `drink`, `go`, `help`, `teacher`, `ishbosheth`, `sample_1`) remain fully preserved.
 
 ---
 
 ## 🔌 7. Key API Endpoints
 
-### Translation & Animation
-- `POST /api/translate-to-signavatar`: Translates text to ISL glosses and generates a 30 FPS SMPL-X binary sequence if all signs are available.
-- `GET /api/signavatar/sequence/{sequence_id}`: Streams contiguous Float32 binary vertex buffer (`frames * 10475 * 3 * 4` bytes).
-- `GET /api/signavatar/sequence/{sequence_id}/metadata`: Returns sequence metadata, frame count, FPS, and gloss tokens.
-- `GET /api/signavatar/motions`: Lists all available validated BridgeConn ISL animations.
-- `GET /api/signavatar/motion/{gloss}`: Resolves single gloss metadata and direct streaming URL.
+### BridgeConn ISL Motion Service (`:8001`)
+- `GET /motions?page=1&page_size=50`: Paginated access across all 1,200+ indexed ISL signs with hand category filters (`Both`, `Right`, `Left`).
+- `GET /motions/search/{query}`: Real-time search across the entire vocabulary and local verified motions.
+- `GET /motions/{gloss}`: Resolves canonical metadata, frame count, FPS, hand usage, and caching status.
+- `GET /motion/{gloss}`: Streams contiguous Float32 binary vertex buffer (`frames * 10475 * 3 * 4` bytes).
+- `POST /generate`: Multi-word sequence generator supporting arbitrary sentence lengths.
 
-### Speech & Video
-- `POST /api/video/upload`: Ingests video files, extracts audio via FFmpeg, and transcribes via Whisper.
-- `POST /api/video/process-url`: Downloads YouTube/web media via yt-dlp with JavaScript challenge resolution.
-- `POST /api/transcription`: Direct audio upload and Whisper speech-to-text.
+### Backend API (`:8000`)
+- `POST /api/translate-to-signavatar`: Translates English/Tamil text to ISL glosses and generates a 30 FPS SMPL-X binary sequence.
+- `POST /api/signavatar/sequence`: Generates contiguous multi-word animation sequence for arbitrary gloss counts.
+- `GET /api/signavatar/sequence/{id}`: Streams assembled Float32 binary animation buffer.
+- `GET /api/signavatar/motions`: Proxies paginated motion inventory.
+- `GET /api/signavatar/motion/{gloss}`: Resolves single gloss metadata.
 
 ---
 
 ## 🧪 8. Demo Workflows & Verified Phrases
 
-SignAura provides verified demonstration presets using confirmed real BridgeConn signs:
+SignAura supports both individual dictionary signs and arbitrary multi-word sequences:
 
 | Input Text | ISL Gloss Sequence | Resolved BridgeConn Keys | Animation Result |
 |---|---|---|---|
 | `"good drink"` | `GOOD` + `DRINK` | `good` + `drink` | ✅ 30 FPS 3D Avatar |
 | `"help teacher"` | `HELP` + `TEACHER` | `help_2` + `teacher_2` | ✅ 30 FPS 3D Avatar |
 | `"go drink help"` | `GO` + `DRINK` + `HELP` | `go` + `drink` + `help_2` | ✅ 30 FPS 3D Avatar |
-| `"நல்ல தண்ணீர்"` | `GOOD` + `DRINK` | `good` + `drink` | ✅ 30 FPS 3D Avatar |
+| `"good drink help teacher go"` | 5-word sentence | Multi-word sequenced | ✅ 30 FPS 3D Avatar |
+| `"salem"` / `"calm"` / `"twin"` | Single Dictionary Sign | Dynamic on-demand SMPL-X | ✅ 30 FPS 3D Avatar |
 | `"hello"` | `HELLO` | *None* | ⚠️ Structured Unavailable Alert |
 
 ---
 
-## 🛡️ 9. Limitations & Future Improvements
+## 🛡️ 9. Features & Data Integrity
 
-1. **Vocabulary Expansion**: The system currently includes validated motions for core vocabulary. Continued shard extraction from the BridgeConn dataset will systematically expand available ISL signs.
-2. **Facial Expressions**: Non-manual markers (eyebrow movement, mouthings) are in active development.
-3. **Continuous Sign Blending**: Current transitions use smooth cosine easing; future work includes deep learning-based motion blending.
+1. **Zero Fake Animations**: Unknown signs strictly return `{ available: false }` with diagnostic details; never silently replaced with "good".
+2. **ISL Dictionary Explorer**: In the 3D Avatar Studio, click **"ISL Dictionary (1,200+)"** to browse, search, filter by hand usage, and immediately preview any sign.
+3. **Continuity & Resampling**: All animations are normalized to 30 FPS with smooth 8-frame cosine interpolation across word boundaries.
+

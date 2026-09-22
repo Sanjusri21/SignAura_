@@ -39,11 +39,19 @@ class Settings(BaseSettings):
     DEMO_MODE: bool = False
     ENABLE_CELERY: bool = False
     APP_ENV: str = "development"
+    BRIDGECONN_DATA_DIR: str = Field(
+        default_factory=lambda: os.environ.get(
+            "BRIDGECONN_DATA_DIR",
+            "D:\\SignAuraData\\BridgeConn" if os.path.exists("D:\\") else "C:\\SignAuraData\\BridgeConn"
+        )
+    )
     
     # CORS
     ALLOWED_ORIGINS: Union[str, List[str]] = [
         "http://localhost:5173",
         "http://127.0.0.1:5173",
+        "http://localhost:5174",
+        "http://127.0.0.1:5174",
         "http://localhost:3000",
         "http://127.0.0.1:3000",
         "http://localhost:8000",

@@ -32,7 +32,7 @@ def main():
     start_time = time.time()
 
     try:
-        saved_npy, saved_json = convert_bridgeconn_sample(
+        saved_npy, saved_json, *params = convert_bridgeconn_sample(
             npz_path=input_npz,
             output_npy_path=output_npy,
             output_json_path=output_json

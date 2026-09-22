@@ -220,7 +220,9 @@ def batch_convert(
         start_t = time.time()
         try:
             cleaned = clean_and_preprocess_sample(npz_path)
-            vertices, _ = retargeter.retarget_sequence(cleaned)
+            ret_res = retargeter.retarget_sequence(cleaned)
+            vertices = ret_res[0]
+            pose_params = ret_res[2] if len(ret_res) > 2 else None
 
             if vertices.shape != (info["frames"], 10475, 3):
                 raise ValueError(f"Output vertices shape mismatch: {vertices.shape}")
@@ -230,6 +232,19 @@ def batch_convert(
 
             # Save animation NPY
             np.save(out_npy_path, vertices)
+
+            if pose_params is not None:
+                out_params_path = os.path.join(output_dir, f"{safe_gloss}_smplx_params.npz")
+                np.savez_compressed(
+                    out_params_path,
+                    global_orient=pose_params["global_orient"],
+                    body_pose=pose_params["body_pose"],
+                    left_hand_pose=pose_params["left_hand_pose"],
+                    right_hand_pose=pose_params["right_hand_pose"],
+                    transl=pose_params["transl"],
+                    fps=pose_params["fps"],
+                    gloss=pose_params["gloss"]
+                )
 
             # Save animation metadata
             meta = {

@@ -3,8 +3,11 @@ SignAvatars API Client Service for SignAura Backend.
 Connects the SignAura Backend to the SignAvatars 3D Gloss / Motion Engine.
 """
 
+import os
 import re
+import json
 import logging
+from pathlib import Path
 from typing import Dict, Any, List, Optional
 import httpx
 
@@ -13,12 +16,69 @@ from app.core.config import settings
 logger = logging.getLogger("SignAvatarClient")
 
 
+CANONICAL_GLOSS_MAP = {
+    "good": "good",
+    "drink": "drink",
+    "go": "go",
+    "help": "help_2",
+    "help_2": "help_2",
+    "teacher": "teacher_2",
+    "teacher_2": "teacher_2",
+    "ishbosheth": "ishbosheth",
+    "sample_1": "sample_1",
+    "sample1": "sample_1",
+    "welcome_help_you": "welcome_help_you",
+    "book_drink_home": "book_drink_home",
+}
+
+
 class SignAvatarClient:
     """Client for communicating with the SignAvatars FastAPI service on port 8001."""
 
     def __init__(self, base_url: Optional[str] = None):
         self.base_url = (base_url or getattr(settings, "SIGNAVATAR_API_URL", "http://127.0.0.1:8001")).rstrip("/")
-        self.timeout = 10.0
+        self.timeout = 2.0
+        # Local paths for resilient offline / unit test fallback
+        self.base_dir = Path(__file__).resolve().parents[2]
+        self.local_npy_dirs = [
+            Path(__file__).resolve().parents[3] / "SignAvatars" / "outputs" / "npy",
+            self.base_dir / "animations",
+        ]
+        self.inventory_file = Path(__file__).resolve().parents[3] / "SignAvatars" / "outputs" / "bridgeconn_gloss_inventory.json"
+
+    def _local_available_motions(self) -> List[Dict[str, Any]]:
+        motions = []
+        seen = set()
+        for npy_dir in self.local_npy_dirs:
+            if not npy_dir.is_dir():
+                continue
+            for jf in npy_dir.glob("*.json"):
+                try:
+                    with open(jf, "r", encoding="utf-8") as f:
+                        m = json.load(f)
+                    stem = jf.stem
+                    canonical = m.get("canonical_gloss") or m.get("gloss") or stem
+                    resolved = m.get("motion_key") or m.get("safe_gloss") or stem
+                    if resolved in seen:
+                        continue
+                    seen.add(resolved)
+                    fps_val = m.get("fps", 50)
+                    if isinstance(fps_val, (int, float)) and float(fps_val).is_integer():
+                        fps_val = int(fps_val)
+                    motions.append({
+                        "gloss": canonical,
+                        "canonical_gloss": canonical,
+                        "motion_key": resolved,
+                        "filename": f"{resolved}.npy",
+                        "frames": m.get("frames", 0),
+                        "fps": fps_val,
+                        "vertex_count": m.get("vertex_count", 10475),
+                        "hands_used": m.get("hands_used", {"left": True, "right": True}),
+                        "source": m.get("source", "BridgeConn Sign Dictionary ISL")
+                    })
+                except Exception:
+                    pass
+        return motions
 
     def normalize_gloss(self, gloss: str) -> str:
         """Sanitize and normalize gloss for API lookup."""
@@ -31,11 +91,16 @@ class SignAvatarClient:
         clean = re.sub(r"_+", "_", clean).strip("_")
         return clean
 
+    def resolve_canonical_key(self, gloss: str) -> str:
+        """Resolve canonical gloss name to motion key (e.g. 'help' -> 'help_2', 'teacher' -> 'teacher_2')."""
+        norm = self.normalize_gloss(gloss)
+        return CANONICAL_GLOSS_MAP.get(norm, norm)
+
     def _motion_lookup_name(self, motion: Optional[Dict[str, Any]]) -> str:
         """Best-effort normalized lookup name for a motion record."""
         if not motion:
             return ""
-        for key in ("filename", "safe_gloss", "gloss"):
+        for key in ("canonical_gloss", "filename", "safe_gloss", "gloss", "motion_key"):
             value = motion.get(key)
             if value is None:
                 continue
@@ -67,26 +132,40 @@ class SignAvatarClient:
         variant_matches.sort(key=lambda motion: self._motion_lookup_name(motion))
         return variant_matches[0]
 
-    async def get_available_motions(self) -> List[Dict[str, Any]]:
-        """Fetch list of all available animations and metadata from SignAvatars."""
+    async def get_available_motions(
+        self,
+        page: Optional[int] = None,
+        page_size: int = 50,
+        search: Optional[str] = None,
+        hand_filter: Optional[str] = None
+    ) -> Dict[str, Any]:
+        """Fetch available animations and metadata from SignAvatars with pagination and search."""
+        params: Dict[str, Any] = {}
+        if page is not None:
+            params["page"] = page
+        if page_size:
+            params["page_size"] = page_size
+        if search:
+            params["search"] = search
+        if hand_filter:
+            params["hand_filter"] = hand_filter
+
         url = f"{self.base_url}/motions"
         try:
             async with httpx.AsyncClient(timeout=self.timeout) as client:
-                res = await client.get(url)
+                res = await client.get(url, params=params if params else None)
                 if res.status_code == 200:
                     data = res.json()
-                    return data.get("motions", [])
+                    if isinstance(data, dict):
+                        return data
+                    elif isinstance(data, list):
+                        return {"motions": data, "count": len(data)}
                 logger.warning("Failed to fetch motions: HTTP %d %s", res.status_code, res.text)
-                return []
-        except httpx.ConnectError as e:
-            logger.error("SignAvatars service unavailable at %s: %s", url, e)
-            return []
-        except httpx.TimeoutException as e:
-            logger.error("SignAvatars request timed out at %s: %s", url, e)
-            return []
-        except Exception as e:
-            logger.error("Error fetching motions from SignAvatars at %s: %s", url, e)
-            return []
+                local_m = self._local_available_motions()
+                return {"motions": local_m, "count": len(local_m)}
+        except Exception:
+            local_m = self._local_available_motions()
+            return {"motions": local_m, "count": len(local_m)}
 
     async def get_motion_metadata(self, gloss: str) -> Optional[Dict[str, Any]]:
         """Fetch metadata for a single specific gloss without downloading binary vertex data."""
@@ -94,38 +173,37 @@ class SignAvatarClient:
         if not safe_gloss:
             return None
 
-        url = f"{self.base_url}/motions/{safe_gloss}"
+        canon_key = self.resolve_canonical_key(safe_gloss)
+        lookup_key = canon_key or safe_gloss
+
+        url = f"{self.base_url}/motions/{lookup_key}"
         try:
             async with httpx.AsyncClient(timeout=self.timeout) as client:
                 res = await client.get(url)
                 if res.status_code == 200:
                     return res.json()
-                elif res.status_code == 404:
-                    motions = await self.get_available_motions()
-                    matched_motion = self._select_best_motion_match(safe_gloss, motions)
-                    if not matched_motion:
-                        return None
-                    actual_key = self._motion_lookup_name(matched_motion)
-                    fallback_url = f"{self.base_url}/motions/{actual_key}"
-                    fallback_res = await client.get(fallback_url)
-                    if fallback_res.status_code == 200:
-                        return fallback_res.json()
-                    return None
-                else:
-                    logger.warning("Unexpected status fetching metadata for %s: HTTP %d", gloss, res.status_code)
-                    return None
-        except httpx.ConnectError as e:
-            logger.error("SignAvatars service unavailable at %s: %s", url, e)
-            return None
-        except httpx.TimeoutException as e:
-            logger.error("SignAvatars request timed out at %s: %s", url, e)
-            return None
-        except Exception as e:
-            logger.error("Error connecting to SignAvatars at %s: %s", url, e)
-            return None
+                fallback_url = f"{self.base_url}/motions/{safe_gloss}"
+                fallback_res = await client.get(fallback_url)
+                if fallback_res.status_code == 200:
+                    return fallback_res.json()
+                return None
+        except Exception:
+            pass
 
-    async def search_motion(self, query: str) -> List[Dict[str, Any]]:
-        """Search available motions by keyword/prefix."""
+        # Local metadata check
+        for npy_dir in self.local_npy_dirs:
+            for stem in (canon_key, safe_gloss):
+                jf = npy_dir / f"{stem}.json"
+                if jf.is_file():
+                    try:
+                        with open(jf, "r", encoding="utf-8") as f:
+                            return json.load(f)
+                    except Exception:
+                        pass
+        return None
+
+    async def search_motion(self, query: str, limit: int = 50) -> List[Dict[str, Any]]:
+        """Search available motions across the complete BridgeConn ISL vocabulary."""
         safe_query = self.normalize_gloss(query)
         if not safe_query:
             return []
@@ -133,20 +211,13 @@ class SignAvatarClient:
         url = f"{self.base_url}/motions/search/{safe_query}"
         try:
             async with httpx.AsyncClient(timeout=self.timeout) as client:
-                res = await client.get(url)
+                res = await client.get(url, params={"limit": limit})
                 if res.status_code == 200:
                     data = res.json()
                     return data.get("matches", [])
-                return []
-        except httpx.ConnectError as e:
-            logger.error("SignAvatars service unavailable at %s: %s", url, e)
-            return []
-        except httpx.TimeoutException as e:
-            logger.error("SignAvatars request timed out at %s: %s", url, e)
-            return []
-        except Exception as e:
-            logger.error("Error searching motions at %s: %s", url, e)
-            return []
+                return [m for m in self._local_available_motions() if safe_query in str(m.get("gloss", "")).lower() or safe_query in str(m.get("motion_key", "")).lower()]
+        except Exception:
+            return [m for m in self._local_available_motions() if safe_query in str(m.get("gloss", "")).lower() or safe_query in str(m.get("motion_key", "")).lower()]
 
     async def get_motion_url(self, gloss: str) -> Optional[str]:
         """Get the direct streaming URL for a gloss if available."""
@@ -173,24 +244,75 @@ class SignAvatarClient:
             }
 
         safe_gloss = self.normalize_gloss(raw_gloss)
+        canon_key = self.resolve_canonical_key(safe_gloss)
+
+        # Helper to resolve locally if API service is busy or offline
+        def _resolve_locally() -> Optional[Dict[str, Any]]:
+            for npy_dir in self.local_npy_dirs:
+                for stem in (canon_key, safe_gloss):
+                    npy_f = npy_dir / f"{stem}.npy"
+                    json_f = npy_dir / f"{stem}.json"
+                    if not json_f.is_file():
+                        json_f = npy_dir / f"{canon_key}.json"
+
+                    if npy_f.is_file():
+                        frames = 0
+                        fps_val = 50
+                        source_val = "BridgeConn Sign Dictionary ISL"
+                        hands_val = {"left": True, "right": True}
+
+                        if json_f.is_file():
+                            try:
+                                with open(json_f, "r", encoding="utf-8") as f:
+                                    jm = json.load(f)
+                                frames = jm.get("frames", 0)
+                                fps_val = jm.get("fps", 50)
+                                source_val = jm.get("source", source_val)
+                                hands_val = jm.get("hands_used", hands_val)
+                            except Exception:
+                                pass
+
+                        if frames == 0:
+                            try:
+                                import numpy as np
+                                arr = np.load(npy_f, mmap_mode="r")
+                                frames = int(arr.shape[0])
+                            except Exception:
+                                pass
+
+                        if isinstance(fps_val, (int, float)) and float(fps_val).is_integer():
+                            fps_val = int(fps_val)
+
+                        return {
+                            "available": True,
+                            "gloss": raw_gloss,
+                            "motion_key": stem,
+                            "source": source_val,
+                            "animation_url": f"{self.base_url}/motion/{stem}",
+                            "metadata_url": f"{self.base_url}/motions/{stem}",
+                            "frames": frames,
+                            "fps": fps_val,
+                            "vertex_count": 10475,
+                            "hands_used": hands_val
+                        }
+            return None
 
         try:
-            # 1. Check exact metadata
-            meta_url = f"{self.base_url}/motions/{safe_gloss}"
+            # 1. Check exact / canonical metadata via HTTP API
+            lookup_key = canon_key or safe_gloss
+            meta_url = f"{self.base_url}/motions/{lookup_key}"
             async with httpx.AsyncClient(timeout=self.timeout) as client:
                 try:
                     res = await client.get(meta_url)
-                except httpx.ConnectError:
+                except (httpx.ConnectError, httpx.TimeoutException):
+                    # Service offline or timeout: try local fallback
+                    local_res = _resolve_locally()
+                    if local_res:
+                        return local_res
                     return {
                         "available": False,
                         "gloss": raw_gloss,
-                        "reason": "SignAvatars API service is unavailable"
-                    }
-                except httpx.TimeoutException:
-                    return {
-                        "available": False,
-                        "gloss": raw_gloss,
-                        "reason": "SignAvatars API request timed out"
+                        "reason": f"No matching ISL animation available for '{raw_gloss}'"
                     }
 
                 if res.status_code == 200:
@@ -207,7 +329,7 @@ class SignAvatarClient:
                     if isinstance(fps_val, (int, float)) and float(fps_val).is_integer():
                         fps_val = int(fps_val)
 
-                    motion_key = meta.get("safe_gloss") or safe_gloss
+                    motion_key = meta.get("motion_key") or meta.get("safe_gloss") or canon_key or safe_gloss
                     motion_key = self.normalize_gloss(str(motion_key))
                     return {
                         "available": True,
@@ -225,7 +347,7 @@ class SignAvatarClient:
                 # 2. Check for exact or real variant matches in the available motion inventory
                 try:
                     motions = await self.get_available_motions()
-                    matched = self._select_best_motion_match(safe_gloss, motions)
+                    matched = self._select_best_motion_match(safe_gloss, motions) or self._select_best_motion_match(canon_key, motions)
                     if matched:
                         m_gloss = self._motion_lookup_name(matched)
                         m_meta = matched
@@ -251,11 +373,16 @@ class SignAvatarClient:
                 except Exception:
                     pass
 
-            # No exact match available
+            # 3. Check local fallback before marking unavailable
+            local_res = _resolve_locally()
+            if local_res:
+                return local_res
+
+            # No exact or variant match available in authentic dataset
             return {
                 "available": False,
                 "gloss": raw_gloss,
-                "reason": "No matching ISL animation available"
+                "reason": f"No matching BridgeConn motion available for '{raw_gloss}'"
             }
 
         except Exception as e:

@@ -139,6 +139,7 @@ class AnimationSequencer:
         Tries local filesystem first for maximum speed; falls back to HTTP API streaming endpoint.
         """
         safe_name = self.client.normalize_gloss(gloss)
+        canon_key = self.client.resolve_canonical_key(safe_name)
         source_fps = 50.0
 
         if meta and "fps" in meta and meta["fps"]:
@@ -149,27 +150,30 @@ class AnimationSequencer:
 
         # 1. Check local NPY files
         for npy_dir in self.local_npy_dirs:
-            local_npy = npy_dir / f"{safe_name}.npy"
-            local_json = npy_dir / f"{safe_name}.json"
-            if local_npy.is_file():
-                if local_json.is_file():
+            stems_to_try = [s for s in (canon_key, safe_name) if s]
+            for stem in stems_to_try:
+                local_npy = npy_dir / f"{stem}.npy"
+                local_json = npy_dir / f"{stem}.json"
+                if local_npy.is_file():
+                    if local_json.is_file():
+                        try:
+                            with open(local_json, "r", encoding="utf-8") as f:
+                                jmeta = json.load(f)
+                                if "fps" in jmeta:
+                                    source_fps = float(jmeta["fps"])
+                        except Exception:
+                            pass
                     try:
-                        with open(local_json, "r", encoding="utf-8") as f:
-                            jmeta = json.load(f)
-                            if "fps" in jmeta:
-                                source_fps = float(jmeta["fps"])
-                    except Exception:
-                        pass
-                try:
-                    data = np.load(local_npy, allow_pickle=False)
-                    data = np.asarray(data, dtype=np.float32)
-                    self._validate_raw_animation(data, safe_name)
-                    return data, source_fps
-                except Exception as e:
-                    logger.warning("Failed loading local file %s: %s", local_npy, e)
+                        data = np.load(local_npy, allow_pickle=False)
+                        data = np.asarray(data, dtype=np.float32)
+                        self._validate_raw_animation(data, safe_name)
+                        return data, source_fps
+                    except Exception as e:
+                        logger.warning("Failed loading local file %s: %s", local_npy, e)
 
         # 2. Fetch binary Float32 stream via HTTP client
-        motion_url = f"{self.client.base_url}/motion/{safe_name}"
+        lookup_stem = canon_key or safe_name
+        motion_url = f"{self.client.base_url}/motion/{lookup_stem}"
         async with httpx.AsyncClient(timeout=15.0) as http_client:
             res = await http_client.get(motion_url)
             if res.status_code != 200:
@@ -252,13 +256,34 @@ class AnimationSequencer:
 
         total_frames = int(combined_vertices.shape[0])
         seq_uid = uuid.uuid4().hex[:8]
-        clean_gloss_tag = "_".join(self.client.normalize_gloss(g) for g in glosses[:3])
+        clean_gloss_tag = "_".join(self.client.normalize_gloss(g) for g in glosses[:8])
         sequence_filename = f"sequence_{clean_gloss_tag}_{seq_uid}"
+
+        # Step 4: Compute per-gloss timing
+        num_trans_frames = max(1, int(round(self.transition_sec * self.target_fps))) if len(resampled_animations) > 1 else 0
+        timeline = []
+        current_frame = 0
+        for i, (item, anim) in enumerate(zip(resolved_list, resampled_animations)):
+            if i > 0:
+                current_frame += num_trans_frames
+            anim_len = int(anim.shape[0])
+            start_f = current_frame
+            end_f = current_frame + anim_len
+            timeline.append({
+                "gloss": item["gloss"],
+                "motion_key": item.get("motion_key") or item["gloss"],
+                "start_frame": start_f,
+                "end_frame": end_f,
+                "duration_frames": anim_len,
+                "start_sec": round(start_f / float(self.target_fps), 3),
+                "end_sec": round(end_f / float(self.target_fps), 3)
+            })
+            current_frame = end_f
 
         npy_path = self.sequences_dir / f"{sequence_filename}.npy"
         json_path = self.sequences_dir / f"{sequence_filename}.json"
 
-        # Step 4: Save combined animation and metadata
+        # Step 5: Save combined animation and metadata
         np.save(str(npy_path), combined_vertices)
 
         animation_url = f"/api/signavatar/sequence/{sequence_filename}"
@@ -268,6 +293,7 @@ class AnimationSequencer:
             "available": True,
             "sequence_id": sequence_filename,
             "glosses": [item["gloss"] for item in resolved_list],
+            "timeline": timeline,
             "frames": total_frames,
             "fps": self.target_fps,
             "vertex_count": VERTEX_COUNT,

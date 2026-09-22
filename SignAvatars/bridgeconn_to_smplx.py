@@ -1,9 +1,15 @@
 """
 BridgeConn ISL to SMPL-X 3D Animation Retargeting Pipeline.
 
-Retargets MediaPipe body landmarks (33) and hand landmarks (21 left, 21 right)
-from the BridgeConn ISL dataset into SMPL-X joint rotations and produces
-(frames, 10475, 3) vertex animation compatible with SignAvatars.
+Mathematically principled retargeting of MediaPipe body landmarks (33)
+and hand landmarks (21 left, 21 right) from the BridgeConn ISL dataset
+into SMPL-X joint rotations, producing:
+  - global_orient (F, 3)
+  - body_pose (F, 63)
+  - left_hand_pose (F, 45)
+  - right_hand_pose (F, 45)
+  - transl (F, 3)
+and (F, 10475, 3) SMPL-X vertex animation compatible with SignAvatars.
 """
 
 import os
@@ -40,7 +46,7 @@ logger = logging.getLogger("BridgeConnRetarget")
 
 
 # ==============================================================================
-# 1. VECTOR & ROTATION MATH HELPERS
+# 1. VECTOR & ROTATION MATHEMATICAL HELPERS
 # ==============================================================================
 
 def normalize_vector(v: np.ndarray, eps: float = 1e-8) -> np.ndarray:
@@ -52,21 +58,20 @@ def normalize_vector(v: np.ndarray, eps: float = 1e-8) -> np.ndarray:
 
 def rotation_between_vectors(v_from: np.ndarray, v_to: np.ndarray) -> np.ndarray:
     """
-    Computes the shortest arc rotation matrix (3x3) that maps unit vector v_from to v_to.
-    Uses robust Rodrigues / quaternion formulation without singularities.
+    Computes the shortest arc 3x3 rotation matrix that maps unit vector v_from to v_to.
+    Uses robust Rodrigues formulation handling parallel and antiparallel cases.
     """
     v_from = normalize_vector(v_from).flatten()
     v_to = normalize_vector(v_to).flatten()
 
     dot = float(np.dot(v_from, v_to))
-    
-    # Vectors are nearly identical -> Identity
+
+    # Identical vectors -> Identity
     if dot > 0.9999999:
         return np.eye(3, dtype=np.float32)
-    
-    # Vectors are opposite -> 180 deg rotation around orthogonal axis
+
+    # Directly opposite vectors -> 180 deg rotation around an orthogonal axis
     if dot < -0.9999999:
-        # Find an orthogonal axis
         if abs(v_from[0]) < 0.9:
             ortho = np.cross(v_from, np.array([1.0, 0.0, 0.0], dtype=np.float32))
         else:
@@ -82,22 +87,26 @@ def rotation_between_vectors(v_from: np.ndarray, v_to: np.ndarray) -> np.ndarray
 
 
 def matrix_to_axis_angle(rot_mat: np.ndarray) -> np.ndarray:
-    """Convert a 3x3 rotation matrix to a 3D axis-angle vector."""
+    """Convert a 3x3 rotation matrix to a 3D axis-angle (Rodrigues) vector."""
     return R.from_matrix(rot_mat).as_rotvec().astype(np.float32)
 
 
-def smooth_landmarks(landmarks: np.ndarray, alpha: float = 0.6) -> np.ndarray:
+def axis_angle_to_matrix(rot_vec: np.ndarray) -> np.ndarray:
+    """Convert a 3D axis-angle vector to a 3x3 rotation matrix."""
+    return R.from_rotvec(rot_vec).as_matrix().astype(np.float32)
+
+
+def smooth_landmarks(landmarks: np.ndarray, alpha: float = 0.65) -> np.ndarray:
     """
     Exponential moving average smoothing over sequence of landmarks (F, N, 3).
-    Removes jitter while preserving fast articulation.
+    Removes high-frequency jitter while preserving sharp sign articulations.
     """
     if len(landmarks) <= 1 or alpha >= 1.0:
         return landmarks
-    
+
     smoothed = np.empty_like(landmarks)
     smoothed[0] = landmarks[0]
     for t in range(1, len(landmarks)):
-        # If current frame is missing/zero, keep previous
         if np.linalg.norm(landmarks[t]) < 1e-5:
             smoothed[t] = smoothed[t - 1]
         else:
@@ -106,17 +115,33 @@ def smooth_landmarks(landmarks: np.ndarray, alpha: float = 0.6) -> np.ndarray:
 
 
 # ==============================================================================
-# 2. BRIDGECONN LANDMARK PREPROCESSING & COORDINATE CONVERSION
+# 2. BRIDGECONN LANDMARK PREPROCESSING & ISOTROPIC COORDINATE CONVERSION
 # ==============================================================================
 
 def clean_and_preprocess_sample(
     npz_path: str,
     smoothing_enabled: bool = True,
-    smoothing_alpha: float = 0.7
+    smoothing_alpha: float = 0.70
 ) -> Dict[str, Any]:
     """
-    Loads BridgeConn sample .npz file, validates arrays, converts coordinates
-    to SMPL-X space, cleans invalid/missing landmarks, and applies temporal smoothing.
+    Loads BridgeConn sample .npz file, cleans missing/zero frames via temporal interpolation,
+    converts MediaPipe camera image space to SMPL-X 3D world space isotropically,
+    and applies temporal smoothing.
+
+    Coordinate Transformation:
+      MediaPipe image space:
+        +X: image right (signer's anatomical Left)
+        +Y: image down
+        +Z: away from camera (depth into scene, normalized)
+      SMPL-X world space:
+        +X: character's Left
+        +Y: character's Up
+        +Z: character's Forward (towards camera / viewer)
+
+    Conversion:
+      X_smplx =  X_mp
+      Y_smplx = -Y_mp
+      Z_smplx = -Z_mp * 1920.0  (scale normalized depth isotropically with image pixel width)
     """
     if not os.path.exists(npz_path):
         raise FileNotFoundError(f"BridgeConn sample file not found at: {npz_path}")
@@ -127,26 +152,51 @@ def clean_and_preprocess_sample(
     rh_raw = data["right_hand"]        # (F, 21, 3)
     conf = data["confidence"] if "confidence" in data else None
     fps = float(data["fps"]) if "fps" in data and data["fps"].shape == () else 50.0
-    gloss = str(data["gloss"]) if "gloss" in data and data["gloss"].shape == () else "sample_1"
+    gloss = str(data["gloss"]) if "gloss" in data and data["gloss"].shape == () else "sample"
 
     frames = len(body_raw)
     if frames == 0:
         raise ValueError("Empty animation sequence (0 frames).")
 
-    # Clean zero/invalid frames using interpolation
+    # Clean zero / missing frames via linear or forward/backward interpolation
     def interpolate_zeros(seq: np.ndarray) -> np.ndarray:
         seq_clean = seq.copy()
-        for i in range(len(seq_clean)):
-            # If all landmarks in frame are near zero
-            if np.all(np.abs(seq_clean[i]) < 1e-4):
-                if i > 0:
-                    seq_clean[i] = seq_clean[i - 1]
-                else:
-                    # Find first valid frame
-                    for j in range(1, len(seq_clean)):
-                        if not np.all(np.abs(seq_clean[j]) < 1e-4):
-                            seq_clean[0] = seq_clean[j]
-                            break
+        n = len(seq_clean)
+        is_zero = np.all(np.abs(seq_clean) < 1e-4, axis=(1, 2))
+        if not np.any(is_zero):
+            return seq_clean
+
+        # If all frames are zero, return zeros
+        if np.all(is_zero):
+            return seq_clean
+
+        # Handle leading zeros
+        first_valid = int(np.where(~is_zero)[0][0])
+        for i in range(first_valid):
+            seq_clean[i] = seq_clean[first_valid]
+
+        # Handle trailing zeros
+        last_valid = int(np.where(~is_zero)[0][-1])
+        for i in range(last_valid + 1, n):
+            seq_clean[i] = seq_clean[last_valid]
+
+        # Handle internal zeros with linear interpolation
+        i = first_valid
+        while i <= last_valid:
+            if is_zero[i]:
+                # find end of zero segment
+                j = i
+                while j <= last_valid and is_zero[j]:
+                    j += 1
+                # interpolate between i-1 and j
+                prev_val = seq_clean[i - 1]
+                next_val = seq_clean[j]
+                for k in range(i, j):
+                    t = (k - (i - 1)) / float(j - (i - 1))
+                    seq_clean[k] = (1.0 - t) * prev_val + t * next_val
+                i = j
+            else:
+                i += 1
         return seq_clean
 
     body_clean = interpolate_zeros(body_raw)
@@ -158,49 +208,25 @@ def clean_and_preprocess_sample(
         lh_clean = smooth_landmarks(lh_clean, alpha=smoothing_alpha)
         rh_clean = smooth_landmarks(rh_clean, alpha=smoothing_alpha)
 
-    # --------------------------------------------------------------------------
-    # COORDINATE SYSTEM CONVERSION:
-    # MediaPipe 2D/3D camera image space -> SMPL-X 3D world space
-    #
-    # MediaPipe:
-    #   +X: Person's Left side (right side in image)
-    #   +Y: Downwards in image
-    #   +Z: Depth (negative = closer to camera / front)
-    #
-    # SMPL-X:
-    #   +X: Character's Left
-    #   +Y: Character's Upwards
-    #   +Z: Character's Front (forward)
-    #
-    # Conversion:
-    #   X_smplx = +X_mp
-    #   Y_smplx = -Y_mp  (flip vertical so up is +Y)
-    #   Z_smplx = -Z_mp  (flip depth so front is +Z)
-    # --------------------------------------------------------------------------
+    # Isotropic depth scaling factor:
+    # MediaPipe normalizes depth Z relative to image width. X is in pixels [0, 1920].
+    # Multiplying Z by 1920.0 restores metric aspect ratio across X, Y, and Z.
+    DEPTH_SCALE = 1920.0
 
-    # Scale factor for depth if needed (MediaPipe depth is normalized relative to width)
-    # For body: calculate shoulder width in 2D to scale depth consistently
-    sh_width_2d = np.linalg.norm(body_clean[:, 11, :2] - body_clean[:, 12, :2], axis=1).mean()
-    if sh_width_2d < 1e-3:
-        sh_width_2d = 300.0
-    
-    # Convert body coordinates
     body_smplx = np.empty_like(body_clean)
     body_smplx[:, :, 0] = body_clean[:, :, 0]
     body_smplx[:, :, 1] = -body_clean[:, :, 1]
-    body_smplx[:, :, 2] = -body_clean[:, :, 2] * sh_width_2d
+    body_smplx[:, :, 2] = -body_clean[:, :, 2] * DEPTH_SCALE
 
-    # Convert hand coordinates
-    # Hand coordinates relative to wrist in pixel space:
     lh_smplx = np.empty_like(lh_clean)
     lh_smplx[:, :, 0] = lh_clean[:, :, 0]
     lh_smplx[:, :, 1] = -lh_clean[:, :, 1]
-    lh_smplx[:, :, 2] = -lh_clean[:, :, 2] * sh_width_2d
+    lh_smplx[:, :, 2] = -lh_clean[:, :, 2] * DEPTH_SCALE
 
     rh_smplx = np.empty_like(rh_clean)
     rh_smplx[:, :, 0] = rh_clean[:, :, 0]
     rh_smplx[:, :, 1] = -rh_clean[:, :, 1]
-    rh_smplx[:, :, 2] = -rh_clean[:, :, 2] * sh_width_2d
+    rh_smplx[:, :, 2] = -rh_clean[:, :, 2] * DEPTH_SCALE
 
     return {
         "frames": frames,
@@ -214,13 +240,18 @@ def clean_and_preprocess_sample(
 
 
 # ==============================================================================
-# 3. SMPL-X SKELETON RETARGETER
+# 3. MATHEMATICAL SMPL-X SKELETON RETARGETER
 # ==============================================================================
 
 class SMPLXRetargeter:
     """
     Retargets cleaned MediaPipe 33-point body and 21-point left/right hands to SMPL-X.
-    Calculates local joint rotations hierarchically using bone direction alignment.
+    Computes rigorous hierarchical local rotations for:
+      - Stable upright lower body base
+      - Natural spine posture tracking
+      - Realistic head/neck orientation
+      - Kinematically aligned shoulder, elbow, and wrist orientations
+      - 30 independent finger joints (15 joints per hand) with correct anatomical flexion
     """
 
     def __init__(self, device: Optional[torch.device] = None):
@@ -245,124 +276,128 @@ class SMPLXRetargeter:
             gender="NEUTRAL",
             use_pca=False,
             use_face_contour=False,
+            flat_hand_mean=True,
             **layer_arg
         ).to(self.device)
         self.parents = self.model.parents.cpu().numpy()
         self.num_joints = len(self.parents)
 
-        # Calculate rest pose joint locations from neutral template
+        # Precompute rest pose joint locations from neutral template
         v_template = self.model.v_template.unsqueeze(0)  # [1, 10475, 3]
         J_regressor = self.model.J_regressor.unsqueeze(0)  # [1, 55, 10475]
         self.J_rest = torch.matmul(J_regressor, v_template)[0].cpu().numpy()  # [55, 3]
 
-        self._build_rest_bone_vectors()
+        self._build_rest_frames()
 
-    def _build_rest_bone_vectors(self):
-        """Precompute normalized rest-pose bone vectors for all joints."""
+    def _build_rest_frames(self):
+        """Precompute rest bone directions and 3D coordinate frames."""
         self.rest_bones: Dict[str, np.ndarray] = {}
-
         J = self.J_rest
-        # Body rest bones (parent -> child direction in rest pose)
+
+        # Spine rest vectors
         self.rest_bones["pelvis_up"] = normalize_vector(J[9] - J[0])            # spine3 - pelvis (+Y)
         self.rest_bones["pelvis_across"] = normalize_vector(J[1] - J[2])        # L_hip - R_hip (+X)
         self.rest_bones["spine1"] = normalize_vector(J[6] - J[3])               # spine2 - spine1 (+Y)
         self.rest_bones["spine2"] = normalize_vector(J[9] - J[6])               # spine3 - spine2 (+Y)
         self.rest_bones["spine3"] = normalize_vector(J[12] - J[9])              # neck - spine3 (+Y)
         self.rest_bones["neck"] = normalize_vector(J[15] - J[12])               # head - neck (+Y)
-        
-        # Left Arm
-        self.rest_bones["l_collar"] = normalize_vector(J[16] - J[13])           # L_shoulder - L_collar (+X)
-        self.rest_bones["l_shoulder"] = normalize_vector(J[18] - J[16])         # L_elbow - L_shoulder (+X)
-        self.rest_bones["l_elbow"] = normalize_vector(J[20] - J[18])            # L_wrist - L_elbow (+X)
-        self.rest_bones["l_wrist"] = normalize_vector(J[28] - J[20])            # L_middle1 - L_wrist (+X)
 
-        # Right Arm
-        self.rest_bones["r_collar"] = normalize_vector(J[17] - J[14])           # R_shoulder - R_collar (-X)
-        self.rest_bones["r_shoulder"] = normalize_vector(J[19] - J[17])         # R_elbow - R_shoulder (-X)
-        self.rest_bones["r_elbow"] = normalize_vector(J[21] - J[19])            # R_wrist - R_elbow (-X)
-        self.rest_bones["r_wrist"] = normalize_vector(J[43] - J[21])            # R_middle1 - R_wrist (-X)
+        # Arms rest vectors
+        self.rest_bones["l_collar"] = normalize_vector(J[16] - J[13])           # L_sh - L_collar (+X)
+        self.rest_bones["l_shoulder"] = normalize_vector(J[18] - J[16])         # L_el - L_sh (+X)
+        self.rest_bones["l_elbow"] = normalize_vector(J[20] - J[18])            # L_wr - L_el (+X)
 
-        # Legs
-        self.rest_bones["l_hip"] = normalize_vector(J[4] - J[1])                # L_knee - L_hip (-Y)
-        self.rest_bones["l_knee"] = normalize_vector(J[7] - J[4])               # L_ankle - L_knee (-Y)
-        self.rest_bones["l_ankle"] = normalize_vector(J[10] - J[7])             # L_foot - L_ankle
-        
-        self.rest_bones["r_hip"] = normalize_vector(J[5] - J[2])                # R_knee - R_hip (-Y)
-        self.rest_bones["r_knee"] = normalize_vector(J[8] - J[5])               # R_ankle - R_knee (-Y)
-        self.rest_bones["r_ankle"] = normalize_vector(J[11] - J[8])             # R_foot - R_ankle
+        self.rest_bones["r_collar"] = normalize_vector(J[17] - J[14])           # R_sh - R_collar (-X)
+        self.rest_bones["r_shoulder"] = normalize_vector(J[19] - J[17])         # R_el - R_sh (-X)
+        self.rest_bones["r_elbow"] = normalize_vector(J[21] - J[19])            # R_wr - R_el (-X)
 
-        # Hand full 3D rest frames
-        lh_along = J[28] - J[20]
-        lh_across = J[25] - J[31]
-        lh_along = normalize_vector(lh_along)
-        lh_across = lh_across - np.dot(lh_across, lh_along) * lh_along
-        lh_across = normalize_vector(lh_across)
-        lh_normal = normalize_vector(np.cross(lh_along, lh_across))
-        self.rest_bones["lh_frame_along"] = lh_along
-        self.rest_bones["lh_frame_across"] = lh_across
-        self.rest_bones["lh_frame_normal"] = lh_normal
+        # ----------------------------------------------------------------------
+        # Full 3D Hand Rest Coordinate Frames (Right-Handed, det = +1):
+        # ----------------------------------------------------------------------
+        # RIGHT HAND:
+        #   Along: Middle1 (43) - Wrist (21) -> along -X
+        #   Pi: Pinky1 (46) to Index1 (40) -> along +Z
+        #   Normal: cross(along, pi) -> along +Y (dorsal / back of hand)
+        #   Across: cross(normal, along) -> along +Z
+        #   Normal: cross(along, across) -> along +Y
+        u_rh_along = normalize_vector(J[43] - J[21])
+        u_rh_pi = normalize_vector(J[40] - J[46])
+        u_rh_norm = normalize_vector(np.cross(u_rh_along, u_rh_pi))
+        u_rh_across = normalize_vector(np.cross(u_rh_norm, u_rh_along))
+        u_rh_norm = normalize_vector(np.cross(u_rh_along, u_rh_across))
+        self.F_rest_rh = np.column_stack([u_rh_along, u_rh_across, u_rh_norm]).astype(np.float32)
 
-        rh_along = J[43] - J[21]
-        rh_across = J[40] - J[46]
-        rh_along = normalize_vector(rh_along)
-        rh_across = rh_across - np.dot(rh_across, rh_along) * rh_along
-        rh_across = normalize_vector(rh_across)
-        rh_normal = normalize_vector(np.cross(rh_along, rh_across))
-        self.rest_bones["rh_frame_along"] = rh_along
-        self.rest_bones["rh_frame_across"] = rh_across
-        self.rest_bones["rh_frame_normal"] = rh_normal
+        # LEFT HAND:
+        #   Along: Middle1 (28) - Wrist (20) -> along +X
+        #   Pi: Pinky1 (31) to Index1 (25) -> along +Z
+        #   Normal: cross(pi, along) -> along +Y (dorsal / back of hand)
+        #   Across: cross(along, normal) -> along +Z
+        #   Normal: cross(across, along) -> along +Y
+        u_lh_along = normalize_vector(J[28] - J[20])
+        u_lh_pi = normalize_vector(J[25] - J[31])
+        u_lh_norm = normalize_vector(np.cross(u_lh_pi, u_lh_along))
+        u_lh_across = normalize_vector(np.cross(u_lh_along, u_lh_norm))
+        u_lh_norm = normalize_vector(np.cross(u_lh_across, u_lh_along))
+        self.F_rest_lh = np.column_stack([u_lh_along, u_lh_across, u_lh_norm]).astype(np.float32)
 
-        # Left Hand Fingers (Index: 25-27, Middle: 28-30, Pinky: 31-33, Ring: 34-36, Thumb: 37-39)
-        self.rest_bones["lh_index1"] = normalize_vector(J[26] - J[25])
-        self.rest_bones["lh_index2"] = normalize_vector(J[27] - J[26])
-        self.rest_bones["lh_index3"] = normalize_vector(J[27] - J[26])          # tip extension
-        
-        self.rest_bones["lh_middle1"] = normalize_vector(J[29] - J[28])
-        self.rest_bones["lh_middle2"] = normalize_vector(J[30] - J[29])
-        self.rest_bones["lh_middle3"] = normalize_vector(J[30] - J[29])
+        # ----------------------------------------------------------------------
+        # Rest Finger Bone Directions in Rest Model Space:
+        # ----------------------------------------------------------------------
+        # Right hand fingers:
+        # Index: 40 -> 41 -> 42 -> tip
+        self.rest_bones["rh_idx0"] = normalize_vector(J[41] - J[40])
+        self.rest_bones["rh_idx1"] = normalize_vector(J[42] - J[41])
+        self.rest_bones["rh_idx2"] = normalize_vector(J[42] - J[41])
+        # Middle: 43 -> 44 -> 45
+        self.rest_bones["rh_mid0"] = normalize_vector(J[44] - J[43])
+        self.rest_bones["rh_mid1"] = normalize_vector(J[45] - J[44])
+        self.rest_bones["rh_mid2"] = normalize_vector(J[45] - J[44])
+        # Pinky: 46 -> 47 -> 48
+        self.rest_bones["rh_pnk0"] = normalize_vector(J[47] - J[46])
+        self.rest_bones["rh_pnk1"] = normalize_vector(J[48] - J[47])
+        self.rest_bones["rh_pnk2"] = normalize_vector(J[48] - J[47])
+        # Ring: 49 -> 50 -> 51
+        self.rest_bones["rh_rng0"] = normalize_vector(J[50] - J[49])
+        self.rest_bones["rh_rng1"] = normalize_vector(J[51] - J[50])
+        self.rest_bones["rh_rng2"] = normalize_vector(J[51] - J[50])
+        # Thumb: 52 -> 53 -> 54
+        self.rest_bones["rh_th0"] = normalize_vector(J[53] - J[52])
+        self.rest_bones["rh_th1"] = normalize_vector(J[54] - J[53])
+        self.rest_bones["rh_th2"] = normalize_vector(J[54] - J[53])
 
-        self.rest_bones["lh_pinky1"] = normalize_vector(J[32] - J[31])
-        self.rest_bones["lh_pinky2"] = normalize_vector(J[33] - J[32])
-        self.rest_bones["lh_pinky3"] = normalize_vector(J[33] - J[32])
-
-        self.rest_bones["lh_ring1"] = normalize_vector(J[35] - J[34])
-        self.rest_bones["lh_ring2"] = normalize_vector(J[36] - J[35])
-        self.rest_bones["lh_ring3"] = normalize_vector(J[36] - J[35])
-
-        self.rest_bones["lh_thumb1"] = normalize_vector(J[38] - J[37])
-        self.rest_bones["lh_thumb2"] = normalize_vector(J[39] - J[38])
-        self.rest_bones["lh_thumb3"] = normalize_vector(J[39] - J[38])
-
-        # Right Hand Fingers (Index: 40-42, Middle: 43-45, Pinky: 46-48, Ring: 49-51, Thumb: 52-54)
-        self.rest_bones["rh_index1"] = normalize_vector(J[41] - J[40])
-        self.rest_bones["rh_index2"] = normalize_vector(J[42] - J[41])
-        self.rest_bones["rh_index3"] = normalize_vector(J[42] - J[41])
-
-        self.rest_bones["rh_middle1"] = normalize_vector(J[44] - J[43])
-        self.rest_bones["rh_middle2"] = normalize_vector(J[45] - J[44])
-        self.rest_bones["rh_middle3"] = normalize_vector(J[45] - J[44])
-
-        self.rest_bones["rh_pinky1"] = normalize_vector(J[47] - J[46])
-        self.rest_bones["rh_pinky2"] = normalize_vector(J[48] - J[47])
-        self.rest_bones["rh_pinky3"] = normalize_vector(J[48] - J[47])
-
-        self.rest_bones["rh_ring1"] = normalize_vector(J[50] - J[49])
-        self.rest_bones["rh_ring2"] = normalize_vector(J[51] - J[50])
-        self.rest_bones["rh_ring3"] = normalize_vector(J[51] - J[50])
-
-        self.rest_bones["rh_thumb1"] = normalize_vector(J[53] - J[52])
-        self.rest_bones["rh_thumb2"] = normalize_vector(J[54] - J[53])
-        self.rest_bones["rh_thumb3"] = normalize_vector(J[54] - J[53])
+        # Left hand fingers:
+        # Index: 25 -> 26 -> 27
+        self.rest_bones["lh_idx0"] = normalize_vector(J[26] - J[25])
+        self.rest_bones["lh_idx1"] = normalize_vector(J[27] - J[26])
+        self.rest_bones["lh_idx2"] = normalize_vector(J[27] - J[26])
+        # Middle: 28 -> 29 -> 30
+        self.rest_bones["lh_mid0"] = normalize_vector(J[29] - J[28])
+        self.rest_bones["lh_mid1"] = normalize_vector(J[30] - J[29])
+        self.rest_bones["lh_mid2"] = normalize_vector(J[30] - J[29])
+        # Pinky: 31 -> 32 -> 33
+        self.rest_bones["lh_pnk0"] = normalize_vector(J[32] - J[31])
+        self.rest_bones["lh_pnk1"] = normalize_vector(J[33] - J[32])
+        self.rest_bones["lh_pnk2"] = normalize_vector(J[33] - J[32])
+        # Ring: 34 -> 35 -> 36
+        self.rest_bones["lh_rng0"] = normalize_vector(J[35] - J[34])
+        self.rest_bones["lh_rng1"] = normalize_vector(J[36] - J[35])
+        self.rest_bones["lh_rng2"] = normalize_vector(J[36] - J[35])
+        # Thumb: 37 -> 38 -> 39
+        self.rest_bones["lh_th0"] = normalize_vector(J[38] - J[37])
+        self.rest_bones["lh_th1"] = normalize_vector(J[39] - J[38])
+        self.rest_bones["lh_th2"] = normalize_vector(J[39] - J[38])
 
     def retarget_frame(
         self,
         body: np.ndarray,      # (33, 3) in SMPL-X coordinate space
         lh: np.ndarray,        # (21, 3) in SMPL-X coordinate space
-        rh: np.ndarray         # (21, 3) in SMPL-X coordinate space
-    ) -> Tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
+        rh: np.ndarray,        # (21, 3) in SMPL-X coordinate space
+        prev_wrist_rh: Optional[np.ndarray] = None,
+        prev_wrist_lh: Optional[np.ndarray] = None,
+        return_state: bool = False
+    ) -> Any:
         """
-        Calculates SMPL-X pose parameters for a single frame:
-        Returns:
+        Retargets a single frame into SMPL-X pose parameters:
             global_orient: (3,)
             body_pose: (63,)  [21 body joints * 3]
             left_hand_pose: (45,) [15 finger joints * 3]
@@ -370,163 +405,324 @@ class SMPLXRetargeter:
             transl: (3,)
         """
         # ======================================================================
-        # 1. ROOT ORIENTATION & TORSO
+        # 1. ROOT ORIENTATION & TORSO POSTURE
         # ======================================================================
-        # MediaPipe body landmark indices:
-        # 0: nose, 11: L_sh, 12: R_sh, 13: L_elb, 14: R_elb, 15: L_wri, 16: R_wri
-        # 23: L_hip, 24: R_hip, 25: L_knee, 26: R_knee, 27: L_ank, 28: R_ank, 31: L_foot, 32: R_foot
+        G_pelvis = np.eye(3, dtype=np.float32)
+        global_orient = np.zeros(3, dtype=np.float32)
 
         mid_hip = (body[23] + body[24]) / 2.0
         mid_shoulder = (body[11] + body[12]) / 2.0
 
-        target_torso_up = normalize_vector(mid_shoulder - mid_hip)
-        target_torso_across = normalize_vector(body[23] - body[24]) # R_hip -> L_hip (+X)
-        target_torso_fwd = normalize_vector(np.cross(target_torso_across, target_torso_up))
-        # Re-orthonormalize across
-        target_torso_across = normalize_vector(np.cross(target_torso_up, target_torso_fwd))
+        # Torso upright & across from shoulders
+        torso_up_raw = mid_shoulder - mid_hip
+        torso_up = normalize_vector(np.array([
+            torso_up_raw[0] * 0.35,
+            max(float(torso_up_raw[1]), 1e-3),
+            torso_up_raw[2] * 0.15
+        ], dtype=np.float32))
 
-        # Pelvis global orientation matrix G_0: columns = [across, up, fwd]
-        G_pelvis = np.column_stack([target_torso_across, target_torso_up, target_torso_fwd]).astype(np.float32)
-        global_orient = matrix_to_axis_angle(G_pelvis)
+        sh_across_raw = body[11] - body[12]  # R_sh -> L_sh (+X)
+        sh_across = normalize_vector(np.array([
+            sh_across_raw[0],
+            sh_across_raw[1] * 0.25,
+            sh_across_raw[2] * 0.25
+        ], dtype=np.float32))
+        sh_fwd = normalize_vector(np.cross(sh_across, torso_up))
+        if sh_fwd[2] < 0:
+            sh_fwd = -sh_fwd
+        sh_across = normalize_vector(np.cross(torso_up, sh_fwd))
 
-        # Spine and Neck
-        # Spine global rotations align with torso up
-        G_spine1 = G_pelvis.copy()
-        G_spine2 = G_pelvis.copy()
-        G_spine3 = G_pelvis.copy()
-        
-        head_vec = normalize_vector(body[0] - mid_shoulder)
-        R_neck_align = rotation_between_vectors(np.array([0.0, 1.0, 0.0]), head_vec)
-        G_neck = R_neck_align @ G_spine3
+        G_torso = np.column_stack([sh_across, torso_up, sh_fwd]).astype(np.float32)
+
+        rotvec_spine = matrix_to_axis_angle(G_torso) * 0.20
+        R_spine_step = R.from_rotvec(rotvec_spine).as_matrix().astype(np.float32)
+
+        G_spine1 = R_spine_step @ G_pelvis
+        G_spine2 = R_spine_step @ G_spine1
+        G_spine3 = R_spine_step @ G_spine2
 
         # ======================================================================
-        # 2. LEFT ARM RETARGETING
+        # 2. HEAD & NECK ORIENTATION
         # ======================================================================
-        # Target bone directions
+        ear_vec = body[7] - body[8]
+        if np.linalg.norm(ear_vec) < 1e-3:
+            ear_vec = body[2] - body[5]
+        if np.linalg.norm(ear_vec) < 1e-3:
+            ear_vec = np.array([1.0, 0.0, 0.0], dtype=np.float32)
+
+        head_across = normalize_vector(np.array([
+            ear_vec[0],
+            ear_vec[1] * 0.35,
+            ear_vec[2] * 0.35
+        ], dtype=np.float32))
+
+        head_up = normalize_vector(np.array([-head_across[1], head_across[0], 0.0], dtype=np.float32))
+        if head_up[1] < 0:
+            head_up = -head_up
+        if np.linalg.norm(head_up) < 1e-3:
+            head_up = np.array([0.0, 1.0, 0.0], dtype=np.float32)
+
+        head_fwd = normalize_vector(np.cross(head_across, head_up))
+        if head_fwd[2] < 0:
+            head_fwd = -head_fwd
+        head_across = normalize_vector(np.cross(head_up, head_fwd))
+
+        G_head = np.column_stack([head_across, head_up, head_fwd]).astype(np.float32)
+        G_neck = G_spine3.copy()
+
+        # ======================================================================
+        # 3. COLLARS & SHOULDERS
+        # ======================================================================
+        # Two-hand interaction proximity factor:
+        has_lh_contact = np.linalg.norm(lh[0]) > 1e-4 and np.linalg.norm(lh[9] - lh[0]) > 1e-4
+        has_rh_contact = np.linalg.norm(rh[0]) > 1e-4 and np.linalg.norm(rh[9] - rh[0]) > 1e-4
+
+        if has_lh_contact and has_rh_contact:
+            lh_center = (lh[0] + lh[9]) / 2.0
+            rh_center = (rh[0] + rh[9]) / 2.0
+            d_hands = float(np.linalg.norm(rh_center - lh_center))
+            # Smooth contact factor: 0.0 when d >= 220 units (~0.22m), smoothly increases to 1.0 when d <= 80 units
+            w_contact = float(np.clip((220.0 - d_hands) / 140.0, 0.0, 1.0))
+        else:
+            d_hands = 1000.0
+            w_contact = 0.0
+
+        # When hands approach midline contact, relax clavicle clamp from 0.72 towards 0.40
+        # and allow slight forward protraction (+Z) so the avatar's hands meet naturally without shoulder collapse
+        clamp_x = float(0.72 - 0.32 * w_contact)
+        protract_z = float(0.20 + 0.25 * w_contact)
+
         u_l_collar = normalize_vector(body[11] - mid_shoulder)
-        u_l_upper_arm = normalize_vector(body[13] - body[11])
-        u_l_forearm = normalize_vector(body[15] - body[13])
-
-        G_l_collar = rotation_between_vectors(self.rest_bones["l_collar"], u_l_collar)
-        G_l_shoulder = rotation_between_vectors(self.rest_bones["l_shoulder"], u_l_upper_arm)
-        G_l_elbow = rotation_between_vectors(self.rest_bones["l_elbow"], u_l_forearm)
-
-        # Left Wrist: use full 3D hand basis (along palm, across pinky->index, palm normal)
-        # LH indices: 0: wrist, 5: index_mcp, 9: middle_mcp, 17: pinky_mcp
-        lh_wrist = lh[0]
-        lh_mid_mcp = lh[9]
-        lh_idx_mcp = lh[5]
-        lh_pnk_mcp = lh[17]
-
-        lh_along = lh_mid_mcp - lh_wrist
-        if np.linalg.norm(lh_along) > 1e-4:
-            lh_along = normalize_vector(lh_along)
-            lh_across = lh_idx_mcp - lh_pnk_mcp
-            lh_across = lh_across - np.dot(lh_across, lh_along) * lh_along
-            if np.linalg.norm(lh_across) > 1e-4:
-                lh_across = normalize_vector(lh_across)
-            else:
-                lh_across = np.array([0.0, 0.0, 1.0], dtype=np.float32)
-            lh_normal = normalize_vector(np.cross(lh_along, lh_across))
-
-            F_target_lh = np.column_stack([lh_along, lh_across, lh_normal])
-            # Rest frame for left hand
-            F_rest_lh = np.column_stack([
-                self.rest_bones["lh_frame_along"],
-                self.rest_bones["lh_frame_across"],
-                self.rest_bones["lh_frame_normal"]
-            ])
-            G_l_wrist = F_target_lh @ F_rest_lh.T
-        else:
-            G_l_wrist = rotation_between_vectors(self.rest_bones["l_wrist"], u_l_forearm)
-
-        # ======================================================================
-        # 3. RIGHT ARM RETARGETING
-        # ======================================================================
         u_r_collar = normalize_vector(body[12] - mid_shoulder)
-        u_r_upper_arm = normalize_vector(body[14] - body[12])
-        u_r_forearm = normalize_vector(body[16] - body[14])
 
-        G_r_collar = rotation_between_vectors(self.rest_bones["r_collar"], u_r_collar)
-        G_r_shoulder = rotation_between_vectors(self.rest_bones["r_shoulder"], u_r_upper_arm)
-        G_r_elbow = rotation_between_vectors(self.rest_bones["r_elbow"], u_r_forearm)
+        u_l_collar_stab = normalize_vector(np.array([
+            max(float(u_l_collar[0]), clamp_x),
+            u_l_collar[1] * 0.25,
+            u_l_collar[2] * protract_z
+        ], dtype=np.float32))
+        u_r_collar_stab = normalize_vector(np.array([
+            min(float(u_r_collar[0]), -clamp_x),
+            u_r_collar[1] * 0.25,
+            u_r_collar[2] * protract_z
+        ], dtype=np.float32))
 
-        # Right Wrist: use full 3D hand basis
-        rh_wrist = rh[0]
-        rh_mid_mcp = rh[9]
-        rh_idx_mcp = rh[5]
-        rh_pnk_mcp = rh[17]
+        G_l_collar = rotation_between_vectors(self.rest_bones["l_collar"], u_l_collar_stab)
+        G_r_collar = rotation_between_vectors(self.rest_bones["r_collar"], u_r_collar_stab)
 
-        rh_along = rh_mid_mcp - rh_wrist
-        if np.linalg.norm(rh_along) > 1e-4:
-            rh_along = normalize_vector(rh_along)
-            rh_across = rh_idx_mcp - rh_pnk_mcp
-            rh_across = rh_across - np.dot(rh_across, rh_along) * rh_along
-            if np.linalg.norm(rh_across) > 1e-4:
-                rh_across = normalize_vector(rh_across)
-            else:
-                rh_across = np.array([0.0, 0.0, 1.0], dtype=np.float32)
-            rh_normal = normalize_vector(np.cross(rh_along, rh_across))
+        # ======================================================================
+        # 4. KINEMATIC ARMS, WRISTS & 3D HAND BASES
+        # ======================================================================
+        # --- RIGHT ARM & WRIST ---
+        u_r_upper = normalize_vector(body[14] - body[12])   # R_sh -> R_el
+        u_r_forearm = normalize_vector(body[16] - body[14]) # R_el -> R_wr
 
-            F_target_rh = np.column_stack([rh_along, rh_across, rh_normal])
-            # Rest frame for right hand
-            F_rest_rh = np.column_stack([
-                self.rest_bones["rh_frame_along"],
-                self.rest_bones["rh_frame_across"],
-                self.rest_bones["rh_frame_normal"]
-            ])
-            G_r_wrist = F_target_rh @ F_rest_rh.T
+        # Elbow flexion plane normal
+        r_bend_cross = np.cross(u_r_upper, u_r_forearm)
+        r_bend_norm = np.linalg.norm(r_bend_cross)
+        if r_bend_norm > 0.05:
+            n_r_arm = r_bend_cross / r_bend_norm
         else:
-            G_r_wrist = rotation_between_vectors(self.rest_bones["r_wrist"], u_r_forearm)
+            n_r_arm = np.array([0.0, 1.0, 0.0], dtype=np.float32)
+
+        # Rigid 3D basis for upper arm
+        u_r_up_perp = normalize_vector(np.cross(u_r_upper, n_r_arm))
+        F_target_r_sh = np.column_stack([u_r_upper, n_r_arm, u_r_up_perp])
+        b_r_sh_rest = self.rest_bones["r_shoulder"]
+        n_sh_rest = np.array([0.0, 1.0, 0.0], dtype=np.float32)
+        u_r_up_perp_rest = normalize_vector(np.cross(b_r_sh_rest, n_sh_rest))
+        F_rest_r_sh = np.column_stack([b_r_sh_rest, n_sh_rest, u_r_up_perp_rest])
+        G_r_shoulder = F_target_r_sh @ F_rest_r_sh.T
+
+        # Right Hand 3D Orientation Frame
+        rh_w = rh[0]
+        rh_idx = rh[5]
+        rh_mid = rh[9]
+        rh_pnk = rh[17]
+
+        rh_along = rh_mid - rh_w
+        has_rh_orient = np.linalg.norm(rh_along) > 1e-4
+        if has_rh_orient:
+            u_rh_along = normalize_vector(rh_along)
+            u_rh_pi = normalize_vector(rh_idx - rh_pnk)     # pinky to index (+Z)
+            u_rh_norm = normalize_vector(np.cross(u_rh_along, u_rh_pi)) # dorsal (+Y in rest)
+            u_rh_across = normalize_vector(np.cross(u_rh_norm, u_rh_along))
+            u_rh_norm = normalize_vector(np.cross(u_rh_along, u_rh_across))
+
+            F_target_rh = np.column_stack([u_rh_along, u_rh_across, u_rh_norm])
+            G_r_wrist = F_target_rh @ self.F_rest_rh.T
+
+            # Face proximity semantic invariant check (resolves monocular depth reflection e.g. DRINK):
+            # When hand is near head/mouth and palm faces directly away into empty space, resolve the 180° flip
+            mid_head = (body[0] + (body[7] + body[8]) / 2.0) / 2.0
+            to_face = normalize_vector(mid_head - rh_w)
+            palm_norm = -G_r_wrist[:, 2] # in F_rest_rh column 2 is dorsal (+Y), palm is -column 2
+            dot_face = float(np.dot(palm_norm, to_face))
+            d_face = float(np.linalg.norm(rh_w - mid_head))
+
+            if d_face < 280.0 and dot_face < -0.15:
+                R_flip = R.from_rotvec(u_rh_along * np.pi).as_matrix().astype(np.float32)
+                G_r_wrist = R_flip @ G_r_wrist
+
+            # Temporal continuity check against previous frame wrist orientation
+            if prev_wrist_rh is not None:
+                R_rel = G_r_wrist @ prev_wrist_rh.T
+                tr = float(np.clip(np.trace(R_rel), -1.0, 3.0))
+                angle = float(np.arccos(np.clip((tr - 1.0) / 2.0, -1.0, 1.0)))
+
+                if angle > np.pi / 2.0:  # > 90 degrees jump
+                    R_flip = R.from_rotvec(u_rh_along * np.pi).as_matrix().astype(np.float32)
+                    G_r_wrist_flipped = R_flip @ G_r_wrist
+
+                    R_rel_flipped = G_r_wrist_flipped @ prev_wrist_rh.T
+                    tr_flipped = float(np.clip(np.trace(R_rel_flipped), -1.0, 3.0))
+                    angle_flipped = float(np.arccos(np.clip((tr_flipped - 1.0) / 2.0, -1.0, 1.0)))
+
+                    if angle_flipped < angle:
+                        G_r_wrist = G_r_wrist_flipped
+                        angle = angle_flipped
+
+                # If still > 60 deg (ambiguous/occluded landmark noise), coast from prev_wrist_rh:
+                if angle > np.deg2rad(60.0):
+                    slerp_t = float(np.deg2rad(45.0) / angle)
+                    r_rel_rotvec = R.from_matrix(G_r_wrist @ prev_wrist_rh.T).as_rotvec()
+                    G_r_wrist = R.from_rotvec(r_rel_rotvec * slerp_t).as_matrix().astype(np.float32) @ prev_wrist_rh
+
+            # Forearm pronation/supination coupling:
+            # Derive dorsal normal directly from continuous G_r_wrist (rest dorsal is +Y)
+            v_r_dorsal_cont = G_r_wrist @ np.array([0.0, 1.0, 0.0], dtype=np.float32)
+            v_r_dorsal = v_r_dorsal_cont - np.dot(v_r_dorsal_cont, u_r_forearm) * u_r_forearm
+            if np.linalg.norm(v_r_dorsal) > 0.1:
+                v_r_dorsal = normalize_vector(v_r_dorsal)
+                n_r_arm_rolled = normalize_vector(0.45 * n_r_arm + 0.55 * v_r_dorsal)
+            else:
+                n_r_arm_rolled = n_r_arm
+        else:
+            n_r_arm_rolled = n_r_arm
+
+        # Rigid 3D basis for forearm
+        u_r_fore_perp = normalize_vector(np.cross(u_r_forearm, n_r_arm_rolled))
+        F_target_r_el = np.column_stack([u_r_forearm, n_r_arm_rolled, u_r_fore_perp])
+        b_r_el_rest = self.rest_bones["r_elbow"]
+        u_r_fore_perp_rest = normalize_vector(np.cross(b_r_el_rest, n_sh_rest))
+        F_rest_r_el = np.column_stack([b_r_el_rest, n_sh_rest, u_r_fore_perp_rest])
+        G_r_elbow = F_target_r_el @ F_rest_r_el.T
+
+        if not has_rh_orient:
+            G_r_wrist = G_r_elbow.copy()
+
+        # --- LEFT ARM & WRIST ---
+        u_l_upper = normalize_vector(body[13] - body[11])   # L_sh -> L_el
+        u_l_forearm = normalize_vector(body[15] - body[13]) # L_el -> L_wr
+
+        l_bend_cross = np.cross(u_l_forearm, u_l_upper)
+        l_bend_norm = np.linalg.norm(l_bend_cross)
+        if l_bend_norm > 0.05:
+            n_l_arm = l_bend_cross / l_bend_norm
+        else:
+            n_l_arm = np.array([0.0, 1.0, 0.0], dtype=np.float32)
+
+        # Rigid 3D basis for upper arm
+        u_l_up_perp = normalize_vector(np.cross(n_l_arm, u_l_upper))
+        F_target_l_sh = np.column_stack([u_l_upper, n_l_arm, u_l_up_perp])
+        b_l_sh_rest = self.rest_bones["l_shoulder"]
+        u_l_up_perp_rest = normalize_vector(np.cross(n_sh_rest, b_l_sh_rest))
+        F_rest_l_sh = np.column_stack([b_l_sh_rest, n_sh_rest, u_l_up_perp_rest])
+        G_l_shoulder = F_target_l_sh @ F_rest_l_sh.T
+
+        # Left Hand 3D Orientation Frame
+        lh_w = lh[0]
+        lh_idx = lh[5]
+        lh_mid = lh[9]
+        lh_pnk = lh[17]
+
+        lh_along = lh_mid - lh_w
+        has_lh_orient = np.linalg.norm(lh_along) > 1e-4
+        if has_lh_orient:
+            u_lh_along = normalize_vector(lh_along)
+            u_lh_pi = normalize_vector(lh_idx - lh_pnk)     # pinky to index (+Z)
+            u_lh_norm = normalize_vector(np.cross(u_lh_pi, u_lh_along)) # dorsal (+Y)
+            u_lh_across = normalize_vector(np.cross(u_lh_along, u_lh_norm))
+            u_lh_norm = normalize_vector(np.cross(u_lh_across, u_lh_along))
+
+            F_target_lh = np.column_stack([u_lh_along, u_lh_across, u_lh_norm])
+            G_l_wrist = F_target_lh @ self.F_rest_lh.T
+
+            # Temporal continuity check against previous frame wrist orientation
+            if prev_wrist_lh is not None:
+                R_rel = G_l_wrist @ prev_wrist_lh.T
+                tr = float(np.clip(np.trace(R_rel), -1.0, 3.0))
+                angle = float(np.arccos(np.clip((tr - 1.0) / 2.0, -1.0, 1.0)))
+
+                if angle > np.pi / 2.0:
+                    R_flip = R.from_rotvec(u_lh_along * np.pi).as_matrix().astype(np.float32)
+                    G_l_wrist_flipped = R_flip @ G_l_wrist
+
+                    R_rel_flipped = G_l_wrist_flipped @ prev_wrist_lh.T
+                    tr_flipped = float(np.clip(np.trace(R_rel_flipped), -1.0, 3.0))
+                    angle_flipped = float(np.arccos(np.clip((tr_flipped - 1.0) / 2.0, -1.0, 1.0)))
+
+                    if angle_flipped < angle:
+                        G_l_wrist = G_l_wrist_flipped
+                        angle = angle_flipped
+
+                # If still > 60 deg (ambiguous/occluded landmark noise), coast from prev_wrist_lh:
+                if angle > np.deg2rad(60.0):
+                    slerp_t = float(np.deg2rad(45.0) / angle)
+                    r_rel_rotvec = R.from_matrix(G_l_wrist @ prev_wrist_lh.T).as_rotvec()
+                    G_l_wrist = R.from_rotvec(r_rel_rotvec * slerp_t).as_matrix().astype(np.float32) @ prev_wrist_lh
+
+            # Forearm pronation/supination coupling:
+            # Derive dorsal normal directly from continuous G_l_wrist
+            v_l_dorsal_cont = G_l_wrist @ np.array([0.0, 1.0, 0.0], dtype=np.float32)
+            v_l_dorsal = v_l_dorsal_cont - np.dot(v_l_dorsal_cont, u_l_forearm) * u_l_forearm
+            if np.linalg.norm(v_l_dorsal) > 0.1:
+                v_l_dorsal = normalize_vector(v_l_dorsal)
+                n_l_arm_rolled = normalize_vector(0.45 * n_l_arm + 0.55 * v_l_dorsal)
+            else:
+                n_l_arm_rolled = n_l_arm
+        else:
+            n_l_arm_rolled = n_l_arm
+
+        # Rigid 3D basis for forearm
+        u_l_fore_perp = normalize_vector(np.cross(n_l_arm_rolled, u_l_forearm))
+        F_target_l_el = np.column_stack([u_l_forearm, n_l_arm_rolled, u_l_fore_perp])
+        b_l_el_rest = self.rest_bones["l_elbow"]
+        u_l_fore_perp_rest = normalize_vector(np.cross(n_sh_rest, b_l_el_rest))
+        F_rest_l_el = np.column_stack([b_l_el_rest, n_sh_rest, u_l_fore_perp_rest])
+        G_l_elbow = F_target_l_el @ F_rest_l_el.T
+
+        if not has_lh_orient:
+            G_l_wrist = G_l_elbow.copy()
 
         # ======================================================================
-        # 4. LEGS RETARGETING
+        # 5. LOCAL BODY ROTATIONS (21 joints in SMPL-X body_pose)
         # ======================================================================
-        u_l_thigh = normalize_vector(body[25] - body[23])
-        u_l_shin = normalize_vector(body[27] - body[25])
-        u_l_foot = normalize_vector(body[31] - body[27])
-
-        G_l_hip = rotation_between_vectors(self.rest_bones["l_hip"], u_l_thigh)
-        G_l_knee = rotation_between_vectors(self.rest_bones["l_knee"], u_l_shin)
-        G_l_ankle = rotation_between_vectors(self.rest_bones["l_ankle"], u_l_foot)
-
-        u_r_thigh = normalize_vector(body[26] - body[24])
-        u_r_shin = normalize_vector(body[28] - body[26])
-        u_r_foot = normalize_vector(body[32] - body[28])
-
-        G_r_hip = rotation_between_vectors(self.rest_bones["r_hip"], u_r_thigh)
-        G_r_knee = rotation_between_vectors(self.rest_bones["r_knee"], u_r_shin)
-        G_r_ankle = rotation_between_vectors(self.rest_bones["r_ankle"], u_r_foot)
-
-        # ======================================================================
-        # 5. COMPUTE LOCAL BODY ROTATIONS (R = G_parent^T * G_child)
-        # ======================================================================
-        # 21 body joints order in SMPL-X:
         # 1: L_Hip, 2: R_Hip, 3: Spine_1, 4: L_Knee, 5: R_Knee, 6: Spine_2, 7: L_Ankle, 8: R_Ankle,
         # 9: Spine_3, 10: L_Foot, 11: R_Foot, 12: Neck, 13: L_Collar, 14: R_Collar, 15: Head,
         # 16: L_Shoulder, 17: R_Shoulder, 18: L_Elbow, 19: R_Elbow, 20: L_Wrist, 21: R_Wrist
         body_rots = np.zeros((21, 3), dtype=np.float32)
 
-        # Hips (parent 0: pelvis)
-        body_rots[0] = matrix_to_axis_angle(G_pelvis.T @ G_l_hip)        # 1: L_Hip
-        body_rots[1] = matrix_to_axis_angle(G_pelvis.T @ G_r_hip)        # 2: R_Hip
+        # Stable neutral standing base for legs
+        body_rots[0] = np.zeros(3, dtype=np.float32)                     # 1: L_Hip
+        body_rots[1] = np.zeros(3, dtype=np.float32)                     # 2: R_Hip
         body_rots[2] = matrix_to_axis_angle(G_pelvis.T @ G_spine1)       # 3: Spine_1
 
-        # Knees & Ankles
-        body_rots[3] = matrix_to_axis_angle(G_l_hip.T @ G_l_knee)        # 4: L_Knee
-        body_rots[4] = matrix_to_axis_angle(G_r_hip.T @ G_r_knee)        # 5: R_Knee
+        body_rots[3] = np.array([0.02, 0.0, 0.0], dtype=np.float32)     # 4: L_Knee
+        body_rots[4] = np.array([0.02, 0.0, 0.0], dtype=np.float32)     # 5: R_Knee
         body_rots[5] = matrix_to_axis_angle(G_spine1.T @ G_spine2)       # 6: Spine_2
-        body_rots[6] = matrix_to_axis_angle(G_l_knee.T @ G_l_ankle)      # 7: L_Ankle
-        body_rots[7] = matrix_to_axis_angle(G_r_knee.T @ G_r_ankle)      # 8: R_Ankle
-        body_rots[8] = matrix_to_axis_angle(G_spine2.T @ G_spine3)       # 9: Spine_3
-        body_rots[9] = np.zeros(3, dtype=np.float32)                      # 10: L_Foot
-        body_rots[10] = np.zeros(3, dtype=np.float32)                     # 11: R_Foot
 
-        # Neck & Collars (parent 9: Spine_3)
+        body_rots[6] = np.zeros(3, dtype=np.float32)                     # 7: L_Ankle
+        body_rots[7] = np.zeros(3, dtype=np.float32)                     # 8: R_Ankle
+        body_rots[8] = matrix_to_axis_angle(G_spine2.T @ G_spine3)       # 9: Spine_3
+
+        body_rots[9] = np.zeros(3, dtype=np.float32)                     # 10: L_Foot
+        body_rots[10] = np.zeros(3, dtype=np.float32)                    # 11: R_Foot
+
+        # Neck & Head
         body_rots[11] = matrix_to_axis_angle(G_spine3.T @ G_neck)        # 12: Neck
         body_rots[12] = matrix_to_axis_angle(G_spine3.T @ G_l_collar)    # 13: L_Collar
         body_rots[13] = matrix_to_axis_angle(G_spine3.T @ G_r_collar)    # 14: R_Collar
-        body_rots[14] = np.zeros(3, dtype=np.float32)                     # 15: Head
+        body_rots[14] = matrix_to_axis_angle(G_neck.T @ G_head)          # 15: Head
 
         # Shoulders (parent: Collar)
         body_rots[15] = matrix_to_axis_angle(G_l_collar.T @ G_l_shoulder) # 16: L_Shoulder
@@ -543,86 +739,105 @@ class SMPLXRetargeter:
         body_pose = body_rots.flatten()
 
         # ======================================================================
-        # 6. INDEPENDENT FINGER ARTICULATION RETARGETING (15 joints per hand)
+        # 6. HIERARCHICAL FINGER ARTICULATION (15 joints per hand)
         # ======================================================================
-        # Left Hand Fingers (parent: G_l_wrist)
-        # MediaPipe indices:
-        # Thumb: 1, 2, 3, 4
-        # Index: 5, 6, 7, 8
-        # Middle: 9, 10, 11, 12
-        # Ring: 13, 14, 15, 16
-        # Pinky: 17, 18, 19, 20
-        lh_rots = np.zeros((15, 3), dtype=np.float32)
-
-        def retarget_finger(
+        def retarget_hand_finger_chain(
             landmarks: np.ndarray,
             indices: Tuple[int, int, int, int],
             rest_keys: Tuple[str, str, str],
-            parent_G: np.ndarray
+            G_wrist: np.ndarray
         ) -> Tuple[np.ndarray, np.ndarray, np.ndarray]:
+            """
+            Computes hierarchical joint rotations for 3 phalanges of a finger.
+            Transforms world-space bone vectors into hand's rest coordinate system,
+            then calculates sequential local rotations R0, R1, R2.
+            """
             p0, p1, p2, p3 = indices
-            # Bone directions
             u0 = normalize_vector(landmarks[p1] - landmarks[p0])
             u1 = normalize_vector(landmarks[p2] - landmarks[p1])
             u2 = normalize_vector(landmarks[p3] - landmarks[p2])
 
-            G0 = rotation_between_vectors(self.rest_bones[rest_keys[0]], u0)
-            G1 = rotation_between_vectors(self.rest_bones[rest_keys[1]], u1)
-            G2 = rotation_between_vectors(self.rest_bones[rest_keys[2]], u2)
+            # Express observed bone directions in the hand's local rest frame
+            v0 = G_wrist.T @ u0
+            v1 = G_wrist.T @ u1
+            v2 = G_wrist.T @ u2
 
-            r0 = matrix_to_axis_angle(parent_G.T @ G0)
-            r1 = matrix_to_axis_angle(G0.T @ G1)
-            r2 = matrix_to_axis_angle(G1.T @ G2)
+            b0_rest = self.rest_bones[rest_keys[0]]
+            b1_rest = self.rest_bones[rest_keys[1]]
+            b2_rest = self.rest_bones[rest_keys[2]]
+
+            R0 = rotation_between_vectors(b0_rest, v0)
+            R1 = rotation_between_vectors(b1_rest, R0.T @ v1)
+            R2 = rotation_between_vectors(b2_rest, (R0 @ R1).T @ v2)
+
+            r0 = matrix_to_axis_angle(R0)
+            r1 = matrix_to_axis_angle(R1)
+            r2 = matrix_to_axis_angle(R2)
             return r0, r1, r2
 
-        # Index (0, 1, 2)
-        lh_rots[0], lh_rots[1], lh_rots[2] = retarget_finger(
-            lh, (5, 6, 7, 8), ("lh_index1", "lh_index2", "lh_index3"), G_l_wrist
-        )
-        # Middle (3, 4, 5)
-        lh_rots[3], lh_rots[4], lh_rots[5] = retarget_finger(
-            lh, (9, 10, 11, 12), ("lh_middle1", "lh_middle2", "lh_middle3"), G_l_wrist
-        )
-        # Pinky (6, 7, 8)
-        lh_rots[6], lh_rots[7], lh_rots[8] = retarget_finger(
-            lh, (17, 18, 19, 20), ("lh_pinky1", "lh_pinky2", "lh_pinky3"), G_l_wrist
-        )
-        # Ring (9, 10, 11)
-        lh_rots[9], lh_rots[10], lh_rots[11] = retarget_finger(
-            lh, (13, 14, 15, 16), ("lh_ring1", "lh_ring2", "lh_ring3"), G_l_wrist
-        )
-        # Thumb (12, 13, 14)
-        lh_rots[12], lh_rots[13], lh_rots[14] = retarget_finger(
-            lh, (1, 2, 3, 4), ("lh_thumb1", "lh_thumb2", "lh_thumb3"), G_l_wrist
-        )
-        left_hand_pose = lh_rots.flatten()
-
-        # Right Hand Fingers (parent: G_r_wrist)
+        # --- RIGHT HAND FINGERS ---
         rh_rots = np.zeros((15, 3), dtype=np.float32)
-        # Index (0, 1, 2)
-        rh_rots[0], rh_rots[1], rh_rots[2] = retarget_finger(
-            rh, (5, 6, 7, 8), ("rh_index1", "rh_index2", "rh_index3"), G_r_wrist
-        )
-        # Middle (3, 4, 5)
-        rh_rots[3], rh_rots[4], rh_rots[5] = retarget_finger(
-            rh, (9, 10, 11, 12), ("rh_middle1", "rh_middle2", "rh_middle3"), G_r_wrist
-        )
-        # Pinky (6, 7, 8)
-        rh_rots[6], rh_rots[7], rh_rots[8] = retarget_finger(
-            rh, (17, 18, 19, 20), ("rh_pinky1", "rh_pinky2", "rh_pinky3"), G_r_wrist
-        )
-        # Ring (9, 10, 11)
-        rh_rots[9], rh_rots[10], rh_rots[11] = retarget_finger(
-            rh, (13, 14, 15, 16), ("rh_ring1", "rh_ring2", "rh_ring3"), G_r_wrist
-        )
-        # Thumb (12, 13, 14)
-        rh_rots[12], rh_rots[13], rh_rots[14] = retarget_finger(
-            rh, (1, 2, 3, 4), ("rh_thumb1", "rh_thumb2", "rh_thumb3"), G_r_wrist
-        )
+        if np.linalg.norm(rh[9] - rh[0]) > 1e-4:
+            # Index (joints 40, 41, 42 -> slots 0, 1, 2)
+            rh_rots[0], rh_rots[1], rh_rots[2] = retarget_hand_finger_chain(
+                rh, (5, 6, 7, 8), ("rh_idx0", "rh_idx1", "rh_idx2"), G_r_wrist
+            )
+            # Middle (joints 43, 44, 45 -> slots 3, 4, 5)
+            rh_rots[3], rh_rots[4], rh_rots[5] = retarget_hand_finger_chain(
+                rh, (9, 10, 11, 12), ("rh_mid0", "rh_mid1", "rh_mid2"), G_r_wrist
+            )
+            # Pinky (joints 46, 47, 48 -> slots 6, 7, 8)
+            rh_rots[6], rh_rots[7], rh_rots[8] = retarget_hand_finger_chain(
+                rh, (17, 18, 19, 20), ("rh_pnk0", "rh_pnk1", "rh_pnk2"), G_r_wrist
+            )
+            # Ring (joints 49, 50, 51 -> slots 9, 10, 11)
+            rh_rots[9], rh_rots[10], rh_rots[11] = retarget_hand_finger_chain(
+                rh, (13, 14, 15, 16), ("rh_rng0", "rh_rng1", "rh_rng2"), G_r_wrist
+            )
+            # Thumb (joints 52, 53, 54 -> slots 12, 13, 14)
+            rh_rots[12], rh_rots[13], rh_rots[14] = retarget_hand_finger_chain(
+                rh, (1, 2, 3, 4), ("rh_th0", "rh_th1", "rh_th2"), G_r_wrist
+            )
         right_hand_pose = rh_rots.flatten()
 
-        # Translation: Root pelvis remains centered
+        # --- LEFT HAND FINGERS ---
+        lh_rots = np.zeros((15, 3), dtype=np.float32)
+        if np.linalg.norm(lh[9] - lh[0]) > 1e-4:
+            # Index (joints 25, 26, 27 -> slots 0, 1, 2)
+            lh_rots[0], lh_rots[1], lh_rots[2] = retarget_hand_finger_chain(
+                lh, (5, 6, 7, 8), ("lh_idx0", "lh_idx1", "lh_idx2"), G_l_wrist
+            )
+            # Middle (joints 28, 29, 30 -> slots 3, 4, 5)
+            lh_rots[3], lh_rots[4], lh_rots[5] = retarget_hand_finger_chain(
+                lh, (9, 10, 11, 12), ("lh_mid0", "lh_mid1", "lh_mid2"), G_l_wrist
+            )
+            # Pinky (joints 31, 32, 33 -> slots 6, 7, 8)
+            lh_rots[6], lh_rots[7], lh_rots[8] = retarget_hand_finger_chain(
+                lh, (17, 18, 19, 20), ("lh_pnk0", "lh_pnk1", "lh_pnk2"), G_l_wrist
+            )
+            # Ring (joints 34, 35, 36 -> slots 9, 10, 11)
+            lh_rots[9], lh_rots[10], lh_rots[11] = retarget_hand_finger_chain(
+                lh, (13, 14, 15, 16), ("lh_rng0", "lh_rng1", "lh_rng2"), G_l_wrist
+            )
+            # Thumb (joints 37, 38, 39 -> slots 12, 13, 14)
+            lh_rots[12], lh_rots[13], lh_rots[14] = retarget_hand_finger_chain(
+                lh, (1, 2, 3, 4), ("lh_th0", "lh_th1", "lh_th2"), G_l_wrist
+            )
+        left_hand_pose = lh_rots.flatten()
+
+        # Pelvis translation remains centered
         transl = np.zeros(3, dtype=np.float32)
+
+        if return_state:
+            frame_state = {
+                "G_r_wrist": G_r_wrist,
+                "G_l_wrist": G_l_wrist,
+                "G_r_elbow": G_r_elbow,
+                "G_l_elbow": G_l_elbow,
+                "G_r_shoulder": G_r_shoulder,
+                "G_l_shoulder": G_l_shoulder,
+            }
+            return global_orient, body_pose, left_hand_pose, right_hand_pose, transl, frame_state
 
         return global_orient, body_pose, left_hand_pose, right_hand_pose, transl
 
@@ -630,16 +845,17 @@ class SMPLXRetargeter:
         self,
         cleaned_data: Dict[str, Any],
         batch_size: int = 32
-    ) -> Tuple[np.ndarray, Dict[str, Any]]:
+    ) -> Tuple[np.ndarray, Dict[str, Any], Dict[str, Any]]:
         """
-        Retargets all frames and runs SMPL-X forward pass to generate (F, 10475, 3) vertices.
+        Retargets all frames of the sequence and runs SMPL-X forward pass
+        to generate (frames, 10475, 3) vertex animation.
         """
         frames = cleaned_data["frames"]
         body_seq = cleaned_data["body"]
         lh_seq = cleaned_data["left_hand"]
         rh_seq = cleaned_data["right_hand"]
 
-        logger.info(f"Retargeting {frames} frames with full body and 2-hand finger articulation...")
+        logger.info(f"Retargeting {frames} frames with full body and 30-joint finger articulation...")
 
         global_orients = []
         body_poses = []
@@ -647,8 +863,46 @@ class SMPLXRetargeter:
         rh_poses = []
         transls = []
 
+        prev_wrist_rh = None
+        prev_wrist_lh = None
+
         for i in range(frames):
-            go, bp, lhp, rhp, tr = self.retarget_frame(body_seq[i], lh_seq[i], rh_seq[i])
+            body_frame = body_seq[i].copy()
+            lh_frame = lh_seq[i].copy()
+            rh_frame = rh_seq[i].copy()
+
+            # Occlusion-aware contact prior (e.g. for TEACHER):
+            # If left index finger is upright (shaft points upward Y > 0.60) and right hand approaches
+            # within interaction proximity envelope (d < 220 units ~ 0.22m) with tracking uncertainty:
+            lh_upright = False
+            if np.linalg.norm(lh_frame[9] - lh_frame[0]) > 1e-4:
+                idx_vec = lh_frame[8] - lh_frame[5] # index MCP -> index tip
+                if np.linalg.norm(idx_vec) > 1e-4:
+                    idx_dir = normalize_vector(idx_vec)
+                    if idx_dir[1] > 0.60: # upright index finger
+                        lh_upright = True
+
+            if lh_upright and np.linalg.norm(rh_frame[9] - rh_frame[0]) > 1e-4:
+                rh_center = (rh_frame[0] + rh_frame[9]) / 2.0
+                lh_idx_tip = lh_frame[8]
+                d_contact = float(np.linalg.norm(rh_center - lh_idx_tip))
+                if d_contact < 220.0:
+                    # Non-dominant upright index acts as spatial anchor; guide right hand toward contact shaft
+                    w_occ = float(np.clip((220.0 - d_contact) / 120.0, 0.0, 0.65))
+                    target_contact = (lh_frame[5] + lh_frame[8]) / 2.0 # center of index shaft
+                    offset = (target_contact - rh_center) * w_occ
+                    rh_frame += offset
+
+            res = self.retarget_frame(
+                body_frame, lh_frame, rh_frame,
+                prev_wrist_rh=prev_wrist_rh,
+                prev_wrist_lh=prev_wrist_lh,
+                return_state=True
+            )
+            go, bp, lhp, rhp, tr, frame_state = res
+            prev_wrist_rh = frame_state["G_r_wrist"]
+            prev_wrist_lh = frame_state["G_l_wrist"]
+
             global_orients.append(go)
             body_poses.append(bp)
             lh_poses.append(lhp)
@@ -664,7 +918,6 @@ class SMPLXRetargeter:
         logger.info(f"Running SMPL-X forward pass on {self.device}...")
         all_vertices = []
 
-        # Forward pass in batches
         with torch.no_grad():
             for start in range(0, frames, batch_size):
                 end = min(start + batch_size, frames)
@@ -699,9 +952,18 @@ class SMPLXRetargeter:
                 verts_batch = output.vertices.cpu().numpy().astype(np.float32)
                 all_vertices.append(verts_batch)
 
-        vertices = np.concatenate(all_vertices, axis=0) # (frames, 10475, 3)
+        vertices = np.concatenate(all_vertices, axis=0)  # (frames, 10475, 3)
 
-        # Diagnostics & metadata
+        pose_params = {
+            "global_orient": global_orients,
+            "body_pose": body_poses,
+            "left_hand_pose": lh_poses,
+            "right_hand_pose": rh_poses,
+            "transl": transls,
+            "fps": cleaned_data["fps"],
+            "gloss": cleaned_data["gloss"]
+        }
+
         metadata = {
             "source": "BridgeConn Sign Dictionary ISL",
             "gloss": cleaned_data["gloss"],
@@ -714,7 +976,7 @@ class SMPLXRetargeter:
             "face_used": False
         }
 
-        return vertices, metadata
+        return vertices, metadata, pose_params
 
 
 # ==============================================================================
@@ -724,15 +986,16 @@ class SMPLXRetargeter:
 def convert_bridgeconn_sample(
     npz_path: str,
     output_npy_path: Optional[str] = None,
-    output_json_path: Optional[str] = None
-) -> Tuple[str, str]:
+    output_json_path: Optional[str] = None,
+    output_params_npz_path: Optional[str] = None
+) -> Tuple[str, str, str]:
     """
-    Complete end-to-end pipeline:
-    1. Loads sample_1.npz
-    2. Cleans landmarks & normalizes coordinates
-    3. Retargets body and hands to SMPL-X
+    Complete end-to-end retargeting pipeline:
+    1. Loads sample .npz
+    2. Cleans landmarks & normalizes coordinates isotropically
+    3. Retargets body and hands to SMPL-X pose parameters
     4. Evaluates SMPL-X forward pass
-    5. Saves (frames, 10475, 3) .npy and metadata .json
+    5. Saves (frames, 10475, 3) .npy, metadata .json, and pose parameters .npz
     """
     cleaned = clean_and_preprocess_sample(npz_path)
     gloss = cleaned["gloss"]
@@ -744,9 +1007,16 @@ def convert_bridgeconn_sample(
         output_npy_path = os.path.join(out_dir, f"{gloss}.npy")
     if output_json_path is None:
         output_json_path = os.path.join(out_dir, f"{gloss}.json")
+    if output_params_npz_path is None:
+        output_params_npz_path = os.path.join(out_dir, f"{gloss}_smplx_params.npz")
+
+    # Ensure parent directories exist
+    os.makedirs(os.path.dirname(os.path.abspath(output_npy_path)), exist_ok=True)
+    os.makedirs(os.path.dirname(os.path.abspath(output_json_path)), exist_ok=True)
+    os.makedirs(os.path.dirname(os.path.abspath(output_params_npz_path)), exist_ok=True)
 
     retargeter = SMPLXRetargeter()
-    vertices, metadata = retargeter.retarget_sequence(cleaned)
+    vertices, metadata, pose_params = retargeter.retarget_sequence(cleaned)
 
     # Save NPY
     np.save(output_npy_path, vertices)
@@ -757,9 +1027,24 @@ def convert_bridgeconn_sample(
         json.dump(metadata, f, indent=4)
     logger.info(f"Saved animation metadata to: {output_json_path}")
 
-    return output_npy_path, output_json_path
+    # Save SMPL-X pose parameters NPZ
+    np.savez_compressed(
+        output_params_npz_path,
+        global_orient=pose_params["global_orient"],
+        body_pose=pose_params["body_pose"],
+        left_hand_pose=pose_params["left_hand_pose"],
+        right_hand_pose=pose_params["right_hand_pose"],
+        transl=pose_params["transl"],
+        fps=pose_params["fps"],
+        gloss=pose_params["gloss"]
+    )
+    logger.info(f"Saved SMPL-X pose parameters to: {output_params_npz_path}")
+
+    return output_npy_path, output_json_path, output_params_npz_path
 
 
 if __name__ == "__main__":
     test_npz = os.path.join(BASE_DIR, "bridgeconn_samples", "sample_1.npz")
+    if not os.path.exists(test_npz):
+        test_npz = r"D:\SignAuraData\BridgeConn\extracted\poses\1160_drink.npz"
     convert_bridgeconn_sample(test_npz)

@@ -61,10 +61,14 @@ def test_simple_negation():
 
 
 def test_phrase_preservation():
-    # 2-word direct phrases should not be distorted
+    # Direct phrases of any length must not be distorted or truncated
+    assert ISLGrammarTransformer.transform_tokens(["good"]) == ["good"]
     assert ISLGrammarTransformer.transform_tokens(["good", "drink"]) == ["good", "drink"]
-    assert ISLGrammarTransformer.transform_tokens(["help", "teacher"]) == ["help", "teacher"]
-    assert ISLGrammarTransformer.transform_tokens(["go", "drink", "help"]) == ["go", "drink", "help"]
+    assert ISLGrammarTransformer.transform_tokens(["good", "drink", "help"]) == ["good", "drink", "help"]
+    assert ISLGrammarTransformer.transform_tokens(["good", "drink", "help", "teacher"]) == ["good", "drink", "help", "teacher"]
+    assert ISLGrammarTransformer.transform_tokens(["good", "drink", "help", "teacher", "go"]) == ["good", "drink", "help", "teacher", "go"]
+    assert ISLGrammarTransformer.transform_tokens(["good", "drink", "help", "teacher", "go", "ishbosheth"]) == ["good", "drink", "help", "teacher", "go", "ishbosheth"]
+    assert ISLGrammarTransformer.transform_tokens(["good", "drink", "help", "teacher", "go", "ishbosheth", "sample_1"]) == ["good", "drink", "help", "teacher", "go", "ishbosheth", "sample_1"]
 
 
 @pytest.mark.asyncio

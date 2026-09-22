@@ -121,10 +121,12 @@ class ISLGrammarTransformer:
             else:
                 core_tokens.append((w, tag))
 
-        # If no grammar markers (time/question/negation/pronoun) and short phrase (e.g. 'good drink', 'help teacher', 'go drink help'),
-        # preserve direct lexical sequence.
-        has_special_markers = bool(time_tokens or question_tokens or negation_tokens or any(tag == "PRONOUN" for _, tag in core_tokens))
-        if not has_special_markers and len(clean_words) <= 3:
+        # If no grammatical rearrangement markers (time/question/negation/pronoun),
+        # preserve the direct lexical sequence regardless of word count (e.g. 'good drink help teacher go ishbosheth sample_1').
+        has_special_markers = bool(
+            time_tokens or question_tokens or negation_tokens or any(tag == "PRONOUN" for _, tag in core_tokens)
+        )
+        if not has_special_markers:
             return clean_words
 
         # 2. Reorder core tokens (Subject - Object - Verb / Topic-Comment)

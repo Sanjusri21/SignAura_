@@ -114,15 +114,46 @@ export const AssistantView: React.FC<AssistantViewProps> = ({
     }
   };
 
+  const recognitionRef = useRef<any>(null);
+
   const toggleRecording = () => {
     if (isRecording) {
+      if (recognitionRef.current) {
+        try { recognitionRef.current.stop(); } catch {}
+      }
       setIsRecording(false);
-    } else {
+      return;
+    }
+
+    const SpeechRecognition = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
+    if (!SpeechRecognition) {
       setIsRecording(true);
       setTimeout(() => {
         setIsRecording(false);
-        setInputValue('How do I sign emergency assistance in ISL?');
-      }, 2000);
+        setInputValue('Help me translate teacher in ISL');
+      }, 1500);
+      return;
+    }
+
+    try {
+      const recognition = new SpeechRecognition();
+      recognition.lang = 'en-IN';
+      recognition.continuous = false;
+      recognition.interimResults = false;
+
+      recognition.onstart = () => setIsRecording(true);
+      recognition.onresult = (event: any) => {
+        const transcript = event.results[0][0].transcript;
+        if (transcript) setInputValue(transcript);
+        setIsRecording(false);
+      };
+      recognition.onerror = () => setIsRecording(false);
+      recognition.onend = () => setIsRecording(false);
+
+      recognitionRef.current = recognition;
+      recognition.start();
+    } catch (e) {
+      setIsRecording(false);
     }
   };
 

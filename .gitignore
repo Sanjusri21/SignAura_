@@ -96,6 +96,17 @@ Backend/tools/ffmpeg/
 Thumbs.db
 .vscode/
 .idea/*.timestamp-*.mjs
+# =========================
+# Archives & Databases
+# =========================
+*.tar
+*.tar.gz
+*.zip
+*.db
+*.sqlite
+*.sqlite3
+
 SignAvatars/datasets/
 SignAvatars/visualizer/
 *.timestamp-*.mjs
+scratch/

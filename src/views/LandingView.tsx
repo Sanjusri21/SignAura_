@@ -21,15 +21,15 @@ interface LandingViewProps {
 }
 
 export const LandingView: React.FC<LandingViewProps> = ({ onNavigate }) => {
-  const [demoSign, setDemoSign] = useState<string>('WELCOME');
+  const [demoSign, setDemoSign] = useState<string>('GOOD');
   const [isDemoPlaying, setIsDemoPlaying] = useState<boolean>(true);
 
   const quickSigns = [
-    { label: 'Welcome', sign: 'WELCOME' },
-    { label: 'Hello', sign: 'HELLO' },
-    { label: 'Thank You', sign: 'THANK_YOU' },
+    { label: 'Good', sign: 'GOOD' },
+    { label: 'Drink', sign: 'DRINK' },
+    { label: 'Go', sign: 'GO' },
     { label: 'Help', sign: 'HELP' },
-    { label: 'India', sign: 'INDIA' },
+    { label: 'Teacher', sign: 'TEACHER' },
   ];
 
   const features = [

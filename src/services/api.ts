@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { VideoProject, GlossToken, ChatMessage, ISLDictionaryItem, ISLDialect } from '../types';
 
-const API_BASE_URL = (import.meta as any).env?.VITE_API_URL || 'http://localhost:8000';
+const API_BASE_URL = (import.meta as any).env?.VITE_API_URL || 'http://127.0.0.1:8000';
 
 export const apiClient = axios.create({
   baseURL: API_BASE_URL,
@@ -76,6 +76,42 @@ export interface SignAvatarResponse {
   fps?: number;
   vertices?: number;
   components?: number;
+}
+
+export interface ISignMatchResult {
+  matched: boolean;
+  uid?: string;
+  video_id?: string;
+  sequence_number?: number;
+  text?: string;
+  split?: string;
+  source?: string;
+  score: number;
+  pose_available: boolean;
+  video_available: boolean;
+  direct_smplx_available: boolean;
+}
+
+export interface ISignGlossMapping {
+  word: string;
+  gloss: string;
+  classification: 'EXACT_BRIDGECONN_MATCH' | 'VARIANT_BRIDGECONN_MATCH' | 'PARTIAL_MATCH' | 'NO_BRIDGECONN_MATCH';
+  bridgeconn_gloss?: string;
+  smplx_available: boolean;
+}
+
+export interface ISignSentenceResponse {
+  available: boolean;
+  input_text: string;
+  isign_match?: ISignMatchResult;
+  glosses: string[];
+  bridgeconn_matches: ISignGlossMapping[];
+  available_signs: string[];
+  missing_signs: string[];
+  animation_available: boolean;
+  animation_url?: string;
+  source: string;
+  message: string;
 }
 
 export const signAuraApi = {
@@ -190,6 +226,22 @@ export const signAuraApi = {
       text,
       dialect,
     });
+    return res.data;
+  },
+
+  // iSign Benchmark Dataset Integration
+  matchISign: async (text: string): Promise<ISignSentenceResponse> => {
+    const res = await apiClient.post<ISignSentenceResponse>('/api/isign/match', { text });
+    return res.data;
+  },
+
+  searchISign: async (query: string, limit = 10): Promise<{ query: string; count: number; results: any[] }> => {
+    const res = await apiClient.get(`/api/isign/search/${encodeURIComponent(query)}?limit=${limit}`);
+    return res.data;
+  },
+
+  getISignItem: async (uid: string): Promise<any> => {
+    const res = await apiClient.get(`/api/isign/item/${encodeURIComponent(uid)}`);
     return res.data;
   },
 };

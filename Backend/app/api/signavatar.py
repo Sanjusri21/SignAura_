@@ -4,7 +4,7 @@ Exposes BridgeConn ISL 3D avatar animations and metadata to SignAura clients.
 """
 
 from fastapi import APIRouter, HTTPException, Response
-from typing import Dict, Any, List
+from typing import Dict, Any, List, Optional
 from pydantic import BaseModel, Field, field_validator
 
 from app.services.signavatar_client import signavatar_client
@@ -41,19 +41,26 @@ class GlossSequenceRequest(BaseModel):
 
 
 @router.get("/motions")
-async def list_available_motions() -> Dict[str, Any]:
-    """List all available BridgeConn ISL 3D animations."""
-    motions = await signavatar_client.get_available_motions()
-    return {
-        "motions": motions,
-        "count": len(motions)
-    }
+async def list_available_motions(
+    page: Optional[int] = None,
+    page_size: int = 50,
+    search: Optional[str] = None,
+    hand_filter: Optional[str] = None
+) -> Dict[str, Any]:
+    """List available BridgeConn ISL 3D animations with pagination, search, and hand filter."""
+    result = await signavatar_client.get_available_motions(
+        page=page,
+        page_size=page_size,
+        search=search,
+        hand_filter=hand_filter
+    )
+    return result
 
 
 @router.get("/search/{query}")
-async def search_motions(query: str) -> Dict[str, Any]:
-    """Search available BridgeConn ISL animations by keyword."""
-    matches = await signavatar_client.search_motion(query)
+async def search_motions(query: str, limit: int = 50) -> Dict[str, Any]:
+    """Search available BridgeConn ISL animations by keyword across the entire vocabulary."""
+    matches = await signavatar_client.search_motion(query, limit=limit)
     return {
         "query": query,
         "matches": matches,

@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState, useCallback } from 'react';
 import * as THREE from 'three';
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import {
   Play,
   Pause,
@@ -11,22 +12,84 @@ import {
   Maximize2,
   Minimize2,
   Loader2,
-  AlertCircle
+  AlertCircle,
+  Shirt,
+  Compass,
+  Eye
 } from 'lucide-react';
 
 export type CameraPreset = 'front' | 'perspective' | 'hands' | 'top';
 export type LightingPreset = 'neon' | 'studio' | 'cyber' | 'sunset';
+
+const VALID_CAMERA_PRESETS: readonly CameraPreset[] = ['front', 'perspective', 'hands', 'top'] as const;
+const VALID_LIGHTING_PRESETS: readonly LightingPreset[] = ['studio', 'neon', 'cyber', 'sunset'] as const;
+
+function normalizeCameraPreset(preset?: string | null): CameraPreset {
+  if (preset && (VALID_CAMERA_PRESETS as readonly string[]).includes(preset)) {
+    return preset as CameraPreset;
+  }
+  return 'front';
+}
+
+function normalizeLightingPreset(preset?: string | null): LightingPreset {
+  if (preset && (VALID_LIGHTING_PRESETS as readonly string[]).includes(preset)) {
+    return preset as LightingPreset;
+  }
+  return 'studio';
+}
+
+interface LightingColors {
+  ambient: number;
+  dir: number;
+  leftFill: number;
+  rightFill: number;
+}
+
+const LIGHTING_PRESET_COLORS: Record<LightingPreset, LightingColors> = {
+  studio: {
+    ambient: 0xffffff,
+    dir: 0xffffff,
+    leftFill: 0xe2e8f0,
+    rightFill: 0xffffff
+  },
+  neon: {
+    ambient: 0xffffff,
+    dir: 0xffffff,
+    leftFill: 0x38bdf8,
+    rightFill: 0x818cf8
+  },
+  cyber: {
+    ambient: 0x06b6d4,
+    dir: 0xffffff,
+    leftFill: 0xec4899,
+    rightFill: 0x10b981
+  },
+  sunset: {
+    ambient: 0xf59e0b,
+    dir: 0xffffff,
+    leftFill: 0xf43f5e,
+    rightFill: 0x8b5cf6
+  }
+};
 
 export const SMPLX_VERTEX_COUNT = 10475;
 export const SMPLX_FACE_COUNT = 20908;
 export const DEFAULT_MOTION_FPS = 20;
 const SIGNAVATAR_API_URL = 'http://127.0.0.1:8001';
 
+interface TopologyGroup {
+  start: number;
+  count: number;
+  materialIndex: number;
+  name?: string;
+}
+
 interface TopologyData {
   vertexCount?: number;
   vertices?: number;
   faceCount?: number;
   faces: number[][] | number[];
+  groups?: TopologyGroup[];
 }
 
 interface NormalizedMotion {
@@ -39,16 +102,34 @@ interface NormalizedMotion {
 
 // Map verified ISL signs to authentic BridgeConn motion keys
 const SIGN_TO_MOTION_MAP: Record<string, string> = {
+  WELCOME: 'welcome',
   GOOD: 'good',
   DRINK: 'drink',
   GO: 'go',
   HELP: 'help_2',
+  HELP_2: 'help_2',
   TEACHER: 'teacher_2',
+  TEACHER_2: 'teacher_2',
   ISHBOSHETH: 'ishbosheth',
   SAMPLE_1: 'sample_1',
   WELCOME_HELP_YOU: 'welcome_help_you',
   BOOK_DRINK_HOME: 'book_drink_home',
 };
+
+// Known authentic motion keys in inventory
+const AUTHENTIC_MOTION_KEYS = new Set([
+  'good',
+  'drink',
+  'go',
+  'help',
+  'help_2',
+  'teacher',
+  'teacher_2',
+  'ishbosheth',
+  'sample_1',
+  'welcome_help_you',
+  'book_drink_home',
+]);
 
 /** Parses the backend's globally converted and normalized Float32 motion binary. */
 function processAndNormalizeMotion(
@@ -112,6 +193,10 @@ export interface SignAvatar3DProps {
   motionUrl?: string;
   motionSegments?: { word: string; frames: number }[];
   motionFps?: number;
+  cameraPreset?: CameraPreset;
+  onCameraPresetChange?: (preset: CameraPreset) => void;
+  lightingPreset?: LightingPreset;
+  onLightingPresetChange?: (preset: LightingPreset) => void;
   height?: string;
   className?: string;
 }
@@ -133,7 +218,12 @@ export const SignAvatar3D: React.FC<SignAvatar3DProps> = ({
   motionUrl = '',
   motionSegments = [],
   motionFps = DEFAULT_MOTION_FPS,
+  cameraPreset: propCameraPreset,
+  onCameraPresetChange,
+  lightingPreset: propLightingPreset,
+  onLightingPresetChange,
   availableSigns = [
+    { label: 'Welcome', sign: 'WELCOME' },
     { label: 'Good', sign: 'GOOD' },
     { label: 'Drink', sign: 'DRINK' },
     { label: 'Go', sign: 'GO' },
@@ -149,8 +239,10 @@ export const SignAvatar3D: React.FC<SignAvatar3DProps> = ({
 }) => {
   // Dedicated mount container for Three.js canvas only (no React children inside)
   const mountRef = useRef<HTMLDivElement>(null);
-  const [cameraPreset, setCameraPreset] = useState<CameraPreset>('front');
-  const [lightingPreset, setLightingPreset] = useState<LightingPreset>('studio');
+  const [cameraPreset, setCameraPreset] = useState<CameraPreset>(normalizeCameraPreset(propCameraPreset));
+  const [lightingPreset, setLightingPreset] = useState<LightingPreset>(normalizeLightingPreset(propLightingPreset));
+  const cameraPresetRef = useRef<CameraPreset>(normalizeCameraPreset(propCameraPreset));
+  const lightingPresetRef = useRef<LightingPreset>(normalizeLightingPreset(propLightingPreset));
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [internalSpeed, setInternalSpeed] = useState(playbackSpeed);
   const [selectedSign, setSelectedSign] = useState(currentSign);
@@ -178,40 +270,115 @@ export const SignAvatar3D: React.FC<SignAvatar3DProps> = ({
   const frameElapsedRef = useRef<number>(0);
   const currentFrameRef = useRef<number>(-1);
 
-  const frameAvatarFromFront = () => {
+  // OrbitControls & Visual Customization
+  const controlsRef = useRef<OrbitControls | null>(null);
+  const [currentDisplayFrame, setCurrentDisplayFrame] = useState<number>(0);
+  const [outfit, setOutfit] = useState<'blue_shirt' | 'white_shirt'>('blue_shirt');
+  const shirtMaterialRef = useRef<THREE.MeshStandardMaterial | null>(null);
+
+  const frameAvatarFromFront = useCallback(() => {
     const camera = cameraRef.current;
     const avatar = avatarGroupRef.current;
+    const controls = controlsRef.current;
     if (!camera || !avatar) return;
 
-    const box = new THREE.Box3().setFromObject(avatar);
-    console.log('AVATAR BOUNDS', box.min, box.max);
-    const size = box.getSize(new THREE.Vector3());
-    const center = box.getCenter(new THREE.Vector3());
-    const verticalExtent = Math.max(size.y, 0.1);
-    const horizontalExtent = Math.max(size.x, 0.1);
-    const verticalDistance = verticalExtent / (2 * Math.tan(THREE.MathUtils.degToRad(camera.fov / 2)));
-    const horizontalDistance = horizontalExtent / (2 * Math.tan(THREE.MathUtils.degToRad(camera.fov / 2)) * Math.max(camera.aspect, 0.1));
-    const distance = Math.max(verticalDistance, horizontalDistance) * 1.2;
-    camera.position.set(0, 1.55, Math.max(distance, 4.5));
-    camera.lookAt(0, center.y, 0);
+    // SMPL-X Avatar centered at (0,0,0). Upper body signing space centered at Y ~ 0.18.
+    camera.position.set(0, 0.22, 1.85);
+    if (controls) {
+      controls.target.set(0, 0.18, 0);
+      controls.update();
+    } else {
+      camera.lookAt(0, 0.18, 0);
+    }
     camera.updateProjectionMatrix();
-    console.log('[SignAvatar3D] CAMERA', {
-      position: camera.position.toArray(),
-      target: [0, center.y, 0],
-      fov: camera.fov,
-    });
-    console.log('[SignAvatar3D] AVATAR', {
-      position: avatar.position.toArray(),
-      rotation: avatar.rotation.toArray(),
-      scale: avatar.scale.toArray(),
-    });
-    console.log('[SignAvatar3D] BOUNDS', {
-      min: box.min.toArray(),
-      max: box.max.toArray(),
-      center: center.toArray(),
-      size: size.toArray(),
-    });
-  };
+  }, []);
+
+  const handleResetCamera = useCallback(() => {
+    frameAvatarFromFront();
+    setCameraPreset('front');
+    onCameraPresetChange?.('front');
+  }, [frameAvatarFromFront, onCameraPresetChange]);
+
+  /**
+   * CAMERA PRESETS (Front, Perspective, Hands, Top) with OrbitControls target sync
+   */
+  const applyCameraPreset = useCallback((presetInput?: CameraPreset | string | null) => {
+    const preset = normalizeCameraPreset(presetInput);
+    cameraPresetRef.current = preset;
+    setCameraPreset(preset);
+    onCameraPresetChange?.(preset);
+    const camera = cameraRef.current;
+    const avatar = avatarGroupRef.current;
+    const controls = controlsRef.current;
+    if (!camera || !avatar) return;
+
+    if (preset === 'front') {
+      camera.position.set(0, 0.22, 1.85);
+      if (controls) controls.target.set(0, 0.18, 0);
+      else camera.lookAt(0, 0.18, 0);
+      avatar.rotation.set(0, 0, 0);
+    } else if (preset === 'perspective') {
+      camera.position.set(0.48, 0.24, 1.80);
+      if (controls) controls.target.set(0, 0.18, 0);
+      else camera.lookAt(0, 0.18, 0);
+      avatar.rotation.set(0, 0, 0);
+    } else if (preset === 'hands') {
+      // Zoomed in directly on upper torso, face, and hands
+      camera.position.set(0, 0.20, 1.30);
+      if (controls) controls.target.set(0, 0.18, 0);
+      else camera.lookAt(0, 0.18, 0);
+      avatar.rotation.set(0, 0, 0);
+    } else if (preset === 'top') {
+      camera.position.set(0, 0.55, 1.75);
+      if (controls) controls.target.set(0, 0.18, 0);
+      else camera.lookAt(0, 0.18, 0);
+      avatar.rotation.set(0, 0, 0);
+    }
+    if (controls) controls.update();
+    camera.updateProjectionMatrix();
+  }, [onCameraPresetChange]);
+
+  /**
+   * LIGHTING PRESETS
+   */
+  const applyLightingPreset = useCallback((presetInput?: LightingPreset | string | null) => {
+    const preset = normalizeLightingPreset(presetInput);
+    lightingPresetRef.current = preset;
+    setLightingPreset(preset);
+    onLightingPresetChange?.(preset);
+
+    const lights = lightsRef.current;
+    if (!lights) return;
+
+    const ambient = lights.ambient as THREE.AmbientLight | undefined;
+    const dir = lights.dir as THREE.DirectionalLight | undefined;
+    const leftFill = lights.leftFill as THREE.PointLight | undefined;
+    const rightFill = lights.rightFill as THREE.PointLight | undefined;
+
+    // Strict defensive check: verify all light instances and their .color property exist before accessing
+    if (!ambient?.color || !dir?.color || !leftFill?.color || !rightFill?.color) {
+      return;
+    }
+
+    const colors = LIGHTING_PRESET_COLORS[preset] ?? LIGHTING_PRESET_COLORS.studio;
+    ambient.color.setHex(colors.ambient);
+    dir.color.setHex(colors.dir);
+    leftFill.color.setHex(colors.leftFill);
+    rightFill.color.setHex(colors.rightFill);
+  }, [onLightingPresetChange]);
+
+  // Synchronize incoming camera & lighting preset props defensively
+  useEffect(() => {
+    if (propCameraPreset !== undefined) {
+      applyCameraPreset(propCameraPreset);
+    }
+  }, [propCameraPreset, applyCameraPreset]);
+
+  useEffect(() => {
+    if (propLightingPreset !== undefined) {
+      applyLightingPreset(propLightingPreset);
+    }
+  }, [propLightingPreset, applyLightingPreset]);
 
   // Synchronize playback & sign props to refs without re-rendering Three scene
   useEffect(() => {
@@ -227,6 +394,46 @@ export const SignAvatar3D: React.FC<SignAvatar3DProps> = ({
     currentSignRef.current = currentSign;
     setSelectedSign(currentSign);
   }, [currentSign]);
+
+  // Synchronize outfit changes to shirt material in real-time
+  useEffect(() => {
+    if (shirtMaterialRef.current) {
+      if (outfit === 'white_shirt') {
+        shirtMaterialRef.current.color.setHex(0xf8fafc);
+        shirtMaterialRef.current.roughness = 0.70;
+      } else {
+        shirtMaterialRef.current.color.setHex(0x2563eb);
+        shirtMaterialRef.current.roughness = 0.76;
+      }
+      shirtMaterialRef.current.needsUpdate = true;
+    }
+  }, [outfit]);
+
+  // Scrubbable frame seek handler for interactive timeline
+  const handleSeekFrame = useCallback((frameTarget: number) => {
+    const motion = motionDataRef.current;
+    const geom = geometryRef.current;
+    if (!motion || !geom) return;
+
+    const validFrame = Math.max(0, Math.min(frameTarget, motion.frames - 1));
+    frameElapsedRef.current = validFrame;
+    currentFrameRef.current = validFrame;
+    setCurrentDisplayFrame(validFrame);
+
+    const offset = validFrame * SMPLX_VERTEX_COUNT * 3;
+    const posAttr = geom.getAttribute('position') as THREE.BufferAttribute;
+    if (posAttr) {
+      (posAttr.array as Float32Array).set(
+        motion.data.subarray(offset, offset + SMPLX_VERTEX_COUNT * 3)
+      );
+      posAttr.needsUpdate = true;
+      geom.computeVertexNormals();
+    }
+  }, []);
+
+  const handleRestartAnimation = useCallback(() => {
+    handleSeekFrame(0);
+  }, [handleSeekFrame]);
 
   /**
    * 1. LOAD TOPOLOGY (SMPL-X 10475 Vertices & 20908 Triangular Faces)
@@ -266,6 +473,12 @@ export const SignAvatar3D: React.FC<SignAvatar3DProps> = ({
         const geom = geometryRef.current;
         if (geom) {
           geom.setIndex(new THREE.BufferAttribute(new Uint32Array(facesArray), 1));
+          geom.clearGroups();
+          if (topology.groups && Array.isArray(topology.groups)) {
+            for (const g of topology.groups) {
+              geom.addGroup(g.start, g.count, g.materialIndex);
+            }
+          }
           geom.computeVertexNormals();
         }
 
@@ -306,23 +519,25 @@ export const SignAvatar3D: React.FC<SignAvatar3DProps> = ({
     let cancelled = false;
 
     // Resolve motion URL
-    const mapped = SIGN_TO_MOTION_MAP[selectedSign.toUpperCase()];
-    if (!motionUrl && !mapped) {
-      console.warn(`[SignAvatar3D] No real animation available for sign: ${selectedSign}`);
-      setModelStatus('error');
-      setModelError(`Sign animation unavailable for: ${selectedSign.toUpperCase()}`);
-      return;
+    const rawSign = (selectedSign || '').trim();
+    const upperSign = rawSign.toUpperCase();
+    const mapped = SIGN_TO_MOTION_MAP[upperSign] || (rawSign ? rawSign.toLowerCase() : '');
+
+    let targetUrl = motionUrl;
+
+    if (!targetUrl) {
+      if (!mapped) return;
+      targetUrl = `${SIGNAVATAR_API_URL}/motion/${mapped}`;
     }
 
-    let targetUrl = motionUrl || `${SIGNAVATAR_API_URL}/motion/${mapped}`;
     if (targetUrl.startsWith('/motion/')) {
       targetUrl = `${SIGNAVATAR_API_URL}${targetUrl}`;
     } else if (targetUrl.startsWith('/api/')) {
       targetUrl = `http://127.0.0.1:8000${targetUrl}`;
     }
 
-    console.log('[SignAvatar3D] Selected sign:', selectedSign.toUpperCase());
-    console.log('[SignAvatar3D] Motion URL:', targetUrl);
+    console.log('[SignAvatar3D] Selected sign:', upperSign || rawSign);
+    console.log('[SignAvatar3D] Target Motion URL:', targetUrl);
 
     setModelStatus('loading');
     setModelError('');
@@ -330,6 +545,18 @@ export const SignAvatar3D: React.FC<SignAvatar3DProps> = ({
     fetch(targetUrl)
       .then(async (res) => {
         if (!res.ok) {
+          if (res.status === 404) {
+            let errorMsg = `No matching BridgeConn motion available for: "${rawSign || selectedSign}"`;
+            try {
+              const errJson = await res.json();
+              if (errJson?.detail?.error) errorMsg = errJson.detail.error;
+              else if (errJson?.detail?.reason) errorMsg = errJson.detail.reason;
+              else if (errJson?.error) errorMsg = errJson.error;
+            } catch {
+              // fallback
+            }
+            throw new Error(errorMsg);
+          }
           throw new Error(`HTTP ${res.status}: Unable to fetch motion from ${targetUrl}`);
         }
 
@@ -409,15 +636,15 @@ export const SignAvatar3D: React.FC<SignAvatar3DProps> = ({
     sceneRef.current = scene;
     scene.fog = new THREE.FogExp2(0x060918, 0.025);
 
-    // B. Fixed face-to-face FRONT camera. The viewer stays on the front Z axis.
+    // B. Fixed face-to-face FRONT camera positioned to frame upper-body signing space.
     const camera = new THREE.PerspectiveCamera(
-      40,
+      36,
       container.clientWidth / (container.clientHeight || 1),
       0.1,
       100
     );
-    camera.position.set(0, 1.55, 4.5);
-    camera.lookAt(0, 0, 0);
+    camera.position.set(0, 0.22, 1.85);
+    camera.lookAt(0, 0.18, 0);
     cameraRef.current = camera;
 
     // C. WebGL Renderer with High-Fidelity Tone Mapping & PCF Shadows
@@ -437,31 +664,46 @@ export const SignAvatar3D: React.FC<SignAvatar3DProps> = ({
     container.appendChild(renderer.domElement);
     rendererRef.current = renderer;
 
+    // Interactive OrbitControls for 3D gesture inspection
+    const controls = new OrbitControls(camera, renderer.domElement);
+    controls.enableDamping = true;
+    controls.dampingFactor = 0.08;
+    controls.target.set(0, 0.18, 0); // Center rotation around upper-body signing space
+    controls.minDistance = 0.9;
+    controls.maxDistance = 3.5;
+    controls.maxPolarAngle = Math.PI / 2 + 0.15; // Prevent flipping under floor
+    controlsRef.current = controls;
+
     // D. ACCESSIBLE SIGNING LIGHTING RIG (Crisp illumination on face, torso, and hands)
     const ambientLight = new THREE.AmbientLight(0xffffff, 0.95);
     scene.add(ambientLight);
 
     // Direct front key light illuminating face and hand gestures
     const frontKeyLight = new THREE.DirectionalLight(0xffffff, 2.4);
-    frontKeyLight.position.set(0, 1.8, 4.0);
+    frontKeyLight.position.set(0, 1.6, 3.2);
     frontKeyLight.castShadow = true;
     frontKeyLight.shadow.mapSize.width = 1024;
     frontKeyLight.shadow.mapSize.height = 1024;
     scene.add(frontKeyLight);
 
     // Left fill light for clear hand silhouette
-    const leftFillLight = new THREE.PointLight(0x38bdf8, 1.8, 10);
-    leftFillLight.position.set(-2.5, 1.2, 2.5);
+    const leftFillLight = new THREE.PointLight(0x38bdf8, 1.8, 8);
+    leftFillLight.position.set(-2.0, 0.6, 1.6);
     scene.add(leftFillLight);
 
     // Right fill light
-    const rightFillLight = new THREE.PointLight(0x818cf8, 1.8, 10);
-    rightFillLight.position.set(2.5, 1.2, 2.5);
+    const rightFillLight = new THREE.PointLight(0xf8fafc, 1.8, 8);
+    rightFillLight.position.set(2.0, 0.6, 1.6);
     scene.add(rightFillLight);
 
+    // Subtle front chest light for hands
+    const handFillLight = new THREE.PointLight(0xffffff, 1.2, 4);
+    handFillLight.position.set(0, 0.18, 1.4);
+    scene.add(handFillLight);
+
     // Floor glow
-    const floorLight = new THREE.PointLight(0x06b6d4, 1.6, 6);
-    floorLight.position.set(0, -1.5, 1.5);
+    const floorLight = new THREE.PointLight(0x06b6d4, 1.4, 6);
+    floorLight.position.set(0, -1.0, 1.5);
     scene.add(floorLight);
 
     lightsRef.current = {
@@ -472,9 +714,13 @@ export const SignAvatar3D: React.FC<SignAvatar3DProps> = ({
       floor: floorLight
     };
 
-    // E. Holographic Stage Base at Ground Level
+    // Apply active lighting and camera presets now that Three.js objects are mounted
+    applyLightingPreset(lightingPresetRef.current);
+    applyCameraPreset(cameraPresetRef.current);
+
+    // E. Holographic Stage Base at Ground Level (Feet at Y ~ -0.88)
     const stageGroup = new THREE.Group();
-    stageGroup.position.set(0, -1.62, 0);
+    stageGroup.position.set(0, -0.92, 0);
 
     const floorGeo = new THREE.CylinderGeometry(1.6, 1.65, 0.04, 64);
     const floorMat = new THREE.MeshPhysicalMaterial({
@@ -494,11 +740,11 @@ export const SignAvatar3D: React.FC<SignAvatar3DProps> = ({
 
     scene.add(stageGroup);
 
-    // F. SMPL-X Avatar Mesh & Geometry Creation (Upright & Front-Facing)
+    // F. SMPL-X Avatar Mesh & Multi-Material Dressed Setup (Upright & Front-Facing)
     const avatarGroup = new THREE.Group();
     avatarGroupRef.current = avatarGroup;
-    avatarGroup.position.set(0, 0, 0); // Positioned stably in world coordinates
-    avatarGroup.rotation.set(0, 0, 0); // Directly facing viewer
+    avatarGroup.position.set(0, 0, 0);
+    avatarGroup.rotation.set(0, 0, 0);
     scene.add(avatarGroup);
 
     const geometry = new THREE.BufferGeometry();
@@ -506,31 +752,54 @@ export const SignAvatar3D: React.FC<SignAvatar3DProps> = ({
     geometry.setAttribute('position', new THREE.BufferAttribute(initialPositions, 3));
     geometryRef.current = geometry;
 
-    // High-visibility human signer material with distinct hand/finger definition
-    const avatarMaterial = new THREE.MeshStandardMaterial({
-      color: 0x4fa8e8,
-      roughness: 0.55,
-      metalness: 0.08,
-      side: THREE.DoubleSide,
+    // Professional Dressed Outfit:
+    // Material 0: Natural Human Skin Tone (Head, Neck, Forearms, Wrists, Hands, Fingers)
+    const skinMaterial = new THREE.MeshStandardMaterial({
+      color: 0xdec0a8, // Warm natural human skin tone
+      roughness: 0.52,
+      metalness: 0.04,
+      side: THREE.FrontSide,
       flatShading: false
     });
 
-    const avatarMesh = new THREE.Mesh(geometry, avatarMaterial);
+    // Material 1: Professional Fitted Shirt (Chest, Torso, Shoulders, Upper Arms)
+    const shirtColor = outfit === 'white_shirt' ? 0xf8fafc : 0x2563eb;
+    const shirtMaterial = new THREE.MeshStandardMaterial({
+      color: shirtColor,
+      roughness: 0.76,
+      metalness: 0.08,
+      side: THREE.FrontSide,
+      flatShading: false
+    });
+    shirtMaterialRef.current = shirtMaterial;
+
+    // Material 2: Tailored Dark Charcoal Trousers (Pelvis, Hips, Legs, Shoes)
+    const trousersMaterial = new THREE.MeshStandardMaterial({
+      color: 0x1e293b,
+      roughness: 0.85,
+      metalness: 0.04,
+      side: THREE.FrontSide,
+      flatShading: false
+    });
+
+    const avatarMesh = new THREE.Mesh(geometry, [skinMaterial, shirtMaterial, trousersMaterial]);
     avatarMesh.castShadow = true;
     avatarMesh.receiveShadow = true;
     avatarMesh.visible = false; // Becomes visible once topology & motion are loaded
     avatarGroup.add(avatarMesh);
     avatarMeshRef.current = avatarMesh;
 
-    const domElem = renderer.domElement;
-
-    // H. Stable Animation Loop (Only vertices update, camera/avatar stay fixed)
+    // H. Stable Animation Loop (Only vertices update, camera/controls handled smoothly)
     let animationFrameId: number;
     const clock = new THREE.Clock();
 
     const animate = () => {
       animationFrameId = requestAnimationFrame(animate);
       const delta = Math.min(clock.getDelta(), 0.1);
+
+      if (controlsRef.current) {
+        controlsRef.current.update();
+      }
 
       // Animate SMPL-X Mesh
       const motion = motionDataRef.current;
@@ -545,12 +814,9 @@ export const SignAvatar3D: React.FC<SignAvatar3DProps> = ({
 
         if (frameIndex !== currentFrameRef.current) {
           currentFrameRef.current = frameIndex;
+          setCurrentDisplayFrame(frameIndex);
           const offset = frameIndex * SMPLX_VERTEX_COUNT * 3;
           const posAttr = geom.getAttribute('position') as THREE.BufferAttribute;
-
-          if (frameIndex % 20 === 0 || frameIndex === motion.frames - 1) {
-            console.log(`[SignAvatar3D] playback frame: ${frameIndex}`);
-          }
 
           if (posAttr) {
             (posAttr.array as Float32Array).set(
@@ -582,7 +848,11 @@ export const SignAvatar3D: React.FC<SignAvatar3DProps> = ({
       cancelAnimationFrame(animationFrameId);
       resizeObserver.disconnect();
 
-      // Remove renderer element safely if still child of container
+      if (controlsRef.current) {
+        controlsRef.current.dispose();
+        controlsRef.current = null;
+      }
+
       if (renderer.domElement.parentNode === container) {
         container.removeChild(renderer.domElement);
       }
@@ -597,69 +867,10 @@ export const SignAvatar3D: React.FC<SignAvatar3DProps> = ({
           }
         }
       });
+      lightsRef.current = {};
+      cameraRef.current = null;
       renderer.dispose();
     };
-  }, []);
-
-  /**
-   * CAMERA PRESETS (All Front/Face-to-Face focused, no overhead or distorted angles)
-   */
-  const applyCameraPreset = useCallback((preset: CameraPreset) => {
-    setCameraPreset(preset);
-    const camera = cameraRef.current;
-    const avatar = avatarGroupRef.current;
-    if (!camera || !avatar) return;
-
-    if (preset === 'front') {
-      camera.position.set(0, 1.55, 4.5);
-      camera.lookAt(0, 0, 0);
-      avatar.rotation.set(0, 0, 0);
-    } else if (preset === 'perspective') {
-      // Mild natural perspective angle
-      camera.position.set(0.6, 0.5, 4.3);
-      camera.lookAt(0, 0.35, 0);
-      avatar.rotation.set(0, 0, 0);
-    } else if (preset === 'hands') {
-      camera.position.set(0, 1.55, 3.2);
-      camera.lookAt(0, 1.45, 0);
-      avatar.rotation.set(0, 0, 0);
-    } else if (preset === 'top') {
-      // Gentle high angle
-      camera.position.set(0, 2.0, 3.9);
-      camera.lookAt(0, 0.25, 0);
-      avatar.rotation.set(0, 0, 0);
-    }
-  }, []);
-
-  /**
-   * LIGHTING PRESETS
-   */
-  const applyLightingPreset = useCallback((preset: LightingPreset) => {
-    setLightingPreset(preset);
-    const lights = lightsRef.current;
-    if (!lights) return;
-
-    if (preset === 'studio') {
-      (lights.ambient as THREE.AmbientLight).color.setHex(0xffffff);
-      (lights.dir as THREE.DirectionalLight).color.setHex(0xffffff);
-      (lights.leftFill as THREE.PointLight).color.setHex(0xe2e8f0);
-      (lights.rightFill as THREE.PointLight).color.setHex(0xffffff);
-    } else if (preset === 'neon') {
-      (lights.ambient as THREE.AmbientLight).color.setHex(0xffffff);
-      (lights.dir as THREE.DirectionalLight).color.setHex(0xffffff);
-      (lights.leftFill as THREE.PointLight).color.setHex(0x38bdf8);
-      (lights.rightFill as THREE.PointLight).color.setHex(0x818cf8);
-    } else if (preset === 'cyber') {
-      (lights.ambient as THREE.AmbientLight).color.setHex(0x06b6d4);
-      (lights.dir as THREE.DirectionalLight).color.setHex(0xffffff);
-      (lights.leftFill as THREE.PointLight).color.setHex(0xec4899);
-      (lights.rightFill as THREE.PointLight).color.setHex(0x10b981);
-    } else if (preset === 'sunset') {
-      (lights.ambient as THREE.AmbientLight).color.setHex(0xf59e0b);
-      (lights.dir as THREE.DirectionalLight).color.setHex(0xffffff);
-      (lights.leftFill as THREE.PointLight).color.setHex(0xf43f5e);
-      (lights.rightFill as THREE.PointLight).color.setHex(0x8b5cf6);
-    }
   }, []);
 
   const speeds = [0.5, 0.75, 1, 1.25, 1.5, 2];
@@ -702,7 +913,7 @@ export const SignAvatar3D: React.FC<SignAvatar3DProps> = ({
                 SignAvatar SMPL-X Stage
               </h2>
               <span className="text-[11px] font-mono text-cyan-300 font-semibold bg-white/8 px-2 py-0.5 rounded-md border border-white/10">
-                {selectedSign.toUpperCase()}
+                {(motionUrl ? currentSign : selectedSign || currentSign || 'READY').toUpperCase()}
               </span>
             </div>
             <p className="text-[11px] text-slate-400">
@@ -712,10 +923,30 @@ export const SignAvatar3D: React.FC<SignAvatar3DProps> = ({
         </div>
 
         {/* Header Right: Controls & Status */}
-        <div className="flex items-center gap-2.5">
+        <div className="flex items-center gap-2">
+          {/* Reset Camera Button */}
+          <button
+            onClick={handleResetCamera}
+            className="px-2.5 py-1 rounded-xl glass-subtle hover:bg-white/10 text-xs font-semibold text-slate-300 hover:text-white border border-white/10 flex items-center gap-1.5 transition-all"
+            title="Reset Camera to Jury View"
+          >
+            <RotateCcw className="w-3.5 h-3.5 text-cyan-400" />
+            <span className="hidden sm:inline">Reset Camera</span>
+          </button>
+
+          {/* Outfit Toggle */}
+          <button
+            onClick={() => setOutfit((prev) => (prev === 'blue_shirt' ? 'white_shirt' : 'blue_shirt'))}
+            className="px-2.5 py-1 rounded-xl glass-subtle hover:bg-white/10 text-xs font-semibold text-slate-300 hover:text-white border border-white/10 flex items-center gap-1.5 transition-all"
+            title="Toggle Outfit (Fitted Shirt & Dark Trousers)"
+          >
+            <Shirt className="w-3.5 h-3.5 text-blue-400" />
+            <span className="hidden sm:inline">{outfit === 'blue_shirt' ? 'Blue Shirt' : 'White Shirt'}</span>
+          </button>
+
           {/* Camera Angles */}
           <div className="hidden sm:flex items-center gap-1 p-1 rounded-xl glass-subtle border border-white/10">
-            {(['front', 'perspective', 'hands', 'top'] as CameraPreset[]).map((p) => (
+            {(['front', 'hands', 'perspective'] as CameraPreset[]).map((p) => (
               <button
                 key={p}
                 onClick={() => applyCameraPreset(p)}
@@ -726,32 +957,10 @@ export const SignAvatar3D: React.FC<SignAvatar3DProps> = ({
                 }`}
                 title={`Camera View: ${p}`}
               >
-                {p}
+                {p === 'front' ? 'Default' : p === 'hands' ? 'Hands' : 'Angle'}
               </button>
             ))}
           </div>
-
-          {/* Lighting Preset Picker */}
-          <button
-            onClick={() => {
-              const presets: LightingPreset[] = ['studio', 'neon', 'cyber', 'sunset'];
-              const next = presets[(presets.indexOf(lightingPreset) + 1) % presets.length];
-              applyLightingPreset(next);
-            }}
-            className="p-1.5 rounded-xl glass-subtle hover:bg-white/10 text-slate-400 hover:text-white border border-white/10 transition-all"
-            title={`Lighting Theme: ${lightingPreset}`}
-          >
-            <Palette className="w-4 h-4" />
-          </button>
-
-          {/* Fullscreen Toggle */}
-          <button
-            onClick={() => setIsFullscreen(!isFullscreen)}
-            className="p-1.5 rounded-xl glass-subtle hover:bg-white/10 text-slate-400 hover:text-white border border-white/10 transition-all"
-            title="Toggle Stage Fullscreen"
-          >
-            {isFullscreen ? <Minimize2 className="w-4 h-4" /> : <Maximize2 className="w-4 h-4" />}
-          </button>
 
           {/* Status Indicator */}
           <div
@@ -772,7 +981,7 @@ export const SignAvatar3D: React.FC<SignAvatar3DProps> = ({
                   : 'bg-emerald-400 animate-pulse'
               }`}
             />
-            <span>{modelStatus === 'error' ? 'Error' : modelStatus === 'loading' ? 'Loading' : 'Ready'}</span>
+            <span>{modelStatus === 'error' ? 'Unavailable' : modelStatus === 'loading' ? 'Loading' : 'Ready'}</span>
           </div>
         </div>
       </header>
@@ -785,112 +994,106 @@ export const SignAvatar3D: React.FC<SignAvatar3DProps> = ({
         {/* Dedicated mount container for Three.js canvas ONLY (No React children) */}
         <div ref={mountRef} className="w-full h-full absolute inset-0" />
 
-        {/* Loading Overlay (React-managed sibling) */}
+        {/* Floating Loading Indicator */}
         {modelStatus === 'loading' && (
-          <div className="absolute inset-0 z-20 flex flex-col items-center justify-center bg-black/40 backdrop-blur-[2px] px-6 text-center pointer-events-none space-y-2">
-            <Loader2 className="w-6 h-6 text-cyan-400 animate-spin" />
-            <p className="text-sm font-semibold text-cyan-200">
-              Loading SignAvatar...
-            </p>
-            <p className="text-xs text-slate-400 font-mono">
-              Fetching SMPL-X Mesh & Motion Stream
-            </p>
+          <div className="absolute top-4 left-1/2 -translate-x-1/2 z-20 flex items-center gap-2 bg-[#101735]/95 border border-cyan-500/40 px-4 py-2 rounded-full backdrop-blur-md shadow-lg pointer-events-none">
+            <Loader2 className="w-3.5 h-3.5 text-cyan-400 animate-spin" />
+            <span className="text-xs font-semibold text-cyan-200">
+              {!topologyReadyRef.current ? 'Loading SignAvatar...' : 'Preparing sign animation...'}
+            </span>
           </div>
         )}
 
-        {/* Error Overlay (React-managed sibling) */}
+        {/* Floating Error Indicator */}
         {modelStatus === 'error' && (
-          <div className="absolute inset-0 z-20 flex flex-col items-center justify-center bg-black/60 backdrop-blur-[2px] px-6 text-center pointer-events-none space-y-2">
-            <AlertCircle className="w-7 h-7 text-rose-400" />
-            <p className="text-sm font-semibold text-rose-300">
-              {modelError || 'Unable to load SignAvatar motion.'}
-            </p>
-            <p className="text-xs text-slate-400">
-              Please check backend API at {SIGNAVATAR_API_URL}
-            </p>
+          <div className="absolute top-4 left-1/2 -translate-x-1/2 z-20 flex items-center gap-2 bg-rose-950/85 border border-rose-500/40 px-4 py-2 rounded-full backdrop-blur-md shadow-lg pointer-events-none max-w-md text-center">
+            <AlertCircle className="w-4 h-4 text-rose-400 shrink-0" />
+            <span className="text-xs font-semibold text-rose-200 truncate">
+              {modelError || 'No sign animation available.'}
+            </span>
           </div>
         )}
 
-        {/* Optional GIF Overlay if explicitly provided and loaded */}
-        {generatedGifUrl && generatedGifStatus !== 'error' && (
-          <div className="absolute inset-4 z-10 hidden items-center justify-center rounded-2xl overflow-hidden bg-black/40 pointer-events-none">
-            <img
-              src={generatedGifUrl}
-              alt={`Generated sign language animation for ${currentSign}`}
-              className="max-w-full max-h-full object-contain"
-              onLoad={onGeneratedGifLoad}
-              onError={onGeneratedGifError}
-            />
-          </div>
-        )}
+        {/* Orbit instruction subtle hint */}
+        <div className="absolute bottom-3 right-3 z-10 hidden sm:flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-black/40 backdrop-blur-sm border border-white/5 pointer-events-none text-[10px] text-slate-400">
+          <Compass className="w-3 h-3 text-cyan-400" />
+          <span>Drag to orbit • Scroll to zoom</span>
+        </div>
       </div>
 
       {/* 3. DEDICATED PLAYBACK TRANSPORT ROW */}
-      <section className="px-6 py-3.5 border-t border-white/10 bg-white/[0.02] flex flex-wrap items-center justify-between gap-4">
-        <div className="flex items-center gap-2">
-          {/* Previous Sign */}
-          <button
-            onClick={handlePrevSign}
-            className="px-3 py-2 rounded-xl glass-subtle hover:bg-white/10 text-xs font-semibold text-slate-300 hover:text-white border border-white/10 flex items-center gap-1 transition-all active:scale-95"
-            title="Previous Sign"
-          >
-            <ChevronLeft className="w-4 h-4" />
-            <span className="hidden sm:inline">Previous</span>
-          </button>
+      <section className="px-6 py-3.5 border-t border-white/10 bg-[#0c122b]/80 backdrop-blur-sm flex flex-col gap-3">
+        {/* Scrubbable Timeline Slider */}
+        {motionInfo && motionInfo.frames > 0 && (
+          <div className="w-full flex items-center gap-3">
+            <span className="text-[11px] font-mono text-slate-400 min-w-[45px]">
+              {((currentDisplayFrame) / (motionInfo.fps || DEFAULT_MOTION_FPS)).toFixed(1)}s
+            </span>
+            <input
+              type="range"
+              min={0}
+              max={Math.max(0, motionInfo.frames - 1)}
+              value={currentDisplayFrame}
+              onChange={(e) => handleSeekFrame(Number(e.target.value))}
+              className="flex-1 h-1.5 bg-slate-700/80 rounded-lg appearance-none cursor-pointer accent-cyan-400 hover:bg-slate-600 transition-colors"
+              aria-label="Timeline scrubber"
+            />
+            <span className="text-[11px] font-mono text-slate-400 min-w-[45px] text-right">
+              {((motionInfo.frames - 1) / (motionInfo.fps || DEFAULT_MOTION_FPS)).toFixed(1)}s
+            </span>
+          </div>
+        )}
 
-          {/* Reset Orientation */}
-          <button
-            onClick={() => {
-              if (avatarGroupRef.current) avatarGroupRef.current.rotation.set(0, 0, 0);
-              applyCameraPreset('front');
-            }}
-            className="p-2 rounded-xl glass-subtle hover:bg-white/10 text-slate-300 hover:text-white border border-white/10 transition-all"
-            title="Reset Avatar Front Orientation"
-          >
-            <RotateCcw className="w-4 h-4" />
-          </button>
+        <div className="flex flex-wrap items-center justify-between gap-4">
+          <div className="flex items-center gap-2">
+            {/* Play/Pause Button */}
+            <button
+              onClick={onTogglePlay}
+              className="px-4 py-2 rounded-xl bg-white hover:bg-slate-100 text-black font-semibold text-xs flex items-center gap-1.5 shadow-md transition-transform active:scale-95"
+              title={isPlaying ? 'Pause Gesture' : 'Play Gesture'}
+            >
+              {isPlaying ? <Pause className="w-4 h-4 fill-black" /> : <Play className="w-4 h-4 fill-black ml-0.5" />}
+              <span>{isPlaying ? 'Pause' : 'Play'}</span>
+            </button>
 
-          {/* Play/Pause Button */}
-          <button
-            onClick={onTogglePlay}
-            className="px-4 py-2 rounded-xl bg-white hover:bg-slate-100 text-black font-semibold text-xs flex items-center gap-1.5 shadow-md transition-transform active:scale-95"
-            title={isPlaying ? 'Pause Gesture' : 'Play Gesture'}
-          >
-            {isPlaying ? <Pause className="w-4 h-4 fill-black" /> : <Play className="w-4 h-4 fill-black ml-0.5" />}
-            <span>{isPlaying ? 'Pause' : 'Play'}</span>
-          </button>
+            {/* Restart Button */}
+            <button
+              onClick={handleRestartAnimation}
+              className="p-2 rounded-xl glass-subtle hover:bg-white/10 text-slate-300 hover:text-white border border-white/10 transition-all active:scale-95"
+              title="Restart Animation from Beginning"
+            >
+              <RotateCcw className="w-4 h-4" />
+            </button>
 
-          {/* Next Sign */}
-          <button
-            onClick={handleNextSign}
-            className="px-3 py-2 rounded-xl glass-subtle hover:bg-white/10 text-xs font-semibold text-slate-300 hover:text-white border border-white/10 flex items-center gap-1 transition-all active:scale-95"
-            title="Next Sign"
-          >
-            <span className="hidden sm:inline">Next</span>
-            <ChevronRight className="w-4 h-4" />
-          </button>
-        </div>
+            {/* Frame Indicator */}
+            {motionInfo && motionInfo.frames > 0 && (
+              <span className="text-[11px] font-mono text-slate-300 px-2.5 py-1 rounded-lg bg-white/5 border border-white/10">
+                Frame {currentDisplayFrame + 1} / {motionInfo.frames}
+              </span>
+            )}
+          </div>
 
-        {/* 4. SPEED CONTROLS ROW */}
-        <div className="flex items-center gap-2">
-          <span className="text-xs text-slate-400 font-semibold">Speed:</span>
-          <div className="flex items-center gap-1">
-            {speeds.map((s) => (
-              <button
-                key={s}
-                onClick={() => {
-                  setInternalSpeed(s);
-                  onSpeedChange?.(s);
-                }}
-                className={`px-2.5 py-1 rounded-lg text-xs font-semibold font-mono transition-all ${
-                  internalSpeed === s
-                    ? 'bg-white/20 text-white border border-white/35 shadow-sm'
-                    : 'glass-subtle text-slate-400 hover:text-white border border-white/8'
-                }`}
-              >
-                {s}x
-              </button>
-            ))}
+          {/* Speed Controls */}
+          <div className="flex items-center gap-2">
+            <span className="text-xs text-slate-400 font-semibold">Speed:</span>
+            <div className="flex items-center gap-1">
+              {speeds.map((s) => (
+                <button
+                  key={s}
+                  onClick={() => {
+                    setInternalSpeed(s);
+                    onSpeedChange?.(s);
+                  }}
+                  className={`px-2 py-1 rounded-lg text-xs font-semibold font-mono transition-all ${
+                    internalSpeed === s
+                      ? 'bg-white/20 text-white border border-white/35 shadow-sm'
+                      : 'glass-subtle text-slate-400 hover:text-white border border-white/8'
+                  }`}
+                >
+                  {s}x
+                </button>
+              ))}
+            </div>
           </div>
         </div>
       </section>
@@ -904,7 +1107,7 @@ export const SignAvatar3D: React.FC<SignAvatar3DProps> = ({
 
           <div className="flex items-center gap-2 overflow-x-auto pb-1 sm:pb-0 scrollbar-thin flex-1">
             {availableSigns.map((item) => {
-              const isCurrent = currentSign.toUpperCase() === item.sign.toUpperCase();
+              const isCurrent = !motionUrl && (selectedSign || currentSign).toUpperCase() === item.sign.toUpperCase();
               return (
                 <button
                   key={item.sign}
@@ -913,7 +1116,7 @@ export const SignAvatar3D: React.FC<SignAvatar3DProps> = ({
                     onSignChange?.(item.sign);
                   }}
                   className={`flex-shrink-0 px-3.5 py-1.5 rounded-xl text-xs font-semibold transition-all duration-150 ${
-                      selectedSign.toUpperCase() === item.sign.toUpperCase()
+                      isCurrent
                       ? 'bg-white/20 text-white border border-white/35 shadow-[0_0_12px_rgba(255,255,255,0.25)] scale-105'
                       : 'glass-subtle text-slate-300 hover:text-white hover:bg-white/10 border border-white/10'
                   }`}

@@ -20,6 +20,7 @@ from app.api.signavatar import router as signavatar_router
 from app.api.jobs import router as jobs_router
 from app.api.chat import router as chat_router
 from app.api.history import router as history_router
+from app.api.isign import router as isign_router
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -43,7 +44,7 @@ app = FastAPI(
 # CORS Configuration
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=settings.ALLOWED_ORIGINS + ["*"],
+    allow_origins=settings.ALLOWED_ORIGINS if isinstance(settings.ALLOWED_ORIGINS, list) else [settings.ALLOWED_ORIGINS],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -88,6 +89,7 @@ app.include_router(signavatar_router, prefix=settings.API_V1_STR)
 app.include_router(jobs_router, prefix=settings.API_V1_STR)
 app.include_router(chat_router, prefix=settings.API_V1_STR)
 app.include_router(history_router, prefix=settings.API_V1_STR)
+app.include_router(isign_router, prefix=settings.API_V1_STR)
 
 from pydantic import BaseModel, Field, field_validator
 from typing import Optional, Dict, Any
