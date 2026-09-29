@@ -19,7 +19,7 @@ import { TranscriptPanel } from '../components/avatar/TranscriptPanel';
 import { SignDictionaryExplorer } from '../components/avatar/SignDictionaryExplorer';
 import { VideoProject, GlossToken } from '../types';
 import { GlassButton } from '../components/ui/GlassButton';
-import { signAuraApi, SignAvatarResponse, ISignSentenceResponse } from '../services/api';
+import { signAuraApi, SignAvatarResponse, ISignSentenceResponse, ISignTranslateMotionResponse, API_BASE_URL } from '../services/api';
 
 const SIGNAVATAR_API_URL = 'http://127.0.0.1:8001';
 
@@ -52,7 +52,7 @@ export const SignAvatarStudioView: React.FC<SignAvatarStudioViewProps> = ({
   const [lightingPreset, setLightingPreset] = useState<LightingPreset>('studio');
 
   // SignAvatar AI generation state
-  const [sentence, setSentence] = useState<string>('welcome');
+  const [sentence, setSentence] = useState<string>('Fancy staying back again.');
   const [generatedGifUrl, setGeneratedGifUrl] = useState<string>('');
   const [generatedMotionUrl, setGeneratedMotionUrl] = useState<string>('');
   const [motionSegments, setMotionSegments] = useState<{ word: string; frames: number }[]>([]);
@@ -61,6 +61,7 @@ export const SignAvatarStudioView: React.FC<SignAvatarStudioViewProps> = ({
   const [generationError, setGenerationError] = useState<string>('');
   const [showDictionary, setShowDictionary] = useState<boolean>(true);
   const [isignResult, setIsignResult] = useState<ISignSentenceResponse | null>(null);
+  const [isignMotionResult, setIsignMotionResult] = useState<ISignTranslateMotionResponse | null>(null);
 
   // Dedicated project video timeline ticker (only active when user explicitly plays the timeline)
   useEffect(() => {
@@ -122,46 +123,71 @@ export const SignAvatarStudioView: React.FC<SignAvatarStudioViewProps> = ({
     setIsTimelinePlaying(false);
 
     try {
-      // 1. Check iSign benchmark dataset for sentence match and BridgeConn availability
-      try {
-        const isignRes = await signAuraApi.matchISign(textToGenerate);
-        setIsignResult(isignRes);
-      } catch (isignErr) {
-        console.warn('iSign match service check failed:', isignErr);
-      }
+      // Connect directly to the authentic iSign text-to-motion translation pipeline
+      const res = await signAuraApi.translateISignMotion(textToGenerate);
+      setIsignMotionResult(res);
 
-      // 2. Call the real translation-to-signavatar sequence pipeline
-      const res = await signAuraApi.translateToSignAvatar(textToGenerate);
+      if (res.available && res.sequence_id) {
+        const animUrl = res.animation_url || `/api/signavatar/sequence/${res.sequence_id}`;
+        setGeneratedMotionUrl(animUrl);
+        setMotionFps(res.fps || 30);
+        setCurrentSignName(res.generated_glosses?.join(' ') || textToGenerate.toUpperCase());
 
-      if (res.available && res.animation?.animation_url) {
-        setGeneratedMotionUrl(res.animation.animation_url);
-        setMotionFps(res.animation.fps || 30);
-        setCurrentSignName(res.glosses?.join(' ') || textToGenerate.toUpperCase());
-        if (res.glosses && res.animation.frames) {
+        // Build motion segments from timeline or glosses
+        if (res.timeline && res.timeline.length > 0) {
           setMotionSegments(
-            res.glosses.map((g) => ({
+            res.timeline.map((item: any) => ({
+              word: item.text || item.gloss || item.uid,
+              frames: item.duration_frames,
+            }))
+          );
+        } else if (res.generated_glosses && res.frames) {
+          setMotionSegments(
+            res.generated_glosses.map((g) => ({
               word: g,
-              frames: Math.round(res.animation!.frames / res.glosses.length)
+              frames: Math.round(res.frames / res.generated_glosses.length),
             }))
           );
         }
         setIsPlaying(true);
-      } else if (!res.available) {
-        // If some signs are missing, display clear message without wiping out the existing avatar
-        const missingReasons =
-          res.unavailable?.map((u) => `${u.gloss}: ${u.reason}`).join(', ') ||
-          res.error ||
-          'Required ISL signs are unavailable';
-        setGenerationError(`Sign animation unavailable for: ${missingReasons}`);
+        setGenerationError('');
+      } else {
+        // available is false or sequence_id is missing -> DO NOT generate or display fake animation
+        setGeneratedMotionUrl('');
+        setMotionSegments([]);
+        let errMsg = '';
+        if (res.status === 'missing_motion' || (res.missing_glosses && res.missing_glosses.length > 0)) {
+          const missing = res.missing_glosses || [];
+          errMsg = `Some sign motions are not available yet:\n${missing.join(', ')}`;
+        } else if (res.unresolved_glosses && res.unresolved_glosses.length > 0) {
+          errMsg = `Some sign motions are not available yet:\n${res.unresolved_glosses.join(', ')}`;
+          if (res.resolved_uids && res.resolved_uids.length > 0) {
+            errMsg += ` (Resolved authentic iSign: ${res.resolved_uids.join(', ')})`;
+          }
+        } else {
+          errMsg = res.message || res.error || 'Sign animation unavailable for this sentence.';
+        }
+        setGenerationError(errMsg);
       }
     } catch (err: any) {
-      const errMsg =
-        err?.response?.data?.detail?.error ||
-        err?.response?.data?.detail ||
-        (err?.message === 'Network Error'
-          ? 'Network Error: Backend API (http://127.0.0.1:8000) is unreachable. Please ensure the backend service is running.'
-          : err?.message) ||
-        'Could not generate animation sequence.';
+      setGeneratedMotionUrl('');
+      setMotionSegments([]);
+      let errMsg = '';
+      if (err?.response?.data?.status === 'missing_motion' || err?.response?.data?.missing_glosses) {
+        const missing = err.response.data.missing_glosses || [];
+        errMsg = `Some sign motions are not available yet:\n${missing.join(', ')}`;
+      } else if (err?.code === 'ECONNABORTED' || (err?.message && err.message.toLowerCase().includes('timeout'))) {
+        errMsg = 'The motion request timed out. Sign motions may not be available yet.';
+      } else {
+        errMsg =
+          err?.response?.data?.message ||
+          err?.response?.data?.detail?.error ||
+          err?.response?.data?.detail ||
+          (err?.message === 'Network Error'
+            ? `Network Error: Backend API (${API_BASE_URL}) is unreachable. Please ensure the backend service is running.`
+            : err?.message) ||
+          'Could not generate animation sequence.';
+      }
       setGenerationError(errMsg);
     } finally {
       setIsGenerating(false);
@@ -193,7 +219,11 @@ export const SignAvatarStudioView: React.FC<SignAvatarStudioViewProps> = ({
 
           <div className="bg-[#101735] px-3.5 py-1.5 rounded-xl border border-[#273154] text-left">
             <p className="text-[10px] text-[#A8B2D1] uppercase tracking-wider font-semibold">Motion</p>
-            <p className="text-xs font-mono font-bold text-white">183 Frames • 20 FPS</p>
+            <p className="text-xs font-mono font-bold text-white">
+              {isignMotionResult && isignMotionResult.frames > 0
+                ? `${isignMotionResult.frames} Frames • ${isignMotionResult.fps} FPS`
+                : '183 Frames • 20 FPS'}
+            </p>
           </div>
 
           <GlassButton
@@ -303,14 +333,12 @@ export const SignAvatarStudioView: React.FC<SignAvatarStudioViewProps> = ({
               <div className="flex flex-wrap gap-1.5 pt-1">
                 <span className="text-[10px] text-[#A8B2D1] self-center mr-1">Presets:</span>
                 {[
+                  { label: 'Fancy staying back again.', text: 'Fancy staying back again.' },
+                  { label: 'Two iSign segments (250f)', text: 'Fancy staying back again. In your class, talk about the time you were' },
+                  { label: 'Unresolved sign test', text: 'Fancy staying back again with an astronaut' },
                   { label: 'welcome', text: 'welcome' },
                   { label: 'good drink', text: 'good drink' },
                   { label: 'help teacher', text: 'help teacher' },
-                  { label: 'go drink help', text: 'go drink help' },
-                  { label: 'good drink help teacher (4w)', text: 'good drink help teacher' },
-                  { label: '5-word sequence', text: 'good drink help teacher go' },
-                  { label: 'introduce (missing)', text: 'introduce' },
-                  { label: 'iSign: I drink water', text: 'I drink water' }
                 ].map((preset) => (
                   <button
                     key={preset.label}
@@ -331,12 +359,81 @@ export const SignAvatarStudioView: React.FC<SignAvatarStudioViewProps> = ({
                 disabled={isGenerating || !sentence.trim()}
                 className="w-full justify-center text-xs font-bold mt-2"
               >
-                {isGenerating ? 'Synthesizing BridgeConn Signs...' : 'Generate 3D Signs'}
+                {isGenerating ? 'Synthesizing 3D Signs...' : 'Generate 3D Signs'}
               </GlassButton>
             </div>
 
             {/* iSign Benchmark Status Panel */}
-            {isignResult && isignResult.isign_match && isignResult.isign_match.matched && (
+            {isignMotionResult ? (
+              <div className="p-3 rounded-xl bg-[#101735] border border-purple-500/30 text-xs space-y-2">
+                <div className="flex items-center justify-between gap-1">
+                  <div className="flex items-center gap-1.5 font-bold text-white text-[11px]">
+                    <Database className="w-3.5 h-3.5 text-[#8B5CF6]" />
+                    <span>iSign Motion Pipeline</span>
+                  </div>
+                  {isignMotionResult.resolved_uids && isignMotionResult.resolved_uids.length > 0 && (
+                    <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-purple-500/20 text-purple-300 border border-purple-500/30">
+                      UID: {isignMotionResult.resolved_uids.join(', ')}
+                    </span>
+                  )}
+                </div>
+
+                <p className="text-[11px] text-[#A8B2D1] italic border-l-2 border-purple-500/50 pl-2">
+                  "{isignMotionResult.original_text}"
+                </p>
+
+                <div className="grid grid-cols-2 gap-2 text-[10px] pt-1">
+                  <div className="bg-[#151D40] p-1.5 rounded border border-[#273154]">
+                    <span className="text-[#A8B2D1]">Status: </span>
+                    <span className={isignMotionResult.available ? "text-emerald-400 font-semibold" : "text-amber-400 font-semibold"}>
+                      {isignMotionResult.available ? "Available (SMPL-X)" : "Withheld (Unresolved)"}
+                    </span>
+                  </div>
+                  <div className="bg-[#151D40] p-1.5 rounded border border-[#273154]">
+                    <span className="text-[#A8B2D1]">Frames / FPS: </span>
+                    <span className="text-[#22D3EE] font-semibold">
+                      {isignMotionResult.frames > 0 ? `${isignMotionResult.frames}f @ ${isignMotionResult.fps} FPS` : "0 frames"}
+                    </span>
+                  </div>
+                </div>
+
+                {/* Generated Glosses */}
+                {isignMotionResult.generated_glosses && isignMotionResult.generated_glosses.length > 0 && (
+                  <div className="space-y-1 pt-1 border-t border-[#273154]/50">
+                    <p className="text-[10px] text-[#A8B2D1] font-semibold uppercase tracking-wider">ISL Glosses:</p>
+                    <div className="flex flex-wrap gap-1">
+                      {isignMotionResult.generated_glosses.map((g, idx) => {
+                        const isUnresolved = isignMotionResult.unresolved_glosses?.includes(g);
+                        return (
+                          <span
+                            key={idx}
+                            className={`px-1.5 py-0.5 rounded text-[10px] font-mono border flex items-center gap-1 ${
+                              !isUnresolved
+                                ? "bg-emerald-950/40 text-emerald-300 border-emerald-500/40"
+                                : "bg-amber-950/40 text-amber-300 border-amber-500/40"
+                            }`}
+                          >
+                            {!isUnresolved ? (
+                              <CheckCircle2 className="w-2.5 h-2.5 text-emerald-400" />
+                            ) : (
+                              <XCircle className="w-2.5 h-2.5 text-amber-400" />
+                            )}
+                            <span>{g}</span>
+                          </span>
+                        );
+                      })}
+                    </div>
+                  </div>
+                )}
+
+                {/* Status Notice */}
+                <div className="text-[10px] text-purple-300/90 bg-purple-950/20 p-2 rounded border border-purple-800/30 leading-relaxed">
+                  {isignMotionResult.available
+                    ? `✓ Authentic iSign 3D motion synthesized (${isignMotionResult.frames} frames @ ${isignMotionResult.fps} FPS).`
+                    : `ℹ ${isignMotionResult.error || "Sign animation withheld to prevent fake substitutions."}`}
+                </div>
+              </div>
+            ) : isignResult && isignResult.isign_match && isignResult.isign_match.matched ? (
               <div className="p-3 rounded-xl bg-[#101735] border border-purple-500/30 text-xs space-y-2">
                 <div className="flex items-center justify-between gap-1">
                   <div className="flex items-center gap-1.5 font-bold text-white text-[11px]">
@@ -365,49 +462,20 @@ export const SignAvatarStudioView: React.FC<SignAvatarStudioViewProps> = ({
                   </div>
                 </div>
 
-                {/* Component Sign Mappings */}
-                {isignResult.bridgeconn_matches && isignResult.bridgeconn_matches.length > 0 && (
-                  <div className="space-y-1 pt-1 border-t border-[#273154]/50">
-                    <p className="text-[10px] text-[#A8B2D1] font-semibold uppercase tracking-wider">BridgeConn ISL Sign Mappings:</p>
-                    <div className="flex flex-wrap gap-1">
-                      {isignResult.bridgeconn_matches.map((m, idx) => (
-                        <span
-                          key={idx}
-                          className={`px-1.5 py-0.5 rounded text-[10px] font-mono border flex items-center gap-1 ${
-                            m.smplx_available
-                              ? "bg-emerald-950/40 text-emerald-300 border-emerald-500/40"
-                              : "bg-amber-950/40 text-amber-300 border-amber-500/40"
-                          }`}
-                        >
-                          {m.smplx_available ? (
-                            <CheckCircle2 className="w-2.5 h-2.5 text-emerald-400" />
-                          ) : (
-                            <XCircle className="w-2.5 h-2.5 text-amber-400" />
-                          )}
-                          <span>{m.word}</span>
-                          {m.bridgeconn_gloss && m.bridgeconn_gloss !== m.word.toUpperCase() && (
-                            <span className="text-[9px] opacity-75">({m.bridgeconn_gloss})</span>
-                          )}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                )}
-
                 {/* Truthful Status Notice */}
                 <div className="text-[10px] text-purple-300/90 bg-purple-950/20 p-2 rounded border border-purple-800/30 leading-relaxed">
                   {isignResult.animation_available
-                    ? "✓ Complete 3D animation synthesized via BridgeConn library."
-                    : "ℹ iSign reference found — direct continuous pose-to-SMPL-X conversion is not yet implemented for this item; 3D animation withheld to avoid fake substitutions."}
+                    ? "✓ Complete 3D animation synthesized."
+                    : "ℹ Sign animation withheld to avoid fake substitutions."}
                 </div>
               </div>
-            )}
+            ) : null}
 
             {generationError && (
               <div className="p-3 rounded-xl bg-amber-500/10 border border-amber-500/30 text-amber-300 text-xs">
-                <p className="font-semibold">{generationError}</p>
+                <p className="font-semibold whitespace-pre-line">{generationError}</p>
                 <p className="text-[10px] text-amber-400/80 mt-0.5">
-                  SignAura strictly serves authentic BridgeConn 3D motion captures and never generates fake animations for missing signs.
+                  SignAura strictly serves authentic 3D motion captures and never generates fake animations for missing signs.
                 </p>
               </div>
             )}

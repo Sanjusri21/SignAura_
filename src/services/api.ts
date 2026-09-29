@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { VideoProject, GlossToken, ChatMessage, ISLDictionaryItem, ISLDialect } from '../types';
 
-const API_BASE_URL = (import.meta as any).env?.VITE_API_URL || 'http://127.0.0.1:8000';
+export const API_BASE_URL = (import.meta as any).env?.VITE_API_URL || 'http://127.0.0.1:8002';
 
 export const apiClient = axios.create({
   baseURL: API_BASE_URL,
@@ -112,6 +112,40 @@ export interface ISignSentenceResponse {
   animation_url?: string;
   source: string;
   message: string;
+}
+
+export interface ISignTranslateMotionResponse {
+  status?: string;
+  original_text: string;
+  requested_glosses?: string[];
+  available_glosses?: string[];
+  missing_glosses?: string[];
+  message?: string | null;
+  generated_glosses: string[];
+  resolved_uids: string[];
+  unresolved_glosses: string[];
+  sequence_id?: string | null;
+  frames: number;
+  fps: number;
+  animation_url?: string | null;
+  metadata_url?: string | null;
+  timeline?: Array<{
+    uid?: string;
+    text?: string;
+    gloss?: string;
+    start_frame: number;
+    end_frame: number;
+    duration_frames: number;
+    start_sec: number;
+    end_sec: number;
+  }>;
+  cache_info?: any[];
+  output_files?: {
+    vertices_npy: string;
+    metadata_json: string;
+  };
+  error?: string | null;
+  available: boolean;
 }
 
 export const signAuraApi = {
@@ -244,4 +278,13 @@ export const signAuraApi = {
     const res = await apiClient.get(`/api/isign/item/${encodeURIComponent(uid)}`);
     return res.data;
   },
+
+  // iSign Text-to-Motion Generation Pipeline
+  translateISignMotion: async (text: string): Promise<ISignTranslateMotionResponse> => {
+    const res = await apiClient.post<ISignTranslateMotionResponse>('/api/isign/translate-to-motion', {
+      text,
+    });
+    return res.data;
+  },
 };
+

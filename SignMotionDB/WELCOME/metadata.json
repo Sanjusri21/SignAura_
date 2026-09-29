@@ -1,0 +1,19 @@
+{
+    "source": "BridgeConn ISL Dataset",
+    "gloss": "welcome",
+    "frames": 104,
+    "fps": 50.0,
+    "vertices": 10475,
+    "vertex_shape": [
+        104,
+        10475,
+        3
+    ],
+    "coordinate_system": "SMPL-X",
+    "hands_used": true,
+    "face_used": false,
+    "sign_id": "WELCOME",
+    "num_frames": 104,
+    "duration_sec": 2.08,
+    "canonical_format": "SMPL-X Pose Parameters"
+}

@@ -76,6 +76,7 @@ export const SMPLX_VERTEX_COUNT = 10475;
 export const SMPLX_FACE_COUNT = 20908;
 export const DEFAULT_MOTION_FPS = 20;
 const SIGNAVATAR_API_URL = 'http://127.0.0.1:8001';
+const BACKEND_API_URL = (import.meta as any).env?.VITE_API_URL || 'http://127.0.0.1:8002';
 
 interface TopologyGroup {
   start: number;
@@ -533,7 +534,7 @@ export const SignAvatar3D: React.FC<SignAvatar3DProps> = ({
     if (targetUrl.startsWith('/motion/')) {
       targetUrl = `${SIGNAVATAR_API_URL}${targetUrl}`;
     } else if (targetUrl.startsWith('/api/')) {
-      targetUrl = `http://127.0.0.1:8000${targetUrl}`;
+      targetUrl = `${BACKEND_API_URL}${targetUrl}`;
     }
 
     console.log('[SignAvatar3D] Selected sign:', upperSign || rawSign);

@@ -108,9 +108,18 @@ class TranslationAnimationService:
                     for g in gloss_tokens
                 ]
 
+            missing = [u.get("gloss") for u in unavailable_list if u.get("gloss")]
+            available = [g for g in gloss_tokens if g not in missing]
+            missing_msg = f"Motion data is not available for {' and '.join(missing)}." if missing else "Sign animation unavailable."
+
             return {
+                "status": "missing_motion",
                 "available": False,
                 "text": raw_text,
+                "requested_glosses": gloss_tokens,
+                "available_glosses": available,
+                "missing_glosses": missing,
+                "message": missing_msg,
                 "glosses": gloss_tokens,
                 "unavailable": unavailable_list
             }

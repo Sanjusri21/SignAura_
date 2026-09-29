@@ -1,0 +1,19 @@
+{
+    "source": "BridgeConn ISL Dataset",
+    "gloss": "drink",
+    "frames": 143,
+    "fps": 50.0,
+    "vertices": 10475,
+    "vertex_shape": [
+        143,
+        10475,
+        3
+    ],
+    "coordinate_system": "SMPL-X",
+    "hands_used": true,
+    "face_used": false,
+    "sign_id": "DRINK",
+    "num_frames": 143,
+    "duration_sec": 2.86,
+    "canonical_format": "SMPL-X Pose Parameters"
+}

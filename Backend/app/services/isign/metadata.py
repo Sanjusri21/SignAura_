@@ -7,6 +7,7 @@ Does NOT fabricate or substitute synthetic records when real files are absent.
 import csv
 import re
 import difflib
+import time
 import logging
 from pathlib import Path
 from typing import Dict, Any, List, Optional, Tuple
@@ -161,8 +162,14 @@ class ISignMetadataRepository:
 
         results: List[Tuple[Dict[str, Any], float]] = []
         query_words = set(norm_query.split())
+        start_time = time.time()
 
         for item in self._items:
+            # Safeguard: prevent blocking for more than 1.0 second
+            if time.time() - start_time > 1.0:
+                logger.warning("[ISIGN] Metadata search exceeded 1.0s timeout safeguard; returning current matches.")
+                break
+
             norm_text = _normalize(item["text"])
             if not norm_text:
                 continue
@@ -172,7 +179,11 @@ class ISignMetadataRepository:
             else:
                 text_words = set(norm_text.split())
                 overlap = len(query_words & text_words)
+                if overlap == 0:
+                    continue  # Fast skip without difflib SequenceMatcher
                 jaccard = overlap / max(1, len(query_words | text_words))
+                if 0.6 * jaccard + 0.4 < min_score:
+                    continue  # Theoretical maximum cannot reach min_score
                 seq_ratio = difflib.SequenceMatcher(None, norm_query, norm_text).ratio()
                 score = 0.6 * jaccard + 0.4 * seq_ratio
 

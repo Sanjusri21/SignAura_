@@ -109,18 +109,29 @@ class ISignCoordinateAdapter:
         Input: (T, 33, 3)
         Output: dict of unit direction arrays (T, 3).
         """
-        T = world_body.shape[0]
+        # Convert MediaPipe camera coordinate frame (+Y down, +Z away)
+        # to SMPL-X standard 3D coordinate frame (+Y up, +Z towards viewer).
+        # iSign landmarks store X and Y in pixel grid coords (scaled by dimensions 300),
+        # whereas Z is unscaled in physical meters (dimensions.depth == 0).
+        # We restore 3D metric isotropy by normalizing X and Y by 300.0.
+        scale = 300.0
+        wb = world_body.copy()
+        wb[:, :, 0] = wb[:, :, 0] / scale
+        wb[:, :, 1] = -wb[:, :, 1] / scale
+        wb[:, :, 2] = -wb[:, :, 2]
+
+        T = wb.shape[0]
 
         # Key joint trajectories
-        sh_l = world_body[:, MP_LEFT_SHOULDER, :]
-        sh_r = world_body[:, MP_RIGHT_SHOULDER, :]
-        el_l = world_body[:, MP_LEFT_ELBOW, :]
-        el_r = world_body[:, MP_RIGHT_ELBOW, :]
-        wr_l = world_body[:, MP_LEFT_WRIST, :]
-        wr_r = world_body[:, MP_RIGHT_WRIST, :]
-        hip_l = world_body[:, MP_LEFT_HIP, :]
-        hip_r = world_body[:, MP_RIGHT_HIP, :]
-        nose = world_body[:, MP_NOSE, :]
+        sh_l = wb[:, MP_LEFT_SHOULDER, :]
+        sh_r = wb[:, MP_RIGHT_SHOULDER, :]
+        el_l = wb[:, MP_LEFT_ELBOW, :]
+        el_r = wb[:, MP_RIGHT_ELBOW, :]
+        wr_l = wb[:, MP_LEFT_WRIST, :]
+        wr_r = wb[:, MP_RIGHT_WRIST, :]
+        hip_l = wb[:, MP_LEFT_HIP, :]
+        hip_r = wb[:, MP_RIGHT_HIP, :]
+        nose = wb[:, MP_NOSE, :]
 
         # Midpoints
         sh_mid = (sh_l + sh_r) * 0.5

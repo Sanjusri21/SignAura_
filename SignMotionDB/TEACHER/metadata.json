@@ -1,0 +1,19 @@
+{
+    "source": "BridgeConn ISL Dataset",
+    "gloss": "teacher (1)",
+    "frames": 110,
+    "fps": 50.0,
+    "vertices": 10475,
+    "vertex_shape": [
+        110,
+        10475,
+        3
+    ],
+    "coordinate_system": "SMPL-X",
+    "hands_used": true,
+    "face_used": false,
+    "sign_id": "TEACHER",
+    "num_frames": 110,
+    "duration_sec": 2.2,
+    "canonical_format": "SMPL-X Pose Parameters"
+}

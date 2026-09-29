@@ -14,7 +14,8 @@ class ISLGrammarTransformer:
     """
     STOP_WORDS = {
         "a", "an", "the", "of", "to", "is", "am", "are", "was", "were",
-        "been", "being", "do", "does", "did", "have", "has", "had"
+        "been", "being", "do", "does", "did", "have", "has", "had",
+        "i", "me", "my"
     }
 
     TIME_WORDS = {

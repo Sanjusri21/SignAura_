@@ -171,29 +171,33 @@ class AnimationSequencer:
                     except Exception as e:
                         logger.warning("Failed loading local file %s: %s", local_npy, e)
 
-        # 2. Fetch binary Float32 stream via HTTP client
+        # 2. Fetch binary Float32 stream via HTTP client (fast safeguard timeout)
         lookup_stem = canon_key or safe_name
         motion_url = f"{self.client.base_url}/motion/{lookup_stem}"
-        async with httpx.AsyncClient(timeout=15.0) as http_client:
-            res = await http_client.get(motion_url)
-            if res.status_code != 200:
-                raise ValueError(f"Failed to fetch animation for gloss '{gloss}' from {motion_url}: HTTP {res.status_code}")
+        try:
+            async with httpx.AsyncClient(timeout=2.0) as http_client:
+                res = await http_client.get(motion_url)
+                if res.status_code != 200:
+                    raise ValueError(f"Failed to fetch animation for gloss '{gloss}' from {motion_url}: HTTP {res.status_code}")
 
-            if "X-FPS" in res.headers:
-                try:
-                    source_fps = float(res.headers["X-FPS"])
-                except Exception:
-                    pass
+                if "X-FPS" in res.headers:
+                    try:
+                        source_fps = float(res.headers["X-FPS"])
+                    except Exception:
+                        pass
 
-            binary_data = res.content
-            expected_bytes_per_frame = VERTEX_COUNT * COORDINATE_DIM * 4
-            if len(binary_data) % expected_bytes_per_frame != 0:
-                raise ValueError(f"Invalid binary data size {len(binary_data)} for gloss '{gloss}'")
+                binary_data = res.content
+                expected_bytes_per_frame = VERTEX_COUNT * COORDINATE_DIM * 4
+                if len(binary_data) % expected_bytes_per_frame != 0:
+                    raise ValueError(f"Invalid binary data size {len(binary_data)} for gloss '{gloss}'")
 
-            frames = len(binary_data) // expected_bytes_per_frame
-            data = np.frombuffer(binary_data, dtype=np.float32).reshape(frames, VERTEX_COUNT, COORDINATE_DIM)
-            self._validate_raw_animation(data, safe_name)
-            return np.ascontiguousarray(data, dtype=np.float32), source_fps
+                frames = len(binary_data) // expected_bytes_per_frame
+                data = np.frombuffer(binary_data, dtype=np.float32).reshape(frames, VERTEX_COUNT, COORDINATE_DIM)
+                self._validate_raw_animation(data, safe_name)
+                return np.ascontiguousarray(data, dtype=np.float32), source_fps
+        except Exception as e:
+            logger.warning("Could not fetch remote animation for '%s': %s", gloss, e)
+            raise
 
     def _validate_raw_animation(self, data: np.ndarray, gloss: str):
         if data.ndim != 3:
@@ -216,8 +220,13 @@ class AnimationSequencer:
         """
         if not glosses:
             return {
+                "status": "missing_motion",
                 "available": False,
                 "glosses": [],
+                "requested_glosses": [],
+                "available_glosses": [],
+                "missing_glosses": [],
+                "message": "Empty gloss sequence provided",
                 "reason": "Empty gloss sequence provided"
             }
 
@@ -227,9 +236,16 @@ class AnimationSequencer:
 
         unavailable_items = [item for item in resolved_list if not item.get("available")]
         if unavailable_items:
+            missing_names = [item.get("gloss", "") for item in unavailable_items if item.get("gloss")]
+            avail_names = [item.get("gloss", "") for item in resolved_list if item.get("available") and item.get("gloss")]
             return {
+                "status": "missing_motion",
                 "available": False,
                 "glosses": glosses,
+                "requested_glosses": [g.upper() for g in glosses],
+                "available_glosses": [g.upper() for g in avail_names],
+                "missing_glosses": [g.upper() for g in missing_names],
+                "message": f"Motion data is not available for {' and '.join([g.upper() for g in missing_names])}.",
                 "unavailable": [
                     {
                         "gloss": item.get("gloss", ""),

@@ -22,6 +22,16 @@ from .models import (
 from .dataset import isign_inspector, ISignDatasetInspector
 from .metadata import isign_metadata, ISignMetadataRepository
 from .mapper import isign_mapper, ISignToBridgeConnMapper
+from .hf_client import isign_hf_client, ISignHFClient
+from .retrieval import (
+    isign_pose_retriever,
+    ISignPoseRetriever,
+    ISignAuthError,
+    ISignRetrievalError,
+    ISignIntegrityError,
+    ARCHIVE_MEMBER_REGISTRY,
+)
+from .motion_service import isign_motion_service, ISignMotionService
 
 __all__ = [
     "ISIGN_DATA_DIR",
@@ -42,4 +52,14 @@ __all__ = [
     "ISignMetadataRepository",
     "isign_mapper",
     "ISignToBridgeConnMapper",
+    "isign_hf_client",
+    "ISignHFClient",
+    "isign_pose_retriever",
+    "ISignPoseRetriever",
+    "ISignAuthError",
+    "ISignRetrievalError",
+    "ISignIntegrityError",
+    "ARCHIVE_MEMBER_REGISTRY",
+    "isign_motion_service",
+    "ISignMotionService",
 ]

@@ -163,3 +163,54 @@ SignAura supports both individual dictionary signs and arbitrary multi-word sequ
 2. **ISL Dictionary Explorer**: In the 3D Avatar Studio, click **"ISL Dictionary (1,200+)"** to browse, search, filter by hand usage, and immediately preview any sign.
 3. **Continuity & Resampling**: All animations are normalized to 30 FPS with smooth 8-frame cosine interpolation across word boundaries.
 
+---
+
+## 🧬 10. Canonical SMPL-X Motion Architecture
+
+### Why SMPL-X Pose Parameters are the Canonical Representation
+Different datasets (such as BridgeConn and iSign) capture human motion in vastly different formats (e.g., MediaPipe normalized landmark coordinates, OpenPose keypoints, continuous video landmarks). If each dataset directly targets baked 3D vertices, differences in subject proportions, coordinate systems, and joint lengths cause severe inconsistencies in finger articulation, wrist orientation, and arm kinematics.
+
+SignAura solves this by establishing **SMPL-X kinematic pose parameters** as the universal internal motion currency:
+- **`global_orient`** (3): Root orientation axis-angle vector.
+- **`body_pose`** (63): 21 body joint rotations (Rodrigues vectors).
+- **`left_hand_pose`** (45): 15 left finger joint rotations (30 DoF articulated).
+- **`right_hand_pose`** (45): 15 right finger joint rotations (30 DoF articulated).
+- **`jaw_pose`** (3): Non-manual facial articulation.
+- **`transl`** (3): Root 3D translation.
+
+### Why Vertices (T, 10475, 3) are NOT the Primary Storage Format
+1. **Kinematic Portability**: Vertices bake body shape ($\beta$) and joint lengths into raw coordinates. Pose parameters are body-shape agnostic; the same motion can animate any avatar identity or gender simply by varying SMPL-X shape parameters.
+2. **Smooth Boundary Blending**: Blending raw vertex points between two signs causes collapsing joints or "ghosting" mesh distortions. Parameter-level blending interpolates rotation vectors smoothly via Rodrigues / SLERP geodesics, preserving bone lengths and rigid skeletal constraints.
+3. **Storage Efficiency**: Storing 10,475 Float32 3D vertices requires ~125 KB per frame (~3.75 MB/sec). Storing canonical pose parameters (162 floats/frame) requires under 0.65 KB per frame — an **80x reduction** in storage and bandwidth.
+4. **Forward Evaluation**: Vertices are generated strictly on-demand during the final visualization/streaming phase by running the SMPL-X forward kinematics model.
+
+### Role of BridgeConn
+BridgeConn serves as the **curated isolated-sign motion library**:
+- Each sign is extracted, normalized, retargeted to SMPL-X pose parameters, validated, and stored permanently in `SignMotionDB/<GLOSS>/motion.npz`.
+- Once stored in `SignMotionDB`, the sign is retrieved directly in constant time without ever running the retargeting pipeline again.
+
+### Role of iSign
+iSign serves as **continuous sign-motion research data and training corpus**:
+- Rather than forcing iSign into an isolated word dictionary, iSign provides natural continuous sentence signing, co-articulation patterns, and real-world signing cadence.
+- Its integration is frozen and stabilized, serving as the benchmark and training dataset for future text-to-motion generative models.
+
+### Role of ISL Grammar
+The ISL grammar engine operates as a decoupled linguistic processor (`app/grammar/isl_grammar.py`):
+- Converts input text into syntactically valid ISL gloss sequences (Subject-Object-Verb, Topic-Comment, Time-first, Question-last).
+- Keeps linguistic transformation completely independent of motion retargeting and 3D rendering.
+
+### Role of Motion Sequencing
+The motion sequencer (`app/motion/motion_sequencer.py` and `motion_blender.py`):
+- Retrieves canonical motions for each gloss from `SignMotionDB`.
+- Resamples all motions to a uniform target FPS (e.g. 30 FPS).
+- Aligns horizontal root translation and body orientation across sign boundaries to eliminate unnatural teleportation.
+- Performs cosine parameter easing across transition windows.
+- Outputs one continuous, validated `CanonicalMotion` sequence.
+
+### Future Text-to-SMPL-X Motion Generation
+The architecture includes an extensible interface (`app/motion/text_to_motion.py`):
+```
+Text / Gloss Sequence ──> [ TextToSMPLXModel ] ──> Canonical SMPL-X Pose Parameters
+```
+For words outside `SignMotionDB`, this module provides a plug-and-play contract for deep generative models (e.g. diffusion or transformer motion generators) to synthesize new SMPL-X parameters on the fly, with zero changes required in the sequencing or rendering pipeline.
+

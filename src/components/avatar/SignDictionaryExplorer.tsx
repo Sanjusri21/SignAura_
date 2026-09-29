@@ -35,7 +35,7 @@ interface SignDictionaryExplorerProps {
   currentSignName?: string;
 }
 
-const BACKEND_API = 'http://127.0.0.1:8000';
+const BACKEND_API = (import.meta as any).env?.VITE_API_URL || 'http://127.0.0.1:8002';
 const SIGNAVATAR_API = 'http://127.0.0.1:8001';
 
 export const SignDictionaryExplorer: React.FC<SignDictionaryExplorerProps> = ({
