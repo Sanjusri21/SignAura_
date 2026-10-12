@@ -47,11 +47,11 @@ export const AuthLayout: React.FC<AuthLayoutProps> = ({
           <div className="flex flex-wrap items-center justify-center lg:justify-start gap-3 pt-1">
             <div className="bg-[#101735] px-3 py-1.5 rounded-lg flex items-center gap-1.5 text-xs text-[#A8B2D1] border border-[#273154]">
               <ShieldCheck className="w-3.5 h-3.5 text-[#22D3EE]" />
-              <span>WCAG 2.1 AA Compliant</span>
+              <span>Accessibility-First Design</span>
             </div>
             <div className="bg-[#101735] px-3 py-1.5 rounded-lg flex items-center gap-1.5 text-xs text-[#A8B2D1] border border-[#273154]">
               <Sparkles className="w-3.5 h-3.5 text-[#8B5CF6]" />
-              <span>Pan-Indian ISL Lexicon</span>
+              <span>BridgeConn ISL Vocabulary</span>
             </div>
           </div>
         </div>

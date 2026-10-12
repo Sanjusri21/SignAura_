@@ -15,6 +15,8 @@ class VideoProcessUrlRequest(BaseModel):
     )
     title: Optional[str] = "Web Video Processing"
     dialect: Optional[str] = "standard"
+    force_reconvert: Optional[bool] = False
+
 
 
 class VideoJobResponse(BaseModel):
@@ -32,3 +34,7 @@ class VideoJobResponse(BaseModel):
     transcript: str = ""
     gloss_tokens: List[GlossTokenSchema] = Field(default_factory=list)
     error: Optional[str] = None
+    language_supported: bool = True
+    message: Optional[str] = None
+    is_existing: bool = False
+

@@ -225,6 +225,7 @@ const MainAppContent: React.FC = () => {
               payload={processingPayload}
               currentDialect={currentDialect}
               onComplete={handleProcessingComplete}
+              onCancel={() => setIsProcessing(false)}
             />
           ) : (
             <>
@@ -265,6 +266,9 @@ const MainAppContent: React.FC = () => {
                   currentDialect={currentDialect}
                   onDialectChange={setCurrentDialect}
                   onStartProcessing={handleStartProcessing}
+                  projects={projects}
+                  onSelectProject={(proj) => setCurrentProject(proj)}
+                  onNavigate={navigateTo}
                 />
               )}
 

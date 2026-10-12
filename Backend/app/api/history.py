@@ -59,14 +59,17 @@ async def get_history(current_user: UserResponse = Depends(get_current_user)):
             "id": j.get("id", str(j.get("_id"))),
             "title": j.get("title", "Project"),
             "originalFileName": j.get("original_file_name", "media.mp4"),
-            "duration": j.get("duration", 0),
+            "duration": round(float(j.get("duration", 0) or 0.0), 1),
             "createdAt": j.get("created_at", "Recently"),
             "status": j.get("status", "completed"),
             "accuracy": j.get("accuracy", 98.5),
             "language": j.get("language", "English (India)"),
             "dialect": j.get("dialect", "standard"),
             "transcript": j.get("transcript", ""),
-            "glossTokens": j.get("gloss_tokens", [])
+            "glossTokens": j.get("gloss_tokens", []),
+            "languageSupported": j.get("language_supported", True),
+            "message": j.get("message"),
         }
         for j in job_list
     ]
+

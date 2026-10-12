@@ -66,6 +66,29 @@ async def execute_video_pipeline(
 
     logger.info("Job %s transcript: %s", job_id, text)
 
+    SUPPORTED_ISL_LANGUAGES = {"en", "english", "hi", "hindi"}
+    normalized_lang = (language or "").strip().lower()
+    is_supported = normalized_lang in SUPPORTED_ISL_LANGUAGES
+
+    if not is_supported:
+        lang_display = language.upper() if language else "UNKNOWN"
+        msg = f"Language not supported yet ({lang_display}). Only English and Hindi are supported for Indian Sign Language translation."
+        logger.warning("Job %s: %s", job_id, msg)
+        return {
+            "job_id": job_id,
+            "status": "completed",
+            "transcript": text,
+            "language": language,
+            "duration": round(duration, 1),
+            "segments": segments,
+            "nlp_tokens": [],
+            "gloss": "",
+            "animations": [],
+            "tokens": [],
+            "language_supported": False,
+            "message": msg,
+        }
+
     nlp_tokens = nlp_processor.analyze_text(text)
 
     isl_service = get_isl_service()
@@ -78,7 +101,7 @@ async def execute_video_pipeline(
         "status": "completed",
         "transcript": text,
         "language": language,
-        "duration": duration,
+        "duration": round(duration, 1),
         "segments": segments,
         "nlp_tokens": nlp_tokens,
         "gloss": isl_result.gloss,
@@ -87,7 +110,10 @@ async def execute_video_pipeline(
             t.model_dump() if hasattr(t, "model_dump") else t.dict()
             for t in (isl_result.tokens or [])
         ],
+        "language_supported": True,
+        "message": None,
     }
+
 
 
 async def _update_job(job_id: str, values: dict):

@@ -8,7 +8,9 @@ import {
   UserSquare2, 
   ArrowRight,
   AlertCircle,
-  Loader2
+  Loader2,
+  Globe,
+  ArrowLeft
 } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import { ConvertPayload } from './ConvertView';
@@ -21,18 +23,25 @@ interface ProcessingViewProps {
   payload: ConvertPayload | null;
   currentDialect: ISLDialect;
   onComplete: (project: VideoProject) => void;
+  onCancel?: () => void;
 }
 
 export const ProcessingView: React.FC<ProcessingViewProps> = ({
   title,
   payload,
   currentDialect,
-  onComplete
+  onComplete,
+  onCancel
 }) => {
   const [currentStepIndex, setCurrentStepIndex] = useState(0);
   const [progress, setProgress] = useState(15);
   const [statusMessage, setStatusMessage] = useState('Initiating neural conversion pipeline...');
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [unsupportedLanguageNotice, setUnsupportedLanguageNotice] = useState<{
+    language?: string;
+    message: string;
+    transcript?: string;
+  } | null>(null);
   const hasFinishedRef = useRef(false);
 
   const steps = [
@@ -103,6 +112,14 @@ export const ProcessingView: React.FC<ProcessingViewProps> = ({
               }
 
               if (jobStatus.status === 'completed') {
+                if (jobStatus.language_supported === false) {
+                  setUnsupportedLanguageNotice({
+                    language: jobStatus.language || 'Non-ISL Language',
+                    message: jobStatus.message || 'Language not supported yet. Only English and Hindi are supported for Indian Sign Language translation.',
+                    transcript: jobStatus.transcript
+                  });
+                  return;
+                }
                 finalTranscript = jobStatus.transcript || '';
                 finalTokens = (jobStatus.gloss_tokens as any) || [];
                 if (jobStatus.duration) jobDuration = jobStatus.duration;
@@ -110,7 +127,10 @@ export const ProcessingView: React.FC<ProcessingViewProps> = ({
               } else if (jobStatus.status === 'failed') {
                 throw new Error(jobStatus.error || 'Video processing failed on server');
               }
-            } catch (pollErr) {
+            } catch (pollErr: any) {
+              if (pollErr?.message?.includes('Language not supported')) {
+                throw pollErr;
+              }
               console.warn('Polling error:', pollErr);
             }
           }
@@ -128,8 +148,17 @@ export const ProcessingView: React.FC<ProcessingViewProps> = ({
             try {
               const jobStatus = await signAuraApi.getJobStatus(jobId);
               if (jobStatus.status === 'completed') {
+                if (jobStatus.language_supported === false) {
+                  setUnsupportedLanguageNotice({
+                    language: jobStatus.language || 'Non-ISL Language',
+                    message: jobStatus.message || 'Language not supported yet. Only English and Hindi are supported for Indian Sign Language translation.',
+                    transcript: jobStatus.transcript
+                  });
+                  return;
+                }
                 finalTranscript = jobStatus.transcript || '';
                 finalTokens = (jobStatus.gloss_tokens as any) || [];
+                if (jobStatus.duration) jobDuration = jobStatus.duration;
                 break;
               }
             } catch {}
@@ -213,6 +242,55 @@ export const ProcessingView: React.FC<ProcessingViewProps> = ({
       isMounted = false;
     };
   }, [payload, currentDialect, title, onComplete]);
+
+  if (unsupportedLanguageNotice) {
+    return (
+      <div className="max-w-2xl mx-auto space-y-6 pb-20 py-8">
+        <div className="bg-[#151D40] rounded-2xl p-6 sm:p-8 border border-amber-500/40 shadow-2xl space-y-6 text-center">
+          <div className="w-16 h-16 rounded-2xl bg-amber-500/10 border border-amber-500/30 text-amber-400 flex items-center justify-center mx-auto">
+            <Globe className="w-8 h-8" />
+          </div>
+
+          <div className="space-y-2">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/15 border border-amber-500/30 text-amber-300 text-xs font-semibold">
+              <span>Detected Language:</span>
+              <span className="uppercase font-bold tracking-wider">{unsupportedLanguageNotice.language}</span>
+            </div>
+            <h2 className="text-xl sm:text-2xl font-bold text-white">
+              Language Not Supported Yet
+            </h2>
+            <p className="text-xs sm:text-sm text-[#A8B2D1] max-w-lg mx-auto leading-relaxed">
+              {unsupportedLanguageNotice.message}
+            </p>
+          </div>
+
+          {unsupportedLanguageNotice.transcript && (
+            <div className="text-left bg-[#101735] p-4 rounded-xl border border-[#273154] space-y-1.5">
+              <span className="text-[11px] font-bold text-[#6B7A99] uppercase tracking-wider">
+                Recognized Speech Audio
+              </span>
+              <p className="text-xs text-[#E2E8F0] italic leading-relaxed">
+                "{unsupportedLanguageNotice.transcript}"
+              </p>
+            </div>
+          )}
+
+          <div className="pt-2 flex items-center justify-center gap-3">
+            {onCancel && (
+              <GlassButton
+                variant="primary"
+                size="md"
+                onClick={onCancel}
+                icon={<ArrowLeft className="w-4 h-4 text-[#080D24]" />}
+              >
+                Back to Video Converter
+              </GlassButton>
+            )}
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="max-w-3xl mx-auto space-y-6 pb-20 py-4">

@@ -134,9 +134,9 @@ export const LandingView: React.FC<LandingViewProps> = ({ onNavigate }) => {
               </h1>
             </div>
 
-            {/* Supporting Copy */}
+            {/* Supporting Copy - Distinct from headline */}
             <p className="text-base sm:text-lg text-[#A8B2D1] leading-relaxed max-w-xl">
-              Breaking communication barriers with AI-powered Indian Sign Language translation and interactive 3D avatars.
+              Transforming spoken video media, educational lectures, and conversational audio into expressive Indian Sign Language with real-time 3D kinematics.
             </p>
 
             {/* CTA Buttons */}
@@ -167,7 +167,7 @@ export const LandingView: React.FC<LandingViewProps> = ({ onNavigate }) => {
             <div className="flex items-center gap-4 pt-4 border-t border-[#273154] text-xs text-[#A8B2D1]">
               <div className="flex items-center gap-1.5">
                 <CheckCircle2 className="w-4 h-4 text-[#22D3EE]" />
-                <span>ISL SOV Syntax</span>
+                <span>ISL Topic-Comment Syntax</span>
               </div>
               <div className="flex items-center gap-1.5">
                 <CheckCircle2 className="w-4 h-4 text-[#22D3EE]" />
@@ -175,15 +175,15 @@ export const LandingView: React.FC<LandingViewProps> = ({ onNavigate }) => {
               </div>
               <div className="flex items-center gap-1.5">
                 <CheckCircle2 className="w-4 h-4 text-[#22D3EE]" />
-                <span>Web-Standard</span>
+                <span>Whisper ASR</span>
               </div>
             </div>
           </div>
 
-          {/* Right Hero Stage: Live 3D Avatar Container */}
+          {/* Right Hero Stage: Live 3D Avatar Container - Fits Above the Fold at 1366x768 */}
           <div className="lg:col-span-6" id="avatar-interactive-section">
-            <div className="bg-[#151D40] rounded-2xl border border-[#273154] p-4 shadow-xl">
-              <div className="flex items-center justify-between pb-3 mb-2 border-b border-[#273154] px-1">
+            <div className="bg-[#151D40] rounded-2xl border border-[#273154] p-3.5 shadow-xl">
+              <div className="flex items-center justify-between pb-2 mb-2 border-b border-[#273154] px-1">
                 <div className="flex items-center gap-2">
                   <span className="w-2 h-2 rounded-full bg-[#22D3EE] animate-pulse" />
                   <span className="text-xs font-bold text-white tracking-wide">3D Sign Avatar Preview</span>
@@ -193,17 +193,18 @@ export const LandingView: React.FC<LandingViewProps> = ({ onNavigate }) => {
                 </span>
               </div>
 
-              {/* Working 3D Avatar (Unchanged component, cleanly housed) */}
+              {/* Working 3D Avatar (height 340px to fit fold, showISLControls=false to avoid duplicate row) */}
               <SignAvatar3D
                 currentSign={demoSign}
                 isPlaying={isDemoPlaying}
                 onTogglePlay={() => setIsDemoPlaying(!isDemoPlaying)}
-                height="420px"
+                showISLControls={false}
+                height="340px"
               />
 
-              {/* Quick Interactive Gesture Buttons */}
-              <div className="mt-3 pt-3 border-t border-[#273154] flex flex-wrap items-center justify-center gap-1.5 select-none">
-                <span className="text-xs font-semibold text-[#A8B2D1] mr-1">Try Sign:</span>
+              {/* Single Unified Gesture Chips Row (Wrap without horizontal scrollbar) */}
+              <div className="mt-2.5 pt-2.5 border-t border-[#273154] flex flex-wrap items-center justify-center gap-2 select-none">
+                <span className="text-xs font-semibold text-[#A8B2D1]">Try Live ISL Signs:</span>
                 {quickSigns.map((item) => (
                   <button
                     key={item.sign}
@@ -211,9 +212,9 @@ export const LandingView: React.FC<LandingViewProps> = ({ onNavigate }) => {
                       setDemoSign(item.sign);
                       setIsDemoPlaying(true);
                     }}
-                    className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
+                    className={`px-3 py-1 rounded-lg text-xs font-semibold transition-all ${
                       demoSign === item.sign
-                        ? 'bg-[#22D3EE] text-[#080D24] shadow-sm'
+                        ? 'bg-[#22D3EE] text-[#080D24] shadow-sm font-bold scale-105'
                         : 'bg-[#101735] text-[#A8B2D1] hover:text-white hover:bg-[#1A244D] border border-[#273154]'
                     }`}
                   >
@@ -223,6 +224,7 @@ export const LandingView: React.FC<LandingViewProps> = ({ onNavigate }) => {
               </div>
             </div>
           </div>
+
 
         </div>
       </section>

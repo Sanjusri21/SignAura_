@@ -14,6 +14,8 @@ import {
 import { VideoProject, NavigationTab } from '../types';
 import { GlassButton } from '../components/ui/GlassButton';
 import { StatusBadge } from '../components/ui/StatusBadge';
+import { formatDuration, formatSeconds } from '../utils/formatters';
+
 
 interface LibraryViewProps {
   projects: VideoProject[];
@@ -110,29 +112,37 @@ export const LibraryView: React.FC<LibraryViewProps> = ({
                 "{proj.transcript}"
               </p>
 
-              {/* Tokens Preview */}
-              <div className="flex flex-wrap items-center gap-1.5 pt-1">
-                {proj.glossTokens.slice(0, 4).map((t) => (
-                  <span
-                    key={t.id}
-                    className="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-[#101735] text-[#A8B2D1] border border-[#273154]"
-                  >
-                    {t.gloss}
+              {/* Tokens Preview / Unsupported Language Warning */}
+              {proj.languageSupported === false ? (
+                <div className="pt-1">
+                  <span className="px-2 py-0.5 rounded text-[10px] font-semibold bg-amber-500/15 text-amber-300 border border-amber-500/30">
+                    Language not supported yet ({proj.language?.toUpperCase() || 'OTHER'})
                   </span>
-                ))}
-                {proj.glossTokens.length > 4 && (
-                  <span className="text-[10px] text-[#6B7A99] font-mono">
-                    +{proj.glossTokens.length - 4} signs
-                  </span>
-                )}
-              </div>
+                </div>
+              ) : (
+                <div className="flex flex-wrap items-center gap-1.5 pt-1">
+                  {proj.glossTokens.slice(0, 4).map((t) => (
+                    <span
+                      key={t.id}
+                      className="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-[#101735] text-[#A8B2D1] border border-[#273154]"
+                    >
+                      {t.gloss}
+                    </span>
+                  ))}
+                  {proj.glossTokens.length > 4 && (
+                    <span className="text-[10px] text-[#6B7A99] font-mono">
+                      +{proj.glossTokens.length - 4} signs
+                    </span>
+                  )}
+                </div>
+              )}
             </div>
 
             {/* Footer Actions */}
             <div className="pt-4 mt-4 border-t border-[#273154] flex items-center justify-between text-xs text-[#A8B2D1]">
               <div className="flex items-center gap-2 text-[11px]">
                 <Clock className="w-3.5 h-3.5" />
-                <span>{proj.duration}s</span>
+                <span>{formatDuration(proj.duration)}</span>
                 <span>•</span>
                 <span className="capitalize">{proj.dialect} ISL</span>
               </div>
@@ -174,7 +184,9 @@ export const LibraryView: React.FC<LibraryViewProps> = ({
             <div className="flex items-center justify-between pb-3 border-b border-[#273154]">
               <div>
                 <h3 className="text-lg font-bold text-white">{selectedProjectPreview.title}</h3>
-                <p className="text-xs text-[#A8B2D1]">Conversion Details & Token Stream</p>
+                <p className="text-xs text-[#A8B2D1]">
+                  Duration: {formatDuration(selectedProjectPreview.duration)} • Dialect: {selectedProjectPreview.dialect.toUpperCase()} ISL
+                </p>
               </div>
               <button
                 onClick={() => setSelectedProjectPreview(null)}
@@ -192,13 +204,19 @@ export const LibraryView: React.FC<LibraryViewProps> = ({
                 </p>
               </div>
 
+              {selectedProjectPreview.languageSupported === false && (
+                <div className="p-3 rounded-xl bg-amber-500/10 border border-amber-500/30 text-xs text-amber-200">
+                  {selectedProjectPreview.message || `Language not supported yet (${selectedProjectPreview.language}). Only English and Hindi are supported for Indian Sign Language translation.`}
+                </div>
+              )}
+
               <div>
                 <p className="text-xs font-semibold text-white mb-1.5">ISL Gloss Sequence ({selectedProjectPreview.glossTokens.length} Tokens):</p>
                 <div className="flex flex-wrap gap-1.5 max-h-40 overflow-y-auto p-2 rounded-xl bg-[#101735] border border-[#273154]">
                   {selectedProjectPreview.glossTokens.map((t) => (
                     <div key={t.id} className="p-2 rounded bg-[#151D40] border border-[#273154] text-center">
                       <p className="text-xs font-mono font-bold text-[#22D3EE]">{t.gloss}</p>
-                      <p className="text-[9px] text-[#A8B2D1]">{t.startTime}s - {t.endTime}s</p>
+                      <p className="text-[9px] text-[#A8B2D1]">{formatSeconds(t.startTime)} - {formatSeconds(t.endTime)}</p>
                     </div>
                   ))}
                 </div>

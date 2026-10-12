@@ -45,16 +45,29 @@ async def run_pipeline_in_background(
             file_path, dialect=dialect, job_id=job_id
         )
 
+        existing_doc = await jobs.find_one({"id": job_id})
+        current_title = (existing_doc or {}).get("title", "")
+        # If title is generic, derive meaningful title from first words of transcript
+        if not current_title or current_title in ("Web Video Conversion", "Web Video Processing", "Web Stream Video", "Online Video Stream"):
+            transcript_words = result.get("transcript", "").strip().split()[:7]
+            if transcript_words:
+                current_title = " ".join(transcript_words) + "..."
+            else:
+                current_title = "Audio Conversion"
+
         await jobs.update_one(
             {"id": job_id},
             {
                 "$set": {
+                    "title": current_title,
                     "status": "completed",
                     "progress": 100,
                     "transcript": result["transcript"],
                     "language": result["language"],
-                    "duration": result["duration"],
+                    "duration": round(float(result["duration"]), 1),
                     "gloss_tokens": result["tokens"],
+                    "language_supported": result.get("language_supported", True),
+                    "message": result.get("message"),
                     "accuracy": 0.0,
                     "updated_at": datetime.datetime.utcnow().isoformat(),
                 }
@@ -94,7 +107,7 @@ def _initial_job(
         "file_path": file_path,
         "status": "processing",
         "progress": 30,
-        "duration": duration,
+        "duration": round(float(duration or 0.0), 1),
         "accuracy": 0.0,
         "language": language,
         "dialect": dialect,
@@ -154,10 +167,13 @@ async def upload_video(
     with open(save_path, "wb") as f:
         f.write(content)
 
+    clean_filename = os.path.splitext(file.filename or "")[0] or "Uploaded Video"
+    clean_title = re.sub(r"[_-]+", " ", clean_filename).strip() or "Uploaded Video"
+
     job_doc = _initial_job(
         job_id=job_id,
         user_id=current_user.id,
-        title=file.filename or "Uploaded Video",
+        title=clean_title,
         dialect=dialect,
         file_path=save_path,
     )
@@ -177,10 +193,38 @@ async def process_video_url(
     background_tasks: BackgroundTasks,
     current_user: UserResponse = Depends(get_current_user),
 ):
+    jobs = get_video_jobs_collection()
+
+    # Prevent duplicate conversions: check if identical URL was already completed for user
+    if not getattr(req, "force_reconvert", False):
+        existing = await jobs.find_one({
+            "user_id": current_user.id,
+            "video_url": req.url,
+            "status": "completed",
+        })
+        if existing:
+            return VideoJobResponse(
+                job_id=existing.get("job_id", existing.get("id")),
+                title=existing.get("title", "Existing Video"),
+                status="completed",
+                video_url=existing.get("video_url"),
+                original_file_name=existing.get("original_file_name"),
+                created_at=str(existing.get("created_at", "")),
+                progress=100,
+                duration=round(float(existing.get("duration", 0.0) or 0.0), 1),
+                accuracy=existing.get("accuracy", 0.0),
+                language=existing.get("language", "en"),
+                dialect=existing.get("dialect", "standard"),
+                transcript=existing.get("transcript", ""),
+                gloss_tokens=existing.get("gloss_tokens", []),
+                language_supported=existing.get("language_supported", True),
+                message=existing.get("message"),
+                is_existing=True,
+            )
+
     job_id = f"job-{uuid.uuid4().hex[:8]}"
 
-    # IMPORTANT: actually download the media.
-    # No YouTube transcript shortcut and no fake fallback.
+    # IMPORTANT: actually download the media via yt-dlp
     try:
         download_res = await video_downloader.download_media(req.url)
     except VideoDownloadError as exc:
@@ -188,21 +232,26 @@ async def process_video_url(
 
     video_path = download_res["file_path"]
 
+    # Meaningful title extraction: prioritize real video title
+    extracted_title = download_res.get("title") or req.title or "Online Video"
+    extracted_title = re.sub(r"YouTube Video \([^\)]+\)", "", extracted_title).strip()
+    if not extracted_title or extracted_title == "Online Video":
+        extracted_title = "Online Video Lecture"
+
     job_doc = _initial_job(
         job_id=job_id,
         user_id=current_user.id,
-        title=req.title or download_res.get("title", "Web Video"),
+        title=extracted_title,
         dialect=req.dialect or "standard",
         video_url=req.url,
         file_path=video_path,
-        duration=float(download_res.get("duration") or 0.0),
+        duration=round(float(download_res.get("duration") or 0.0), 1),
     )
 
     job_doc["original_file_name"] = download_res.get(
-        "title", "Web Video"
+        "title", extracted_title
     )
 
-    jobs = get_video_jobs_collection()
     await jobs.insert_one(job_doc)
 
     await _start_pipeline(
@@ -213,3 +262,4 @@ async def process_video_url(
     )
 
     return VideoJobResponse(**job_doc)
+

@@ -11,10 +11,12 @@ import {
   ArrowRight,
   Clock,
   Play,
-  ArrowDown
+  ArrowDown,
+  AlertCircle
 } from 'lucide-react';
-import { ISLDialect } from '../types';
+import { ISLDialect, VideoProject } from '../types';
 import { GlassButton } from '../components/ui/GlassButton';
+import { formatDuration } from '../utils/formatters';
 
 export interface ConvertPayload {
   file?: File;
@@ -28,12 +30,18 @@ interface ConvertViewProps {
   currentDialect: ISLDialect;
   onDialectChange: (dialect: ISLDialect) => void;
   onStartProcessing: (payload: ConvertPayload) => void;
+  projects?: VideoProject[];
+  onSelectProject?: (project: VideoProject) => void;
+  onNavigate?: (tab: any) => void;
 }
 
 export const ConvertView: React.FC<ConvertViewProps> = ({
   currentDialect,
   onDialectChange,
-  onStartProcessing
+  onStartProcessing,
+  projects = [],
+  onSelectProject,
+  onNavigate
 }) => {
   const [activeMode, setActiveMode] = useState<'upload' | 'url'>('upload');
   const [isDragOver, setIsDragOver] = useState(false);
@@ -41,7 +49,29 @@ export const ConvertView: React.FC<ConvertViewProps> = ({
   const [videoUrl, setVideoUrl] = useState('');
   const [isUrlValid, setIsUrlValid] = useState(false);
   const [selectedPreset, setSelectedPreset] = useState<string | null>(null);
+  const [ignoreDuplicateWarning, setIgnoreDuplicateWarning] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  // Check for duplicate match
+  const existingProjectMatch = React.useMemo(() => {
+    if (ignoreDuplicateWarning) return null;
+    if (selectedFile) {
+      const fileNameClean = selectedFile.name.replace(/\.[^/.]+$/, '').trim().toLowerCase();
+      return projects.find((p) => {
+        const pTitle = p.title.trim().toLowerCase();
+        return pTitle === fileNameClean || pTitle.includes(fileNameClean) || fileNameClean.includes(pTitle);
+      }) || null;
+    }
+    if (isUrlValid && videoUrl.trim()) {
+      const cleanUrl = videoUrl.trim().toLowerCase();
+      return projects.find((p) => {
+        return (p as any).sourceUrl?.toLowerCase() === cleanUrl ||
+               p.title.toLowerCase().includes('web stream') ||
+               (cleanUrl.includes('youtube') && p.title.toLowerCase().includes('youtube'));
+      }) || null;
+    }
+    return null;
+  }, [selectedFile, videoUrl, isUrlValid, projects, ignoreDuplicateWarning]);
 
   const pipelineSteps = [
     { title: 'VIDEO', desc: 'Media Ingest', icon: FileVideo },
@@ -99,6 +129,7 @@ export const ConvertView: React.FC<ConvertViewProps> = ({
       const file = e.dataTransfer.files[0];
       setSelectedFile(file);
       setSelectedPreset(null);
+      setIgnoreDuplicateWarning(false);
     }
   };
 
@@ -106,6 +137,7 @@ export const ConvertView: React.FC<ConvertViewProps> = ({
     if (e.target.files && e.target.files[0]) {
       setSelectedFile(e.target.files[0]);
       setSelectedPreset(null);
+      setIgnoreDuplicateWarning(false);
     }
   };
 
@@ -113,6 +145,7 @@ export const ConvertView: React.FC<ConvertViewProps> = ({
     const val = e.target.value;
     setVideoUrl(val);
     setIsUrlValid(val.trim().length > 8);
+    setIgnoreDuplicateWarning(false);
     if (val.trim()) {
       setSelectedFile(null);
       setSelectedPreset(null);
@@ -124,6 +157,7 @@ export const ConvertView: React.FC<ConvertViewProps> = ({
     setSelectedFile(null);
     setVideoUrl('');
     setIsUrlValid(false);
+    setIgnoreDuplicateWarning(false);
   };
 
   const handleLaunchPipeline = () => {
@@ -328,7 +362,7 @@ export const ConvertView: React.FC<ConvertViewProps> = ({
                   </span>
                   <div className="flex items-center gap-1 text-[10px] text-[#A8B2D1]">
                     <Clock className="w-3 h-3" />
-                    <span>{p.duration}s</span>
+                    <span>{formatDuration(p.duration)}</span>
                   </div>
                 </div>
 
@@ -340,6 +374,42 @@ export const ConvertView: React.FC<ConvertViewProps> = ({
             ))}
           </div>
         </div>
+
+        {/* Existing Duplicate Conversion Banner */}
+        {existingProjectMatch && (
+          <div className="p-4 rounded-xl bg-amber-500/10 border border-amber-500/30 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 animate-fadeIn">
+            <div className="flex items-start gap-2.5">
+              <AlertCircle className="w-5 h-5 text-amber-400 flex-shrink-0 mt-0.5" />
+              <div>
+                <p className="text-xs font-bold text-amber-300">
+                  Conversion already exists for this source
+                </p>
+                <p className="text-[11px] text-[#A8B2D1] mt-0.5">
+                  "{existingProjectMatch.title}" ({formatDuration(existingProjectMatch.duration)}) is already in your library.
+                </p>
+              </div>
+            </div>
+            <div className="flex items-center gap-2 self-end sm:self-center">
+              {onSelectProject && onNavigate && (
+                <button
+                  onClick={() => {
+                    onSelectProject(existingProjectMatch);
+                    onNavigate('avatar');
+                  }}
+                  className="px-3.5 py-1.5 rounded-lg bg-[#22D3EE] text-[#080D24] text-xs font-bold hover:bg-[#22D3EE]/90 transition-colors shadow-sm"
+                >
+                  Open Existing
+                </button>
+              )}
+              <button
+                onClick={() => setIgnoreDuplicateWarning(true)}
+                className="px-3 py-1.5 rounded-lg bg-[#151D40] text-amber-200 border border-amber-500/30 text-xs font-medium hover:bg-[#202B59] transition-colors"
+              >
+                Convert Again
+              </button>
+            </div>
+          </div>
+        )}
 
         {/* Launch Pipeline Action */}
         <div className="pt-4 border-t border-[#273154] flex flex-col sm:flex-row sm:items-center justify-between gap-4">

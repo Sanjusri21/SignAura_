@@ -16,6 +16,7 @@ import { VideoProject, NavigationTab } from '../types';
 import { useAuth } from '../context/AuthContext';
 import { GlassButton } from '../components/ui/GlassButton';
 import { StatusBadge } from '../components/ui/StatusBadge';
+import { formatDuration } from '../utils/formatters';
 
 interface DashboardViewProps {
   projects: VideoProject[];
@@ -30,36 +31,44 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
 }) => {
   const { user } = useAuth();
 
+  const totalSignsGenerated = projects.reduce((acc, p) => acc + (p.glossTokens?.length || 0), 0);
+  const uniqueSignsUsed = new Set(
+    projects.flatMap((p) => (p.glossTokens || []).map((t) => (t.gloss || '').trim().toUpperCase())).filter(Boolean)
+  ).size;
+  const totalSeconds = projects.reduce((acc, p) => acc + (p.duration || 0), 0);
+  const totalMinutes = totalSeconds >= 60 ? (totalSeconds / 60).toFixed(1) + ' min' : Math.round(totalSeconds) + ' sec';
+
   const stats = [
     {
       title: 'Videos Processed',
       value: `${projects.length}`,
-      trend: '+12% this week',
+      trend: `${projects.length} completed conversions`,
       icon: Video,
       color: 'text-[#22D3EE]'
     },
     {
-      title: 'Translations',
-      value: '1,420+',
-      trend: 'ISL SOV Certified',
+      title: 'Signs Generated',
+      value: totalSignsGenerated.toLocaleString(),
+      trend: 'ISL Topic-Comment order',
       icon: Languages,
       color: 'text-[#8B5CF6]'
     },
     {
-      title: 'Sign Sequences',
-      value: '15,800',
-      trend: '60 FPS 3D Keyframes',
+      title: 'Unique Signs Used',
+      value: uniqueSignsUsed.toLocaleString(),
+      trend: 'Indexed motion vocabulary',
       icon: Layers,
       color: 'text-[#10B981]'
     },
     {
-      title: 'Recent Activity',
-      value: 'Active',
-      trend: 'Whisper ASR Live',
-      icon: Activity,
+      title: 'Time Translated',
+      value: totalMinutes,
+      trend: 'Whisper ASR processed',
+      icon: Clock,
       color: 'text-[#F59E0B]'
     }
   ];
+
 
   const actionCards = [
     {
@@ -262,7 +271,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
               <div className="pt-3 mt-3 border-t border-[#273154] flex items-center justify-between text-xs text-[#A8B2D1]">
                 <div className="flex items-center gap-1.5">
                   <Clock className="w-3.5 h-3.5" />
-                  <span>{proj.duration}s</span>
+                  <span>{formatDuration(proj.duration)}</span>
                 </div>
 
                 <button

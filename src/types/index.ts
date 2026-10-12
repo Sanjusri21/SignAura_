@@ -38,6 +38,9 @@ export interface VideoProject {
   thumbnailUrl?: string;
   language: string;
   dialect: ISLDialect;
+  languageSupported?: boolean;
+  message?: string;
+  is_existing?: boolean;
 }
 
 export interface AvatarPose {
