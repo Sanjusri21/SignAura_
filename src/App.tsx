@@ -10,6 +10,7 @@ import { DashboardView } from './views/DashboardView';
 import { ConvertView } from './views/ConvertView';
 import { ProcessingView } from './views/ProcessingView';
 import { TranslatorView } from './views/TranslatorView';
+import { SignToTextView } from './views/SignToTextView';
 import { SignAvatarStudioView } from './views/SignAvatarStudioView';
 import { AssistantView } from './views/AssistantView';
 import { LibraryView } from './views/LibraryView';
@@ -28,6 +29,7 @@ const PATH_TO_TAB: Record<string, NavigationTab> = {
   '/dashboard': 'dashboard',
   '/video-to-isl': 'convert',
   '/translator': 'translator',
+  '/sign-to-text': 'sign-to-text',
   '/avatar': 'avatar',
   '/chat': 'assistant',
   '/history': 'library',
@@ -42,6 +44,7 @@ const TAB_TO_PATH: Record<NavigationTab, string> = {
   dashboard: '/dashboard',
   convert: '/video-to-isl',
   translator: '/translator',
+  'sign-to-text': '/sign-to-text',
   avatar: '/avatar',
   assistant: '/chat',
   library: '/history',
@@ -52,6 +55,7 @@ const PROTECTED_TABS: NavigationTab[] = [
   'dashboard',
   'convert',
   'translator',
+  'sign-to-text',
   'avatar',
   'assistant',
   'library',
@@ -279,6 +283,10 @@ const MainAppContent: React.FC = () => {
                   onSendToAvatar={(proj) => setCurrentProject(proj)}
                   onNavigate={navigateTo}
                 />
+              )}
+
+              {activeTab === 'sign-to-text' && (
+                <SignToTextView />
               )}
 
               {activeTab === 'avatar' && (

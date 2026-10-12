@@ -10,6 +10,7 @@
     "test": "node --experimental-strip-types tests/islGrammar.test.mjs"
   },
   "dependencies": {
+    "@mediapipe/tasks-vision": "^1.1.0",
     "axios": "^1.19.0",
     "canvas-confetti": "^1.9.3",
     "clsx": "^2.1.1",

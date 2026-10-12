@@ -33,6 +33,7 @@ export const DashboardHeader: React.FC<DashboardHeaderProps> = ({
     dashboard: { title: 'Dashboard', subtitle: 'AI accessibility operations & pipeline overview' },
     convert: { title: 'Video to ISL', subtitle: 'Synthesize 3D sign keyframes from speech and video' },
     translator: { title: 'Translator', subtitle: 'Convert text into ISL Subject-Object-Verb gloss' },
+    'sign-to-text': { title: 'Sign to Text', subtitle: 'Webcam gesture recognition with instant Text-to-Speech' },
     avatar: { title: '3D Sign Avatar', subtitle: 'Interactive 3D humanoid avatar motion rig' },
     assistant: { title: 'AI Assistant', subtitle: 'Conversational ISL accessibility copilot' },
     library: { title: 'History & Archive', subtitle: 'Previous conversions, gloss tokens & transcripts' },

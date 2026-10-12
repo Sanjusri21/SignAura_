@@ -14,7 +14,8 @@ import {
   ChevronLeft,
   ChevronRight,
   Menu,
-  X
+  X,
+  Camera
 } from 'lucide-react';
 
 interface DashboardSidebarProps {
@@ -34,6 +35,7 @@ export const DashboardSidebar: React.FC<DashboardSidebarProps> = ({
     { id: 'dashboard' as NavigationTab, label: 'Dashboard', icon: LayoutDashboard },
     { id: 'convert' as NavigationTab, label: 'Video to ISL', icon: Video },
     { id: 'translator' as NavigationTab, label: 'Translator', icon: Languages },
+    { id: 'sign-to-text' as NavigationTab, label: 'Sign to Text', icon: Camera },
     { id: 'avatar' as NavigationTab, label: '3D Avatar', icon: UserSquare2 },
     { id: 'assistant' as NavigationTab, label: 'AI Assistant', icon: BotMessageSquare },
     { id: 'library' as NavigationTab, label: 'History', icon: History },

@@ -6,6 +6,7 @@ export type NavigationTab =
   | 'dashboard' 
   | 'convert' 
   | 'translator'
+  | 'sign-to-text'
   | 'avatar' 
   | 'assistant' 
   | 'library' 
