@@ -258,6 +258,10 @@ export const SignAvatarStudioView: React.FC<SignAvatarStudioViewProps> = ({
               generatedGifUrl={generatedGifUrl}
               height="500px"
               showISLControls={true}
+              caption={project?.transcript || sentence}
+              glossTokens={project?.glossTokens}
+              activeTokenId={activeToken?.id}
+              isFingerspelled={activeToken?.isFingerspelled}
               onSignChange={(sign) => {
                 setIsTimelinePlaying(false);
                 setCurrentSignName(sign);

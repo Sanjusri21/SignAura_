@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState, useCallback } from 'react';
+import React, { useEffect, useRef, useState, useCallback, useMemo } from 'react';
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import {
@@ -15,8 +15,12 @@ import {
   AlertCircle,
   Shirt,
   Compass,
-  Eye
+  Eye,
+  Layers,
+  Hand
 } from 'lucide-react';
+
+export const motionBufferCache = new Map<string, NormalizedMotion>();
 
 export type CameraPreset = 'front' | 'perspective' | 'hands' | 'top';
 export type LightingPreset = 'neon' | 'studio' | 'cyber' | 'sunset';
@@ -200,6 +204,11 @@ export interface SignAvatar3DProps {
   onLightingPresetChange?: (preset: LightingPreset) => void;
   height?: string;
   className?: string;
+  // Phase 4 additions:
+  caption?: string;
+  glossTokens?: { id: string; word: string; gloss?: string; isFingerspelled?: boolean; fingerspelledChars?: string[] }[];
+  activeTokenId?: string;
+  isFingerspelled?: boolean;
 }
 
 export const SignAvatar3D: React.FC<SignAvatar3DProps> = ({
@@ -236,7 +245,11 @@ export const SignAvatar3D: React.FC<SignAvatar3DProps> = ({
     { label: 'Book Drink Home', sign: 'BOOK_DRINK_HOME' },
   ],
   height = '480px',
-  className = ''
+  className = '',
+  caption,
+  glossTokens,
+  activeTokenId,
+  isFingerspelled
 }) => {
   // Dedicated mount container for Three.js canvas only (no React children inside)
   const mountRef = useRef<HTMLDivElement>(null);
@@ -271,11 +284,69 @@ export const SignAvatar3D: React.FC<SignAvatar3DProps> = ({
   const frameElapsedRef = useRef<number>(0);
   const currentFrameRef = useRef<number>(-1);
 
+  // Crossfade blending between consecutive signs (0.15 - 0.25s)
+  const prevFrameVerticesRef = useRef<Float32Array | null>(null);
+  const blendStartTimeRef = useRef<number>(0);
+  const isBlendingRef = useRef<boolean>(false);
+
+  // Non-manual markers (NMM) state ref
+  const currentNMMRef = useRef<{ type: 'negation' | 'wh_question' | 'yesno_question'; label: string } | null>(null);
+
+  // Auto framing hands during fingerspelling
+  const autoHandFramedRef = useRef<boolean>(false);
+
   // OrbitControls & Visual Customization
   const controlsRef = useRef<OrbitControls | null>(null);
   const [currentDisplayFrame, setCurrentDisplayFrame] = useState<number>(0);
   const [outfit, setOutfit] = useState<'blue_shirt' | 'white_shirt'>('blue_shirt');
   const shirtMaterialRef = useRef<THREE.MeshStandardMaterial | null>(null);
+
+  // Active token computation
+  const activeToken = useMemo(() => {
+    if (glossTokens && activeTokenId) {
+      return glossTokens.find(t => t.id === activeTokenId);
+    }
+    return null;
+  }, [glossTokens, activeTokenId]);
+
+  // Non-Manual Marker (NMM) detection driven by ISL Grammar
+  const currentNMM = useMemo(() => {
+    const signText = (selectedSign || currentSign || '').toUpperCase();
+    const capText = (caption || '').toUpperCase();
+    const tokenGloss = (activeToken?.gloss || '').toUpperCase();
+
+    // 1. Negation: head shake
+    if (
+      signText === 'NOT' ||
+      signText === 'NO' ||
+      signText.includes('NOT') ||
+      tokenGloss === 'NOT' ||
+      tokenGloss === 'NO' ||
+      /\b(NOT|NO|NEVER)\b/.test(capText)
+    ) {
+      return { type: 'negation' as const, label: 'NMM: Head Shake (Negation)' };
+    }
+
+    // 2. WH-Question: furrowed brows + forward tilt
+    const whWords = ['WHAT', 'WHERE', 'WHO', 'WHY', 'HOW', 'WHICH', 'WHEN'];
+    if (
+      whWords.some(w => signText.includes(w) || tokenGloss.includes(w)) ||
+      (capText.includes('?') && whWords.some(w => capText.includes(w)))
+    ) {
+      return { type: 'wh_question' as const, label: 'NMM: Furrowed Brows & Tilt (WH-Q)' };
+    }
+
+    // 3. Yes/No Question: raised eyebrows + alert posture
+    if (capText.includes('?') || signText.includes('?')) {
+      return { type: 'yesno_question' as const, label: 'NMM: Raised Brows (Yes/No-Q)' };
+    }
+
+    return null;
+  }, [selectedSign, currentSign, caption, activeToken]);
+
+  useEffect(() => {
+    currentNMMRef.current = currentNMM;
+  }, [currentNMM]);
 
   const frameAvatarFromFront = useCallback(() => {
     const camera = cameraRef.current;
@@ -324,10 +395,10 @@ export const SignAvatar3D: React.FC<SignAvatar3DProps> = ({
       else camera.lookAt(0, 0.18, 0);
       avatar.rotation.set(0, 0, 0);
     } else if (preset === 'hands') {
-      // Zoomed in directly on upper torso, face, and hands
-      camera.position.set(0, 0.20, 1.30);
-      if (controls) controls.target.set(0, 0.18, 0);
-      else camera.lookAt(0, 0.18, 0);
+      // Hands close-up: frames signing space and two-handed finger positions directly
+      camera.position.set(0, 0.20, 1.05);
+      if (controls) controls.target.set(0, 0.20, 0.08);
+      else camera.lookAt(0, 0.20, 0.08);
       avatar.rotation.set(0, 0, 0);
     } else if (preset === 'top') {
       camera.position.set(0, 0.55, 1.75);
@@ -338,6 +409,18 @@ export const SignAvatar3D: React.FC<SignAvatar3DProps> = ({
     if (controls) controls.update();
     camera.updateProjectionMatrix();
   }, [onCameraPresetChange]);
+
+  // Auto frame hands during fingerspelling
+  useEffect(() => {
+    const isFspActive = Boolean(isFingerspelled || activeToken?.isFingerspelled);
+    if (isFspActive && !autoHandFramedRef.current) {
+      applyCameraPreset('hands');
+      autoHandFramedRef.current = true;
+    } else if (!isFspActive && autoHandFramedRef.current) {
+      applyCameraPreset('front');
+      autoHandFramedRef.current = false;
+    }
+  }, [isFingerspelled, activeToken?.isFingerspelled, applyCameraPreset]);
 
   /**
    * LIGHTING PRESETS
@@ -514,7 +597,29 @@ export const SignAvatar3D: React.FC<SignAvatar3DProps> = ({
   }, []);
 
   /**
-   * 2. LOAD MOTION DATA (Dynamic Float32 Binary from GET /motion/{motion_name})
+  // Background preloader for available sign inventory
+  useEffect(() => {
+    if (!availableSigns || availableSigns.length === 0) return;
+    for (const item of availableSigns) {
+      const upper = item.sign.toUpperCase();
+      const mapped = SIGN_TO_MOTION_MAP[upper] || item.sign.toLowerCase();
+      const url = `${SIGNAVATAR_API_URL}/motion/${mapped}`;
+      if (!motionBufferCache.has(url)) {
+        fetch(url)
+          .then(async (res) => {
+            if (res.ok) {
+              const buf = await res.arrayBuffer();
+              const motion = processAndNormalizeMotion(buf);
+              motionBufferCache.set(url, motion);
+            }
+          })
+          .catch(() => {});
+      }
+    }
+  }, [availableSigns]);
+
+  /**
+   * 2. LOAD MOTION DATA (Instant Cache + Dynamic Float32 Binary from GET /motion/{motion_name})
    */
   useEffect(() => {
     let cancelled = false;
@@ -539,6 +644,33 @@ export const SignAvatar3D: React.FC<SignAvatar3DProps> = ({
 
     console.log('[SignAvatar3D] Selected sign:', upperSign || rawSign);
     console.log('[SignAvatar3D] Target Motion URL:', targetUrl);
+
+    // Capture previous pose for smooth crossfading if already signing
+    const setupCrossfade = () => {
+      const geom = geometryRef.current;
+      if (geom && motionDataRef.current) {
+        const posAttr = geom.getAttribute('position') as THREE.BufferAttribute;
+        if (posAttr) {
+          prevFrameVerticesRef.current = new Float32Array(posAttr.array);
+          blendStartTimeRef.current = performance.now();
+          isBlendingRef.current = true;
+        }
+      }
+    };
+
+    // Instant Cache Hit (0ms delay, no "Preparing sign animation" banner)
+    if (motionBufferCache.has(targetUrl)) {
+      const cached = motionBufferCache.get(targetUrl)!;
+      setupCrossfade();
+      motionDataRef.current = cached;
+      setMotionInfo({ frames: cached.frames, fps: cached.fps });
+      frameElapsedRef.current = 0;
+      currentFrameRef.current = -1;
+      setModelStatus('ready');
+      setModelError('');
+      if (avatarMeshRef.current) avatarMeshRef.current.visible = true;
+      return;
+    }
 
     setModelStatus('loading');
     setModelError('');
@@ -580,6 +712,8 @@ export const SignAvatar3D: React.FC<SignAvatar3DProps> = ({
         if (cancelled) return;
 
         const motion = processAndNormalizeMotion(buffer, headerFrames, headerFpsVal);
+        motionBufferCache.set(targetUrl, motion);
+        setupCrossfade();
         motionDataRef.current = motion;
         setMotionInfo({ frames: motion.frames, fps: motion.fps });
         frameElapsedRef.current = 0;
@@ -588,15 +722,9 @@ export const SignAvatar3D: React.FC<SignAvatar3DProps> = ({
         console.log(
           `[SignAvatar3D] Motion loaded successfully: ${motion.frames} frames × ${motion.vertices} vertices @ ${motion.fps} FPS (${buffer.byteLength} bytes)`
         );
-        console.log('[SignAvatar3D] Frames:', motion.frames);
-        console.log('[SignAvatar3D] MOTION', {
-          frames: motion.frames,
-          vertices: motion.vertices,
-          fps: motion.fps,
-        });
 
         const geom = geometryRef.current;
-        if (geom) {
+        if (geom && !isBlendingRef.current) {
           const posAttr = geom.getAttribute('position') as THREE.BufferAttribute;
           if (posAttr) {
             (posAttr.array as Float32Array).set(motion.data.subarray(0, SMPLX_VERTEX_COUNT * 3));
@@ -770,7 +898,10 @@ export const SignAvatar3D: React.FC<SignAvatar3DProps> = ({
       roughness: 0.76,
       metalness: 0.08,
       side: THREE.FrontSide,
-      flatShading: false
+      flatShading: false,
+      polygonOffset: true,
+      polygonOffsetFactor: -1.0,
+      polygonOffsetUnits: -1.0,
     });
     shirtMaterialRef.current = shirtMaterial;
 
@@ -780,7 +911,10 @@ export const SignAvatar3D: React.FC<SignAvatar3DProps> = ({
       roughness: 0.85,
       metalness: 0.04,
       side: THREE.FrontSide,
-      flatShading: false
+      flatShading: false,
+      polygonOffset: true,
+      polygonOffsetFactor: 1.0,
+      polygonOffsetUnits: 1.0,
     });
 
     const avatarMesh = new THREE.Mesh(geometry, [skinMaterial, shirtMaterial, trousersMaterial]);
@@ -802,6 +936,30 @@ export const SignAvatar3D: React.FC<SignAvatar3DProps> = ({
         controlsRef.current.update();
       }
 
+      // Non-manual markers (NMM) handling
+      const nmm = currentNMMRef.current;
+      const avatar = avatarGroupRef.current;
+      if (avatar) {
+        if (nmm?.type === 'negation') {
+          // Rhythmic head/upper torso shake for negation (NOT / NO)
+          const shake = Math.sin(clock.getElapsedTime() * 9) * 0.07;
+          avatar.rotation.y = shake;
+          avatar.rotation.x = 0;
+        } else if (nmm?.type === 'wh_question') {
+          // Attentive forward tilt for WH-questions (WHAT, WHERE, WHO, WHY, HOW)
+          avatar.rotation.x = 0.045;
+          avatar.rotation.y = 0;
+        } else if (nmm?.type === 'yesno_question') {
+          // Slight back tilt / raised head alert for Yes/No questions
+          avatar.rotation.x = -0.035;
+          avatar.rotation.y = 0;
+        } else {
+          // Smooth return to neutral
+          avatar.rotation.y = avatar.rotation.y * 0.85;
+          avatar.rotation.x = avatar.rotation.x * 0.85;
+        }
+      }
+
       // Animate SMPL-X Mesh
       const motion = motionDataRef.current;
       const geom = geometryRef.current;
@@ -813,16 +971,54 @@ export const SignAvatar3D: React.FC<SignAvatar3DProps> = ({
 
         const frameIndex = Math.min(Math.floor(frameElapsedRef.current), motion.frames - 1);
 
-        if (frameIndex !== currentFrameRef.current) {
+        if (frameIndex !== currentFrameRef.current || isBlendingRef.current) {
           currentFrameRef.current = frameIndex;
           setCurrentDisplayFrame(frameIndex);
           const offset = frameIndex * SMPLX_VERTEX_COUNT * 3;
           const posAttr = geom.getAttribute('position') as THREE.BufferAttribute;
 
           if (posAttr) {
-            (posAttr.array as Float32Array).set(
-              motion.data.subarray(offset, offset + SMPLX_VERTEX_COUNT * 3)
-            );
+            const posArray = posAttr.array as Float32Array;
+            const targetData = motion.data.subarray(offset, offset + SMPLX_VERTEX_COUNT * 3);
+
+            if (isBlendingRef.current && prevFrameVerticesRef.current) {
+              const elapsedBlend = performance.now() - blendStartTimeRef.current;
+              const blendDuration = 200; // 0.20s crossfade duration
+              const blendProgress = Math.min(1.0, elapsedBlend / blendDuration);
+              // Cosine interpolation for fluid, seamless blend
+              const t = 0.5 - 0.5 * Math.cos(blendProgress * Math.PI);
+              const prevData = prevFrameVerticesRef.current;
+
+              for (let i = 0; i < SMPLX_VERTEX_COUNT * 3; i++) {
+                posArray[i] = prevData[i] * (1 - t) + targetData[i] * t;
+              }
+
+              if (blendProgress >= 1.0) {
+                isBlendingRef.current = false;
+                prevFrameVerticesRef.current = null;
+              }
+            } else {
+              posArray.set(targetData);
+            }
+
+            // Facial blendshape simulation: Brow displacement for question NMMs
+            if (nmm?.type === 'wh_question' || nmm?.type === 'yesno_question') {
+              const isRaised = nmm.type === 'yesno_question';
+              const yOffset = isRaised ? 0.006 : -0.005;
+              for (let v = 0; v < SMPLX_VERTEX_COUNT; v++) {
+                const y = posArray[v * 3 + 1];
+                const z = posArray[v * 3 + 2];
+                const x = posArray[v * 3];
+                // Brow ridge vertices in SMPL-X space
+                if (y > 0.49 && y < 0.57 && z > 0.065 && Math.abs(x) < 0.075) {
+                  posArray[v * 3 + 1] += yOffset;
+                  if (!isRaised) {
+                    posArray[v * 3] += x > 0 ? -0.002 : 0.002; // Furrow inward
+                  }
+                }
+              }
+            }
+
             posAttr.needsUpdate = true;
           }
         }
@@ -951,13 +1147,14 @@ export const SignAvatar3D: React.FC<SignAvatar3DProps> = ({
               <button
                 key={p}
                 onClick={() => applyCameraPreset(p)}
-                className={`px-2 py-0.5 rounded-lg text-[11px] font-medium capitalize transition-all ${
+                className={`px-2 py-0.5 rounded-lg text-[11px] font-medium capitalize transition-all flex items-center gap-1 ${
                   cameraPreset === p
                     ? 'bg-white/20 text-white border border-white/25 shadow-sm'
                     : 'text-slate-400 hover:text-white'
                 }`}
-                title={`Camera View: ${p}`}
+                title={`Camera View: ${p === 'hands' ? 'Hands Close-up (Framing Signs & Fingerspelling)' : p}`}
               >
+                {p === 'hands' && <Hand className="w-3 h-3 text-cyan-300" />}
                 {p === 'front' ? 'Default' : p === 'hands' ? 'Hands' : 'Angle'}
               </button>
             ))}
@@ -1021,6 +1218,53 @@ export const SignAvatar3D: React.FC<SignAvatar3DProps> = ({
           <span>Drag to orbit • Scroll to zoom</span>
         </div>
       </div>
+
+      {/* 2.5 LIVE SYNCED CAPTIONS & ISL GLOSS ROW */}
+      <section className="px-6 py-2.5 bg-[#0a0f24]/95 border-t border-b border-cyan-500/20 flex flex-col gap-1.5 backdrop-blur-md">
+        <div className="flex items-center justify-between text-xs">
+          <div className="flex items-center gap-2">
+            <span className="text-[10px] uppercase font-bold tracking-wider text-cyan-400 bg-cyan-950/70 px-2 py-0.5 rounded border border-cyan-800/60 flex items-center gap-1">
+              <Sparkles className="w-3 h-3 text-cyan-300" />
+              Synced Captions
+            </span>
+            <span className="text-slate-200 font-medium truncate max-w-md">
+              {caption || (selectedSign ? `ISL Gesture: ${selectedSign}` : 'SignAura 3D Avatar')}
+            </span>
+          </div>
+
+          {currentNMM && (
+            <span className="text-[10px] font-mono font-semibold px-2.5 py-0.5 rounded-full bg-purple-500/20 text-purple-300 border border-purple-500/40 flex items-center gap-1 shrink-0 animate-pulse">
+              <Sparkles className="w-3 h-3 text-purple-400" />
+              {currentNMM.label}
+            </span>
+          )}
+        </div>
+
+        {/* Active Synced ISL Gloss Tokens */}
+        {glossTokens && glossTokens.length > 0 && (
+          <div className="flex items-center gap-1.5 overflow-x-auto pb-0.5 scrollbar-thin">
+            <span className="text-[10px] text-slate-400 font-mono mr-1">Gloss:</span>
+            {glossTokens.map((tok) => {
+              const isActive = tok.id === activeTokenId || tok.gloss?.toUpperCase() === (selectedSign || currentSign).toUpperCase();
+              return (
+                <span
+                  key={tok.id}
+                  className={`text-[11px] font-mono px-2 py-0.5 rounded-md transition-all duration-150 shrink-0 ${
+                    isActive
+                      ? 'bg-cyan-500/30 text-cyan-300 font-bold border border-cyan-400/70 shadow-[0_0_12px_rgba(34,211,238,0.4)] scale-105'
+                      : tok.isFingerspelled
+                      ? 'bg-purple-950/40 text-purple-300/80 border border-purple-800/40'
+                      : 'bg-white/5 text-slate-400 border border-white/10'
+                  }`}
+                >
+                  {tok.gloss}
+                  {tok.isFingerspelled && <span className="ml-1 text-[9px] text-purple-400 font-normal">[FSP]</span>}
+                </span>
+              );
+            })}
+          </div>
+        )}
+      </section>
 
       {/* 3. DEDICATED PLAYBACK TRANSPORT ROW */}
       <section className="px-6 py-3.5 border-t border-white/10 bg-[#0c122b]/80 backdrop-blur-sm flex flex-col gap-3">
