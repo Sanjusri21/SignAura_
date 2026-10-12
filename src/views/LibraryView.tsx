@@ -15,6 +15,7 @@ import { VideoProject, NavigationTab } from '../types';
 import { GlassButton } from '../components/ui/GlassButton';
 import { StatusBadge } from '../components/ui/StatusBadge';
 import { formatDuration, formatSeconds } from '../utils/formatters';
+import { resolveGlossTokensWithFallback } from '../lib/islFingerspelling';
 
 
 interface LibraryViewProps {
@@ -136,6 +137,21 @@ export const LibraryView: React.FC<LibraryViewProps> = ({
                   )}
                 </div>
               )}
+
+              {/* Coverage Report Badge */}
+              {proj.languageSupported !== false && (
+                <div className="flex items-center justify-between text-[10px] pt-2 border-t border-[#273154]/50">
+                  <span className="text-[#A8B2D1]">Coverage:</span>
+                  <span className="font-semibold text-[#22D3EE] bg-[#101735] px-2 py-0.5 rounded border border-[#273154]">
+                    {proj.coverage !== undefined ? proj.coverage : resolveGlossTokensWithFallback(proj.glossTokens).coverage}% Signs
+                    {(proj.coverage !== undefined ? proj.coverage : resolveGlossTokensWithFallback(proj.glossTokens).coverage) < 100 && (
+                      <span className="text-[#A8B2D1] ml-1">
+                        ({100 - (proj.coverage !== undefined ? proj.coverage : resolveGlossTokensWithFallback(proj.glossTokens).coverage)}% Fingerspelled)
+                      </span>
+                    )}
+                  </span>
+                </div>
+              )}
             </div>
 
             {/* Footer Actions */}
@@ -211,15 +227,44 @@ export const LibraryView: React.FC<LibraryViewProps> = ({
               )}
 
               <div>
-                <p className="text-xs font-semibold text-white mb-1.5">ISL Gloss Sequence ({selectedProjectPreview.glossTokens.length} Tokens):</p>
-                <div className="flex flex-wrap gap-1.5 max-h-40 overflow-y-auto p-2 rounded-xl bg-[#101735] border border-[#273154]">
-                  {selectedProjectPreview.glossTokens.map((t) => (
-                    <div key={t.id} className="p-2 rounded bg-[#151D40] border border-[#273154] text-center">
-                      <p className="text-xs font-mono font-bold text-[#22D3EE]">{t.gloss}</p>
-                      <p className="text-[9px] text-[#A8B2D1]">{formatSeconds(t.startTime)} - {formatSeconds(t.endTime)}</p>
+                {(() => {
+                  const { resolvedTokens, coverage, authenticCount, fingerspelledCount } = resolveGlossTokensWithFallback(selectedProjectPreview.glossTokens);
+                  return (
+                    <div className="space-y-2">
+                      <div className="flex items-center justify-between text-xs">
+                        <span className="font-semibold text-white">
+                          ISL Gloss Sequence ({resolvedTokens.length} Tokens):
+                        </span>
+                        <span className="text-[10px] font-semibold text-[#22D3EE] bg-[#101735] px-2 py-0.5 rounded border border-[#273154]">
+                          Coverage: {selectedProjectPreview.coverage !== undefined ? selectedProjectPreview.coverage : coverage}% ({authenticCount} Signs, {fingerspelledCount} Fingerspelled)
+                        </span>
+                      </div>
+
+                      <div className="flex flex-wrap gap-1.5 max-h-40 overflow-y-auto p-2.5 rounded-xl bg-[#101735] border border-[#273154]">
+                        {resolvedTokens.map((t) => (
+                          <div 
+                            key={t.id} 
+                            className={`p-2 rounded border text-center ${
+                              t.isFingerspelled 
+                                ? 'bg-purple-950/40 border-purple-500/40 text-purple-200' 
+                                : 'bg-[#151D40] border-[#273154] text-white'
+                            }`}
+                          >
+                            <p className="text-xs font-mono font-bold flex items-center justify-center gap-1">
+                              <span className={t.isFingerspelled ? 'text-purple-300' : 'text-[#22D3EE]'}>{t.gloss}</span>
+                              {t.isFingerspelled && (
+                                <span className="text-[8px] bg-purple-500/30 text-purple-200 px-1 rounded font-sans font-bold">FS</span>
+                              )}
+                            </p>
+                            <p className="text-[9px] text-[#A8B2D1] mt-0.5">
+                              {t.isFingerspelled && t.fingerspelledChars ? t.fingerspelledChars.join('-') : `${formatSeconds(t.startTime)} - ${formatSeconds(t.endTime)}`}
+                            </p>
+                          </div>
+                        ))}
+                      </div>
                     </div>
-                  ))}
-                </div>
+                  );
+                })()}
               </div>
             </div>
 

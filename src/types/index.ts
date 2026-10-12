@@ -22,6 +22,8 @@ export interface GlossToken {
   confidence: number;
   category?: string;
   grammarTag?: string;
+  isFingerspelled?: boolean;
+  fingerspelledChars?: string[];
 }
 
 export interface VideoProject {
@@ -41,6 +43,7 @@ export interface VideoProject {
   languageSupported?: boolean;
   message?: string;
   is_existing?: boolean;
+  coverage?: number; // % of tokens with real authentic sign vs fingerspelled
 }
 
 export interface AvatarPose {

@@ -17,6 +17,7 @@ import { useAuth } from '../context/AuthContext';
 import { GlassButton } from '../components/ui/GlassButton';
 import { StatusBadge } from '../components/ui/StatusBadge';
 import { formatDuration } from '../utils/formatters';
+import { resolveGlossTokensWithFallback } from '../lib/islFingerspelling';
 
 interface DashboardViewProps {
   projects: VideoProject[];
@@ -265,6 +266,14 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
                       +{proj.glossTokens.length - 4} signs
                     </span>
                   )}
+                </div>
+
+                {/* Coverage metric */}
+                <div className="flex items-center justify-between text-[10px] pt-1.5 border-t border-[#273154]/50">
+                  <span className="text-[#A8B2D1]">Sign Coverage:</span>
+                  <span className="font-semibold text-[#22D3EE] bg-[#101735] px-2 py-0.5 rounded border border-[#273154]">
+                    {proj.coverage !== undefined ? proj.coverage : resolveGlossTokensWithFallback(proj.glossTokens).coverage}% Authentic
+                  </span>
                 </div>
               </div>
 
