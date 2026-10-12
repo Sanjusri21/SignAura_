@@ -15,6 +15,7 @@ import { SignAvatarStudioView } from './views/SignAvatarStudioView';
 import { AssistantView } from './views/AssistantView';
 import { LibraryView } from './views/LibraryView';
 import { SettingsView } from './views/SettingsView';
+import { EvaluationView } from './views/EvaluationView';
 import { NavigationTab, ISLDialect, VideoProject, AccessibilitySettings } from './types';
 import { SAMPLE_PROJECTS } from './data/mockData';
 import { signAuraApi } from './services/api';
@@ -34,6 +35,8 @@ const PATH_TO_TAB: Record<string, NavigationTab> = {
   '/chat': 'assistant',
   '/history': 'library',
   '/settings': 'settings',
+  '/evaluation': 'evaluation',
+  '/about': 'evaluation',
 };
 
 const TAB_TO_PATH: Record<NavigationTab, string> = {
@@ -49,6 +52,7 @@ const TAB_TO_PATH: Record<NavigationTab, string> = {
   assistant: '/chat',
   library: '/history',
   settings: '/settings',
+  evaluation: '/evaluation',
 };
 
 const PROTECTED_TABS: NavigationTab[] = [
@@ -59,7 +63,8 @@ const PROTECTED_TABS: NavigationTab[] = [
   'avatar',
   'assistant',
   'library',
-  'settings'
+  'settings',
+  'evaluation'
 ];
 
 const MainAppContent: React.FC = () => {
@@ -318,6 +323,10 @@ const MainAppContent: React.FC = () => {
                   onTestSign={handleTestSign}
                   onNavigate={navigateTo}
                 />
+              )}
+
+              {activeTab === 'evaluation' && (
+                <EvaluationView />
               )}
             </>
           )}

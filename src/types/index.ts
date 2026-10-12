@@ -10,7 +10,8 @@ export type NavigationTab =
   | 'avatar' 
   | 'assistant' 
   | 'library' 
-  | 'settings';
+  | 'settings'
+  | 'evaluation';
 
 export type ISLDialect = 'standard' | 'north' | 'south';
 

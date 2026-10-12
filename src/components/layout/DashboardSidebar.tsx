@@ -15,7 +15,8 @@ import {
   ChevronRight,
   Menu,
   X,
-  Camera
+  Camera,
+  Award
 } from 'lucide-react';
 
 interface DashboardSidebarProps {
@@ -40,6 +41,7 @@ export const DashboardSidebar: React.FC<DashboardSidebarProps> = ({
     { id: 'assistant' as NavigationTab, label: 'AI Assistant', icon: BotMessageSquare },
     { id: 'library' as NavigationTab, label: 'History', icon: History },
     { id: 'settings' as NavigationTab, label: 'Settings', icon: Settings },
+    { id: 'evaluation' as NavigationTab, label: 'Evaluation & About', icon: Award },
   ];
 
   const handleNav = (tab: NavigationTab) => {

@@ -38,6 +38,7 @@ export const DashboardHeader: React.FC<DashboardHeaderProps> = ({
     assistant: { title: 'AI Assistant', subtitle: 'Conversational ISL accessibility copilot' },
     library: { title: 'History & Archive', subtitle: 'Previous conversions, gloss tokens & transcripts' },
     settings: { title: 'Settings & Lexicon', subtitle: 'Accessibility preferences & certified ISL dictionary' },
+    evaluation: { title: 'Evaluation & Benchmarks', subtitle: 'Pipeline architecture dataflow, WER scores & ISLRTC verification' },
   };
 
   const currentInfo = titleMap[currentTab] || { title: 'Dashboard', subtitle: 'SignAura' };
