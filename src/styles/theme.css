@@ -305,3 +305,66 @@
 ::-webkit-scrollbar-thumb:hover {
   background: #3B4975;
 }
+
+/* ==========================================================================
+   WCAG 2.1 AA Keyboard Navigation & Focus Outlines
+   ========================================================================== */
+
+:focus-visible {
+  outline: 2px solid #22D3EE !important;
+  outline-offset: 3px !important;
+  box-shadow: 0 0 0 4px rgba(34, 211, 238, 0.25) !important;
+}
+
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+[role="button"]:focus-visible,
+[tabindex="0"]:focus-visible {
+  outline: 2px solid #22D3EE !important;
+  outline-offset: 2px !important;
+  box-shadow: 0 0 12px rgba(34, 211, 238, 0.45) !important;
+}
+
+/* ==========================================================================
+   High-Contrast Theme Mode (WCAG AAA Contrast Ratio)
+   ========================================================================== */
+
+.high-contrast {
+  --bg-primary: #000000;
+  --bg-secondary: #050814;
+  --surface: #0a0f24;
+  --surface-hover: #121a3a;
+  --text-primary: #FFFFFF;
+  --text-secondary: #E2E8F0;
+  --text-muted: #CBD5E1;
+  --border-subtle: #475569;
+  --border-accent: #38BDF8;
+  --border-focus: #38BDF8;
+}
+
+.high-contrast .solid-card,
+.high-contrast .glass-card,
+.high-contrast [class*="bg-[#151D40]"] {
+  background-color: #060a1e !important;
+  border-color: #38BDF8 !important;
+  border-width: 1.5px !important;
+}
+
+.high-contrast [class*="bg-[#101735]"] {
+  background-color: #02040c !important;
+  border-color: #475569 !important;
+}
+
+.high-contrast button {
+  border-color: #38BDF8 !important;
+}
+
+.high-contrast p,
+.high-contrast span[class*="text-slate-400"],
+.high-contrast span[class*="text-[#A8B2D1]"] {
+  color: #E2E8F0 !important;
+}
+

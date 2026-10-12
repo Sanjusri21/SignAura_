@@ -17,6 +17,11 @@ export const AmbientBackground: React.FC = () => {
   const mouseRef = useRef({ x: -1000, y: -1000, targetX: -1000, targetY: -1000 });
 
   useEffect(() => {
+    // Respect OS-level prefers-reduced-motion preference
+    if (typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      return;
+    }
+
     const canvas = canvasRef.current;
     if (!canvas) return;
     const ctx = canvas.getContext('2d');

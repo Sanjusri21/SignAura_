@@ -1126,6 +1126,7 @@ export const SignAvatar3D: React.FC<SignAvatar3DProps> = ({
             onClick={handleResetCamera}
             className="px-2.5 py-1 rounded-xl glass-subtle hover:bg-white/10 text-xs font-semibold text-slate-300 hover:text-white border border-white/10 flex items-center gap-1.5 transition-all"
             title="Reset Camera to Jury View"
+            aria-label="Reset Camera to Jury View"
           >
             <RotateCcw className="w-3.5 h-3.5 text-cyan-400" />
             <span className="hidden sm:inline">Reset Camera</span>
@@ -1136,6 +1137,7 @@ export const SignAvatar3D: React.FC<SignAvatar3DProps> = ({
             onClick={() => setOutfit((prev) => (prev === 'blue_shirt' ? 'white_shirt' : 'blue_shirt'))}
             className="px-2.5 py-1 rounded-xl glass-subtle hover:bg-white/10 text-xs font-semibold text-slate-300 hover:text-white border border-white/10 flex items-center gap-1.5 transition-all"
             title="Toggle Outfit (Fitted Shirt & Dark Trousers)"
+            aria-label="Toggle Outfit between Blue and White Shirt"
           >
             <Shirt className="w-3.5 h-3.5 text-blue-400" />
             <span className="hidden sm:inline">{outfit === 'blue_shirt' ? 'Blue Shirt' : 'White Shirt'}</span>
@@ -1296,6 +1298,7 @@ export const SignAvatar3D: React.FC<SignAvatar3DProps> = ({
               onClick={onTogglePlay}
               className="px-4 py-2 rounded-xl bg-white hover:bg-slate-100 text-black font-semibold text-xs flex items-center gap-1.5 shadow-md transition-transform active:scale-95"
               title={isPlaying ? 'Pause Gesture' : 'Play Gesture'}
+              aria-label={isPlaying ? 'Pause Gesture Playback' : 'Play Gesture Playback'}
             >
               {isPlaying ? <Pause className="w-4 h-4 fill-black" /> : <Play className="w-4 h-4 fill-black ml-0.5" />}
               <span>{isPlaying ? 'Pause' : 'Play'}</span>
@@ -1306,6 +1309,7 @@ export const SignAvatar3D: React.FC<SignAvatar3DProps> = ({
               onClick={handleRestartAnimation}
               className="p-2 rounded-xl glass-subtle hover:bg-white/10 text-slate-300 hover:text-white border border-white/10 transition-all active:scale-95"
               title="Restart Animation from Beginning"
+              aria-label="Restart Animation from Beginning"
             >
               <RotateCcw className="w-4 h-4" />
             </button>
