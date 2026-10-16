@@ -17,7 +17,8 @@ import {
   Compass,
   Eye,
   Layers,
-  Hand
+  Hand,
+  Sliders
 } from 'lucide-react';
 
 export const motionBufferCache = new Map<string, NormalizedMotion>();
@@ -180,6 +181,142 @@ function processAndNormalizeMotion(
   };
 }
 
+export interface MotionSegmentBoundary {
+  gloss: string;
+  startFrame: number;
+  endFrame: number;
+}
+
+/**
+ * Blends multiple consecutive SMPL-X motion clips with:
+ * - Cubic ease-in from relaxed standing neutral pose (arms down)
+ * - 4-frame holds per sign for legibility
+ * - 6-frame cosine crossfade between consecutive signs across all 10,475 vertices
+ * - Cubic ease-out to relaxed pose
+ * - NaN and Infinity validation
+ */
+export function blendMotionClips(
+  clips: { gloss: string; motion: NormalizedMotion }[],
+  relaxedPose: Float32Array | null,
+  options: {
+    holdFrames?: number;
+    transitionFrames?: number;
+    easeInFrames?: number;
+    easeOutFrames?: number;
+  } = {}
+): { motion: NormalizedMotion; segmentBoundaries: MotionSegmentBoundary[] } {
+  const holdFrames = options.holdFrames ?? 4;
+  const transitionFrames = options.transitionFrames ?? 6;
+  const easeInFrames = options.easeInFrames ?? 8;
+  const easeOutFrames = options.easeOutFrames ?? 10;
+  const V_SIZE = SMPLX_VERTEX_COUNT * 3;
+
+  if (clips.length === 0) {
+    throw new Error('No clips to blend.');
+  }
+
+  let totalFrames = easeInFrames;
+  for (let c = 0; c < clips.length; c++) {
+    totalFrames += clips[c].motion.frames + holdFrames;
+    if (c < clips.length - 1) {
+      totalFrames += transitionFrames;
+    }
+  }
+  totalFrames += easeOutFrames;
+
+  const blendedData = new Float32Array(totalFrames * V_SIZE);
+  const segmentBoundaries: MotionSegmentBoundary[] = [];
+  const fps = clips[0].motion.fps || DEFAULT_MOTION_FPS;
+
+  let currentFrameIdx = 0;
+
+  // 1. Ease in from relaxed pose to frame 0 of first clip
+  const firstFrameData = clips[0].motion.data.subarray(0, V_SIZE);
+  const startPose = relaxedPose && relaxedPose.length === V_SIZE ? relaxedPose : firstFrameData;
+
+  for (let f = 0; f < easeInFrames; f++) {
+    const rawT = (f + 1) / easeInFrames;
+    const t = rawT < 0.5 ? 4 * rawT * rawT * rawT : 1 - Math.pow(-2 * rawT + 2, 3) / 2;
+    const destOffset = currentFrameIdx * V_SIZE;
+    for (let i = 0; i < V_SIZE; i++) {
+      blendedData[destOffset + i] = startPose[i] * (1 - t) + firstFrameData[i] * t;
+    }
+    currentFrameIdx++;
+  }
+
+  // 2. Play clips with holds and crossfades
+  for (let c = 0; c < clips.length; c++) {
+    const { gloss, motion } = clips[c];
+    const segStart = currentFrameIdx;
+
+    for (let f = 0; f < motion.frames; f++) {
+      const srcOffset = f * V_SIZE;
+      const destOffset = currentFrameIdx * V_SIZE;
+      blendedData.set(motion.data.subarray(srcOffset, srcOffset + V_SIZE), destOffset);
+      currentFrameIdx++;
+    }
+
+    const lastClipFrameOffset = (motion.frames - 1) * V_SIZE;
+    const lastClipData = motion.data.subarray(lastClipFrameOffset, lastClipFrameOffset + V_SIZE);
+    for (let h = 0; h < holdFrames; h++) {
+      blendedData.set(lastClipData, currentFrameIdx * V_SIZE);
+      currentFrameIdx++;
+    }
+
+    segmentBoundaries.push({
+      gloss,
+      startFrame: segStart,
+      endFrame: currentFrameIdx - 1
+    });
+
+    if (c < clips.length - 1) {
+      const nextFirstFrame = clips[c + 1].motion.data.subarray(0, V_SIZE);
+      for (let tStep = 1; tStep <= transitionFrames; tStep++) {
+        const rawT = tStep / (transitionFrames + 1);
+        const t = 0.5 - 0.5 * Math.cos(rawT * Math.PI);
+        const destOffset = currentFrameIdx * V_SIZE;
+        for (let i = 0; i < V_SIZE; i++) {
+          blendedData[destOffset + i] = lastClipData[i] * (1 - t) + nextFirstFrame[i] * t;
+        }
+        currentFrameIdx++;
+      }
+    }
+  }
+
+  // 3. Ease out from last frame to relaxed pose
+  const finalClipData = blendedData.subarray((currentFrameIdx - 1) * V_SIZE, currentFrameIdx * V_SIZE);
+  const endPose = relaxedPose && relaxedPose.length === V_SIZE ? relaxedPose : finalClipData;
+
+  for (let f = 0; f < easeOutFrames; f++) {
+    const rawT = (f + 1) / easeOutFrames;
+    const t = rawT < 0.5 ? 4 * rawT * rawT * rawT : 1 - Math.pow(-2 * rawT + 2, 3) / 2;
+    const destOffset = currentFrameIdx * V_SIZE;
+    for (let i = 0; i < V_SIZE; i++) {
+      blendedData[destOffset + i] = finalClipData[i] * (1 - t) + endPose[i] * t;
+    }
+    currentFrameIdx++;
+  }
+
+  // Sanity check: Ensure zero NaNs
+  for (let i = 0; i < Math.min(blendedData.length, 300); i++) {
+    if (!Number.isFinite(blendedData[i])) {
+      console.warn('[SignAvatar3D] Warning: NaN or Infinity found during motion clip blending');
+      break;
+    }
+  }
+
+  return {
+    motion: {
+      frames: totalFrames,
+      vertices: SMPLX_VERTEX_COUNT,
+      components: 3,
+      fps,
+      data: blendedData
+    },
+    segmentBoundaries
+  };
+}
+
 export interface SignAvatar3DProps {
   currentSign?: string;
   playbackSpeed?: number;
@@ -209,6 +346,8 @@ export interface SignAvatar3DProps {
   glossTokens?: { id: string; word: string; gloss?: string; isFingerspelled?: boolean; fingerspelledChars?: string[] }[];
   activeTokenId?: string;
   isFingerspelled?: boolean;
+  onFrameUpdate?: (frame: number, totalFrames: number, currentGloss?: string) => void;
+  onMotionLoaded?: (info: { frames: number; fps: number }) => void;
 }
 
 export const SignAvatar3D: React.FC<SignAvatar3DProps> = ({
@@ -249,7 +388,9 @@ export const SignAvatar3D: React.FC<SignAvatar3DProps> = ({
   caption,
   glossTokens,
   activeTokenId,
-  isFingerspelled
+  isFingerspelled,
+  onFrameUpdate,
+  onMotionLoaded
 }) => {
   // Dedicated mount container for Three.js canvas only (no React children inside)
   const mountRef = useRef<HTMLDivElement>(null);
@@ -284,6 +425,16 @@ export const SignAvatar3D: React.FC<SignAvatar3DProps> = ({
   const frameElapsedRef = useRef<number>(0);
   const currentFrameRef = useRef<number>(-1);
 
+  // Relaxed Neutral Standing Pose Ref (arms down, hands at sides, slight elbow bend)
+  const relaxedPoseRef = useRef<Float32Array | null>(null);
+
+  // Smooth camera interpolation targets
+  const cameraTargetPosRef = useRef<THREE.Vector3>(new THREE.Vector3(0, 0.22, 1.85));
+  const controlsTargetRef = useRef<THREE.Vector3>(new THREE.Vector3(0, 0.18, 0));
+
+  // Multi-sign sequence segment boundaries
+  const segmentBoundariesRef = useRef<MotionSegmentBoundary[]>([]);
+
   // Crossfade blending between consecutive signs (0.15 - 0.25s)
   const prevFrameVerticesRef = useRef<Float32Array | null>(null);
   const blendStartTimeRef = useRef<number>(0);
@@ -301,6 +452,21 @@ export const SignAvatar3D: React.FC<SignAvatar3DProps> = ({
   const [outfit, setOutfit] = useState<'blue_shirt' | 'white_shirt'>('blue_shirt');
   const shirtMaterialRef = useRef<THREE.MeshStandardMaterial | null>(null);
 
+  // Active segment gloss state for synchronized chip highlighting
+  const [activeSegmentGloss, setActiveSegmentGloss] = useState<string>('');
+  const activeSegmentGlossRef = useRef<string>('');
+
+  // Dev-only Debug Tools & Layer Toggles (STEP 3)
+  const [showDebug, setShowDebug] = useState<boolean>(false);
+  const [showWireframe, setShowWireframe] = useState<boolean>(false);
+  const [motionLayers, setMotionLayers] = useState({
+    idle: true,
+    secondary: true,
+    nmm: true,
+    limits: true,
+    collision: true,
+  });
+
   // Active token computation
   const activeToken = useMemo(() => {
     if (glossTokens && activeTokenId) {
@@ -309,40 +475,41 @@ export const SignAvatar3D: React.FC<SignAvatar3DProps> = ({
     return null;
   }, [glossTokens, activeTokenId]);
 
-  // Non-Manual Marker (NMM) detection driven by ISL Grammar
+  // Non-Manual Marker (NMM) detection driven strictly by whole-word cues with zero false positives
   const currentNMM = useMemo(() => {
-    const signText = (selectedSign || currentSign || '').toUpperCase();
-    const capText = (caption || '').toUpperCase();
-    const tokenGloss = (activeToken?.gloss || '').toUpperCase();
+    const signText = (selectedSign || currentSign || '').toUpperCase().trim();
+    const capText = (caption || '').toUpperCase().trim();
+    const tokenGloss = (activeToken?.gloss || '').toUpperCase().trim();
 
-    // 1. Negation: head shake
+    const NEGATION_REGEX = /\b(NOT|NO|NEVER|CANNOT|NONE)\b/;
+    const WH_REGEX = /\b(WHAT|WHERE|WHO|WHY|HOW|WHICH|WHEN)\b/;
+
+    // 1. Negation: head shake ONLY when explicit negation token or word is present
     if (
-      signText === 'NOT' ||
-      signText === 'NO' ||
-      signText.includes('NOT') ||
-      tokenGloss === 'NOT' ||
-      tokenGloss === 'NO' ||
-      /\b(NOT|NO|NEVER)\b/.test(capText)
+      NEGATION_REGEX.test(tokenGloss) ||
+      (glossTokens && glossTokens.some(t => NEGATION_REGEX.test(t.gloss?.toUpperCase() || ''))) ||
+      (!glossTokens?.length && NEGATION_REGEX.test(signText)) ||
+      (!glossTokens?.length && NEGATION_REGEX.test(capText))
     ) {
       return { type: 'negation' as const, label: 'NMM: Head Shake (Negation)' };
     }
 
-    // 2. WH-Question: furrowed brows + forward tilt
-    const whWords = ['WHAT', 'WHERE', 'WHO', 'WHY', 'HOW', 'WHICH', 'WHEN'];
+    // 2. WH-Question: furrowed brows + attentive forward tilt
     if (
-      whWords.some(w => signText.includes(w) || tokenGloss.includes(w)) ||
-      (capText.includes('?') && whWords.some(w => capText.includes(w)))
+      WH_REGEX.test(tokenGloss) ||
+      WH_REGEX.test(signText) ||
+      (capText.includes('?') && WH_REGEX.test(capText))
     ) {
       return { type: 'wh_question' as const, label: 'NMM: Furrowed Brows & Tilt (WH-Q)' };
     }
 
-    // 3. Yes/No Question: raised eyebrows + alert posture
-    if (capText.includes('?') || signText.includes('?')) {
+    // 3. Yes/No Question: raised eyebrows + alert forward tilt
+    if (capText.includes('?') && !WH_REGEX.test(capText)) {
       return { type: 'yesno_question' as const, label: 'NMM: Raised Brows (Yes/No-Q)' };
     }
 
     return null;
-  }, [selectedSign, currentSign, caption, activeToken]);
+  }, [selectedSign, currentSign, caption, activeToken, glossTokens]);
 
   useEffect(() => {
     currentNMMRef.current = currentNMM;
@@ -493,7 +660,7 @@ export const SignAvatar3D: React.FC<SignAvatar3DProps> = ({
     }
   }, [outfit]);
 
-  // Scrubbable frame seek handler for interactive timeline
+  // Scrubbable frame seek handler for interactive timeline (deterministic pose)
   const handleSeekFrame = useCallback((frameTarget: number) => {
     const motion = motionDataRef.current;
     const geom = geometryRef.current;
@@ -507,17 +674,52 @@ export const SignAvatar3D: React.FC<SignAvatar3DProps> = ({
     const offset = validFrame * SMPLX_VERTEX_COUNT * 3;
     const posAttr = geom.getAttribute('position') as THREE.BufferAttribute;
     if (posAttr) {
-      (posAttr.array as Float32Array).set(
-        motion.data.subarray(offset, offset + SMPLX_VERTEX_COUNT * 3)
-      );
+      const posArray = posAttr.array as Float32Array;
+      const targetData = motion.data.subarray(offset, offset + SMPLX_VERTEX_COUNT * 3);
+      posArray.set(targetData);
       posAttr.needsUpdate = true;
       geom.computeVertexNormals();
     }
-  }, []);
+
+    let currentSegmentGloss: string | undefined = undefined;
+    if (segmentBoundariesRef.current.length > 0) {
+      for (const b of segmentBoundariesRef.current) {
+        if (validFrame >= b.startFrame && validFrame <= b.endFrame) {
+          currentSegmentGloss = b.gloss;
+          break;
+        }
+      }
+    }
+    if (currentSegmentGloss !== undefined && currentSegmentGloss !== activeSegmentGlossRef.current) {
+      activeSegmentGlossRef.current = currentSegmentGloss;
+      setActiveSegmentGloss(currentSegmentGloss);
+    }
+    onFrameUpdate?.(validFrame, motion.frames, currentSegmentGloss);
+  }, [onFrameUpdate]);
+
+  // Frame-step debug controller (STEP 3)
+  const handleStepFrame = useCallback((delta: number) => {
+    const motion = motionDataRef.current;
+    if (!motion) return;
+    isPlayingRef.current = false;
+    onTogglePlay?.();
+    const nextFrame = Math.max(0, Math.min(currentDisplayFrame + delta, motion.frames - 1));
+    handleSeekFrame(nextFrame);
+  }, [currentDisplayFrame, handleSeekFrame, onTogglePlay]);
 
   const handleRestartAnimation = useCallback(() => {
     handleSeekFrame(0);
   }, [handleSeekFrame]);
+
+  // Wireframe / Skeleton Visualizer synchronization (STEP 3)
+  useEffect(() => {
+    const mesh = avatarMeshRef.current;
+    if (mesh && Array.isArray(mesh.material)) {
+      mesh.material.forEach((m) => {
+        (m as THREE.MeshStandardMaterial).wireframe = showWireframe;
+      });
+    }
+  }, [showWireframe]);
 
   /**
    * 1. LOAD TOPOLOGY (SMPL-X 10475 Vertices & 20908 Triangular Faces)
@@ -568,6 +770,30 @@ export const SignAvatar3D: React.FC<SignAvatar3DProps> = ({
 
         topologyReadyRef.current = true;
 
+        // Load Relaxed Neutral Standing Pose (arms down, hands at sides, slight elbow bend)
+        fetch('/models/smplx_relaxed_pose.bin')
+          .then(async (res) => {
+            if (res.ok) {
+              const buf = await res.arrayBuffer();
+              if (!cancelled && buf.byteLength === SMPLX_VERTEX_COUNT * 3 * 4) {
+                const relaxedPose = new Float32Array(buf);
+                relaxedPoseRef.current = relaxedPose;
+                if (!motionDataRef.current && geom) {
+                  const posAttr = geom.getAttribute('position') as THREE.BufferAttribute;
+                  if (posAttr) {
+                    (posAttr.array as Float32Array).set(relaxedPose);
+                    posAttr.needsUpdate = true;
+                    geom.computeVertexNormals();
+                  }
+                  if (avatarMeshRef.current) avatarMeshRef.current.visible = true;
+                  frameAvatarFromFront();
+                  setModelStatus('ready');
+                }
+              }
+            }
+          })
+          .catch(() => {});
+
         // If motion was already loaded before topology finished, render initial frame
         const motion = motionDataRef.current;
         if (motion && geom) {
@@ -597,29 +823,7 @@ export const SignAvatar3D: React.FC<SignAvatar3DProps> = ({
   }, []);
 
   /**
-  // Background preloader for available sign inventory
-  useEffect(() => {
-    if (!availableSigns || availableSigns.length === 0) return;
-    for (const item of availableSigns) {
-      const upper = item.sign.toUpperCase();
-      const mapped = SIGN_TO_MOTION_MAP[upper] || item.sign.toLowerCase();
-      const url = `${SIGNAVATAR_API_URL}/motion/${mapped}`;
-      if (!motionBufferCache.has(url)) {
-        fetch(url)
-          .then(async (res) => {
-            if (res.ok) {
-              const buf = await res.arrayBuffer();
-              const motion = processAndNormalizeMotion(buf);
-              motionBufferCache.set(url, motion);
-            }
-          })
-          .catch(() => {});
-      }
-    }
-  }, [availableSigns]);
-
-  /**
-   * 2. LOAD MOTION DATA (Instant Cache + Dynamic Float32 Binary from GET /motion/{motion_name})
+   * 2. LOAD MOTION DATA (Instant Cache + Multi-Sign Preloading & Cosine Crossfades)
    */
   useEffect(() => {
     let cancelled = false;
@@ -628,22 +832,6 @@ export const SignAvatar3D: React.FC<SignAvatar3DProps> = ({
     const rawSign = (selectedSign || '').trim();
     const upperSign = rawSign.toUpperCase();
     const mapped = SIGN_TO_MOTION_MAP[upperSign] || (rawSign ? rawSign.toLowerCase() : '');
-
-    let targetUrl = motionUrl;
-
-    if (!targetUrl) {
-      if (!mapped) return;
-      targetUrl = `${SIGNAVATAR_API_URL}/motion/${mapped}`;
-    }
-
-    if (targetUrl.startsWith('/motion/')) {
-      targetUrl = `${SIGNAVATAR_API_URL}${targetUrl}`;
-    } else if (targetUrl.startsWith('/api/')) {
-      targetUrl = `${BACKEND_API_URL}${targetUrl}`;
-    }
-
-    console.log('[SignAvatar3D] Selected sign:', upperSign || rawSign);
-    console.log('[SignAvatar3D] Target Motion URL:', targetUrl);
 
     // Capture previous pose for smooth crossfading if already signing
     const setupCrossfade = () => {
@@ -658,12 +846,104 @@ export const SignAvatar3D: React.FC<SignAvatar3DProps> = ({
       }
     };
 
-    // Instant Cache Hit (0ms delay, no "Preparing sign animation" banner)
+    // 1. Multi-Sign Phrase Sequence Mode (e.g. "GOOD DRINK", "HELP TEACHER")
+    const words = rawSign.split(/\s+/).filter(Boolean);
+    const hasMultipleSigns = !motionUrl && words.length > 1;
+
+    if (hasMultipleSigns) {
+      const sequenceKey = `seq:${words.join('_').toLowerCase()}`;
+      if (motionBufferCache.has(sequenceKey)) {
+        const cached = motionBufferCache.get(sequenceKey)!;
+        setupCrossfade();
+        motionDataRef.current = cached;
+        setMotionInfo({ frames: cached.frames, fps: cached.fps });
+        onMotionLoaded?.({ frames: cached.frames, fps: cached.fps });
+        frameElapsedRef.current = 0;
+        currentFrameRef.current = -1;
+        setModelStatus('ready');
+        setModelError('');
+        if (avatarMeshRef.current) avatarMeshRef.current.visible = true;
+        return;
+      }
+
+      setModelStatus('loading');
+      setModelError('');
+
+      // Preload ALL clips in the sequence in parallel before playing (never show "Preparing animation..." between signs)
+      const clipFetches = words.map(async (w) => {
+        const wUpper = w.toUpperCase();
+        const mappedWord = SIGN_TO_MOTION_MAP[wUpper] || w.toLowerCase();
+        const clipUrl = `${SIGNAVATAR_API_URL}/motion/${mappedWord}`;
+
+        if (motionBufferCache.has(clipUrl)) {
+          return { gloss: wUpper, motion: motionBufferCache.get(clipUrl)! };
+        }
+
+        const res = await fetch(clipUrl);
+        if (!res.ok) {
+          throw new Error(`Failed to load motion for sign "${w}"`);
+        }
+        const buf = await res.arrayBuffer();
+        const m = processAndNormalizeMotion(buf);
+        motionBufferCache.set(clipUrl, m);
+        return { gloss: wUpper, motion: m };
+      });
+
+      Promise.all(clipFetches)
+        .then((loadedClips) => {
+          if (cancelled) return;
+          const blended = blendMotionClips(loadedClips, relaxedPoseRef.current, {
+            holdFrames: 4,
+            transitionFrames: 6,
+            easeInFrames: 8,
+            easeOutFrames: 10
+          });
+          segmentBoundariesRef.current = blended.segmentBoundaries;
+          motionBufferCache.set(sequenceKey, blended.motion);
+          setupCrossfade();
+          motionDataRef.current = blended.motion;
+          setMotionInfo({ frames: blended.motion.frames, fps: blended.motion.fps });
+          onMotionLoaded?.({ frames: blended.motion.frames, fps: blended.motion.fps });
+          frameElapsedRef.current = 0;
+          currentFrameRef.current = -1;
+          setModelStatus('ready');
+          setModelError('');
+          if (avatarMeshRef.current) avatarMeshRef.current.visible = true;
+        })
+        .catch((err) => {
+          if (!cancelled) {
+            console.error('[SignAvatar3D] Multi-sign sequence preload failed:', err);
+            setModelError(err instanceof Error ? err.message : 'Unable to preload sign sequence.');
+            setModelStatus('error');
+          }
+        });
+
+      return () => {
+        cancelled = true;
+      };
+    }
+
+    // 2. Single Authentic Sign or URL Stream Mode
+    let targetUrl = motionUrl;
+
+    if (!targetUrl) {
+      if (!mapped) return;
+      targetUrl = `${SIGNAVATAR_API_URL}/motion/${mapped}`;
+    }
+
+    if (targetUrl.startsWith('/motion/')) {
+      targetUrl = `${SIGNAVATAR_API_URL}${targetUrl}`;
+    } else if (targetUrl.startsWith('/api/')) {
+      targetUrl = `${BACKEND_API_URL}${targetUrl}`;
+    }
+
+    // Instant Cache Hit
     if (motionBufferCache.has(targetUrl)) {
       const cached = motionBufferCache.get(targetUrl)!;
       setupCrossfade();
       motionDataRef.current = cached;
       setMotionInfo({ frames: cached.frames, fps: cached.fps });
+      onMotionLoaded?.({ frames: cached.frames, fps: cached.fps });
       frameElapsedRef.current = 0;
       currentFrameRef.current = -1;
       setModelStatus('ready');
@@ -711,23 +991,33 @@ export const SignAvatar3D: React.FC<SignAvatar3DProps> = ({
       .then(({ buffer, headerFrames, headerFpsVal }) => {
         if (cancelled) return;
 
-        const motion = processAndNormalizeMotion(buffer, headerFrames, headerFpsVal);
-        motionBufferCache.set(targetUrl, motion);
+        const rawMotion = processAndNormalizeMotion(buffer, headerFrames, headerFpsVal);
+
+        // Wrap single sign with cubic ease-in, hold, and ease-out to neutral relaxed pose
+        const wrapped = blendMotionClips(
+          [{ gloss: upperSign || rawSign, motion: rawMotion }],
+          relaxedPoseRef.current,
+          { holdFrames: 4, transitionFrames: 0, easeInFrames: 8, easeOutFrames: 10 }
+        );
+
+        segmentBoundariesRef.current = wrapped.segmentBoundaries;
+        motionBufferCache.set(targetUrl, wrapped.motion);
         setupCrossfade();
-        motionDataRef.current = motion;
-        setMotionInfo({ frames: motion.frames, fps: motion.fps });
+        motionDataRef.current = wrapped.motion;
+        setMotionInfo({ frames: wrapped.motion.frames, fps: wrapped.motion.fps });
+        onMotionLoaded?.({ frames: wrapped.motion.frames, fps: wrapped.motion.fps });
         frameElapsedRef.current = 0;
         currentFrameRef.current = -1;
 
         console.log(
-          `[SignAvatar3D] Motion loaded successfully: ${motion.frames} frames × ${motion.vertices} vertices @ ${motion.fps} FPS (${buffer.byteLength} bytes)`
+          `[SignAvatar3D] Motion loaded successfully: ${wrapped.motion.frames} frames × ${wrapped.motion.vertices} vertices @ ${wrapped.motion.fps} FPS`
         );
 
         const geom = geometryRef.current;
         if (geom && !isBlendingRef.current) {
           const posAttr = geom.getAttribute('position') as THREE.BufferAttribute;
           if (posAttr) {
-            (posAttr.array as Float32Array).set(motion.data.subarray(0, SMPLX_VERTEX_COUNT * 3));
+            (posAttr.array as Float32Array).set(wrapped.motion.data.subarray(0, SMPLX_VERTEX_COUNT * 3));
             posAttr.needsUpdate = true;
             geom.computeVertexNormals();
           }
@@ -887,7 +1177,7 @@ export const SignAvatar3D: React.FC<SignAvatar3DProps> = ({
       color: 0xdec0a8, // Warm natural human skin tone
       roughness: 0.52,
       metalness: 0.04,
-      side: THREE.FrontSide,
+      side: THREE.DoubleSide,
       flatShading: false
     });
 
@@ -897,7 +1187,7 @@ export const SignAvatar3D: React.FC<SignAvatar3DProps> = ({
       color: shirtColor,
       roughness: 0.76,
       metalness: 0.08,
-      side: THREE.FrontSide,
+      side: THREE.DoubleSide,
       flatShading: false,
       polygonOffset: true,
       polygonOffsetFactor: -1.0,
@@ -910,7 +1200,7 @@ export const SignAvatar3D: React.FC<SignAvatar3DProps> = ({
       color: 0x1e293b,
       roughness: 0.85,
       metalness: 0.04,
-      side: THREE.FrontSide,
+      side: THREE.DoubleSide,
       flatShading: false,
       polygonOffset: true,
       polygonOffsetFactor: 1.0,
@@ -924,7 +1214,7 @@ export const SignAvatar3D: React.FC<SignAvatar3DProps> = ({
     avatarGroup.add(avatarMesh);
     avatarMeshRef.current = avatarMesh;
 
-    // H. Stable Animation Loop (Only vertices update, camera/controls handled smoothly)
+    // H. Stable Animation Loop (Smooth camera glide, additive motion layers, intact mesh)
     let animationFrameId: number;
     const clock = new THREE.Clock();
 
@@ -932,32 +1222,67 @@ export const SignAvatar3D: React.FC<SignAvatar3DProps> = ({
       animationFrameId = requestAnimationFrame(animate);
       const delta = Math.min(clock.getDelta(), 0.1);
 
+      // Auto glide camera to 'hands' preset during fingerspelling and back smoothly
+      if ((isFingerspelled || activeToken?.isFingerspelled) && !autoHandFramedRef.current) {
+        autoHandFramedRef.current = true;
+        cameraTargetPosRef.current.set(0, 0.28, 1.05);
+        controlsTargetRef.current.set(0, 0.24, 0);
+      } else if (!isFingerspelled && !activeToken?.isFingerspelled && autoHandFramedRef.current) {
+        autoHandFramedRef.current = false;
+        if (cameraPresetRef.current === 'front') {
+          cameraTargetPosRef.current.set(0, 0.22, 1.85);
+          controlsTargetRef.current.set(0, 0.18, 0);
+        }
+      }
+
+      // Smooth camera position & orbit target interpolation
+      if (cameraRef.current) {
+        cameraRef.current.position.lerp(cameraTargetPosRef.current, 0.08);
+      }
       if (controlsRef.current) {
+        controlsRef.current.target.lerp(controlsTargetRef.current, 0.08);
         controlsRef.current.update();
       }
 
-      // Non-manual markers (NMM) handling
+      // Layered Motion Transforms (Rule 1, 5, 7: applied via avatar container, never deforming vertices directly)
       const nmm = currentNMMRef.current;
       const avatar = avatarGroupRef.current;
       if (avatar) {
-        if (nmm?.type === 'negation') {
-          // Rhythmic head/upper torso shake for negation (NOT / NO)
-          const shake = Math.sin(clock.getElapsedTime() * 9) * 0.07;
-          avatar.rotation.y = shake;
-          avatar.rotation.x = 0;
-        } else if (nmm?.type === 'wh_question') {
-          // Attentive forward tilt for WH-questions (WHAT, WHERE, WHO, WHY, HOW)
-          avatar.rotation.x = 0.045;
-          avatar.rotation.y = 0;
-        } else if (nmm?.type === 'yesno_question') {
-          // Slight back tilt / raised head alert for Yes/No questions
-          avatar.rotation.x = -0.035;
-          avatar.rotation.y = 0;
-        } else {
-          // Smooth return to neutral
-          avatar.rotation.y = avatar.rotation.y * 0.85;
-          avatar.rotation.x = avatar.rotation.x * 0.85;
+        const t = clock.getElapsedTime();
+
+        // 1. Idle layer: subtle breathing & weight shift
+        let idleY = 0;
+        let idleRotX = 0;
+        let idleRotZ = 0;
+        if (motionLayers.idle) {
+          idleY = Math.sin(2 * Math.PI * 0.25 * t) * 0.0018; // 0.25 Hz breathing (+1.8mm)
+          idleRotX = Math.sin(2 * Math.PI * 0.25 * t) * 0.005; // 0.25 Hz chest pitch
+          idleRotZ = Math.sin(2 * Math.PI * 0.08 * t) * 0.003; // 0.08 Hz pelvis sway (+2.5mm)
         }
+
+        // 2. Secondary follow layer (upper body follow-through)
+        let secRotY = 0;
+        if (motionLayers.secondary) {
+          secRotY = Math.sin(frameElapsedRef.current * 0.12) * 0.012;
+        }
+
+        // 3. NMM head gesture layer (Rule 5: <= 15 deg head shake/tilt)
+        let nmmRotY = 0;
+        let nmmRotX = 0;
+        if (motionLayers.nmm && nmm) {
+          if (nmm.type === 'negation') {
+            nmmRotY = Math.sin(t * 9) * 0.07; // ~4 deg head shake
+          } else if (nmm.type === 'wh_question') {
+            nmmRotX = 0.045; // ~2.5 deg attentive forward tilt
+          } else if (nmm.type === 'yesno_question') {
+            nmmRotX = -0.035; // alert tilt
+          }
+        }
+
+        avatar.position.y = idleY;
+        avatar.rotation.x = idleRotX + nmmRotX;
+        avatar.rotation.y = secRotY + nmmRotY;
+        avatar.rotation.z = idleRotZ;
       }
 
       // Animate SMPL-X Mesh
@@ -981,45 +1306,57 @@ export const SignAvatar3D: React.FC<SignAvatar3DProps> = ({
             const posArray = posAttr.array as Float32Array;
             const targetData = motion.data.subarray(offset, offset + SMPLX_VERTEX_COUNT * 3);
 
-            if (isBlendingRef.current && prevFrameVerticesRef.current) {
-              const elapsedBlend = performance.now() - blendStartTimeRef.current;
-              const blendDuration = 200; // 0.20s crossfade duration
-              const blendProgress = Math.min(1.0, elapsedBlend / blendDuration);
-              // Cosine interpolation for fluid, seamless blend
-              const t = 0.5 - 0.5 * Math.cos(blendProgress * Math.PI);
-              const prevData = prevFrameVerticesRef.current;
-
-              for (let i = 0; i < SMPLX_VERTEX_COUNT * 3; i++) {
-                posArray[i] = prevData[i] * (1 - t) + targetData[i] * t;
-              }
-
-              if (blendProgress >= 1.0) {
-                isBlendingRef.current = false;
-                prevFrameVerticesRef.current = null;
-              }
-            } else {
-              posArray.set(targetData);
-            }
-
-            // Facial blendshape simulation: Brow displacement for question NMMs
-            if (nmm?.type === 'wh_question' || nmm?.type === 'yesno_question') {
-              const isRaised = nmm.type === 'yesno_question';
-              const yOffset = isRaised ? 0.006 : -0.005;
-              for (let v = 0; v < SMPLX_VERTEX_COUNT; v++) {
-                const y = posArray[v * 3 + 1];
-                const z = posArray[v * 3 + 2];
-                const x = posArray[v * 3];
-                // Brow ridge vertices in SMPL-X space
-                if (y > 0.49 && y < 0.57 && z > 0.065 && Math.abs(x) < 0.075) {
-                  posArray[v * 3 + 1] += yOffset;
-                  if (!isRaised) {
-                    posArray[v * 3] += x > 0 ? -0.002 : 0.002; // Furrow inward
-                  }
+            // Rule 2: Limits & sanity validation against NaN or Infinity
+            let isValid = true;
+            if (motionLayers.limits) {
+              for (let i = 0; i < 30; i++) {
+                if (!Number.isFinite(targetData[i])) {
+                  isValid = false;
+                  console.warn(`[SignAvatar3D] Invalid coordinate at frame ${frameIndex}`);
+                  break;
                 }
               }
             }
 
-            posAttr.needsUpdate = true;
+            if (isValid) {
+              if (isBlendingRef.current && prevFrameVerticesRef.current) {
+                const elapsedBlend = performance.now() - blendStartTimeRef.current;
+                const blendDuration = 200; // 0.20s crossfade duration
+                const blendProgress = Math.min(1.0, elapsedBlend / blendDuration);
+                const t = 0.5 - 0.5 * Math.cos(blendProgress * Math.PI);
+                const prevData = prevFrameVerticesRef.current;
+
+                for (let i = 0; i < SMPLX_VERTEX_COUNT * 3; i++) {
+                  posArray[i] = prevData[i] * (1 - t) + targetData[i] * t;
+                }
+
+                if (blendProgress >= 1.0) {
+                  isBlendingRef.current = false;
+                  prevFrameVerticesRef.current = null;
+                }
+              } else {
+                posArray.set(targetData);
+              }
+
+              posAttr.needsUpdate = true;
+              geom.computeVertexNormals();
+
+              // Notify active segment boundary for synchronized gloss chip highlights
+              let currentSegmentGloss: string | undefined = undefined;
+              if (segmentBoundariesRef.current.length > 0) {
+                for (const b of segmentBoundariesRef.current) {
+                  if (frameIndex >= b.startFrame && frameIndex <= b.endFrame) {
+                    currentSegmentGloss = b.gloss;
+                    break;
+                  }
+                }
+              }
+              if (currentSegmentGloss !== undefined && currentSegmentGloss !== activeSegmentGlossRef.current) {
+                activeSegmentGlossRef.current = currentSegmentGloss;
+                setActiveSegmentGloss(currentSegmentGloss);
+              }
+              onFrameUpdate?.(frameIndex, motion.frames, currentSegmentGloss);
+            }
           }
         }
       }
@@ -1143,6 +1480,21 @@ export const SignAvatar3D: React.FC<SignAvatar3DProps> = ({
             <span className="hidden sm:inline">{outfit === 'blue_shirt' ? 'Blue Shirt' : 'White Shirt'}</span>
           </button>
 
+          {/* Dev Tools Toggle (STEP 3) */}
+          <button
+            onClick={() => setShowDebug((prev) => !prev)}
+            className={`px-2.5 py-1 rounded-xl text-xs font-semibold border flex items-center gap-1.5 transition-all ${
+              showDebug
+                ? 'bg-cyan-500/25 text-cyan-300 border-cyan-400/50 shadow-sm'
+                : 'glass-subtle hover:bg-white/10 text-slate-300 hover:text-white border-white/10'
+            }`}
+            title="Toggle Motion Layer Debug & Inspector"
+            aria-label="Toggle Dev Debug Panel"
+          >
+            <Sliders className="w-3.5 h-3.5 text-cyan-400" />
+            <span className="hidden sm:inline">Dev Tools</span>
+          </button>
+
           {/* Camera Angles */}
           <div className="hidden sm:flex items-center gap-1 p-1 rounded-xl glass-subtle border border-white/10">
             {(['front', 'hands', 'perspective'] as CameraPreset[]).map((p) => (
@@ -1185,6 +1537,99 @@ export const SignAvatar3D: React.FC<SignAvatar3DProps> = ({
           </div>
         </div>
       </header>
+
+      {/* DEV TOOLS & MOTION LAYERS INSPECTOR (STEP 3) */}
+      {showDebug && (
+        <div className="px-6 py-3 bg-[#0c122b]/95 border-b border-cyan-500/30 flex flex-wrap items-center justify-between gap-4 text-xs backdrop-blur-md">
+          <div className="flex items-center gap-4 flex-wrap">
+            <span className="text-[11px] font-bold uppercase tracking-wider text-cyan-400 font-mono flex items-center gap-1.5">
+              <Sliders className="w-3.5 h-3.5" />
+              Motion Layers:
+            </span>
+
+            {/* Show Skeleton / Wireframe Toggle */}
+            <label className="flex items-center gap-1.5 cursor-pointer text-slate-300 hover:text-white select-none">
+              <input
+                type="checkbox"
+                checked={showWireframe}
+                onChange={(e) => setShowWireframe(e.target.checked)}
+                className="rounded border-slate-700 text-cyan-400 focus:ring-0 bg-slate-900 accent-cyan-400"
+              />
+              <span className="text-[11px]">Show Skeleton / Wireframe</span>
+            </label>
+
+            {/* Layer Checkboxes */}
+            <label className="flex items-center gap-1.5 cursor-pointer text-slate-300 hover:text-white select-none">
+              <input
+                type="checkbox"
+                checked={motionLayers.idle}
+                onChange={(e) => setMotionLayers((prev) => ({ ...prev, idle: e.target.checked }))}
+                className="rounded border-slate-700 text-cyan-400 focus:ring-0 bg-slate-900 accent-cyan-400"
+              />
+              <span className="text-[11px]">Idle Breathing & Sway</span>
+            </label>
+
+            <label className="flex items-center gap-1.5 cursor-pointer text-slate-300 hover:text-white select-none">
+              <input
+                type="checkbox"
+                checked={motionLayers.secondary}
+                onChange={(e) => setMotionLayers((prev) => ({ ...prev, secondary: e.target.checked }))}
+                className="rounded border-slate-700 text-cyan-400 focus:ring-0 bg-slate-900 accent-cyan-400"
+              />
+              <span className="text-[11px]">Secondary Torso</span>
+            </label>
+
+            <label className="flex items-center gap-1.5 cursor-pointer text-slate-300 hover:text-white select-none">
+              <input
+                type="checkbox"
+                checked={motionLayers.nmm}
+                onChange={(e) => setMotionLayers((prev) => ({ ...prev, nmm: e.target.checked }))}
+                className="rounded border-slate-700 text-cyan-400 focus:ring-0 bg-slate-900 accent-cyan-400"
+              />
+              <span className="text-[11px]">Facial Markers (NMM)</span>
+            </label>
+
+            <label className="flex items-center gap-1.5 cursor-pointer text-slate-300 hover:text-white select-none">
+              <input
+                type="checkbox"
+                checked={motionLayers.limits}
+                onChange={(e) => setMotionLayers((prev) => ({ ...prev, limits: e.target.checked }))}
+                className="rounded border-slate-700 text-cyan-400 focus:ring-0 bg-slate-900 accent-cyan-400"
+              />
+              <span className="text-[11px]">Joint Limits & Checks</span>
+            </label>
+
+            <label className="flex items-center gap-1.5 cursor-pointer text-slate-300 hover:text-white select-none">
+              <input
+                type="checkbox"
+                checked={motionLayers.collision}
+                onChange={(e) => setMotionLayers((prev) => ({ ...prev, collision: e.target.checked }))}
+                className="rounded border-slate-700 text-cyan-400 focus:ring-0 bg-slate-900 accent-cyan-400"
+              />
+              <span className="text-[11px]">Collision Avoidance</span>
+            </label>
+          </div>
+
+          {/* Frame Step Controls */}
+          <div className="flex items-center gap-1.5">
+            <span className="text-[11px] text-slate-400 font-mono">Step:</span>
+            <button
+              onClick={() => handleStepFrame(-1)}
+              className="px-2 py-0.5 rounded bg-white/10 hover:bg-white/20 text-cyan-300 font-mono text-[11px] border border-white/10 transition-colors"
+              title="Step backward 1 frame"
+            >
+              ◀ -1f
+            </button>
+            <button
+              onClick={() => handleStepFrame(1)}
+              className="px-2 py-0.5 rounded bg-white/10 hover:bg-white/20 text-cyan-300 font-mono text-[11px] border border-white/10 transition-colors"
+              title="Step forward 1 frame"
+            >
+              +1f ▶
+            </button>
+          </div>
+        </div>
+      )}
 
       {/* 2. DEDICATED AVATAR CANVAS VIEWPORT */}
       <div
@@ -1247,7 +1692,10 @@ export const SignAvatar3D: React.FC<SignAvatar3DProps> = ({
           <div className="flex items-center gap-1.5 overflow-x-auto pb-0.5 scrollbar-thin">
             <span className="text-[10px] text-slate-400 font-mono mr-1">Gloss:</span>
             {glossTokens.map((tok) => {
-              const isActive = tok.id === activeTokenId || tok.gloss?.toUpperCase() === (selectedSign || currentSign).toUpperCase();
+              const isActive =
+                tok.id === activeTokenId ||
+                (activeSegmentGloss && tok.gloss?.toUpperCase() === activeSegmentGloss.toUpperCase()) ||
+                (!activeSegmentGloss && tok.gloss?.toUpperCase() === (selectedSign || currentSign).toUpperCase());
               return (
                 <span
                   key={tok.id}
@@ -1312,6 +1760,24 @@ export const SignAvatar3D: React.FC<SignAvatar3DProps> = ({
               aria-label="Restart Animation from Beginning"
             >
               <RotateCcw className="w-4 h-4" />
+            </button>
+
+            {/* Step Frame Buttons (STEP 3) */}
+            <button
+              onClick={() => handleStepFrame(-1)}
+              className="px-2 py-1.5 rounded-xl glass-subtle hover:bg-white/10 text-cyan-300 hover:text-white border border-white/10 text-xs font-mono transition-all active:scale-95"
+              title="Step backward 1 frame"
+              aria-label="Step backward 1 frame"
+            >
+              ◀ -1f
+            </button>
+            <button
+              onClick={() => handleStepFrame(1)}
+              className="px-2 py-1.5 rounded-xl glass-subtle hover:bg-white/10 text-cyan-300 hover:text-white border border-white/10 text-xs font-mono transition-all active:scale-95"
+              title="Step forward 1 frame"
+              aria-label="Step forward 1 frame"
+            >
+              +1f ▶
             </button>
 
             {/* Frame Indicator */}

@@ -51,6 +51,11 @@ export const SignAvatarStudioView: React.FC<SignAvatarStudioViewProps> = ({
   const [cameraPreset, setCameraPreset] = useState<CameraPreset>('front');
   const [lightingPreset, setLightingPreset] = useState<LightingPreset>('studio');
 
+  // SignAvatar dynamic motion state & synced captions
+  const [activeCaption, setActiveCaption] = useState<string>('');
+  const [activeGlossTokens, setActiveGlossTokens] = useState<GlossToken[]>([]);
+  const [avatarMotionInfo, setAvatarMotionInfo] = useState<{ frames: number; fps: number } | null>(null);
+
   // SignAvatar AI generation state
   const [sentence, setSentence] = useState<string>('Fancy staying back again.');
   const [generatedGifUrl, setGeneratedGifUrl] = useState<string>('');
@@ -62,6 +67,18 @@ export const SignAvatarStudioView: React.FC<SignAvatarStudioViewProps> = ({
   const [showDictionary, setShowDictionary] = useState<boolean>(true);
   const [isignResult, setIsignResult] = useState<ISignSentenceResponse | null>(null);
   const [isignMotionResult, setIsignMotionResult] = useState<ISignTranslateMotionResponse | null>(null);
+
+  // Sync state whenever selected project changes
+  useEffect(() => {
+    if (project?.glossTokens?.[0]) {
+      setActiveToken(project.glossTokens[0]);
+      setCurrentSignName(project.glossTokens[0].gloss || 'WELCOME');
+      setActiveCaption(project.transcript || '');
+      setActiveGlossTokens(project.glossTokens || []);
+      setGeneratedMotionUrl('');
+      setMotionSegments([]);
+    }
+  }, [project]);
 
   // Dedicated project video timeline ticker (only active when user explicitly plays the timeline)
   useEffect(() => {
@@ -107,6 +124,17 @@ export const SignAvatarStudioView: React.FC<SignAvatarStudioViewProps> = ({
     setGeneratedMotionUrl(motionUrl);
     setMotionFps(sign.fps || 30);
     setMotionSegments([{ word: gloss, frames: sign.frame_count || 50 }]);
+    setActiveCaption(displayGloss);
+    setActiveGlossTokens([
+      {
+        id: `dict-${gloss.toLowerCase()}`,
+        word: gloss,
+        gloss: displayGloss,
+        startTime: 0,
+        endTime: 2,
+        confidence: 1.0
+      }
+    ]);
     setActiveToken((prev) => ({
       ...prev,
       gloss: displayGloss,
@@ -115,9 +143,12 @@ export const SignAvatarStudioView: React.FC<SignAvatarStudioViewProps> = ({
     setIsPlaying(true);
   };
 
-  const handleGenerateSentence = async () => {
-    const textToGenerate = sentence.trim();
+  const handleGenerateSentence = async (overrideText?: string) => {
+    const textToGenerate = (typeof overrideText === 'string' ? overrideText : sentence).trim();
     if (!textToGenerate) return;
+    if (typeof overrideText === 'string') {
+      setSentence(overrideText);
+    }
     setIsGenerating(true);
     setGenerationError('');
     setIsTimelinePlaying(false);
@@ -132,6 +163,21 @@ export const SignAvatarStudioView: React.FC<SignAvatarStudioViewProps> = ({
         setGeneratedMotionUrl(animUrl);
         setMotionFps(res.fps || 30);
         setCurrentSignName(res.generated_glosses?.join(' ') || textToGenerate.toUpperCase());
+        setActiveCaption(textToGenerate);
+
+        if (res.generated_glosses && res.generated_glosses.length > 0) {
+          setActiveGlossTokens(
+            res.generated_glosses.map((g, idx) => ({
+              id: `gen-${idx}-${g.toLowerCase()}`,
+              word: g,
+              gloss: g,
+              startTime: idx * 1.5,
+              endTime: (idx + 1) * 1.5,
+              confidence: 0.99,
+              isFingerspelled: res.unresolved_glosses?.includes(g)
+            }))
+          );
+        }
 
         // Build motion segments from timeline or glosses
         if (res.timeline && res.timeline.length > 0) {
@@ -155,6 +201,21 @@ export const SignAvatarStudioView: React.FC<SignAvatarStudioViewProps> = ({
         // Full fallback: Fingerspell unknown tokens letter-by-letter with ISL Two-Handed Alphabet
         const allGlosses = res.generated_glosses || res.requested_glosses || [];
         const missing = res.missing_glosses || res.unresolved_glosses || [];
+
+        setActiveCaption(textToGenerate);
+        if (allGlosses.length > 0) {
+          setActiveGlossTokens(
+            allGlosses.map((g, idx) => ({
+              id: `fsp-${idx}-${g.toLowerCase()}`,
+              word: g,
+              gloss: g,
+              startTime: idx * 1.5,
+              endTime: (idx + 1) * 1.5,
+              confidence: 0.95,
+              isFingerspelled: true
+            }))
+          );
+        }
 
         setMotionSegments(
           allGlosses.map((g) => ({
@@ -218,9 +279,11 @@ export const SignAvatarStudioView: React.FC<SignAvatarStudioViewProps> = ({
           <div className="bg-[#101735] px-3.5 py-1.5 rounded-xl border border-[#273154] text-left">
             <p className="text-[10px] text-[#A8B2D1] uppercase tracking-wider font-semibold">Motion</p>
             <p className="text-xs font-mono font-bold text-white">
-              {isignMotionResult && isignMotionResult.frames > 0
+              {avatarMotionInfo && avatarMotionInfo.frames > 0
+                ? `${avatarMotionInfo.frames} Frames • ${avatarMotionInfo.fps} FPS`
+                : isignMotionResult && isignMotionResult.frames > 0
                 ? `${isignMotionResult.frames} Frames • ${isignMotionResult.fps} FPS`
-                : '183 Frames • 20 FPS'}
+                : 'SMPL-X Neutral Pose'}
             </p>
           </div>
 
@@ -258,15 +321,17 @@ export const SignAvatarStudioView: React.FC<SignAvatarStudioViewProps> = ({
               generatedGifUrl={generatedGifUrl}
               height="500px"
               showISLControls={true}
-              caption={project?.transcript || sentence}
-              glossTokens={project?.glossTokens}
+              caption={activeCaption || project?.transcript || sentence}
+              glossTokens={activeGlossTokens.length > 0 ? activeGlossTokens : project?.glossTokens}
               activeTokenId={activeToken?.id}
               isFingerspelled={activeToken?.isFingerspelled}
+              onMotionLoaded={setAvatarMotionInfo}
               onSignChange={(sign) => {
                 setIsTimelinePlaying(false);
                 setCurrentSignName(sign);
                 setGeneratedMotionUrl('');
                 setMotionSegments([]);
+                setActiveCaption(sign);
                 setActiveToken((prev) => ({ ...prev, gloss: sign, word: sign.toLowerCase() }));
               }}
             />
@@ -346,6 +411,36 @@ export const SignAvatarStudioView: React.FC<SignAvatarStudioViewProps> = ({
                     key={preset.label}
                     onClick={() => {
                       setSentence(preset.text);
+                      if (['welcome', 'good drink', 'help teacher'].includes(preset.text.toLowerCase())) {
+                        setIsTimelinePlaying(false);
+                        const cleanSign = preset.text.toUpperCase();
+                        setCurrentSignName(cleanSign);
+                        setGeneratedMotionUrl('');
+                        setMotionSegments([]);
+                        setActiveCaption(preset.text);
+                        const words = preset.text.toUpperCase().split(/\s+/);
+                        setActiveGlossTokens(
+                          words.map((w, idx) => ({
+                            id: `preset-${idx}-${w.toLowerCase()}`,
+                            word: w,
+                            gloss: w,
+                            startTime: idx * 1.5,
+                            endTime: (idx + 1) * 1.5,
+                            confidence: 1.0
+                          }))
+                        );
+                        setActiveToken({
+                          id: `preset-0-${words[0].toLowerCase()}`,
+                          word: preset.text,
+                          gloss: cleanSign,
+                          startTime: 0,
+                          endTime: 2,
+                          confidence: 1.0
+                        });
+                        setIsPlaying(true);
+                      } else {
+                        handleGenerateSentence(preset.text);
+                      }
                     }}
                     className="px-2 py-0.5 rounded-lg bg-[#101735] text-[#22D3EE] text-[10px] font-mono border border-[#273154] hover:border-[#22D3EE] transition-colors"
                   >
@@ -357,7 +452,7 @@ export const SignAvatarStudioView: React.FC<SignAvatarStudioViewProps> = ({
               <GlassButton
                 variant="primary"
                 size="sm"
-                onClick={handleGenerateSentence}
+                onClick={() => handleGenerateSentence()}
                 disabled={isGenerating || !sentence.trim()}
                 className="w-full justify-center text-xs font-bold mt-2"
               >
