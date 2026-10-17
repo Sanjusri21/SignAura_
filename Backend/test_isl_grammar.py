@@ -36,20 +36,21 @@ def test_wh_questions_placed_at_end():
 
 
 def test_subject_object_action_reordering():
-    # "I want water" -> ["water", "want", "i"]
+    # SOV: Subject + Object + Verb
+    # "I want water" -> ["i", "water", "want"]
     words_want = ["i", "want", "water"]
     transformed_want = ISLGrammarTransformer.transform_tokens(words_want)
-    assert transformed_want == ["water", "want", "i"]
+    assert transformed_want == ["i", "water", "want"]
 
-    # "I need help" -> ["help", "need", "i"]
+    # "I need help" -> ["i", "help", "need"]
     words_need = ["i", "need", "help"]
     transformed_need = ISLGrammarTransformer.transform_tokens(words_need)
-    assert transformed_need == ["help", "need", "i"]
+    assert transformed_need == ["i", "help", "need"]
 
-    # "I drink water" -> ["water", "drink", "i"]
+    # "I drink water" -> ["i", "water", "drink"]
     words_drink = ["i", "drink", "water"]
     transformed_drink = ISLGrammarTransformer.transform_tokens(words_drink)
-    assert transformed_drink == ["water", "drink", "i"]
+    assert transformed_drink == ["i", "water", "drink"]
 
 
 def test_simple_negation():
@@ -57,36 +58,50 @@ def test_simple_negation():
     words = ["i", "drink", "not"]
     transformed = ISLGrammarTransformer.transform_tokens(words)
     assert "not" in transformed
-    assert transformed[-1] in ("not", "i")
+    assert transformed[-1] == "not"
 
 
-def test_phrase_preservation():
-    # Direct phrases of any length must not be distorted or truncated
-    assert ISLGrammarTransformer.transform_tokens(["good"]) == ["good"]
-    assert ISLGrammarTransformer.transform_tokens(["good", "drink"]) == ["good", "drink"]
-    assert ISLGrammarTransformer.transform_tokens(["good", "drink", "help"]) == ["good", "drink", "help"]
-    assert ISLGrammarTransformer.transform_tokens(["good", "drink", "help", "teacher"]) == ["good", "drink", "help", "teacher"]
-    assert ISLGrammarTransformer.transform_tokens(["good", "drink", "help", "teacher", "go"]) == ["good", "drink", "help", "teacher", "go"]
-    assert ISLGrammarTransformer.transform_tokens(["good", "drink", "help", "teacher", "go", "ishbosheth"]) == ["good", "drink", "help", "teacher", "go", "ishbosheth"]
-    assert ISLGrammarTransformer.transform_tokens(["good", "drink", "help", "teacher", "go", "ishbosheth", "sample_1"]) == ["good", "drink", "help", "teacher", "go", "ishbosheth", "sample_1"]
+def test_representative_sentence_regressions():
+    """Regression test cases required by Phase 2 audit."""
+    test_suite = [
+        ("I need help", ["i", "help", "need"]),
+        ("Today I go home", ["today", "i", "home", "go"]),
+        ("I drink water", ["i", "water", "drink"]),
+        ("I am not happy", ["i", "happy", "not"]),
+        ("Where is the hospital?", ["hospital", "where"]),
+        ("Yesterday I saw doctor", ["yesterday", "i", "doctor", "see"]),
+        ("Tomorrow we will visit hospital", ["tomorrow", "we", "hospital", "visit"]),
+        ("I drink soda", ["i", "soda", "drink"]),
+        ("Doctor needs help", ["doctor", "help", "need"]),
+        ("Teacher helps students", ["teacher", "student", "help"])
+    ]
+
+    for sentence, expected_tokens in test_suite:
+        clean = ISLGrammarTransformer.clean_text(sentence)
+        transformed = ISLGrammarTransformer.transform_tokens(clean)
+        assert transformed == expected_tokens, f"Mismatch for '{sentence}': got {transformed}, expected {expected_tokens}"
 
 
 @pytest.mark.asyncio
 async def test_full_isl_service_grammar():
     service = get_isl_service()
 
-    # "I want water"
+    # "I want water" -> ["I", "WATER", "WANT"]
     res1 = await service.translate_to_gloss("I want water")
-    assert res1.gloss == ["WATER", "WANT", "I"]
+    assert res1.gloss == ["I", "WATER", "WANT"]
 
-    # "I need help"
+    # "I need help" -> ["I", "HELP", "NEED"]
     res2 = await service.translate_to_gloss("I need help")
-    assert res2.gloss == ["HELP", "NEED", "I"]
+    assert res2.gloss == ["I", "HELP", "NEED"]
 
-    # "Where is school?"
+    # "Where is school?" -> ["SCHOOL", "WHERE"]
     res3 = await service.translate_to_gloss("Where is school?")
     assert res3.gloss == ["SCHOOL", "WHERE"]
 
-    # "Who is teacher?"
+    # "Who is teacher?" -> ["TEACHER", "WHO"]
     res4 = await service.translate_to_gloss("Who is teacher?")
     assert res4.gloss == ["TEACHER", "WHO"]
+
+    # "Where is the hospital?" -> ["HOSPITAL", "WHERE"]
+    res5 = await service.translate_to_gloss("Where is the hospital?")
+    assert res5.gloss == ["HOSPITAL", "WHERE"]

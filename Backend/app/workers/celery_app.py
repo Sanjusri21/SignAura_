@@ -66,7 +66,7 @@ async def execute_video_pipeline(
 
     logger.info("Job %s transcript: %s", job_id, text)
 
-    SUPPORTED_ISL_LANGUAGES = {"en", "english", "hi", "hindi"}
+    SUPPORTED_ISL_LANGUAGES = {"en", "english", "hi", "hindi", "ta", "tamil"}
     normalized_lang = (language or "").strip().lower()
     is_supported = normalized_lang in SUPPORTED_ISL_LANGUAGES
 

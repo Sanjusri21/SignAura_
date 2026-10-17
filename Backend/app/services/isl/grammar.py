@@ -15,10 +15,12 @@ class ISLGrammarTransformer:
     STOP_WORDS = {
         "a", "an", "the", "of", "to", "is", "am", "are", "was", "were",
         "been", "being", "be", "do", "does", "did", "have", "has", "had",
-        "in", "on", "into", "onto", "at", "by", "for", "with"
+        "in", "on", "into", "onto", "at", "by", "for", "with",
+        "will", "would", "shall", "should", "can", "could", "may", "might", "must"
     }
 
     LEMMAS = {
+        "morning": "morning", "evening": "evening",
         "going": "go", "went": "go", "goes": "go", "gone": "go",
         "eating": "eat", "ate": "eat", "eats": "eat", "eaten": "eat",
         "drinking": "drink", "drinks": "drink", "drank": "drink",
@@ -31,7 +33,12 @@ class ISLGrammarTransformer:
         "crying": "cry", "cried": "cry", "cries": "cry",
         "writes": "write", "writing": "write", "wrote": "write",
         "needs": "need", "needed": "need", "needing": "need",
-        "helps": "help", "helped": "help", "helping": "help"
+        "helps": "help", "helped": "help", "helping": "help",
+        "saw": "see", "seen": "see", "sees": "see", "seeing": "see",
+        "bought": "buy", "buying": "buy", "buys": "buy",
+        "found": "find", "finding": "find", "finds": "find",
+        "took": "take", "taking": "take", "taken": "take",
+        "gave": "give", "giving": "give", "given": "give"
     }
 
     TIME_WORDS = {
@@ -55,7 +62,7 @@ class ISLGrammarTransformer:
         "give", "take", "want", "need", "like", "see", "know", "walk", "run",
         "speak", "read", "write", "work", "study", "meet", "buy", "sell",
         "play", "live", "feel", "call", "wait", "love", "look", "think",
-        "visit", "travel", "cry"
+        "visit", "travel", "cry", "find"
     }
 
     NEGATIONS = {
@@ -78,9 +85,13 @@ class ISLGrammarTransformer:
         lw = word.lower()
         if lw in cls.LEMMAS:
             return cls.LEMMAS[lw]
+        if lw in cls.VERBS or lw in cls.TIME_WORDS or lw in cls.QUESTION_WORDS:
+            return lw
+        if lw.endswith("eed"):
+            return lw
         if lw.endswith("ing") and len(lw) > 4:
             return lw[:-3]
-        if lw.endswith("ed") and len(lw) > 3:
+        if lw.endswith("ed") and len(lw) > 4:
             return lw[:-2]
         if lw.endswith("s") and not lw.endswith("ss") and len(lw) > 3:
             return lw[:-1]
@@ -128,8 +139,18 @@ class ISLGrammarTransformer:
         if not clean_words:
             clean_words = [cls.lemmatize(w.lower()) for w in words]
 
-        # Tag items
-        tagged = [(w, cls.tag_word(w)) for w in clean_words]
+        # Tag items with contextual awareness
+        tagged = []
+        for idx, w in enumerate(clean_words):
+            prev_w = clean_words[idx - 1] if idx > 0 else ""
+            tag = cls.tag_word(w)
+            # Contextual POS disambiguation:
+            # "help" acts as noun object after verbs like "need", "want", "require", or modifiers "urgent", "immediate"
+            if w == "help" and prev_w in ("need", "want", "require", "urgent", "immediate"):
+                tag = "CONTENT_WORD"
+            elif w == "drink" and prev_w in ("good", "cold", "hot", "fresh"):
+                tag = "CONTENT_WORD"
+            tagged.append((w, tag))
 
         time_tokens = []
         question_tokens = []
@@ -184,5 +205,3 @@ class ISLGrammarTransformer:
         result.extend(question_tokens)
 
         return result if result else clean_words
-
-        return result

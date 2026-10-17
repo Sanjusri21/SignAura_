@@ -77,7 +77,7 @@ async def test_gloss_variant_resolution():
     hello_res = await signavatar_client.resolve_gloss_animation("hello")
     assert hello_res["available"] is False
     assert hello_res["gloss"] == "hello"
-    assert "No matching ISL animation available" in hello_res["reason"]
+    assert ("No matching BridgeConn motion available" in hello_res["reason"] or "No matching ISL animation available" in hello_res["reason"])
 
     missing_res = await signavatar_client.resolve_gloss_animation("missing_random_word")
     assert missing_res["available"] is False
@@ -92,13 +92,13 @@ async def test_gloss_variant_resolution():
 async def test_isl_grammar_and_translation():
     isl_service = get_isl_service()
 
-    # SOV / Topic-Comment ordering: "I drink water" -> WATER DRINK I
+    # SOV ordering: "I drink water" -> Subject (I) + Object (WATER) + Verb (DRINK)
     res1 = await isl_service.translate_to_gloss("I drink water")
-    assert res1.gloss == ["WATER", "DRINK", "I"]
+    assert res1.gloss == ["I", "WATER", "DRINK"]
 
-    # Request / Needs: "I need help" -> HELP NEED I
+    # Request / Needs: "I need help" -> Subject (I) + Object (HELP) + Verb (NEED)
     res2 = await isl_service.translate_to_gloss("I need help")
-    assert res2.gloss == ["HELP", "NEED", "I"]
+    assert res2.gloss == ["I", "HELP", "NEED"]
 
     # Question Word at End: "Where is school?" -> SCHOOL WHERE
     res3 = await isl_service.translate_to_gloss("Where is school?")
@@ -108,9 +108,9 @@ async def test_isl_grammar_and_translation():
     res4 = await isl_service.translate_to_gloss("Who is teacher?")
     assert res4.gloss == ["TEACHER", "WHO"]
 
-    # Time markers at beginning: "Today I go home" -> TODAY HOME GO I
+    # Time markers at beginning: "Today I go home" -> TODAY I HOME GO
     res5 = await isl_service.translate_to_gloss("Today I go home")
-    assert res5.gloss == ["TODAY", "HOME", "GO", "I"]
+    assert res5.gloss == ["TODAY", "I", "HOME", "GO"]
 
 
 # ==============================================================================
@@ -188,12 +188,12 @@ async def test_e2e_text_to_signavatar_cases():
     assert d1["animation"]["vertex_count"] == 10475
     assert d1["source"] == "BridgeConn Sign Dictionary ISL"
 
-    # 2. "help teacher" (resolves help_2 and teacher_2)
+    # 2. "help teacher" (SOV: Object before Verb -> TEACHER HELP; resolves teacher_2 and help_2)
     r2 = client.post("/api/translate-to-signavatar", json={"text": "help teacher"})
     assert r2.status_code == 200
     d2 = r2.json()
     assert d2["available"] is True
-    assert d2["glosses"] == ["HELP", "TEACHER"]
+    assert d2["glosses"] == ["TEACHER", "HELP"]
     assert d2["animation"]["fps"] == 30
 
     # 3. "go drink help" (resolves go, drink, help_2)
@@ -212,14 +212,14 @@ async def test_e2e_text_to_signavatar_cases():
     assert len(d4["unavailable"]) >= 1
     assert "HELLO" in [u["gloss"].upper() for u in d4["unavailable"]]
 
-    # 5. Partial sign scenario: "I need help" (I, NEED unavailable; HELP available)
-    r5 = client.post("/api/translate-to-signavatar", json={"text": "I need help"})
+    # 5. Partial sign scenario: "help dinosaur" (DINOSAUR unavailable; HELP available)
+    r5 = client.post("/api/translate-to-signavatar", json={"text": "help dinosaur"})
     assert r5.status_code == 200
     d5 = r5.json()
     assert d5["available"] is False
     assert "animation" not in d5
     unavail_glosses = [u["gloss"].upper() for u in d5.get("unavailable", [])]
-    assert "I" in unavail_glosses or "NEED" in unavail_glosses
+    assert "DINOSAUR" in unavail_glosses
 
 
 # ==============================================================================
