@@ -17,9 +17,11 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 if BASE_DIR not in sys.path:
     sys.path.insert(0, BASE_DIR)
 
+import pytest
 from app.services.translation_animation_service import translation_animation_service
 
 
+@pytest.mark.asyncio
 async def test_translation_bridge():
     print("\n" + "=" * 60)
     print("TESTING TRANSLATION ANIMATION BRIDGE SERVICE")
@@ -71,6 +73,7 @@ async def test_translation_bridge():
     assert "error" in res_empty
 
 
+@pytest.mark.asyncio
 async def test_real_bridgeconn_variants_are_used_when_present():
     print("\n" + "=" * 60)
     print("TESTING REAL BRIDGECONN VARIANT RESOLUTION")

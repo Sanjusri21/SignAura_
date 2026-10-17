@@ -14,12 +14,14 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 if BASE_DIR not in sys.path:
     sys.path.insert(0, BASE_DIR)
 
+import pytest
 from app.main import app
 from app.services.isl_animation_service import isl_animation_service, resolve_gloss_sequence
 
 client = TestClient(app)
 
 
+@pytest.mark.asyncio
 async def test_service_sequences():
     print("\n" + "=" * 60)
     print("TESTING ISL ANIMATION SERVICE SEQUENCES (ASYNC)")

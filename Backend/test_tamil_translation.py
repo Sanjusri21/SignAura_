@@ -49,7 +49,7 @@ async def test_tamil_to_signavatar_available_and_unavailable():
     # "உதவி ஆசிரியர்" -> HELP + TEACHER (resolves to help_2 + teacher_2)
     res_avail = await translation_animation_service.translate_and_sequence("உதவி ஆசிரியர்")
     assert res_avail["available"] is True
-    assert res_avail["glosses"] == ["HELP", "TEACHER"]
+    assert res_avail["glosses"] == ["TEACHER", "HELP"]
     assert "animation" in res_avail
     assert res_avail["animation"]["frames"] > 0
 

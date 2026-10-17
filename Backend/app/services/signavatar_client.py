@@ -382,7 +382,7 @@ class SignAvatarClient:
             return {
                 "available": False,
                 "gloss": raw_gloss,
-                "reason": f"No matching BridgeConn motion available for '{raw_gloss}'"
+                "reason": f"No matching ISL animation available (No matching BridgeConn motion available for '{raw_gloss}')"
             }
 
         except Exception as e:

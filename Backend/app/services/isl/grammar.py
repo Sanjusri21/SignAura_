@@ -93,7 +93,7 @@ class ISLGrammarTransformer:
             return lw[:-3]
         if lw.endswith("ed") and len(lw) > 4:
             return lw[:-2]
-        if lw.endswith("s") and not lw.endswith("ss") and len(lw) > 3:
+        if lw.endswith("s") and not lw.endswith(("ss", "us", "is", "as", "ous")) and len(lw) > 3:
             return lw[:-1]
         return lw
 
