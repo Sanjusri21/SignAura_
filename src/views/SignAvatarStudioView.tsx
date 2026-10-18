@@ -11,12 +11,14 @@ import {
   UserSquare2,
   Database,
   CheckCircle2,
-  XCircle
+  XCircle,
+  Cpu
 } from 'lucide-react';
 import { SignAvatar3D, CameraPreset, LightingPreset } from '../components/avatar/SignAvatar3D';
 import { GlossTimeline } from '../components/avatar/GlossTimeline';
 import { TranscriptPanel } from '../components/avatar/TranscriptPanel';
 import { SignDictionaryExplorer } from '../components/avatar/SignDictionaryExplorer';
+import { ExperimentalHandPoseModal } from '../components/avatar/ExperimentalHandPoseModal';
 import { VideoProject, GlossToken } from '../types';
 import { GlassButton } from '../components/ui/GlassButton';
 import { signAuraApi, SignAvatarResponse, ISignSentenceResponse, ISignTranslateMotionResponse, API_BASE_URL } from '../services/api';
@@ -65,6 +67,7 @@ export const SignAvatarStudioView: React.FC<SignAvatarStudioViewProps> = ({
   const [isGenerating, setIsGenerating] = useState<boolean>(false);
   const [generationError, setGenerationError] = useState<string>('');
   const [showDictionary, setShowDictionary] = useState<boolean>(true);
+  const [isExperimentalModalOpen, setIsExperimentalModalOpen] = useState<boolean>(false);
   const [isignResult, setIsignResult] = useState<ISignSentenceResponse | null>(null);
   const [isignMotionResult, setIsignMotionResult] = useState<ISignTranslateMotionResponse | null>(null);
 
@@ -219,14 +222,18 @@ export const SignAvatarStudioView: React.FC<SignAvatarStudioViewProps> = ({
 
         setMotionSegments(
           allGlosses.map((g) => ({
-            word: missing.includes(g) ? `${g} [FINGERSPELL]` : g,
+            word: missing.includes(g) ? `${g} [UNAVAILABLE]` : g,
             frames: 25,
           }))
         );
-        // Fallback to motion sequence and proceed with seamless playback
-        setGeneratedMotionUrl('/motion/welcome_help_you');
-        setIsPlaying(true);
-        setGenerationError('');
+        // Do not substitute unrelated animations when signs are unavailable
+        setGeneratedMotionUrl('');
+        setIsPlaying(false);
+        setGenerationError(
+          missing.length > 0
+            ? `Sign motion unavailable for: ${missing.join(', ')}. Procedural hand poses can be inspected in the experimental prototype.`
+            : 'Requested sign motion is not available.'
+        );
       }
     } catch (err: any) {
       setGeneratedMotionUrl('');
@@ -294,6 +301,16 @@ export const SignAvatarStudioView: React.FC<SignAvatarStudioViewProps> = ({
             icon={<BookOpen className="w-4 h-4 text-[#22D3EE]" />}
           >
             {showDictionary ? 'Hide Dictionary' : 'ISL Dictionary (3,000+)'}
+          </GlassButton>
+
+          <GlassButton
+            variant="secondary"
+            size="sm"
+            onClick={() => setIsExperimentalModalOpen(true)}
+            icon={<Cpu className="w-4 h-4 text-amber-400" />}
+            className="border-amber-500/30 text-amber-300 hover:text-white"
+          >
+            Hand Pose Prototype (A–Z / 0–9)
           </GlassButton>
         </div>
       </div>
@@ -620,6 +637,12 @@ export const SignAvatarStudioView: React.FC<SignAvatarStudioViewProps> = ({
           currentSignName={currentSignName}
         />
       )}
+
+      {/* 4. EXPERIMENTAL PROCEDURAL HAND-POSE PROTOTYPE MODAL */}
+      <ExperimentalHandPoseModal
+        isOpen={isExperimentalModalOpen}
+        onClose={() => setIsExperimentalModalOpen(false)}
+      />
     </div>
   );
 };
