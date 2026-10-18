@@ -5,9 +5,12 @@ Handles temporal linear resampling to 30 FPS, smooth cosine transitions, and str
 """
 
 import os
+import time
 import uuid
 import json
 import logging
+import threading
+from contextlib import contextmanager
 from pathlib import Path
 from datetime import datetime, timezone
 from typing import List, Dict, Any, Tuple, Optional
@@ -132,6 +135,30 @@ class AnimationSequencer:
             self.base_dir / "animations",
             self.sequences_dir
         ]
+
+        # Active lifecycle tracking: ensures sequences being read/served are never deleted
+        self._active_leases: Dict[str, int] = {}
+        self._active_lock = threading.RLock()
+
+    @contextmanager
+    def acquire_sequence(self, sequence_id: str):
+        """
+        Lease a sequence ID during read/stream operations.
+        Guarantees that cleanup will never delete the sequence while an active lease is held.
+        Reference counts are strictly released in the finally block.
+        """
+        safe_id = self.sanitize_sequence_id(sequence_id)
+        with self._active_lock:
+            self._active_leases[safe_id] = self._active_leases.get(safe_id, 0) + 1
+        try:
+            yield safe_id
+        finally:
+            with self._active_lock:
+                current = self._active_leases.get(safe_id, 0)
+                if current <= 1:
+                    self._active_leases.pop(safe_id, None)
+                else:
+                    self._active_leases[safe_id] = current - 1
 
     async def load_animation(self, gloss: str, meta: Optional[Dict[str, Any]] = None) -> Tuple[np.ndarray, float]:
         """
@@ -299,8 +326,10 @@ class AnimationSequencer:
         npy_path = self.sequences_dir / f"{sequence_filename}.npy"
         json_path = self.sequences_dir / f"{sequence_filename}.json"
 
-        # Step 5: Save combined animation and metadata
-        np.save(str(npy_path), combined_vertices)
+        # Step 5: Save combined animation and metadata atomically via temporary files
+        tmp_id = uuid.uuid4().hex[:6]
+        tmp_npy_path = self.sequences_dir / f".tmp_{sequence_filename}_{tmp_id}.npy"
+        tmp_json_path = self.sequences_dir / f".tmp_{sequence_filename}_{tmp_id}.json"
 
         animation_url = f"/api/signavatar/sequence/{sequence_filename}"
         metadata_url = f"/api/signavatar/sequence/{sequence_filename}/metadata"
@@ -322,8 +351,24 @@ class AnimationSequencer:
             "created_at": datetime.now(timezone.utc).isoformat()
         }
 
-        with open(json_path, "w", encoding="utf-8") as f:
-            json.dump(seq_metadata, f, indent=2)
+        try:
+            np.save(str(tmp_npy_path), combined_vertices)
+            with open(tmp_json_path, "w", encoding="utf-8") as f:
+                json.dump(seq_metadata, f, indent=2)
+
+            with self.acquire_sequence(sequence_filename):
+                # Atomic replace guarantees partially written files are never eligible for serving
+                os.replace(tmp_npy_path, npy_path)
+                os.replace(tmp_json_path, json_path)
+                # Prune old ephemeral sequences to prevent unbounded disk accumulation while protecting active files
+                self._cleanup_old_sequences(max_sequences=40, protect_sequence_id=sequence_filename)
+        except Exception as save_err:
+            try:
+                tmp_npy_path.unlink(missing_ok=True)
+                tmp_json_path.unlink(missing_ok=True)
+            except Exception:
+                pass
+            raise RuntimeError(f"Failed to atomically persist sequence '{sequence_filename}': {save_err}") from save_err
 
         return {
             "available": True,
@@ -338,6 +383,118 @@ class AnimationSequencer:
             "source": "BridgeConn Sign Dictionary ISL",
             "vertices": combined_vertices
         }
+
+    def _cleanup_old_sequences(
+        self,
+        max_sequences: int = 40,
+        protect_sequence_id: Optional[str] = None,
+        max_files: Optional[int] = None
+    ) -> Dict[str, Any]:
+        """
+        Removes older ephemeral sequences when total sequence count exceeds max_sequences.
+        Protects:
+        - Active leased sequences currently being read or served
+        - The sequence that was just created (protect_sequence_id)
+        - Files outside sequences_dir or non-matching extensions
+        - Handles Windows file locks gracefully
+        Returns diagnostic dictionary of cleanup execution.
+        """
+        limit = max_files if max_files is not None else max_sequences
+        metrics = {
+            "max_sequences": limit,
+            "total_sequences_found": 0,
+            "pruned_sequences": 0,
+            "pruned_files": 0,
+            "active_protected_sequences": 0,
+            "locked_skipped_files": 0,
+            "retained_sequences": 0,
+        }
+
+        try:
+            if not self.sequences_dir.is_dir():
+                return metrics
+
+            seq_dir_resolved = self.sequences_dir.resolve()
+
+            # Snapshot active sequence leases
+            with self._active_lock:
+                active_set = set(self._active_leases.keys())
+            if protect_sequence_id:
+                try:
+                    active_set.add(self.sanitize_sequence_id(protect_sequence_id))
+                except ValueError:
+                    pass
+
+            # Also prune stale temporary files (.tmp_*) older than 5 minutes
+            now = time.time()
+            for tmp_p in self.sequences_dir.glob(".tmp_*"):
+                try:
+                    if now - tmp_p.stat().st_mtime > 300:
+                        tmp_p.unlink(missing_ok=True)
+                except Exception:
+                    pass
+
+            # Group files by sequence ID stem (e.g. sequence_{tag}_{uid})
+            sequence_map: Dict[str, List[Path]] = {}
+            for ext in ("sequence_*.npy", "sequence_*.json"):
+                for p in self.sequences_dir.glob(ext):
+                    if p.is_file() and p.resolve().parent == seq_dir_resolved:
+                        seq_stem = p.stem
+                        sequence_map.setdefault(seq_stem, []).append(p)
+
+            metrics["total_sequences_found"] = len(sequence_map)
+
+            # Sort sequences by newest file modification time
+            sorted_sequences = []
+            for stem, paths in sequence_map.items():
+                mtime = max((p.stat().st_mtime for p in paths if p.is_file()), default=0.0)
+                sorted_sequences.append((mtime, stem, paths))
+
+            sorted_sequences.sort(key=lambda item: (item[0], item[1]))
+
+            # Prune oldest if sequence count exceeds limit
+            if len(sorted_sequences) > limit:
+                candidates_to_prune = sorted_sequences[:-limit]
+                for _, stem, paths in candidates_to_prune:
+                    # Never delete active/leased sequences
+                    if stem in active_set:
+                        metrics["active_protected_sequences"] += 1
+                        continue
+
+                    pruned_this_seq = 0
+                    for p in paths:
+                        try:
+                            p.unlink(missing_ok=True)
+                            metrics["pruned_files"] += 1
+                            pruned_this_seq += 1
+                        except (PermissionError, OSError) as lock_err:
+                            metrics["locked_skipped_files"] += 1
+                            logger.debug("Skipping locked sequence file %s: %s", p.name, lock_err)
+                        except Exception:
+                            pass
+                    if pruned_this_seq > 0:
+                        metrics["pruned_sequences"] += 1
+
+            # Count remaining
+            remaining_stems = set(
+                p.stem for p in self.sequences_dir.glob("sequence_*.*")
+                if p.is_file() and p.suffix in (".npy", ".json")
+            )
+            metrics["retained_sequences"] = len(remaining_stems)
+
+            if metrics["retained_sequences"] > limit:
+                logger.info(
+                    "Cleanup retained %d sequences (above target %d) because %d active sequences were protected and %d files were locked.",
+                    metrics["retained_sequences"],
+                    limit,
+                    metrics["active_protected_sequences"],
+                    metrics["locked_skipped_files"],
+                )
+
+        except Exception as e:
+            logger.warning("Error during sequence cleanup: %s", e)
+
+        return metrics
 
     def sanitize_sequence_id(self, sequence_id: str) -> str:
         """Sanitizes sequence_id to prevent directory traversal and arbitrary filesystem injection."""
@@ -361,78 +518,78 @@ class AnimationSequencer:
         return clean
 
     def get_sequence_metadata(self, sequence_id: str) -> Dict[str, Any]:
-        """Fetch saved JSON metadata for a sequence."""
-        safe_id = self.sanitize_sequence_id(sequence_id)
-        json_path = (self.sequences_dir / f"{safe_id}.json").resolve()
+        """Fetch saved JSON metadata for a sequence under an active lease."""
+        with self.acquire_sequence(sequence_id) as safe_id:
+            json_path = (self.sequences_dir / f"{safe_id}.json").resolve()
 
-        if self.sequences_dir.resolve() not in json_path.parents and json_path.parent != self.sequences_dir.resolve():
-            raise ValueError("Invalid sequence path")
+            if self.sequences_dir.resolve() not in json_path.parents and json_path.parent != self.sequences_dir.resolve():
+                raise ValueError("Invalid sequence path")
 
-        if not json_path.is_file():
-            raise FileNotFoundError(f"Sequence metadata not found for ID: {sequence_id}")
+            if not json_path.is_file():
+                raise FileNotFoundError(f"Sequence metadata not found for ID: {sequence_id}")
 
-        with open(json_path, "r", encoding="utf-8") as f:
-            meta = json.load(f)
+            with open(json_path, "r", encoding="utf-8") as f:
+                meta = json.load(f)
 
-        meta.setdefault("available", True)
-        meta.setdefault("animation_url", f"/api/signavatar/sequence/{safe_id}")
-        meta.setdefault("metadata_url", f"/api/signavatar/sequence/{safe_id}/metadata")
-        return meta
+            meta.setdefault("available", True)
+            meta.setdefault("animation_url", f"/api/signavatar/sequence/{safe_id}")
+            meta.setdefault("metadata_url", f"/api/signavatar/sequence/{safe_id}/metadata")
+            return meta
 
     def get_sequence_binary(self, sequence_id: str) -> Tuple[bytes, Dict[str, str]]:
         """
         Loads the combined SMPL-X Float32 vertex sequence and returns contiguous binary buffer
-        along with validation headers.
+        along with validation headers under an active lease.
         """
-        safe_id = self.sanitize_sequence_id(sequence_id)
-        npy_path = (self.sequences_dir / f"{safe_id}.npy").resolve()
+        with self.acquire_sequence(sequence_id) as safe_id:
+            npy_path = (self.sequences_dir / f"{safe_id}.npy").resolve()
 
-        if self.sequences_dir.resolve() not in npy_path.parents and npy_path.parent != self.sequences_dir.resolve():
-            raise ValueError("Invalid sequence path")
+            if self.sequences_dir.resolve() not in npy_path.parents and npy_path.parent != self.sequences_dir.resolve():
+                raise ValueError("Invalid sequence path")
 
-        if not npy_path.is_file():
-            raise FileNotFoundError(f"Sequence animation not found for ID: {sequence_id}")
+            if not npy_path.is_file():
+                raise FileNotFoundError(f"Sequence animation not found for ID: {sequence_id}")
 
-        data = np.load(npy_path, allow_pickle=False)
-        data = np.asarray(data, dtype=np.float32)
+            data = np.load(npy_path, allow_pickle=False)
+            data = np.asarray(data, dtype=np.float32)
 
-        self._validate_raw_animation(data, safe_id)
+            self._validate_raw_animation(data, safe_id)
 
-        frames = int(data.shape[0])
-        vertices = int(data.shape[1])
-        components = int(data.shape[2])
+            frames = int(data.shape[0])
+            vertices = int(data.shape[1])
+            components = int(data.shape[2])
 
-        # Read optional metadata for FPS & source
-        fps_val = self.target_fps
-        source_val = "BridgeConn Sign Dictionary ISL"
-        try:
-            meta = self.get_sequence_metadata(safe_id)
-            if "fps" in meta:
-                fps_val = meta["fps"]
-            if "source" in meta:
-                source_val = meta["source"]
-        except Exception:
-            pass
+            # Read optional metadata for FPS & source
+            fps_val = self.target_fps
+            source_val = "BridgeConn Sign Dictionary ISL"
+            try:
+                meta = self.get_sequence_metadata(safe_id)
+                if "fps" in meta:
+                    fps_val = meta["fps"]
+                if "source" in meta:
+                    source_val = meta["source"]
+            except Exception:
+                pass
 
-        binary_data = np.ascontiguousarray(data, dtype=np.float32).tobytes()
-        expected_bytes = frames * vertices * components * 4
-        actual_bytes = len(binary_data)
+            binary_data = np.ascontiguousarray(data, dtype=np.float32).tobytes()
+            expected_bytes = frames * vertices * components * 4
+            actual_bytes = len(binary_data)
 
-        if actual_bytes != expected_bytes:
-            raise ValueError(f"Binary sequence size mismatch: expected {expected_bytes} bytes, got {actual_bytes}")
+            if actual_bytes != expected_bytes:
+                raise ValueError(f"Binary sequence size mismatch: expected {expected_bytes} bytes, got {actual_bytes}")
 
-        headers = {
-            "Content-Type": "application/octet-stream",
-            "Content-Length": str(actual_bytes),
-            "X-Frames": str(frames),
-            "X-FPS": str(fps_val),
-            "X-Vertices": str(vertices),
-            "X-Components": str(components),
-            "X-Dtype": "float32",
-            "X-Source": str(source_val)
-        }
+            headers = {
+                "Content-Type": "application/octet-stream",
+                "Content-Length": str(actual_bytes),
+                "X-Frames": str(frames),
+                "X-FPS": str(fps_val),
+                "X-Vertices": str(vertices),
+                "X-Components": str(components),
+                "X-Dtype": "float32",
+                "X-Source": str(source_val)
+            }
 
-        return binary_data, headers
+            return binary_data, headers
 
 
 animation_sequencer = AnimationSequencer()
