@@ -1,6 +1,12 @@
 """
 Automated end-to-end browser regression test for Three.js avatar rendering,
-WebGL2 context stability, multi-sign playback, and mesh vertex deformation.
+WebGL2 context stability, multi-sign playback, and animated mesh deformation.
+
+Portability:
+- Configurable via `CHROME_PATH` (default: standard OS Chrome paths).
+- Configurable via `VITE_URL` (default: http://localhost:5174/).
+- Skips gracefully with clear diagnostic messages only when prerequisites
+  (Chrome executable or Vite dev server) are genuinely absent.
 """
 
 import asyncio
@@ -20,13 +26,33 @@ except ImportError:
     import websockets
 
 
-def get_or_launch_chrome():
+def find_chrome_executable() -> str | None:
+    """Finds Google Chrome executable from env var or standard OS locations."""
+    env_path = os.environ.get("CHROME_PATH")
+    if env_path and os.path.isfile(env_path):
+        return env_path
+
+    candidates = [
+        r"C:\Program Files\Google\Chrome\Application\chrome.exe",
+        r"C:\Program Files (x86)\Google\Chrome\Application\chrome.exe",
+        os.path.expanduser(r"~\AppData\Local\Google\Chrome\Application\chrome.exe"),
+        "/usr/bin/google-chrome",
+        "/usr/bin/chromium",
+        "/usr/bin/chromium-browser",
+        "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
+    ]
+    for c in candidates:
+        if os.path.isfile(c):
+            return c
+    return None
+
+
+def get_or_launch_chrome(chrome_path: str, target_url: str):
     """Ensure Chrome is running with remote debugging port 9222."""
     try:
         urllib.request.urlopen("http://127.0.0.1:9222/json/version", timeout=1)
         return None  # already running
     except Exception:
-        chrome_path = r"C:\Program Files\Google\Chrome\Application\chrome.exe"
         user_data = os.path.join(os.environ.get("TEMP", r"C:\Temp"), f"chrome_avatar_test_{int(time.time())}")
         cmd = [
             chrome_path,
@@ -37,10 +63,17 @@ def get_or_launch_chrome():
             "--ignore-gpu-blocklist",
             "--disable-gpu-sandbox",
             "--window-size=1280,800",
-            "http://localhost:5174"
+            target_url
         ]
         proc = subprocess.Popen(cmd)
-        time.sleep(3)
+        # Poll up to 5 seconds for port 9222 to become available
+        for _ in range(10):
+            time.sleep(0.5)
+            try:
+                urllib.request.urlopen("http://127.0.0.1:9222/json/version", timeout=0.5)
+                return proc
+            except Exception:
+                pass
         return proc
 
 
@@ -50,16 +83,38 @@ async def test_e2e_avatar_browser_playback_and_deformation():
     Connects to Chrome via CDP, asserts WebGL2 active, verifies mesh deformation
     across playback frames, switches signs, and asserts subsequent playback works
     with zero console or WebGL errors.
+
+    Note on pixel-difference measurement:
+    Samples pixel deltas within the avatar canvas viewport region across time.
+    This serves as a reliable browser-level signal that the Three.js render loop
+    is actively executing and altering pixel states (sign gesture animation),
+    complementing direct unit test verification of Float32 vertex buffers.
     """
-    proc = get_or_launch_chrome()
+    vite_url = os.environ.get("VITE_URL", "http://localhost:5174/").rstrip("/") + "/"
+
+    # Prerequisite 1: Verify frontend dev server is reachable
+    try:
+        urllib.request.urlopen(vite_url, timeout=2)
+    except Exception as e:
+        pytest.skip(f"Vite dev server is unreachable at {vite_url}: {e}. (Set VITE_URL to override).")
+
+    # Prerequisite 2: Locate Google Chrome binary
+    chrome_path = find_chrome_executable()
+    if not chrome_path:
+        pytest.skip("Google Chrome executable not found. Set CHROME_PATH environment variable to enable browser test.")
+
+    proc = get_or_launch_chrome(chrome_path, vite_url)
     try:
         targets_raw = urllib.request.urlopen("http://127.0.0.1:9222/json/list", timeout=5).read().decode("utf-8")
         targets = json.loads(targets_raw)
-        page_target = next((t for t in targets if t.get("type") == "page" and "localhost:5174" in t.get("url", "")), None)
+
+        # Match target tab by port or URL
+        port_str = urllib.parse.urlparse(vite_url).netloc
+        page_target = next((t for t in targets if t.get("type") == "page" and port_str in t.get("url", "")), None)
 
         if not page_target:
-            # Open new tab to localhost:5174 if not present
-            new_tab = json.loads(urllib.request.urlopen("http://127.0.0.1:9222/json/new?http://localhost:5174", timeout=5).read().decode("utf-8"))
+            # Open new tab to target URL
+            new_tab = json.loads(urllib.request.urlopen(f"http://127.0.0.1:9222/json/new?{vite_url}", timeout=5).read().decode("utf-8"))
             ws_url = new_tab["webSocketDebuggerUrl"]
         else:
             ws_url = page_target["webSocketDebuggerUrl"]
@@ -124,7 +179,7 @@ async def test_e2e_avatar_browser_playback_and_deformation():
             # 2. Capture frame 1 screenshot
             import base64
             scr1 = await cdp("Page.captureScreenshot", {"format": "png"})
-            arr1 = np.array(Image.open(io_bytes := __import__('io').BytesIO(base64.b64decode(scr1["data"]))), dtype=np.int16)
+            arr1 = np.array(Image.open(__import__('io').BytesIO(base64.b64decode(scr1["data"]))), dtype=np.int16)
 
             # Wait during sign 1 playback
             await asyncio.sleep(1.5)

@@ -20,6 +20,24 @@ import {
   Hand,
   Sliders
 } from 'lucide-react';
+import {
+  SMPLX_VERTEX_COUNT,
+  SMPLX_FACE_COUNT,
+  DEFAULT_MOTION_FPS,
+  NormalizedMotion,
+  MotionSegmentBoundary,
+  processAndNormalizeMotion,
+  blendMotionClips,
+} from '../../utils/motionDecoder';
+
+export {
+  SMPLX_VERTEX_COUNT,
+  SMPLX_FACE_COUNT,
+  DEFAULT_MOTION_FPS,
+  blendMotionClips,
+  processAndNormalizeMotion,
+};
+export type { NormalizedMotion, MotionSegmentBoundary };
 
 export const motionBufferCache = new Map<string, NormalizedMotion>();
 
@@ -77,9 +95,6 @@ const LIGHTING_PRESET_COLORS: Record<LightingPreset, LightingColors> = {
   }
 };
 
-export const SMPLX_VERTEX_COUNT = 10475;
-export const SMPLX_FACE_COUNT = 20908;
-export const DEFAULT_MOTION_FPS = 20;
 const SIGNAVATAR_API_URL = 'http://127.0.0.1:8001';
 const BACKEND_API_URL = (import.meta as any).env?.VITE_API_URL || 'http://127.0.0.1:8002';
 
@@ -96,14 +111,6 @@ interface TopologyData {
   faceCount?: number;
   faces: number[][] | number[];
   groups?: TopologyGroup[];
-}
-
-interface NormalizedMotion {
-  frames: number;
-  vertices: number;
-  components: number;
-  fps: number;
-  data: Float32Array; // Flattened normalized coordinates: frames * 10475 * 3
 }
 
 // Map verified ISL signs to authentic BridgeConn motion keys
@@ -136,186 +143,6 @@ const AUTHENTIC_MOTION_KEYS = new Set([
   'welcome_help_you',
   'book_drink_home',
 ]);
-
-/** Parses the backend's globally converted and normalized Float32 motion binary. */
-function processAndNormalizeMotion(
-  buffer: ArrayBuffer,
-  headerFrames?: number,
-  headerFps?: number
-): NormalizedMotion {
-  if (!buffer || buffer.byteLength === 0) {
-    throw new Error('Motion buffer is empty.');
-  }
-
-  const floatView = new Float32Array(buffer);
-  const totalFloats = floatView.length;
-  const floatsPerFrame = SMPLX_VERTEX_COUNT * 3;
-
-  if (totalFloats % floatsPerFrame !== 0) {
-    throw new Error(
-      `Invalid motion binary length. Expected multiple of ${floatsPerFrame * 4} bytes (${floatsPerFrame} floats), received ${buffer.byteLength} bytes.`
-    );
-  }
-
-  const computedFrames = totalFloats / floatsPerFrame;
-  const frames = (headerFrames && headerFrames === computedFrames) ? headerFrames : computedFrames;
-
-  if (frames <= 0) {
-    throw new Error('Motion contains zero frames.');
-  }
-
-  for (let i = 0; i < totalFloats; i += 3) {
-    if (!Number.isFinite(floatView[i]) || !Number.isFinite(floatView[i + 1]) || !Number.isFinite(floatView[i + 2])) {
-      throw new Error('Motion data contains NaN or infinite coordinates.');
-    }
-  }
-
-  const normalizedData = new Float32Array(floatView);
-
-  return {
-    frames,
-    vertices: SMPLX_VERTEX_COUNT,
-    components: 3,
-    fps: headerFps || DEFAULT_MOTION_FPS,
-    data: normalizedData,
-  };
-}
-
-export interface MotionSegmentBoundary {
-  gloss: string;
-  startFrame: number;
-  endFrame: number;
-}
-
-/**
- * Blends multiple consecutive SMPL-X motion clips with:
- * - Cubic ease-in from relaxed standing neutral pose (arms down)
- * - 4-frame holds per sign for legibility
- * - 6-frame cosine crossfade between consecutive signs across all 10,475 vertices
- * - Cubic ease-out to relaxed pose
- * - NaN and Infinity validation
- */
-export function blendMotionClips(
-  clips: { gloss: string; motion: NormalizedMotion }[],
-  relaxedPose: Float32Array | null,
-  options: {
-    holdFrames?: number;
-    transitionFrames?: number;
-    easeInFrames?: number;
-    easeOutFrames?: number;
-  } = {}
-): { motion: NormalizedMotion; segmentBoundaries: MotionSegmentBoundary[] } {
-  const holdFrames = options.holdFrames ?? 4;
-  const transitionFrames = options.transitionFrames ?? 6;
-  const easeInFrames = options.easeInFrames ?? 8;
-  const easeOutFrames = options.easeOutFrames ?? 10;
-  const V_SIZE = SMPLX_VERTEX_COUNT * 3;
-
-  if (clips.length === 0) {
-    throw new Error('No clips to blend.');
-  }
-
-  let totalFrames = easeInFrames;
-  for (let c = 0; c < clips.length; c++) {
-    totalFrames += clips[c].motion.frames + holdFrames;
-    if (c < clips.length - 1) {
-      totalFrames += transitionFrames;
-    }
-  }
-  totalFrames += easeOutFrames;
-
-  const blendedData = new Float32Array(totalFrames * V_SIZE);
-  const segmentBoundaries: MotionSegmentBoundary[] = [];
-  const fps = clips[0].motion.fps || DEFAULT_MOTION_FPS;
-
-  let currentFrameIdx = 0;
-
-  // 1. Ease in from relaxed pose to frame 0 of first clip
-  const firstFrameData = clips[0].motion.data.subarray(0, V_SIZE);
-  const startPose = relaxedPose && relaxedPose.length === V_SIZE ? relaxedPose : firstFrameData;
-
-  for (let f = 0; f < easeInFrames; f++) {
-    const rawT = (f + 1) / easeInFrames;
-    const t = rawT < 0.5 ? 4 * rawT * rawT * rawT : 1 - Math.pow(-2 * rawT + 2, 3) / 2;
-    const destOffset = currentFrameIdx * V_SIZE;
-    for (let i = 0; i < V_SIZE; i++) {
-      blendedData[destOffset + i] = startPose[i] * (1 - t) + firstFrameData[i] * t;
-    }
-    currentFrameIdx++;
-  }
-
-  // 2. Play clips with holds and crossfades
-  for (let c = 0; c < clips.length; c++) {
-    const { gloss, motion } = clips[c];
-    const segStart = currentFrameIdx;
-
-    for (let f = 0; f < motion.frames; f++) {
-      const srcOffset = f * V_SIZE;
-      const destOffset = currentFrameIdx * V_SIZE;
-      blendedData.set(motion.data.subarray(srcOffset, srcOffset + V_SIZE), destOffset);
-      currentFrameIdx++;
-    }
-
-    const lastClipFrameOffset = (motion.frames - 1) * V_SIZE;
-    const lastClipData = motion.data.subarray(lastClipFrameOffset, lastClipFrameOffset + V_SIZE);
-    for (let h = 0; h < holdFrames; h++) {
-      blendedData.set(lastClipData, currentFrameIdx * V_SIZE);
-      currentFrameIdx++;
-    }
-
-    segmentBoundaries.push({
-      gloss,
-      startFrame: segStart,
-      endFrame: currentFrameIdx - 1
-    });
-
-    if (c < clips.length - 1) {
-      const nextFirstFrame = clips[c + 1].motion.data.subarray(0, V_SIZE);
-      for (let tStep = 1; tStep <= transitionFrames; tStep++) {
-        const rawT = tStep / (transitionFrames + 1);
-        const t = 0.5 - 0.5 * Math.cos(rawT * Math.PI);
-        const destOffset = currentFrameIdx * V_SIZE;
-        for (let i = 0; i < V_SIZE; i++) {
-          blendedData[destOffset + i] = lastClipData[i] * (1 - t) + nextFirstFrame[i] * t;
-        }
-        currentFrameIdx++;
-      }
-    }
-  }
-
-  // 3. Ease out from last frame to relaxed pose
-  const finalClipData = blendedData.subarray((currentFrameIdx - 1) * V_SIZE, currentFrameIdx * V_SIZE);
-  const endPose = relaxedPose && relaxedPose.length === V_SIZE ? relaxedPose : finalClipData;
-
-  for (let f = 0; f < easeOutFrames; f++) {
-    const rawT = (f + 1) / easeOutFrames;
-    const t = rawT < 0.5 ? 4 * rawT * rawT * rawT : 1 - Math.pow(-2 * rawT + 2, 3) / 2;
-    const destOffset = currentFrameIdx * V_SIZE;
-    for (let i = 0; i < V_SIZE; i++) {
-      blendedData[destOffset + i] = finalClipData[i] * (1 - t) + endPose[i] * t;
-    }
-    currentFrameIdx++;
-  }
-
-  // Sanity check: Ensure zero NaNs
-  for (let i = 0; i < Math.min(blendedData.length, 300); i++) {
-    if (!Number.isFinite(blendedData[i])) {
-      console.warn('[SignAvatar3D] Warning: NaN or Infinity found during motion clip blending');
-      break;
-    }
-  }
-
-  return {
-    motion: {
-      frames: totalFrames,
-      vertices: SMPLX_VERTEX_COUNT,
-      components: 3,
-      fps,
-      data: blendedData
-    },
-    segmentBoundaries
-  };
-}
 
 export interface SignAvatar3DProps {
   currentSign?: string;

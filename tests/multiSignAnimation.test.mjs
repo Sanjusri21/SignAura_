@@ -1,83 +1,28 @@
 /**
- * Unit regression tests for SignAvatar 3D animation binary decoding,
- * multi-sign sequence blending, timing, and crossfades.
+ * Unit regression tests exercising production SMPL-X motion decoding,
+ * normalization, frame timing, and multi-clip transition blending.
  *
+ * Directly imports and verifies production utilities from `src/utils/motionDecoder.ts`.
  * Run with: node --experimental-strip-types tests/multiSignAnimation.test.mjs
  */
 
 import assert from 'node:assert/strict';
 import test from 'node:test';
 
-const SMPLX_VERTEX_COUNT = 10475;
-const FLOATS_PER_FRAME = SMPLX_VERTEX_COUNT * 3; // 31425
-const BYTES_PER_FRAME = FLOATS_PER_FRAME * 4;   // 125700
-const DEFAULT_MOTION_FPS = 30;
+import {
+  SMPLX_VERTEX_COUNT,
+  SMPLX_FACE_COUNT,
+  DEFAULT_MOTION_FPS,
+  FLOATS_PER_FRAME,
+  BYTES_PER_FRAME,
+  processAndNormalizeMotion,
+  createTransition,
+  calculateFrameIndex,
+  blendMotionClips,
+} from '../src/utils/motionDecoder.ts';
 
 /**
- * Pure implementation of SignAvatar3D binary decoder for testing.
- * Matches `processAndNormalizeMotion` in SignAvatar3D.tsx.
- */
-function processAndNormalizeMotion(buffer, headerFrames, headerFps) {
-  if (!buffer || buffer.byteLength === 0) {
-    throw new Error('Motion buffer is empty.');
-  }
-
-  const floatView = new Float32Array(buffer);
-  const totalFloats = floatView.length;
-
-  if (totalFloats % FLOATS_PER_FRAME !== 0) {
-    throw new Error(
-      `Invalid motion binary length. Expected multiple of ${BYTES_PER_FRAME} bytes (${FLOATS_PER_FRAME} floats), received ${buffer.byteLength} bytes.`
-    );
-  }
-
-  const computedFrames = totalFloats / FLOATS_PER_FRAME;
-  const frames = headerFrames && headerFrames === computedFrames ? headerFrames : computedFrames;
-
-  if (frames <= 0) {
-    throw new Error('Motion contains zero frames.');
-  }
-
-  for (let i = 0; i < totalFloats; i += 3) {
-    if (!Number.isFinite(floatView[i]) || !Number.isFinite(floatView[i + 1]) || !Number.isFinite(floatView[i + 2])) {
-      throw new Error('Motion data contains NaN or infinite coordinates.');
-    }
-  }
-
-  return {
-    frames,
-    vertices: SMPLX_VERTEX_COUNT,
-    components: 3,
-    fps: headerFps || DEFAULT_MOTION_FPS,
-    data: new Float32Array(floatView),
-  };
-}
-
-/**
- * Pure implementation of SignAvatar3D cosine crossfade blending.
- * Matches `createTransition` and `blendMotionClips` in SignAvatar3D.tsx.
- */
-function createTransition(poseA, poseB, numFrames = 6) {
-  if (numFrames <= 0) {
-    return new Float32Array(0);
-  }
-
-  const result = new Float32Array(numFrames * FLOATS_PER_FRAME);
-  for (let f = 1; f <= numFrames; f++) {
-    // Cosine easing weight strictly in (0, 1)
-    const step = f / (numFrames + 1);
-    const weight = 0.5 * (1.0 - Math.cos(Math.PI * step));
-    const offset = (f - 1) * FLOATS_PER_FRAME;
-
-    for (let i = 0; i < FLOATS_PER_FRAME; i++) {
-      result[offset + i] = (1.0 - weight) * poseA[i] + weight * poseB[i];
-    }
-  }
-  return result;
-}
-
-/**
- * Helper to generate synthetic SMPL-X motion clip.
+ * Helper to generate synthetic SMPL-X motion binary buffer matching production schema.
  */
 function createSyntheticMotion(frames, baseOffset = 0.0) {
   const data = new Float32Array(frames * FLOATS_PER_FRAME);
@@ -86,17 +31,21 @@ function createSyntheticMotion(frames, baseOffset = 0.0) {
     for (let v = 0; v < SMPLX_VERTEX_COUNT; v++) {
       const idx = frameOffset + v * 3;
       data[idx] = (v * 0.001) + baseOffset;          // x
-      data[idx + 1] = 0.2 + (f * 0.005);             // y (animating upward)
+      data[idx + 1] = 0.2 + (f * 0.005);             // y (upward animation)
       data[idx + 2] = -0.1 + Math.sin(f * 0.1);      // z
     }
   }
   return data.buffer;
 }
 
-test('SignAvatar Binary Decoder — Valid Payloads', () => {
-  // Test 1-frame, 5-frame, and 10-frame buffers
+test('Production Motion Decoder — Valid Float32 Payloads & Frame Stride', () => {
+  assert.equal(SMPLX_VERTEX_COUNT, 10475);
+  assert.equal(FLOATS_PER_FRAME, 31425);
+  assert.equal(BYTES_PER_FRAME, 125700);
+
+  // Test 1-frame, 5-frame, and 10-frame buffers using production decoder
   for (const numFrames of [1, 5, 10]) {
-    const buf = createSyntheticMotion(numFrames, 0.1);
+    const buf = createSyntheticMotion(numFrames, 0.25);
     const motion = processAndNormalizeMotion(buf, numFrames, 30);
 
     assert.equal(motion.frames, numFrames);
@@ -104,31 +53,35 @@ test('SignAvatar Binary Decoder — Valid Payloads', () => {
     assert.equal(motion.components, 3);
     assert.equal(motion.fps, 30);
     assert.equal(motion.data.length, numFrames * FLOATS_PER_FRAME);
+    assert.equal(motion.data.byteLength, numFrames * BYTES_PER_FRAME);
+
+    // Verify first coordinate reflects the base offset exactly
+    assert.ok(Math.abs(motion.data[0] - 0.25) < 1e-6);
   }
 });
 
-test('SignAvatar Binary Decoder — Rejects Truncated and Malformed Buffers', () => {
+test('Production Motion Decoder — Rejects Truncated, Non-Stride, and Malformed Payloads', () => {
   // 1. Empty buffer
   assert.throws(
     () => processAndNormalizeMotion(new ArrayBuffer(0)),
     /Motion buffer is empty/
   );
 
-  // 2. Truncated buffer with non-frame float count (e.g. 10 floats instead of 31425)
-  const nonFrameBuffer = new ArrayBuffer(10 * 4);
+  // 2. Truncated buffer (arbitrary non-frame byte count)
+  const nonFrameBuffer = new ArrayBuffer(50 * 4); // 200 bytes
   assert.throws(
     () => processAndNormalizeMotion(nonFrameBuffer),
     /Invalid motion binary length/
   );
 
-  // 3. Off-by-one float buffer (one frame + 1 float)
+  // 3. Off-by-one float buffer (1 frame + 1 float = 125,704 bytes)
   const offByOneFloat = new ArrayBuffer(BYTES_PER_FRAME + 4);
   assert.throws(
     () => processAndNormalizeMotion(offByOneFloat),
     /Invalid motion binary length/
   );
 
-  // 4. Non-multiple of 4 bytes buffer throws RangeError
+  // 4. Non-multiple of 4 bytes (e.g. 13 bytes) triggers Float32Array RangeError
   const oddBytes = new ArrayBuffer(13);
   assert.throws(
     () => processAndNormalizeMotion(oddBytes),
@@ -136,8 +89,8 @@ test('SignAvatar Binary Decoder — Rejects Truncated and Malformed Buffers', ()
   );
 });
 
-test('SignAvatar Binary Decoder — Rejects NaN and Infinity Coordinates', () => {
-  // Buffer containing NaN
+test('Production Motion Decoder — Rejects NaN and Infinite Coordinates', () => {
+  // Buffer containing NaN coordinate
   const bufNaN = createSyntheticMotion(2);
   const viewNaN = new Float32Array(bufNaN);
   viewNaN[100] = NaN;
@@ -146,7 +99,7 @@ test('SignAvatar Binary Decoder — Rejects NaN and Infinity Coordinates', () =>
     /Motion data contains NaN or infinite coordinates/
   );
 
-  // Buffer containing Infinity
+  // Buffer containing Infinity coordinate
   const bufInf = createSyntheticMotion(2);
   const viewInf = new Float32Array(bufInf);
   viewInf[500] = Infinity;
@@ -154,9 +107,18 @@ test('SignAvatar Binary Decoder — Rejects NaN and Infinity Coordinates', () =>
     () => processAndNormalizeMotion(bufInf),
     /Motion data contains NaN or infinite coordinates/
   );
+
+  // Buffer containing -Infinity coordinate
+  const bufNegInf = createSyntheticMotion(2);
+  const viewNegInf = new Float32Array(bufNegInf);
+  viewNegInf[1000] = -Infinity;
+  assert.throws(
+    () => processAndNormalizeMotion(bufNegInf),
+    /Motion data contains NaN or infinite coordinates/
+  );
 });
 
-test('SignAvatar Motion Blending — Smooth Cosine Transition Between Signs', () => {
+test('Production Motion Blending — Cosine Transition Between Clips', () => {
   const clipA = new Float32Array(createSyntheticMotion(3, 0.0));
   const clipB = new Float32Array(createSyntheticMotion(3, 1.0));
 
@@ -191,62 +153,77 @@ test('SignAvatar Motion Blending — Smooth Cosine Transition Between Signs', ()
   }
 });
 
-test('SignAvatar Playback Timing — Looping and Frame Modulo Integrity', () => {
+test('Production Multi-Clip Blending — Segment Boundaries & Hold Frames', () => {
+  const motionA = processAndNormalizeMotion(createSyntheticMotion(10, 0.0), 10, 30);
+  const motionB = processAndNormalizeMotion(createSyntheticMotion(15, 1.0), 15, 30);
+
+  const blended = blendMotionClips(
+    [
+      { gloss: 'SIGN_A', motion: motionA },
+      { gloss: 'SIGN_B', motion: motionB },
+    ],
+    null,
+    { holdFrames: 4, transitionFrames: 6, easeInFrames: 8, easeOutFrames: 10 }
+  );
+
+  // Expected frame calculation:
+  // easeIn(8) + clipA(10) + hold(4) + trans(6) + clipB(15) + hold(4) + easeOut(10) = 57 frames
+  const expectedTotal = 8 + 10 + 4 + 6 + 15 + 4 + 10;
+  assert.equal(blended.motion.frames, expectedTotal);
+  assert.equal(blended.segmentBoundaries.length, 2);
+
+  // Segment boundaries check
+  assert.equal(blended.segmentBoundaries[0].gloss, 'SIGN_A');
+  assert.equal(blended.segmentBoundaries[0].startFrame, 8);
+  assert.equal(blended.segmentBoundaries[0].endFrame, 8 + 10 + 4 - 1); // 21
+
+  assert.equal(blended.segmentBoundaries[1].gloss, 'SIGN_B');
+  assert.equal(blended.segmentBoundaries[1].startFrame, 22 + 6); // 28
+});
+
+test('Production Playback Timing — calculateFrameIndex Modulo & Wrap-Around', () => {
   const totalFrames = 100;
   const fps = 30;
   const speed = 1.0;
+  const deltaSec = 1.0 / fps;
 
-  let frameElapsed = 0;
+  let currentElapsed = 0;
   const sampledIndices = [];
 
-  // Simulate 4 seconds of playback (120 frames at 30 fps -> should wrap around at 100)
   for (let step = 0; step < 120; step++) {
-    const delta = 1.0 / fps;
-    frameElapsed = (frameElapsed + delta * fps * speed) % totalFrames;
-    const frameIndex = Math.min(Math.floor(frameElapsed), totalFrames - 1);
-
-    assert.ok(frameIndex >= 0 && frameIndex < totalFrames, `Frame index ${frameIndex} must remain in [0, 99]`);
-    assert.ok(Number.isFinite(frameIndex), `Frame index must be finite`);
+    const { nextElapsed, frameIndex } = calculateFrameIndex(
+      currentElapsed,
+      deltaSec,
+      fps,
+      speed,
+      totalFrames
+    );
+    currentElapsed = nextElapsed;
     sampledIndices.push(frameIndex);
+    assert.ok(frameIndex >= 0 && frameIndex < totalFrames);
   }
 
-  // Confirm wrap-around occurred cleanly
+  // Confirm wrap-around occurred cleanly across totalFrames
   assert.equal(sampledIndices[98], 99);
   assert.equal(sampledIndices[99], 0);
   assert.equal(sampledIndices[119], 20);
 });
 
-test('SignAvatar Playback State Machine — Rapid Sequence Switching', () => {
-  // Simulate active playback switching to a new sequence
-  const motionA = processAndNormalizeMotion(createSyntheticMotion(30, 0.0), 30, 30);
-  const motionB = processAndNormalizeMotion(createSyntheticMotion(40, 5.0), 40, 30);
+test('Production Decoder Stride Contract — Deliberate Stride Mutation Sensitivity', () => {
+  // Verify that any payload that diverges from exact 10,475 * 3 floats/frame is rejected
+  const validBuffer = createSyntheticMotion(1);
+  assert.equal(validBuffer.byteLength, 125700);
 
-  let currentMotion = motionA;
-  let currentFrame = 15; // playing mid-way through sign A
-  let isBlending = false;
-  let prevFrameVertices = null;
-
-  // Rapid switch triggered to sign B
-  prevFrameVertices = new Float32Array(
-    currentMotion.data.subarray(currentFrame * FLOATS_PER_FRAME, (currentFrame + 1) * FLOATS_PER_FRAME)
+  // If stride were 10474 or 10476 vertices instead of 10475:
+  const brokenStrideBuffer = new ArrayBuffer(10474 * 3 * 4);
+  assert.throws(
+    () => processAndNormalizeMotion(brokenStrideBuffer),
+    /Invalid motion binary length/
   );
-  isBlending = true;
-  currentMotion = motionB;
-  currentFrame = 0;
 
-  assert.equal(currentMotion.frames, 40);
-  assert.equal(isBlending, true);
-  assert.equal(prevFrameVertices.length, FLOATS_PER_FRAME);
-  assert.ok(Number.isFinite(prevFrameVertices[0]));
-
-  // Ensure blend interpolation executes safely without NaN
-  const targetData = currentMotion.data.subarray(0, FLOATS_PER_FRAME);
-  const blendedPose = new Float32Array(FLOATS_PER_FRAME);
-  const t = 0.5; // mid-crossfade
-  for (let i = 0; i < FLOATS_PER_FRAME; i++) {
-    blendedPose[i] = prevFrameVertices[i] * (1 - t) + targetData[i] * t;
-  }
-
-  assert.ok(!Number.isNaN(blendedPose[0]));
-  assert.ok(Number.isFinite(blendedPose[0]));
+  const brokenStrideBuffer2 = new ArrayBuffer(10476 * 3 * 4);
+  assert.throws(
+    () => processAndNormalizeMotion(brokenStrideBuffer2),
+    /Invalid motion binary length/
+  );
 });
