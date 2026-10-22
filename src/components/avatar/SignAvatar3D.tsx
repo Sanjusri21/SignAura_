@@ -144,6 +144,12 @@ const AUTHENTIC_MOTION_KEYS = new Set([
   'book_drink_home',
 ]);
 
+/** True when a gloss resolves to a motion clip in the local inventory. */
+export const hasSignMotion = (gloss: string): boolean => {
+  const upper = (gloss || '').trim().toUpperCase();
+  return upper in SIGN_TO_MOTION_MAP || AUTHENTIC_MOTION_KEYS.has(upper.toLowerCase());
+};
+
 export interface SignAvatar3DProps {
   currentSign?: string;
   playbackSpeed?: number;
@@ -248,6 +254,9 @@ export const SignAvatar3D: React.FC<SignAvatar3DProps> = ({
   const topologyReadyRef = useRef<boolean>(false);
   const isPlayingRef = useRef<boolean>(isPlaying);
   const playbackSpeedRef = useRef<number>(playbackSpeed);
+  // The render loop is created once on mount, so it must read the latest callback via a ref
+  const onFrameUpdateRef = useRef(onFrameUpdate);
+  onFrameUpdateRef.current = onFrameUpdate;
   const currentSignRef = useRef<string>(currentSign);
   const frameElapsedRef = useRef<number>(0);
   const currentFrameRef = useRef<number>(-1);
@@ -1182,7 +1191,7 @@ export const SignAvatar3D: React.FC<SignAvatar3DProps> = ({
                 activeSegmentGlossRef.current = currentSegmentGloss;
                 setActiveSegmentGloss(currentSegmentGloss);
               }
-              onFrameUpdate?.(frameIndex, motion.frames, currentSegmentGloss);
+              onFrameUpdateRef.current?.(frameIndex, motion.frames, currentSegmentGloss);
             }
           }
         }

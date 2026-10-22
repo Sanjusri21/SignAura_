@@ -20,6 +20,26 @@ apiClient.interceptors.request.use((config) => {
   return config;
 });
 
+// Expired or invalid session: clear it and send the user back to sign in
+apiClient.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    const url: string = error?.config?.url || '';
+    const isAuthCall = url.includes('/api/auth/login') || url.includes('/api/auth/register');
+    if (error?.response?.status === 401 && !isAuthCall) {
+      localStorage.removeItem('signaura_auth_token');
+      localStorage.removeItem('signaura_user_data');
+      error.message = 'Your session has expired. Please sign in again.';
+      if (window.location.pathname !== '/signin') {
+        setTimeout(() => window.location.assign('/signin'), 2500);
+      }
+    } else if (!error?.response) {
+      error.message = 'Cannot reach the SignAura server. Please make sure the backend is running.';
+    }
+    return Promise.reject(error);
+  }
+);
+
 export interface HealthResponse {
   status: string;
   service: string;

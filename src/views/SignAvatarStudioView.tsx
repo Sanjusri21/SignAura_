@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import {
   Sparkles,
   BookOpen,
@@ -14,7 +14,7 @@ import {
   XCircle,
   Cpu
 } from 'lucide-react';
-import { SignAvatar3D, CameraPreset, LightingPreset } from '../components/avatar/SignAvatar3D';
+import { SignAvatar3D, CameraPreset, LightingPreset, hasSignMotion } from '../components/avatar/SignAvatar3D';
 import { GlossTimeline } from '../components/avatar/GlossTimeline';
 import { TranscriptPanel } from '../components/avatar/TranscriptPanel';
 import { SignDictionaryExplorer } from '../components/avatar/SignDictionaryExplorer';
@@ -24,6 +24,11 @@ import { GlassButton } from '../components/ui/GlassButton';
 import { signAuraApi, SignAvatarResponse, ISignSentenceResponse, ISignTranslateMotionResponse, API_BASE_URL } from '../services/api';
 
 const SIGNAVATAR_API_URL = 'http://127.0.0.1:8001';
+
+// Transcript playback pacing: words without a motion clip are highlighted briefly and skipped;
+// a clip that never reports completion (e.g. failed to load) is abandoned after a timeout
+const MISSING_SIGN_DWELL_MS = 700;
+const MOTION_STEP_TIMEOUT_MS = 20000;
 
 interface SignAvatarStudioViewProps {
   project: VideoProject;
@@ -71,53 +76,105 @@ export const SignAvatarStudioView: React.FC<SignAvatarStudioViewProps> = ({
   const [isignResult, setIsignResult] = useState<ISignSentenceResponse | null>(null);
   const [isignMotionResult, setIsignMotionResult] = useState<ISignTranslateMotionResponse | null>(null);
 
-  // Sync state whenever selected project changes
+  // Transcript playback: the project's gloss tokens are signed one at a time, and the
+  // sequence advances when the avatar finishes each clip (isTimelinePlaying drives it)
+  const [sequenceIndex, setSequenceIndex] = useState<number>(0);
+  const sequenceStepRef = useRef<{ awaitingMotion: boolean; loaded: boolean; maxFrame: number }>({
+    awaitingMotion: false,
+    loaded: false,
+    maxFrame: 0
+  });
+  const avatarSign = currentSignName || activeToken.gloss || 'WELCOME';
+  const avatarSignRef = useRef(avatarSign);
+  avatarSignRef.current = avatarSign;
+
+  const startTranscriptPlayback = (fromIndex: number = 0) => {
+    setGeneratedMotionUrl('');
+    setMotionSegments([]);
+    setActiveCaption(project.transcript || '');
+    setActiveGlossTokens(project.glossTokens || []);
+    setSequenceIndex(fromIndex);
+    setIsTimelinePlaying(true);
+    setIsPlaying(true);
+  };
+
+  // Sync state whenever selected project changes, then start signing its transcript
   useEffect(() => {
     if (project?.glossTokens?.[0]) {
       setActiveToken(project.glossTokens[0]);
       setCurrentSignName(project.glossTokens[0].gloss || 'WELCOME');
-      setActiveCaption(project.transcript || '');
-      setActiveGlossTokens(project.glossTokens || []);
-      setGeneratedMotionUrl('');
-      setMotionSegments([]);
+      startTranscriptPlayback(0);
     }
   }, [project]);
 
-  // Dedicated project video timeline ticker (only active when user explicitly plays the timeline)
+  // Apply the current sequence token to the avatar
   useEffect(() => {
     if (!isTimelinePlaying) return;
+    const token = project.glossTokens[sequenceIndex];
+    if (!token) {
+      setIsTimelinePlaying(false);
+      return;
+    }
 
-    const interval = setInterval(() => {
-      setCurrentTime((prev) => {
-        const next = prev + 0.1 * playbackSpeed;
-        if (next >= project.duration) {
-          setIsTimelinePlaying(false);
-          return 0;
-        }
+    setActiveToken(token);
+    setCurrentTime(token.startTime);
+    if (hasSignMotion(token.gloss)) {
+      // Re-signing the gloss already loaded fires no new load, so it counts as loaded
+      const alreadyLoaded = token.gloss.toUpperCase() === avatarSignRef.current.toUpperCase();
+      sequenceStepRef.current = { awaitingMotion: true, loaded: alreadyLoaded, maxFrame: 0 };
+      setCurrentSignName(token.gloss);
+    } else {
+      sequenceStepRef.current = { awaitingMotion: false, loaded: false, maxFrame: 0 };
+    }
+  }, [isTimelinePlaying, sequenceIndex, project.glossTokens]);
 
-        const found = project.glossTokens.find(
-          (t) => next >= t.startTime && next <= t.endTime
-        );
-        if (found && found.id !== activeToken.id) {
-          setActiveToken(found);
-          setCurrentSignName(found.gloss || 'WELCOME');
-          setGeneratedMotionUrl('');
-        }
-        return next;
-      });
-    }, 100);
+  // Dwell on words without motion, and guard against clips that never complete
+  useEffect(() => {
+    if (!isTimelinePlaying || !isPlaying) return;
+    const token = project.glossTokens[sequenceIndex];
+    if (!token) return;
 
-    return () => clearInterval(interval);
-  }, [isTimelinePlaying, playbackSpeed, project.duration, project.glossTokens, activeToken.id]);
+    const delay = hasSignMotion(token.gloss)
+      ? MOTION_STEP_TIMEOUT_MS / playbackSpeed
+      : MISSING_SIGN_DWELL_MS / playbackSpeed;
+    const timer = setTimeout(() => {
+      setSequenceIndex((i) => (i === sequenceIndex ? i + 1 : i));
+    }, delay);
+    return () => clearTimeout(timer);
+  }, [isTimelinePlaying, isPlaying, sequenceIndex, playbackSpeed, project.glossTokens]);
+
+  const handleAvatarMotionLoaded = useCallback((info: { frames: number; fps: number }) => {
+    setAvatarMotionInfo(info);
+    sequenceStepRef.current.loaded = true;
+    sequenceStepRef.current.maxFrame = 0;
+  }, []);
+
+  // A clip has finished once the looping frame index wraps back to the start
+  const handleAvatarFrame = useCallback((frame: number) => {
+    const step = sequenceStepRef.current;
+    if (!step.awaitingMotion || !step.loaded) return;
+    if (frame < step.maxFrame - 2) {
+      step.awaitingMotion = false;
+      setSequenceIndex((i) => i + 1);
+      return;
+    }
+    step.maxFrame = Math.max(step.maxFrame, frame);
+  }, []);
 
   const handleSelectToken = (token: GlossToken) => {
-    setIsTimelinePlaying(false);
-    setActiveToken(token);
-    setCurrentSignName(token.gloss || 'WELCOME');
-    setGeneratedMotionUrl('');
-    setMotionSegments([]);
-    setCurrentTime(token.startTime);
-    setIsPlaying(true);
+    const index = project.glossTokens.findIndex((t) => t.id === token.id);
+    if (index >= 0) {
+      startTranscriptPlayback(index);
+    }
+  };
+
+  const handleToggleTranscriptPlayback = () => {
+    if (isTimelinePlaying) {
+      setIsTimelinePlaying(false);
+    } else {
+      const atEnd = sequenceIndex >= project.glossTokens.length - 1;
+      startTranscriptPlayback(atEnd ? 0 : sequenceIndex);
+    }
   };
 
   const handleDictionarySelect = (gloss: string, motionUrl: string, sign: any) => {
@@ -323,7 +380,7 @@ export const SignAvatarStudioView: React.FC<SignAvatarStudioViewProps> = ({
           <div className="bg-[#151D40] rounded-2xl border border-[#273154] p-4 shadow-xl relative">
             {/* Embedded 3D Avatar */}
             <SignAvatar3D
-              currentSign={currentSignName || activeToken.gloss || 'WELCOME'}
+              currentSign={avatarSign}
               isPlaying={isPlaying}
               onTogglePlay={() => setIsPlaying(!isPlaying)}
               playbackSpeed={playbackSpeed}
@@ -342,7 +399,8 @@ export const SignAvatarStudioView: React.FC<SignAvatarStudioViewProps> = ({
               glossTokens={activeGlossTokens.length > 0 ? activeGlossTokens : project?.glossTokens}
               activeTokenId={activeToken?.id}
               isFingerspelled={activeToken?.isFingerspelled}
-              onMotionLoaded={setAvatarMotionInfo}
+              onMotionLoaded={handleAvatarMotionLoaded}
+              onFrameUpdate={handleAvatarFrame}
               onSignChange={(sign) => {
                 setIsTimelinePlaying(false);
                 setCurrentSignName(sign);
@@ -364,7 +422,7 @@ export const SignAvatarStudioView: React.FC<SignAvatarStudioViewProps> = ({
                 totalDuration={project.duration}
                 onSelectToken={handleSelectToken}
                 isPlaying={isTimelinePlaying}
-                onTogglePlay={() => setIsTimelinePlaying(!isTimelinePlaying)}
+                onTogglePlay={handleToggleTranscriptPlayback}
               />
             </div>
           )}
@@ -623,6 +681,9 @@ export const SignAvatarStudioView: React.FC<SignAvatarStudioViewProps> = ({
                 project={project}
                 activeTokenId={activeToken.id}
                 onSelectToken={handleSelectToken}
+                isPlaying={isTimelinePlaying}
+                onTogglePlay={handleToggleTranscriptPlayback}
+                onReplay={() => startTranscriptPlayback(0)}
               />
             </div>
           )}

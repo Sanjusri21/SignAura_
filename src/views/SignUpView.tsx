@@ -67,7 +67,7 @@ export const SignUpView: React.FC<SignUpViewProps> = ({ onNavigate, onSuccess })
         setServerError('Registration failed. Please try with another email.');
       }
     } catch (err: any) {
-      setServerError(err.response?.data?.detail || 'An error occurred during account creation.');
+      setServerError(err.response?.data?.detail || err.message || 'An error occurred during account creation.');
     } finally {
       setIsLoading(false);
     }
