@@ -19,9 +19,11 @@ import { GlossTimeline } from '../components/avatar/GlossTimeline';
 import { TranscriptPanel } from '../components/avatar/TranscriptPanel';
 import { SignDictionaryExplorer } from '../components/avatar/SignDictionaryExplorer';
 import { ExperimentalHandPoseModal } from '../components/avatar/ExperimentalHandPoseModal';
+import { WordCheckPanel } from '../components/avatar/WordCheckPanel';
 import { VideoProject, GlossToken } from '../types';
 import { GlassButton } from '../components/ui/GlassButton';
 import { signAuraApi, SignAvatarResponse, ISignSentenceResponse, ISignTranslateMotionResponse, API_BASE_URL } from '../services/api';
+import { checkSentenceWords, generateWordSequence, WordCheckResponse } from '../services/signAvatarWords';
 
 const SIGNAVATAR_API_URL = 'http://127.0.0.1:8001';
 
@@ -75,6 +77,8 @@ export const SignAvatarStudioView: React.FC<SignAvatarStudioViewProps> = ({
   const [isExperimentalModalOpen, setIsExperimentalModalOpen] = useState<boolean>(false);
   const [isignResult, setIsignResult] = useState<ISignSentenceResponse | null>(null);
   const [isignMotionResult, setIsignMotionResult] = useState<ISignTranslateMotionResponse | null>(null);
+  const [wordCheck, setWordCheck] = useState<WordCheckResponse | null>(null);
+  const [isCheckingWords, setIsCheckingWords] = useState<boolean>(false);
 
   // Transcript playback: the project's gloss tokens are signed one at a time, and the
   // sequence advances when the avatar finishes each clip (isTimelinePlaying drives it)
@@ -203,6 +207,51 @@ export const SignAvatarStudioView: React.FC<SignAvatarStudioViewProps> = ({
     setIsPlaying(true);
   };
 
+  // Word-by-word signing from the ISL dictionary: words without a sign are skipped, the rest play in order
+  const playWordSequence = async (text: string) => {
+    const seq = await generateWordSequence(text);
+    let start = 0;
+    const tokens: GlossToken[] = seq.segments.map((s, idx) => {
+      const duration = s.frames / seq.fps;
+      const token = {
+        id: `word-${idx}-${s.motion_id}`,
+        word: s.word,
+        gloss: s.motion_id.toUpperCase(),
+        startTime: start,
+        endTime: start + duration,
+        confidence: 1.0
+      };
+      start += duration;
+      return token;
+    });
+
+    setGeneratedMotionUrl(seq.motion);
+    setMotionFps(seq.fps);
+    setCurrentSignName(tokens.map((t) => t.gloss).join(' '));
+    setActiveCaption(text);
+    setActiveGlossTokens(tokens);
+    setMotionSegments(
+      seq.segments.map((s) => ({
+        word: s.synonym_of && s.synonym_of !== s.word ? `${s.word} → ${s.synonym_of}` : s.word,
+        frames: s.frames
+      }))
+    );
+    setIsPlaying(true);
+  };
+
+  // Plays one word picked from the word list
+  const handlePlayWord = (word: string) => {
+    setIsTimelinePlaying(false);
+    setGeneratedMotionUrl(`/motion/${word}`);
+    setMotionSegments([]);
+    setCurrentSignName(word.toUpperCase());
+    setActiveCaption(word.replace(/_/g, ' '));
+    setActiveGlossTokens([
+      { id: `word-${word}`, word, gloss: word.toUpperCase(), startTime: 0, endTime: 2, confidence: 1.0 }
+    ]);
+    setIsPlaying(true);
+  };
+
   const handleGenerateSentence = async (overrideText?: string) => {
     const textToGenerate = (typeof overrideText === 'string' ? overrideText : sentence).trim();
     if (!textToGenerate) return;
@@ -213,12 +262,18 @@ export const SignAvatarStudioView: React.FC<SignAvatarStudioViewProps> = ({
     setGenerationError('');
     setIsTimelinePlaying(false);
 
-    try {
-      // Connect directly to the authentic iSign text-to-motion translation pipeline
-      const res = await signAuraApi.translateISignMotion(textToGenerate);
-      setIsignMotionResult(res);
+    // Per-word availability first, so the word check panel updates even if generation fails
+    setIsCheckingWords(true);
+    const check = await checkSentenceWords(textToGenerate).catch(() => null);
+    setWordCheck(check);
+    setIsCheckingWords(false);
 
-      if (res.available && res.sequence_id) {
+    try {
+      // A whole-sentence iSign motion is preferred when one exists; otherwise sign word by word
+      const res = await signAuraApi.translateISignMotion(textToGenerate).catch(() => null);
+      setIsignMotionResult(res?.available ? res : null);
+
+      if (res?.available && res.sequence_id) {
         const animUrl = res.animation_url || `/api/signavatar/sequence/${res.sequence_id}`;
         setGeneratedMotionUrl(animUrl);
         setMotionFps(res.fps || 30);
@@ -257,40 +312,16 @@ export const SignAvatarStudioView: React.FC<SignAvatarStudioViewProps> = ({
         }
         setIsPlaying(true);
         setGenerationError('');
-      } else {
-        // Full fallback: Fingerspell unknown tokens letter-by-letter with ISL Two-Handed Alphabet
-        const allGlosses = res.generated_glosses || res.requested_glosses || [];
-        const missing = res.missing_glosses || res.unresolved_glosses || [];
-
-        setActiveCaption(textToGenerate);
-        if (allGlosses.length > 0) {
-          setActiveGlossTokens(
-            allGlosses.map((g, idx) => ({
-              id: `fsp-${idx}-${g.toLowerCase()}`,
-              word: g,
-              gloss: g,
-              startTime: idx * 1.5,
-              endTime: (idx + 1) * 1.5,
-              confidence: 0.95,
-              isFingerspelled: true
-            }))
-          );
-        }
-
-        setMotionSegments(
-          allGlosses.map((g) => ({
-            word: missing.includes(g) ? `${g} [UNAVAILABLE]` : g,
-            frames: 25,
-          }))
-        );
-        // Do not substitute unrelated animations when signs are unavailable
+      } else if (check && check.available === 0) {
+        // Do not substitute unrelated animations when no word has a sign
         setGeneratedMotionUrl('');
+        setMotionSegments([]);
         setIsPlaying(false);
         setGenerationError(
-          missing.length > 0
-            ? `Sign motion unavailable for: ${missing.join(', ')}. Procedural hand poses can be inspected in the experimental prototype.`
-            : 'Requested sign motion is not available.'
+          `None of these words are in the sign dataset: ${check.tokens.map((t) => t.input).join(', ')}.`
         );
+      } else {
+        await playWordSequence(textToGenerate);
       }
     } catch (err: any) {
       setGeneratedMotionUrl('');
@@ -374,7 +405,7 @@ export const SignAvatarStudioView: React.FC<SignAvatarStudioViewProps> = ({
 
       {/* 2. MAIN 3D STAGE & SIDEBAR */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
-        
+
         {/* Left / Center 3D Stage (8 cols on desktop) */}
         <div className="lg:col-span-8 space-y-4">
           <div className="bg-[#151D40] rounded-2xl border border-[#273154] p-4 shadow-xl relative">
@@ -426,6 +457,9 @@ export const SignAvatarStudioView: React.FC<SignAvatarStudioViewProps> = ({
               />
             </div>
           )}
+
+          {/* Word Check: per-word availability of the last sentence + searchable word list */}
+          <WordCheckPanel check={wordCheck} isChecking={isCheckingWords} onSelectWord={handlePlayWord} />
         </div>
 
         {/* Right Controls Panel (4 cols on desktop) */}

@@ -37,10 +37,13 @@ INDEX_DIR = os.path.join(DEFAULT_ROOT, "index")
 CACHE_SMPLX_DIR = os.path.join(DEFAULT_ROOT, "cache", "smplx")
 DB_PATH = os.path.join(INDEX_DIR, "bridgeconn.db")
 
-os.makedirs(SHARDS_DIR, exist_ok=True)
-os.makedirs(EXTRACTED_POSES_DIR, exist_ok=True)
-os.makedirs(INDEX_DIR, exist_ok=True)
-os.makedirs(CACHE_SMPLX_DIR, exist_ok=True)
+try:
+    os.makedirs(SHARDS_DIR, exist_ok=True)
+    os.makedirs(EXTRACTED_POSES_DIR, exist_ok=True)
+    os.makedirs(INDEX_DIR, exist_ok=True)
+    os.makedirs(CACHE_SMPLX_DIR, exist_ok=True)
+except OSError as e:  # data drive absent: importers only need the gloss helpers
+    logger.warning(f"BridgeConn data root unavailable ({DEFAULT_ROOT}): {e}")
 
 
 def init_db(db_path: str = DB_PATH):

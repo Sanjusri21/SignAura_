@@ -39,6 +39,7 @@ Backend/temp/
 Backend/output/
 Backend/outputs/
 Backend/cache/
+Backend/datasets/isl_dictionary/smplx_cache/
 
 # =========================
 # SignAvatars generated files

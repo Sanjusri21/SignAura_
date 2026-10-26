@@ -9,6 +9,8 @@ Provides:
 """
 
 import os
+import re
+import csv
 import sys
 import json
 import sqlite3
@@ -17,11 +19,13 @@ import threading
 from typing import Dict, Any, Tuple, Optional, List
 from pathlib import Path
 
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+import numpy as np
+
+BASE_DIR =os.path.dirname(os.path.abspath(__file__))
 if BASE_DIR not in sys.path:
     sys.path.insert(0, BASE_DIR)
 
-from bridgeconn_to_smplx import convert_bridgeconn_sample
+from bridgeconn_to_smplx import convert_bridgeconn_sample, SMPLXRetargeter
 from ingest_bridgeconn_dataset import sanitize_gloss, normalize_gloss
 
 logger = logging.getLogger("BridgeConnService")
@@ -32,8 +36,25 @@ DB_PATH = os.path.join(INDEX_DIR, "bridgeconn.db")
 CACHE_SMPLX_DIR = os.path.join(DEFAULT_ROOT, "cache", "smplx")
 LOCAL_NPY_DIR = os.path.join(BASE_DIR, "outputs", "npy")
 
-os.makedirs(CACHE_SMPLX_DIR, exist_ok=True)
+# Per-word landmark files from Backend/scripts/extract_isl_keypoints.py (primary source),
+# then the validated SMPL-X pose parameters in SignMotionDB (fallback).
+REPO_ROOT = os.path.dirname(BASE_DIR)
+ISL_DICTIONARY_DIR = os.environ.get("ISL_DICTIONARY_DIR", os.path.join(REPO_ROOT, "Backend", "datasets", "isl_dictionary"))
+SIGN_MOTION_DB_DIR = os.environ.get("SIGN_MOTION_DB_DIR", os.path.join(REPO_ROOT, "SignMotionDB"))
+# Converted vertices for both live inside the repo so the avatar works without the D: data drive
+CACHE_ISL_DICT_DIR = os.path.join(ISL_DICTIONARY_DIR, "smplx_cache", "isl_dictionary")
+CACHE_SIGN_MOTION_DB_DIR = os.path.join(ISL_DICTIONARY_DIR, "smplx_cache", "signmotiondb")
+ISL_DICTIONARY_SOURCE = "ISL Dictionary (bridgeconn/sign-dictionary-isl)"
+QUALITY_REPORT_PATH = os.path.join(ISL_DICTIONARY_DIR, "quality_report.csv")  # Backend/scripts/analyze_isl_dataset.py
+SYNONYMS_PATH = os.path.join(BASE_DIR, "word_synonyms.json")
+
+try:
+    os.makedirs(CACHE_SMPLX_DIR, exist_ok=True)
+except OSError as e:
+    logger.warning(f"BridgeConn cache unavailable ({CACHE_SMPLX_DIR}): {e}")
 _db_lock = threading.Lock()
+_convert_lock = threading.Lock()
+_file_cache: Dict[str, Tuple[float, Any]] = {}
 
 
 def get_db_connection(db_path: str = DB_PATH) -> Optional[sqlite3.Connection]:
@@ -207,18 +228,324 @@ def resolve_sample_for_gloss(gloss: str) -> Optional[Dict[str, Any]]:
         conn.close()
 
 
+def word_key(text: str) -> str:
+    """Word key used by the ISL dictionary folder (same rules as api.normalize_gloss)."""
+    s = re.sub(r"[\s\-]+", "_", str(text).strip().lower())
+    s = re.sub(r"[^a-z0-9_]", "", s)
+    return re.sub(r"_+", "_", s).strip("_")
+
+
+def _load_cached(path: str, parse, default):
+    """Parses a data file, re-reading it only when its modification time changes."""
+    try:
+        mtime = os.path.getmtime(path)
+    except OSError:
+        return default
+    cached = _file_cache.get(path)
+    if cached and cached[0] == mtime:
+        return cached[1]
+    try:
+        with open(path, "r", encoding="utf-8", newline="") as f:
+            data = parse(f)
+    except Exception as e:
+        logger.error(f"Failed to read {path}: {e}")
+        return default
+    _file_cache[path] = (mtime, data)
+    return data
+
+
+def load_isl_dictionary_index() -> Dict[str, Any]:
+    """ISL_DICTIONARY_DIR/index.json written by Backend/scripts/extract_isl_keypoints.py."""
+    return _load_cached(os.path.join(ISL_DICTIONARY_DIR, "index.json"), json.load, {})
+
+
+def load_failed_clips() -> Dict[str, str]:
+    """Clip key -> fail flags, for clips the quality report marks as failed."""
+    return _load_cached(
+        QUALITY_REPORT_PATH,
+        lambda f: {r["word"]: r["flags"] for r in csv.DictReader(f) if r.get("status") == "fail"},
+        {},
+    )
+
+
+def load_synonyms() -> Dict[str, str]:
+    return _load_cached(
+        SYNONYMS_PATH,
+        lambda f: {word_key(k): word_key(v) for k, v in json.load(f).items() if not k.startswith("_")},
+        {},
+    )
+
+
+def lookup_isl_dictionary(name: str) -> Optional[Dict[str, Any]]:
+    """Resolves a word or alias to its ISL dictionary entry (with 'word' and 'npz_path' added)."""
+    index = load_isl_dictionary_index()
+    words = index.get("words", {})
+    key = word_key(name)
+    if key not in words:
+        key = index.get("aliases", {}).get(key)
+    if not key or key not in words:
+        return None
+    npz_path = os.path.join(ISL_DICTIONARY_DIR, words[key]["file"])
+    if not os.path.isfile(npz_path):
+        return None
+    return {**words[key], "word": key, "npz_path": npz_path}
+
+
+def search_isl_dictionary(query: str, limit: int = 50) -> List[Dict[str, Any]]:
+    """Exact, then prefix, then substring matches over ISL dictionary words and aliases."""
+    index = load_isl_dictionary_index()
+    q = word_key(query)
+    if not q:
+        return []
+    names = {**{w: w for w in index.get("words", {})}, **index.get("aliases", {})}
+    ranked = sorted(
+        (n for n in names if q in n),
+        key=lambda n: (n != q, not n.startswith(q), n)
+    )
+    seen, results = set(), []
+    for n in ranked:
+        entry = lookup_isl_dictionary(names[n])
+        if entry and entry["word"] not in seen:
+            seen.add(entry["word"])
+            results.append(entry)
+        if len(results) >= limit:
+            break
+    return results
+
+
+def _is_fresh(cache_path: str, source_path: str) -> bool:
+    return (
+        os.path.exists(cache_path)
+        and os.path.getsize(cache_path) > 1000
+        and os.path.getmtime(cache_path) >= os.path.getmtime(source_path)
+    )
+
+
+def _from_isl_dictionary(entry: Dict[str, Any]) -> Dict[str, Any]:
+    """Returns cached SMPL-X vertices for a dictionary word, converting its landmarks on first use."""
+    word, npz_path = entry["word"], entry["npz_path"]
+    stem = os.path.splitext(os.path.basename(npz_path))[0]  # 'water' and 'water_2' can share one file
+    out_npy = os.path.join(CACHE_ISL_DICT_DIR, f"{stem}.npy")
+    out_json = os.path.join(CACHE_ISL_DICT_DIR, f"{stem}.json")
+    result = {
+        "gloss": word,
+        "npy_path": out_npy,
+        "json_path": out_json,
+        "source": ISL_DICTIONARY_SOURCE,
+    }
+    if _is_fresh(out_npy, npz_path):
+        return {**result, "status": "cached"}
+
+    with _convert_lock:
+        if _is_fresh(out_npy, npz_path):
+            return {**result, "status": "cached"}
+        logger.info(f"Converting ISL dictionary word '{word}' ({entry.get('label')}) to SMPL-X...")
+        os.makedirs(CACHE_ISL_DICT_DIR, exist_ok=True)
+        try:
+            convert_bridgeconn_sample(
+                npz_path,
+                output_npy_path=out_npy,
+                output_json_path=out_json,
+                output_params_npz_path=os.path.join(CACHE_ISL_DICT_DIR, f"{stem}_smplx_params.npz"),
+            )
+            # The converter labels everything as BridgeConn; /motion reports the json's source as X-Source
+            with open(out_json, "r", encoding="utf-8") as f:
+                meta = json.load(f)
+            meta.update({"source": ISL_DICTIONARY_SOURCE, "word": word, "dataset_label": entry.get("label")})
+            with open(out_json, "w", encoding="utf-8") as f:
+                json.dump(meta, f, indent=4)
+        except Exception as e:
+            logger.error(f"ISL dictionary conversion failed for '{word}': {e}")
+            return {**result, "status": "error", "detail": f"SMPL-X conversion error for '{word}': {e}"}
+    return {**result, "status": "converted"}
+
+
+def _from_sign_motion_db(name: str) -> Optional[Dict[str, Any]]:
+    """Returns SMPL-X vertices for a SignMotionDB sign (stored as pose parameters), or None if absent."""
+    sign_id = word_key(name).upper()
+    motion_path = os.path.join(SIGN_MOTION_DB_DIR, sign_id, "motion.npz")
+    if not sign_id or not os.path.isfile(motion_path):
+        return None
+
+    out_npy = os.path.join(CACHE_SIGN_MOTION_DB_DIR, f"{sign_id}.npy")
+    out_json = os.path.join(CACHE_SIGN_MOTION_DB_DIR, f"{sign_id}.json")
+    result = {"gloss": sign_id.lower(), "npy_path": out_npy, "json_path": out_json, "source": "SignMotionDB"}
+    if _is_fresh(out_npy, motion_path):
+        return {**result, "status": "cached"}
+
+    with _convert_lock:
+        if _is_fresh(out_npy, motion_path):
+            return {**result, "status": "cached"}
+        try:
+            params = np.load(motion_path, allow_pickle=False)
+            vertices = SMPLXRetargeter().params_to_vertices(
+                params["global_orient"], params["body_pose"],
+                params["left_hand_pose"], params["right_hand_pose"], params["transl"],
+            )
+            os.makedirs(CACHE_SIGN_MOTION_DB_DIR, exist_ok=True)
+            np.save(out_npy, vertices)
+            with open(out_json, "w", encoding="utf-8") as f:
+                json.dump({
+                    "source": "SignMotionDB",
+                    "gloss": sign_id.lower(),
+                    "frames": int(vertices.shape[0]),
+                    "fps": float(params["fps"]),
+                    "vertices": int(vertices.shape[1]),
+                    "vertex_shape": list(vertices.shape),
+                    "coordinate_system": "SMPL-X",
+                }, f, indent=4)
+        except Exception as e:
+            logger.error(f"SignMotionDB forward pass failed for '{sign_id}': {e}")
+            return {**result, "status": "error", "detail": f"SignMotionDB conversion error for '{sign_id}': {e}"}
+    return {**result, "status": "converted"}
+
+
+def _sign_motion_db_ids() -> List[str]:
+    if not os.path.isdir(SIGN_MOTION_DB_DIR):
+        return []
+    return sorted(
+        d for d in os.listdir(SIGN_MOTION_DB_DIR)
+        if os.path.isfile(os.path.join(SIGN_MOTION_DB_DIR, d, "motion.npz"))
+    )
+
+
+def _failed_flags(entry: Dict[str, Any]) -> Optional[str]:
+    """Fail flags of the clip a dictionary entry plays, or None if it passed the quality check."""
+    clip = entry.get("best_variant") or entry["word"]
+    return load_failed_clips().get(clip)
+
+
+def _playable(key: str) -> Optional[Dict[str, Any]]:
+    """Where a word key plays from (SignMotionDB, then quality-passed ISL dictionary clips), or None."""
+    if key and key.upper() in _sign_motion_db_ids():
+        return {"key": key, "source": "SignMotionDB"}
+    entry = lookup_isl_dictionary(key)
+    if entry and not _failed_flags(entry):
+        return {"key": entry["word"], "source": ISL_DICTIONARY_SOURCE, "label": entry.get("label")}
+    return None
+
+
+def resolve_word(key: str) -> Dict[str, Any]:
+    """
+    Status of one word key for sentence playback:
+      'available' (own clip), 'synonym' (plays a mapped word, e.g. hey -> hello) or 'missing'.
+    """
+    found = _playable(key)
+    if found:
+        return {"status": "available", **found}
+    target = load_synonyms().get(key)
+    found = _playable(target) if target else None
+    if found:
+        return {"status": "synonym", "synonym_of": found["key"], **found}
+
+    entry = lookup_isl_dictionary(key)
+    flags = _failed_flags(entry) if entry else None
+    reason = f"clip failed quality check ({flags})" if flags else "not in dataset"
+    return {"status": "missing", "key": key, "reason": reason}
+
+
+def resolve_text(text: str) -> List[Dict[str, Any]]:
+    """Splits text into words and resolves each; two-word synonyms such as 'thank you' are matched first."""
+    normalized = text.lower().replace("’", "'")
+    tokens = [t.strip("'_-") for t in re.findall(r"[a-z0-9_'\-]+", normalized)]
+    tokens = [t for t in tokens if t]
+    synonyms = load_synonyms()
+    results, i = [], 0
+    while i < len(tokens):
+        pair = f"{word_key(tokens[i])}_{word_key(tokens[i + 1])}" if i + 1 < len(tokens) else None
+        if pair and pair in synonyms and resolve_word(pair)["status"] != "missing":
+            results.append({"input": f"{tokens[i]} {tokens[i + 1]}", **resolve_word(pair)})
+            i += 2
+            continue
+        results.append({"input": tokens[i], **resolve_word(word_key(tokens[i]))})
+        i += 1
+    return results
+
+
+def playable_words() -> Dict[str, Any]:
+    """Every word the avatar can sign: SignMotionDB, quality-passed dictionary words, their aliases and synonyms."""
+    items: Dict[str, Dict[str, Any]] = {}
+    for sign_id in _sign_motion_db_ids():
+        items[sign_id.lower()] = {"word": sign_id.lower(), "type": "word", "source": "SignMotionDB"}
+
+    index = load_isl_dictionary_index()
+    excluded = 0
+    for word, entry in index.get("words", {}).items():
+        if "variant_of" in entry:
+            continue
+        if _failed_flags({**entry, "word": word}):
+            excluded += 1
+            continue
+        items.setdefault(word, {
+            "word": word,
+            "type": "word",
+            "source": ISL_DICTIONARY_SOURCE,
+            "label": entry.get("label"),
+            "variants": len(entry.get("variants", [])),
+        })
+
+    for alias, word in index.get("aliases", {}).items():
+        if word in items:
+            items.setdefault(alias, {"word": alias, "type": "alias", "target": word, "source": items[word]["source"]})
+    for syn in load_synonyms():
+        found = _playable(load_synonyms()[syn])
+        if found:
+            items.setdefault(syn, {"word": syn, "type": "synonym", "target": found["key"], "source": found["source"]})
+
+    words = sorted(items.values(), key=lambda w: w["word"])
+    return {"count": len(words), "excluded_failed": excluded, "words": words}
+
+
 def get_or_convert_smplx(gloss_or_key: str) -> Dict[str, Any]:
+    """Motion lookup for a word; words with no clip of their own fall back to their synonym (hey -> hello)."""
+    res = _get_or_convert_smplx(gloss_or_key)
+    target = load_synonyms().get(word_key(gloss_or_key))
+    if res["status"] == "unavailable" and target:
+        return _get_or_convert_smplx(target)
+    return res
+
+
+def _get_or_convert_smplx(gloss_or_key: str) -> Dict[str, Any]:
     r"""
     Lazy on-demand SMPL-X conversion and cache retrieval pipeline:
-    webpage/search -> gloss -> original BridgeConn pose -> SMPL-X conversion -> cache -> animation API
+    webpage/search -> gloss -> landmarks / pose params -> SMPL-X vertices -> cache -> animation API
+
+    Lookup order (a source that fails to convert falls through to the next one):
+      1. SignMotionDB/<SIGN>/motion.npz (hand-verified signs)
+      2. ISL dictionary folder (Backend/datasets/isl_dictionary)
+      3. Local outputs/npy (verified signs and generated sentence sequences)
+      4. BridgeConn SQLite index
 
     Returns dict with status:
       - 'local': Existing pre-verified animation (outputs/npy)
       - 'cached': Already converted and cached in D:\SignAuraData\BridgeConn\cache\smplx
       - 'converted': Freshly converted on-demand and cached
-      - 'unavailable': Gloss does not exist in local verified or BridgeConn index
+      - 'unavailable': Gloss does not exist in any source
       - 'error': Conversion failed or file corrupted
     """
+    first_error = None
+
+    motion_db = _from_sign_motion_db(gloss_or_key)
+    if motion_db:
+        if motion_db["status"] != "error":
+            return motion_db
+        first_error = motion_db
+
+    entry = lookup_isl_dictionary(gloss_or_key)
+    if entry:
+        res = _from_isl_dictionary(entry)
+        if res["status"] != "error":
+            return res
+        first_error = first_error or res
+
+    res = _from_local_or_bridgeconn_index(gloss_or_key)
+    if res["status"] in ("unavailable", "error") and first_error:
+        return first_error
+    return res
+
+
+def _from_local_or_bridgeconn_index(gloss_or_key: str) -> Dict[str, Any]:
+    """Original lookup: local outputs/npy, then the BridgeConn SQLite index with lazy conversion."""
     clean_name = normalize_gloss(gloss_or_key)
 
     # 1. Check local outputs/npy verified animations

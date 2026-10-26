@@ -257,6 +257,12 @@ class SMPLXRetargeter:
     def __init__(self, device: Optional[torch.device] = None):
         self.device = device or torch.device("cuda" if torch.cuda.is_available() else "cpu")
         logger.info(f"Initializing SMPL-X model on device: {self.device}")
+        model_file = os.path.join(HUMAN_MODEL_PATH, "smplx", "SMPLX_NEUTRAL.npz")
+        if not os.path.isfile(model_file):
+            raise FileNotFoundError(
+                f"SMPL-X body model not found at {model_file}. "
+                "Download SMPLX_NEUTRAL.npz (licence registration required) from https://smpl-x.is.tue.mpg.de"
+            )
 
         layer_arg = {
             "create_global_orient": False,
@@ -915,44 +921,7 @@ class SMPLXRetargeter:
         rh_poses = np.array(rh_poses, dtype=np.float32)
         transls = np.array(transls, dtype=np.float32)
 
-        logger.info(f"Running SMPL-X forward pass on {self.device}...")
-        all_vertices = []
-
-        with torch.no_grad():
-            for start in range(0, frames, batch_size):
-                end = min(start + batch_size, frames)
-                b_size = end - start
-
-                b_go = torch.tensor(global_orients[start:end], device=self.device)
-                b_bp = torch.tensor(body_poses[start:end], device=self.device)
-                b_lhp = torch.tensor(lh_poses[start:end], device=self.device)
-                b_rhp = torch.tensor(rh_poses[start:end], device=self.device)
-                b_tr = torch.tensor(transls[start:end], device=self.device)
-
-                b_betas = torch.zeros((b_size, 10), dtype=torch.float32, device=self.device)
-                b_expr = torch.zeros((b_size, 10), dtype=torch.float32, device=self.device)
-                b_jaw = torch.zeros((b_size, 3), dtype=torch.float32, device=self.device)
-                b_leye = torch.zeros((b_size, 3), dtype=torch.float32, device=self.device)
-                b_reye = torch.zeros((b_size, 3), dtype=torch.float32, device=self.device)
-
-                output = self.model(
-                    global_orient=b_go,
-                    body_pose=b_bp,
-                    left_hand_pose=b_lhp,
-                    right_hand_pose=b_rhp,
-                    transl=b_tr,
-                    betas=b_betas,
-                    expression=b_expr,
-                    jaw_pose=b_jaw,
-                    leye_pose=b_leye,
-                    reye_pose=b_reye,
-                    return_verts=True
-                )
-
-                verts_batch = output.vertices.cpu().numpy().astype(np.float32)
-                all_vertices.append(verts_batch)
-
-        vertices = np.concatenate(all_vertices, axis=0)  # (frames, 10475, 3)
+        vertices = self.params_to_vertices(global_orients, body_poses, lh_poses, rh_poses, transls, batch_size)
 
         pose_params = {
             "global_orient": global_orients,
@@ -977,6 +946,56 @@ class SMPLXRetargeter:
         }
 
         return vertices, metadata, pose_params
+
+    def params_to_vertices(
+        self,
+        global_orients: np.ndarray,
+        body_poses: np.ndarray,
+        lh_poses: np.ndarray,
+        rh_poses: np.ndarray,
+        transls: np.ndarray,
+        batch_size: int = 32
+    ) -> np.ndarray:
+        """Runs the SMPL-X forward pass on pose parameters, returning (frames, 10475, 3) vertices."""
+        frames = len(global_orients)
+        logger.info(f"Running SMPL-X forward pass on {self.device}...")
+        all_vertices = []
+
+        with torch.no_grad():
+            for start in range(0, frames, batch_size):
+                end = min(start + batch_size, frames)
+                b_size = end - start
+
+                b_go = torch.tensor(global_orients[start:end], dtype=torch.float32, device=self.device)
+                b_bp = torch.tensor(body_poses[start:end], dtype=torch.float32, device=self.device)
+                b_lhp = torch.tensor(lh_poses[start:end], dtype=torch.float32, device=self.device)
+                b_rhp = torch.tensor(rh_poses[start:end], dtype=torch.float32, device=self.device)
+                b_tr = torch.tensor(transls[start:end], dtype=torch.float32, device=self.device)
+
+                b_betas = torch.zeros((b_size, 10), dtype=torch.float32, device=self.device)
+                b_expr = torch.zeros((b_size, 10), dtype=torch.float32, device=self.device)
+                b_jaw = torch.zeros((b_size, 3), dtype=torch.float32, device=self.device)
+                b_leye = torch.zeros((b_size, 3), dtype=torch.float32, device=self.device)
+                b_reye = torch.zeros((b_size, 3), dtype=torch.float32, device=self.device)
+
+                output = self.model(
+                    global_orient=b_go,
+                    body_pose=b_bp,
+                    left_hand_pose=b_lhp,
+                    right_hand_pose=b_rhp,
+                    transl=b_tr,
+                    betas=b_betas,
+                    expression=b_expr,
+                    jaw_pose=b_jaw,
+                    leye_pose=b_leye,
+                    reye_pose=b_reye,
+                    return_verts=True
+                )
+
+                verts_batch = output.vertices.cpu().numpy().astype(np.float32)
+                all_vertices.append(verts_batch)
+
+        return np.concatenate(all_vertices, axis=0)  # (frames, 10475, 3)
 
 
 # ==============================================================================
