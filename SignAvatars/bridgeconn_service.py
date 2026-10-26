@@ -45,8 +45,16 @@ SIGN_MOTION_DB_DIR = os.environ.get("SIGN_MOTION_DB_DIR", os.path.join(REPO_ROOT
 CACHE_ISL_DICT_DIR = os.path.join(ISL_DICTIONARY_DIR, "smplx_cache", "isl_dictionary")
 CACHE_SIGN_MOTION_DB_DIR = os.path.join(ISL_DICTIONARY_DIR, "smplx_cache", "signmotiondb")
 ISL_DICTIONARY_SOURCE = "ISL Dictionary (bridgeconn/sign-dictionary-isl)"
-QUALITY_REPORT_PATH = os.path.join(ISL_DICTIONARY_DIR, "quality_report.csv")  # Backend/scripts/analyze_isl_dataset.py
+INCLUDE_ISL_DIR = os.environ.get("INCLUDE_ISL_DIR", os.path.join(REPO_ROOT, "Backend", "datasets", "include_isl"))
+INCLUDE_ISL_SOURCE = "INCLUDE (ravijavitharana/INCLUDE)"
 SYNONYMS_PATH = os.path.join(BASE_DIR, "word_synonyms.json")
+
+# Keypoint dictionaries in lookup order after SignMotionDB: (folder, source label, SMPL-X cache folder).
+# Each folder holds <word>.npz + index.json and the quality_report.csv of Backend/scripts/analyze_isl_dataset.py.
+KEYPOINT_DICTIONARIES = [
+    (ISL_DICTIONARY_DIR, ISL_DICTIONARY_SOURCE, CACHE_ISL_DICT_DIR),  # Backend/scripts/extract_isl_keypoints.py
+    (INCLUDE_ISL_DIR, INCLUDE_ISL_SOURCE, os.path.join(INCLUDE_ISL_DIR, "smplx_cache")),  # extract_video_keypoints.py
+]
 
 try:
     os.makedirs(CACHE_SMPLX_DIR, exist_ok=True)
@@ -254,15 +262,19 @@ def _load_cached(path: str, parse, default):
     return data
 
 
+def load_dictionary_index(folder: str) -> Dict[str, Any]:
+    """<folder>/index.json of a keypoint dictionary."""
+    return _load_cached(os.path.join(folder, "index.json"), json.load, {})
+
+
 def load_isl_dictionary_index() -> Dict[str, Any]:
-    """ISL_DICTIONARY_DIR/index.json written by Backend/scripts/extract_isl_keypoints.py."""
-    return _load_cached(os.path.join(ISL_DICTIONARY_DIR, "index.json"), json.load, {})
+    return load_dictionary_index(ISL_DICTIONARY_DIR)
 
 
-def load_failed_clips() -> Dict[str, str]:
-    """Clip key -> fail flags, for clips the quality report marks as failed."""
+def load_failed_clips(folder: str) -> Dict[str, str]:
+    """Clip key -> fail flags, for clips the folder's quality report marks as failed."""
     return _load_cached(
-        QUALITY_REPORT_PATH,
+        os.path.join(folder, "quality_report.csv"),
         lambda f: {r["word"]: r["flags"] for r in csv.DictReader(f) if r.get("status") == "fail"},
         {},
     )
@@ -276,28 +288,49 @@ def load_synonyms() -> Dict[str, str]:
     )
 
 
-def lookup_isl_dictionary(name: str) -> Optional[Dict[str, Any]]:
-    """Resolves a word or alias to its ISL dictionary entry (with 'word' and 'npz_path' added)."""
-    index = load_isl_dictionary_index()
+def _dictionary_entry(folder: str, source: str, cache_dir: str, key: str) -> Optional[Dict[str, Any]]:
+    """One keypoint dictionary's entry for a word or alias, with lookup fields added."""
+    index = load_dictionary_index(folder)
     words = index.get("words", {})
-    key = word_key(name)
     if key not in words:
         key = index.get("aliases", {}).get(key)
     if not key or key not in words:
         return None
-    npz_path = os.path.join(ISL_DICTIONARY_DIR, words[key]["file"])
+    npz_path = os.path.join(folder, words[key]["file"])
     if not os.path.isfile(npz_path):
         return None
-    return {**words[key], "word": key, "npz_path": npz_path}
+    clip = words[key].get("best_variant") or key
+    return {
+        **words[key],
+        "word": key,
+        "npz_path": npz_path,
+        "source": source,
+        "cache_dir": cache_dir,
+        "failed_flags": load_failed_clips(folder).get(clip),
+    }
+
+
+def lookup_isl_dictionary(name: str) -> Optional[Dict[str, Any]]:
+    """
+    Resolves a word or alias across the keypoint dictionaries (ISL dictionary, then INCLUDE).
+    A clip that passed the quality check wins over an earlier dictionary's failed one; failed_flags
+    is set when only failed clips exist.
+    """
+    key = word_key(name)
+    entries = [e for d in KEYPOINT_DICTIONARIES if (e := _dictionary_entry(*d, key))]
+    return next((e for e in entries if not e["failed_flags"]), entries[0] if entries else None)
 
 
 def search_isl_dictionary(query: str, limit: int = 50) -> List[Dict[str, Any]]:
-    """Exact, then prefix, then substring matches over ISL dictionary words and aliases."""
-    index = load_isl_dictionary_index()
+    """Exact, then prefix, then substring matches over all keypoint dictionary words and aliases."""
     q = word_key(query)
     if not q:
         return []
-    names = {**{w: w for w in index.get("words", {})}, **index.get("aliases", {})}
+    names: Dict[str, str] = {}
+    for folder, _, _ in KEYPOINT_DICTIONARIES:
+        index = load_dictionary_index(folder)
+        names.update({w: w for w in index.get("words", {}) if w not in names})
+        names.update({a: w for a, w in index.get("aliases", {}).items() if a not in names})
     ranked = sorted(
         (n for n in names if q in n),
         key=lambda n: (n != q, not n.startswith(q), n)
@@ -323,15 +356,15 @@ def _is_fresh(cache_path: str, source_path: str) -> bool:
 
 def _from_isl_dictionary(entry: Dict[str, Any]) -> Dict[str, Any]:
     """Returns cached SMPL-X vertices for a dictionary word, converting its landmarks on first use."""
-    word, npz_path = entry["word"], entry["npz_path"]
+    word, npz_path, cache_dir, source = entry["word"], entry["npz_path"], entry["cache_dir"], entry["source"]
     stem = os.path.splitext(os.path.basename(npz_path))[0]  # 'water' and 'water_2' can share one file
-    out_npy = os.path.join(CACHE_ISL_DICT_DIR, f"{stem}.npy")
-    out_json = os.path.join(CACHE_ISL_DICT_DIR, f"{stem}.json")
+    out_npy = os.path.join(cache_dir, f"{stem}.npy")
+    out_json = os.path.join(cache_dir, f"{stem}.json")
     result = {
         "gloss": word,
         "npy_path": out_npy,
         "json_path": out_json,
-        "source": ISL_DICTIONARY_SOURCE,
+        "source": source,
     }
     if _is_fresh(out_npy, npz_path):
         return {**result, "status": "cached"}
@@ -339,19 +372,19 @@ def _from_isl_dictionary(entry: Dict[str, Any]) -> Dict[str, Any]:
     with _convert_lock:
         if _is_fresh(out_npy, npz_path):
             return {**result, "status": "cached"}
-        logger.info(f"Converting ISL dictionary word '{word}' ({entry.get('label')}) to SMPL-X...")
-        os.makedirs(CACHE_ISL_DICT_DIR, exist_ok=True)
+        logger.info(f"Converting {source} word '{word}' ({entry.get('label')}) to SMPL-X...")
+        os.makedirs(cache_dir, exist_ok=True)
         try:
             convert_bridgeconn_sample(
                 npz_path,
                 output_npy_path=out_npy,
                 output_json_path=out_json,
-                output_params_npz_path=os.path.join(CACHE_ISL_DICT_DIR, f"{stem}_smplx_params.npz"),
+                output_params_npz_path=os.path.join(cache_dir, f"{stem}_smplx_params.npz"),
             )
             # The converter labels everything as BridgeConn; /motion reports the json's source as X-Source
             with open(out_json, "r", encoding="utf-8") as f:
                 meta = json.load(f)
-            meta.update({"source": ISL_DICTIONARY_SOURCE, "word": word, "dataset_label": entry.get("label")})
+            meta.update({"source": source, "word": word, "dataset_label": entry.get("label")})
             with open(out_json, "w", encoding="utf-8") as f:
                 json.dump(meta, f, indent=4)
         except Exception as e:
@@ -409,19 +442,13 @@ def _sign_motion_db_ids() -> List[str]:
     )
 
 
-def _failed_flags(entry: Dict[str, Any]) -> Optional[str]:
-    """Fail flags of the clip a dictionary entry plays, or None if it passed the quality check."""
-    clip = entry.get("best_variant") or entry["word"]
-    return load_failed_clips().get(clip)
-
-
 def _playable(key: str) -> Optional[Dict[str, Any]]:
-    """Where a word key plays from (SignMotionDB, then quality-passed ISL dictionary clips), or None."""
+    """Where a word key plays from (SignMotionDB, then quality-passed keypoint dictionary clips), or None."""
     if key and key.upper() in _sign_motion_db_ids():
         return {"key": key, "source": "SignMotionDB"}
     entry = lookup_isl_dictionary(key)
-    if entry and not _failed_flags(entry):
-        return {"key": entry["word"], "source": ISL_DICTIONARY_SOURCE, "label": entry.get("label")}
+    if entry and not entry["failed_flags"]:
+        return {"key": entry["word"], "source": entry["source"], "label": entry.get("label")}
     return None
 
 
@@ -439,26 +466,30 @@ def resolve_word(key: str) -> Dict[str, Any]:
         return {"status": "synonym", "synonym_of": found["key"], **found}
 
     entry = lookup_isl_dictionary(key)
-    flags = _failed_flags(entry) if entry else None
+    flags = entry["failed_flags"] if entry else None
     reason = f"clip failed quality check ({flags})" if flags else "not in dataset"
     return {"status": "missing", "key": key, "reason": reason}
 
 
 def resolve_text(text: str) -> List[Dict[str, Any]]:
-    """Splits text into words and resolves each; two-word synonyms such as 'thank you' are matched first."""
+    """
+    Splits text into words and resolves each. Phrases of up to three words that have their own sign
+    or synonym ('good morning', 'how are you', 'thank you') are matched first, longest first.
+    """
     normalized = text.lower().replace("’", "'")
     tokens = [t.strip("'_-") for t in re.findall(r"[a-z0-9_'\-]+", normalized)]
     tokens = [t for t in tokens if t]
-    synonyms = load_synonyms()
     results, i = [], 0
     while i < len(tokens):
-        pair = f"{word_key(tokens[i])}_{word_key(tokens[i + 1])}" if i + 1 < len(tokens) else None
-        if pair and pair in synonyms and resolve_word(pair)["status"] != "missing":
-            results.append({"input": f"{tokens[i]} {tokens[i + 1]}", **resolve_word(pair)})
-            i += 2
-            continue
-        results.append({"input": tokens[i], **resolve_word(word_key(tokens[i]))})
-        i += 1
+        for n in (3, 2, 1):
+            if i + n > len(tokens):
+                continue
+            key = "_".join(word_key(t) for t in tokens[i:i + n])
+            res = resolve_word(key)
+            if n == 1 or res["status"] != "missing":
+                results.append({"input": " ".join(tokens[i:i + n]), **res})
+                i += n
+                break
     return results
 
 
@@ -468,32 +499,43 @@ def playable_words() -> Dict[str, Any]:
     for sign_id in _sign_motion_db_ids():
         items[sign_id.lower()] = {"word": sign_id.lower(), "type": "word", "source": "SignMotionDB"}
 
-    index = load_isl_dictionary_index()
-    excluded = 0
-    for word, entry in index.get("words", {}).items():
-        if "variant_of" in entry:
-            continue
-        if _failed_flags({**entry, "word": word}):
-            excluded += 1
-            continue
-        items.setdefault(word, {
-            "word": word,
-            "type": "word",
-            "source": ISL_DICTIONARY_SOURCE,
-            "label": entry.get("label"),
-            "variants": len(entry.get("variants", [])),
-        })
+    failed_words = set()
+    for folder, source, _ in KEYPOINT_DICTIONARIES:
+        index = load_dictionary_index(folder)
+        failed = load_failed_clips(folder)
+        for word, entry in index.get("words", {}).items():
+            if "variant_of" in entry:
+                continue
+            if failed.get(entry.get("best_variant") or word):
+                failed_words.add(word)
+                continue
+            items.setdefault(word, {
+                "word": word,
+                "type": "word",
+                "source": source,
+                "label": entry.get("label"),
+                "variants": len(entry.get("variants", [])),
+            })
+        for alias, word in index.get("aliases", {}).items():
+            if word in items:
+                items.setdefault(alias, {"word": alias, "type": "alias", "target": word, "source": items[word]["source"]})
 
-    for alias, word in index.get("aliases", {}).items():
-        if word in items:
-            items.setdefault(alias, {"word": alias, "type": "alias", "target": word, "source": items[word]["source"]})
-    for syn in load_synonyms():
-        found = _playable(load_synonyms()[syn])
+    for syn, target in load_synonyms().items():
+        found = _playable(target)
         if found:
             items.setdefault(syn, {"word": syn, "type": "synonym", "target": found["key"], "source": found["source"]})
 
     words = sorted(items.values(), key=lambda w: w["word"])
-    return {"count": len(words), "excluded_failed": excluded, "words": words}
+    by_source: Dict[str, int] = {}
+    for w in words:
+        if w["type"] == "word":
+            by_source[w["source"]] = by_source.get(w["source"], 0) + 1
+    return {
+        "count": len(words),
+        "by_source": by_source,
+        "excluded_failed": len(failed_words - set(items)),
+        "words": words,
+    }
 
 
 def get_or_convert_smplx(gloss_or_key: str) -> Dict[str, Any]:
@@ -512,7 +554,7 @@ def _get_or_convert_smplx(gloss_or_key: str) -> Dict[str, Any]:
 
     Lookup order (a source that fails to convert falls through to the next one):
       1. SignMotionDB/<SIGN>/motion.npz (hand-verified signs)
-      2. ISL dictionary folder (Backend/datasets/isl_dictionary)
+      2. Keypoint dictionaries: Backend/datasets/isl_dictionary, then Backend/datasets/include_isl
       3. Local outputs/npy (verified signs and generated sentence sequences)
       4. BridgeConn SQLite index
 

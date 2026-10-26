@@ -48,8 +48,8 @@ from scipy.signal import savgol_filter
 
 try:
     from pose_format import Pose
-except ImportError:
-    sys.exit("pose-format is required: pip install pose-format")
+except ImportError:  # only needed for reading shards; clean_landmarks() works without it
+    Pose = None
 
 logging.basicConfig(level=logging.INFO, format="[%(levelname)s] %(message)s")
 logger = logging.getLogger("ExtractISL")
@@ -233,6 +233,26 @@ def process_sample(meta: dict, pose_bytes: bytes, dw_bytes: Optional[bytes]) -> 
             dw_l = np.where(dw_l >= 0, dw_l * size, -1.0)
             dw_r = np.where(dw_r >= 0, dw_r * size, -1.0)
 
+    return clean_landmarks(data, conf, fps, dw_l, dw_lc, dw_r, dw_rc)
+
+
+def clean_landmarks(
+    data: np.ndarray,
+    conf: np.ndarray,
+    fps: float,
+    dw_l: Optional[np.ndarray] = None,
+    dw_lc: Optional[np.ndarray] = None,
+    dw_r: Optional[np.ndarray] = None,
+    dw_rc: Optional[np.ndarray] = None,
+) -> Dict:
+    """
+    Cleans one clip of MediaPipe Holistic landmarks laid out like the .pose files: data (F, 576, 3)
+    with x, y in pixels and raw MediaPipe z, conf (F, 576). DWPose hands (pixels) are optional fills.
+    Also used by extract_video_keypoints.py so both datasets get identical cleaning.
+    """
+    frames = len(data)
+    if frames < 2:
+        raise ValueError(f"only {frames} frames")
     max_gap = max(1, int(round(MAX_GAP_SEC * fps)))
     window = max(5, int(round(SMOOTH_WINDOW_SEC * fps)) | 1)
 
@@ -316,6 +336,8 @@ def main():
     ap.add_argument("--out", default=DEFAULT_OUT, help="output folder")
     ap.add_argument("--words", nargs="*", help="only extract these words (matched on word key or alias)")
     args = ap.parse_args()
+    if Pose is None:
+        sys.exit("pose-format is required: pip install pose-format")
     sys.stderr.reconfigure(errors="backslashreplace")  # some labels contain U+FFFD; Windows consoles can't print it
 
     shards =sorted(glob.glob(os.path.join(args.shards, "*.tar")))

@@ -15,8 +15,12 @@ interface WordCheckPanelProps {
 
 const displayWord = (key: string) => key.replace(/_/g, ' ');
 
+// 'ISL Dictionary (bridgeconn/sign-dictionary-isl)' -> 'ISL Dictionary'
+const shortSourceName = (source: string) => (source === 'SignMotionDB' ? 'Verified' : source.replace(/\s*\(.*\)$/, ''));
+
 export const WordCheckPanel: React.FC<WordCheckPanelProps> = ({ check, isChecking, onSelectWord }) => {
   const [words, setWords] = useState<PlayableWord[]>([]);
+  const [bySource, setBySource] = useState<Record<string, number>>({});
   const [excludedFailed, setExcludedFailed] = useState(0);
   const [listError, setListError] = useState('');
   const [query, setQuery] = useState('');
@@ -27,6 +31,7 @@ export const WordCheckPanel: React.FC<WordCheckPanelProps> = ({ check, isCheckin
       .then((res) => {
         if (cancelled) return;
         setWords(res.words);
+        setBySource(res.by_source || {});
         setExcludedFailed(res.excluded_failed);
         registerPlayableWords(res.words.map((w) => w.word));
       })
@@ -112,6 +117,26 @@ export const WordCheckPanel: React.FC<WordCheckPanelProps> = ({ check, isCheckin
             {words.length.toLocaleString()}
           </p>
         </div>
+        {Object.keys(bySource).length > 0 && (
+          <div className="flex flex-wrap gap-1.5">
+            {Object.entries(bySource)
+              .sort((a, b) => b[1] - a[1])
+              .map(([source, n]) => (
+                <span
+                  key={source}
+                  title={source}
+                  className="px-2 py-0.5 rounded-md bg-[#101735] border border-[#273154] text-[10px] text-[#A8B2D1]"
+                >
+                  {shortSourceName(source)} <span className="font-mono text-white">{n.toLocaleString()}</span>
+                </span>
+              ))}
+            {words.length > Object.values(bySource).reduce((a, b) => a + b, 0) && (
+              <span className="px-2 py-0.5 text-[10px] text-[#6B7A99]">
+                + {(words.length - Object.values(bySource).reduce((a, b) => a + b, 0)).toLocaleString()} aliases &amp; synonyms
+              </span>
+            )}
+          </div>
+        )}
         <div className="relative sm:max-w-sm">
           <Search className="w-3.5 h-3.5 text-[#6B7A99] absolute left-2.5 top-1/2 -translate-y-1/2" />
           <input

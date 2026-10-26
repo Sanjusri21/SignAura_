@@ -16,6 +16,8 @@ export interface PlayableWord {
 
 export interface PlayableWordsResponse {
   count: number;
+  /** Words with their own clip, per source (aliases and synonyms are not counted here) */
+  by_source: Record<string, number>;
   excluded_failed: number;
   words: PlayableWord[];
 }

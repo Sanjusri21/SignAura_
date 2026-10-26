@@ -46,7 +46,7 @@ def isl_dictionary_metadata(entry: Dict[str, Any]) -> Dict[str, Any]:
         },
         "aliases": entry.get("aliases", []),
         "status": "AVAILABLE",
-        "source": "ISL Dictionary (bridgeconn/sign-dictionary-isl)",
+        "source": entry.get("source", "ISL Dictionary (bridgeconn/sign-dictionary-isl)"),
         "animation_url": f"/motion/{entry['word']}",
     }
 
