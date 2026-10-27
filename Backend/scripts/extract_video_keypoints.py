@@ -21,7 +21,10 @@ Usage:
     <venv python> -I Backend/scripts/extract_video_keypoints.py                 # every new word
 
 Each word is saved as soon as its videos are done; re-running resumes and skips words already in
-index.json (use --restart to redo them).
+index.json (use --restart to redo them, or --redo --words ... to redo only some and keep the rest).
+
+Flat-folder datasets (one <word>[-n].mp4 per word) also record each video's picture area (the part
+without black letterbox bars) and each wrist's distance to its edge, for the hand-visibility check.
 
 Training archive of every video (all words, raw MediaPipe incl. face + cleaned arrays; resumable;
 does not touch the avatar dictionary):
@@ -54,6 +57,9 @@ REPO_ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__fi
 DEFAULT_ROOT = r"D:\dowloads\archive"
 DEFAULT_OUT = os.path.join(REPO_ROOT, "Backend", "datasets", "include_isl")
 ISL_DICTIONARY_DIR = os.path.join(REPO_ROOT, "Backend", "datasets", "isl_dictionary")
+INCLUDE_ISL_DIR = os.path.join(REPO_ROOT, "Backend", "datasets", "include_isl")
+ISL_PART1_DIR = os.path.join(REPO_ROOT, "Backend", "datasets", "ISL_part_1_408")
+ISL_PART2_DIR = os.path.join(REPO_ROOT, "Backend", "datasets", "ISL_Part2_452")
 SIGN_MOTION_DB_DIR = os.path.join(REPO_ROOT, "SignMotionDB")
 SYNONYMS_PATH = os.path.join(REPO_ROOT, "SignAvatars", "word_synonyms.json")
 
@@ -116,10 +122,76 @@ def collect_words(root: str) -> Dict[str, Dict]:
     return words
 
 
-def existing_words() -> Tuple[Dict[str, str], Dict[str, str]]:
+def parse_file_name(stem: str) -> Tuple[str, Optional[int], Optional[str]]:
     """
-    (available, failed): word key -> where it already plays from, and word key -> fail flags,
-    for SignMotionDB and the ISL dictionary including its aliases and the synonym list.
+    Word key, variant number and note from a flat file name:
+    'West-2' -> ('west', 2, None); 'Subsidy (Sign -2)' -> ('subsidy', 2, None); 'touch.f135' -> ('touch', None, None);
+    'self help_1_FAC142479E964E34AD7F' -> ('self_help', 1, None); 'you (plural)' -> ('you', None, 'plural').
+    """
+    s = re.sub(r"_(\d+)_[0-9A-Fa-f]{20}$", r" \1", stem)  # trailing export hash
+    s = re.sub(r"\.f\d+$", "", s)  # '.f135' frame-count suffix
+    var, note = None, None
+    m = re.search(r"\(\s*sign\s*-?\s*(\d+)\s*\)\s*$", s, re.IGNORECASE)
+    if m:
+        var, s = int(m.group(1)), s[:m.start()]
+    m = re.search(r"\(([^)]*)\)\s*$", s)
+    if m:
+        note, s = m.group(1).strip(), s[:m.start()]
+    m = re.search(r"(?<=[A-Za-z\)])[\s\-_]*(\d+)\s*$", s)  # trailing variant number
+    if m and var is None:
+        var, s = int(m.group(1)), s[:m.start()]
+    return slugify(s) or slugify(stem), var, note
+
+
+def video_seconds(path: str) -> float:
+    import cv2
+    cap = cv2.VideoCapture(path)
+    seconds = cap.get(cv2.CAP_PROP_FRAME_COUNT) / (cap.get(cv2.CAP_PROP_FPS) or 25.0)
+    cap.release()
+    return seconds
+
+
+def collect_flat_words(root: str, max_seconds: float) -> Tuple[Dict[str, Dict], List[Tuple[str, float]]]:
+    """
+    Flat folder of <word>[-n].mp4 files -> same structure as collect_words. Files named alike
+    ('west-1', 'west-2') are variants of one word. Videos longer than max_seconds are not single
+    words (stories, lectures) and come back separately as (file, seconds).
+    """
+    found, too_long = [], []
+    for f in sorted(os.listdir(root)):
+        path = os.path.join(root, f)
+        if not (os.path.isfile(path) and f.lower().endswith(VIDEO_EXTS)):
+            continue
+        seconds = video_seconds(path)
+        if seconds > max_seconds:
+            too_long.append((f, seconds))
+            continue
+        key, variant, note = parse_file_name(os.path.splitext(f)[0])
+        found.append({"key": key, "label": os.path.splitext(f)[0], "category": os.path.basename(root),
+                      "aliases": [], "note": note, "videos": [path], "variant": variant})
+
+    keys = [w["key"] for w in found]
+    words: Dict[str, Dict] = {}
+    for w in found:
+        key = w["key"]
+        # A plural form is a different sign ('you (plural)' is not 'you'); other notes only
+        # separate words when a plain word of the same name exists in the folder
+        if w["note"] and (slugify(w["note"]) == "plural"
+                          or (keys.count(key) > 1 and any(x["key"] == key and not x["note"] for x in found))):
+            key = f"{key}_{slugify(w['note'])}"
+        if key in words:  # variants: pool the videos
+            words[key]["videos"] += w["videos"]
+            continue
+        words[key] = {k: v for k, v in w.items() if k not in ("key", "variant")}
+    return words, too_long
+
+
+def existing_words(exclude_dir: Optional[str] = None) -> Tuple[Dict[str, str], Dict[str, str]]:
+    """
+    (available, failed): word key -> where it already plays from, and word key -> fail flags
+    (only for words that pass nowhere). Sources: SignMotionDB, the ISL dictionary and include_isl
+    with their aliases, and the synonym list. exclude_dir is the folder being written, so a
+    re-run does not count its own earlier output as "existing".
     """
     available: Dict[str, str] = {}
     if os.path.isdir(SIGN_MOTION_DB_DIR):
@@ -127,23 +199,29 @@ def existing_words() -> Tuple[Dict[str, str], Dict[str, str]]:
             if os.path.isfile(os.path.join(SIGN_MOTION_DB_DIR, d, "motion.npz")):
                 available[d.lower()] = "SignMotionDB"
 
-    with open(os.path.join(ISL_DICTIONARY_DIR, "index.json"), encoding="utf-8") as f:
-        index = json.load(f)
-    with open(os.path.join(ISL_DICTIONARY_DIR, "quality_report.csv"), encoding="utf-8", newline="") as f:
-        failed_clips = {r["word"]: r["flags"] for r in csv.DictReader(f) if r["status"] == "fail"}
-
     failed: Dict[str, str] = {}
-    for word, entry in index["words"].items():
-        if "variant_of" in entry:
+    for folder, name in ((ISL_DICTIONARY_DIR, "ISL dictionary"), (INCLUDE_ISL_DIR, "include_isl"),
+                         (ISL_PART1_DIR, "ISL part 1"), (ISL_PART2_DIR, "ISL part 2")):
+        if exclude_dir and os.path.abspath(folder) == os.path.abspath(exclude_dir):
             continue
-        flags = failed_clips.get(entry.get("best_variant") or word)
-        if flags:
-            failed[word] = flags
-        else:
-            available.setdefault(word, "ISL dictionary")
-    for alias, word in index.get("aliases", {}).items():
-        if word in available:
-            available.setdefault(alias, f"ISL dictionary alias of '{word}'")
+        if not os.path.isfile(os.path.join(folder, "index.json")):
+            continue
+        with open(os.path.join(folder, "index.json"), encoding="utf-8") as f:
+            index = json.load(f)
+        with open(os.path.join(folder, "quality_report.csv"), encoding="utf-8", newline="") as f:
+            failed_clips = {r["word"]: r["flags"] for r in csv.DictReader(f) if r["status"] == "fail"}
+        for word, entry in index["words"].items():
+            if "variant_of" in entry:
+                continue
+            flags = failed_clips.get(entry.get("best_variant") or word)
+            if flags:
+                failed.setdefault(word, f"{name}: {flags}")
+            else:
+                available.setdefault(word, name)
+        for alias, word in index.get("aliases", {}).items():
+            if word in available:
+                available.setdefault(alias, f"{name} alias of '{word}'")
+    failed = {k: v for k, v in failed.items() if k not in available}
 
     with open(SYNONYMS_PATH, encoding="utf-8") as f:
         synonyms = {slugify(k): slugify(v) for k, v in json.load(f).items() if not k.startswith("_")}
@@ -153,16 +231,16 @@ def existing_words() -> Tuple[Dict[str, str], Dict[str, str]]:
     return available, failed
 
 
-def plan(words: Dict[str, Dict]) -> Tuple[Dict[str, str], Dict[str, str]]:
+def plan(words: Dict[str, Dict], exclude_dir: Optional[str] = None) -> Tuple[Dict[str, str], Dict[str, str]]:
     """(skip, extract): word key -> reason."""
-    available, failed = existing_words()
+    available, failed = existing_words(exclude_dir)
     skip, extract = {}, {}
     for key, w in words.items():
         hit = next(((k, available[k]) for k in [key, *w["aliases"]] if k in available), None)
         if hit:
             skip[key] = hit[1] if hit[0] == key else f"'{hit[0]}': {hit[1]}"
         elif key in failed:
-            extract[key] = f"replaces failed ISL dictionary clip ({failed[key]})"
+            extract[key] = f"replaces a failed clip ({failed[key]})"
         else:
             extract[key] = "new"
     return skip, extract
@@ -197,18 +275,50 @@ MP_FACE = slice(33, 501)
 RAW_POINTS = 543  # pose 0-32, face 33-500, left hand 501-521, right hand 522-542 (the .pose layout minus world pose)
 
 
-def track_video(path: str) -> Tuple[np.ndarray, np.ndarray, float, int, int]:
-    """Runs Holistic on every frame: (data (F, 576, 3) [x px, y px, raw z], conf (F, 576), fps, width, height)."""
+BAR_DARK = 14        # mean brightness (0-255) below which a row/column of the picture counts as a black bar
+BAR_MAX_SHARE = 0.35  # a bar can take at most this share of the frame on one side
+
+
+def picture_box(brightest: np.ndarray) -> Tuple[float, float, float, float]:
+    """
+    (x0, y0, x1, y1) of the actual picture in pixels, without black letterbox/pillarbox bars.
+    `brightest` is the per-pixel maximum grayscale over several frames, so a bar stays dark throughout.
+    """
+    h, w = brightest.shape
+
+    def lead(v: np.ndarray) -> int:
+        k, limit = 0, int(len(v) * BAR_MAX_SHARE)
+        while k < limit and v[k] < BAR_DARK:
+            k += 1
+        return k
+
+    rows, cols = brightest.mean(axis=1), brightest.mean(axis=0)
+    x0, x1 = lead(cols), w - lead(cols[::-1])
+    y0, y1 = lead(rows), h - lead(rows[::-1])
+    if (x1 - x0) < 0.5 * w or (y1 - y0) < 0.5 * h:  # implausible: fall back to the whole frame
+        return 0.0, 0.0, float(w), float(h)
+    return float(x0), float(y0), float(x1), float(y1)
+
+
+def track_video(path: str) -> Tuple[np.ndarray, np.ndarray, float, int, int, Tuple[float, float, float, float]]:
+    """
+    Runs Holistic on every frame: (data (F, 576, 3) [x px, y px, raw z], conf (F, 576), fps, width, height,
+    picture box (x0, y0, x1, y1) in pixels).
+    """
     import cv2
     cap = cv2.VideoCapture(path)
     fps = float(cap.get(cv2.CAP_PROP_FPS) or 25.0)
+    every = max(1, int(cap.get(cv2.CAP_PROP_FRAME_COUNT)) // 6)  # ~6 frames are enough to find the bars
     _holistic.reset()  # no tracking state carried over from the previous video
-    data, conf, w, h = [], [], 0, 0
+    data, conf, w, h, brightest = [], [], 0, 0, None
     while True:
         ok, frame = cap.read()
         if not ok:
             break
         h, w = frame.shape[:2]
+        if len(data) % every == 0:
+            gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+            brightest = gray if brightest is None else np.maximum(brightest, gray)
         r = _holistic.process(cv2.cvtColor(frame, cv2.COLOR_BGR2RGB))
         # Same 576-point layout as the .pose files
         d = np.zeros((576, 3), dtype=np.float32)
@@ -222,7 +332,27 @@ def track_video(path: str) -> Tuple[np.ndarray, np.ndarray, float, int, int]:
     cap.release()
     if not data:
         raise ValueError("no frames decoded")
-    return np.stack(data), np.stack(conf), fps, w, h
+    return np.stack(data), np.stack(conf), fps, w, h, picture_box(brightest)
+
+
+def wrist_edge_distance(data: np.ndarray, conf: np.ndarray, box: Tuple[float, float, float, float]) -> Dict[str, np.ndarray]:
+    """
+    Per frame, how far each pose wrist is from the nearest edge of the picture (the video without
+    its black bars), in shoulder widths (negative = outside; -9 = no pose detected). A hand at or
+    beyond the picture edge cannot be tracked, so the quality check only expects a hand while its
+    wrist is clear of the edges. Stored as extra keys in the .npz (ignored by the avatar converter),
+    with the picture box; the margin is chosen at analysis time, so it can change without re-extracting.
+    """
+    x0, y0, x1, y1 = box
+    pose_found = conf[:, 11] > 0  # left shoulder visibility is 0 when no pose was detected
+    shoulder = np.hypot(data[:, 11, 0] - data[:, 12, 0], data[:, 11, 1] - data[:, 12, 1])
+    sw = float(np.median(shoulder[pose_found])) if pose_found.any() else 1.0
+    out = {"picture_box": np.array(box, dtype=np.float32)}
+    for side, idx in (("left", 15), ("right", 16)):
+        x, y = data[:, idx, 0], data[:, idx, 1]
+        edge = np.minimum.reduce([x - x0, x1 - x, y - y0, y1 - y]) / max(sw, 1.0)
+        out[f"{side}_wrist_edge"] = np.where(pose_found, edge, -9.0).astype(np.float32)
+    return out
 
 
 def process_video(job: Tuple) -> Dict:
@@ -233,12 +363,14 @@ def process_video(job: Tuple) -> Dict:
     """
     word, path = job[0], job[1]
     try:
-        data, conf, fps, width, height = track_video(path)
+        data, conf, fps, width, height, box = track_video(path)
         if len(job) == 2:
-            return {"word": word, "video": path, **clean_landmarks(data, conf, fps)}
+            res = clean_landmarks(data, conf, fps)
+            res["arrays"].update(wrist_edge_distance(data, conf, box))
+            return {"word": word, "video": path, **res}
 
         out_path, meta = job[2], json.loads(job[3])
-        meta.update({"frames": len(data), "fps": fps, "width": width, "height": height})
+        meta.update({"frames": len(data), "fps": fps, "width": width, "height": height, "picture_box": list(box)})
         arrays = {
             "raw_landmarks": data[:, :RAW_POINTS],
             "raw_confidence": conf[:, :RAW_POINTS],
@@ -366,9 +498,18 @@ def archive_all_videos(words: Dict[str, Dict], root: str, out_dir: str, workers:
 
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.add_argument("--root", default=DEFAULT_ROOT, help="dataset folder with category subfolders")
+    ap.add_argument("--root", default=DEFAULT_ROOT, help="dataset folder")
+    ap.add_argument("--layout", choices=("include", "flat"), default="include",
+                    help="include: <Category>/<n>. <word>/*.MOV (INCLUDE); flat: <word>[-n].mp4 files in one folder")
+    ap.add_argument("--max-seconds", type=float, default=60.0,
+                    help="flat layout: videos longer than this are stories/lectures, not words, and are skipped")
+    ap.add_argument("--dataset-name", default="INCLUDE (ravijavitharana/INCLUDE, CC0-1.0)",
+                    help="dataset label written to index.json")
     ap.add_argument("--out", default=DEFAULT_OUT, help="output folder")
     ap.add_argument("--words", nargs="*", help="only these words (word keys or aliases)")
+    ap.add_argument("--words-file", metavar="FILE", help="like --words, one word per line")
+    ap.add_argument("--redo", action="store_true",
+                    help="re-extract the selected words even if already in index.json, keeping all other words")
     ap.add_argument("--plan", action="store_true", help="print which words are skipped / extracted and exit")
     ap.add_argument("--no-skip", action="store_true", help="also extract words that already exist")
     ap.add_argument("--restart", action="store_true", help="ignore words already in index.json")
@@ -377,24 +518,49 @@ def main():
     ap.add_argument("--workers", type=int, default=4, help="parallel MediaPipe processes (8 hung once; 4 is tested)")
     args = ap.parse_args()
     sys.stdout.reconfigure(errors="backslashreplace")
+    if args.words_file:
+        with open(args.words_file, encoding="utf-8") as f:
+            args.words = (args.words or []) + [line.strip() for line in f if line.strip()]
 
-    words = collect_words(args.root)
+    too_long: List[Tuple[str, float]] = []
+    if args.layout == "flat":
+        words, too_long = collect_flat_words(args.root, args.max_seconds)
+    else:
+        words = collect_words(args.root)
     if args.all_videos:
         archive_all_videos(words, args.root, args.all_videos, args.workers,
                            {slugify(w) for w in args.words} if args.words else None)
         return
-    skip, extract = plan(words)
+    skip, extract = plan(words, args.out)
     n_videos = sum(len(words[k]["videos"]) for k in extract)
     print(f"{len(words)} words, {sum(len(w['videos']) for w in words.values())} videos")
+    if too_long:
+        print(f"Not words (longer than {args.max_seconds:.0f} s, left out): {len(too_long)} videos")
     print(f"Skip (already playable, passed quality): {len(skip)}")
-    print(f"Extract (new or replacing a failed clip): {len(extract)} words, {n_videos} videos")
+    by_source: Dict[str, int] = {}
+    for reason in skip.values():
+        source = re.sub(r"^'[^']*': ", "", reason)
+        source = "SignMotionDB" if source.startswith("SignMotionDB") else \
+            "ISL dictionary" if source.startswith("ISL dictionary") else \
+            "include_isl" if source.startswith("include_isl") else \
+            "ISL part 1" if source.startswith("ISL part 1") else \
+            "ISL part 2" if source.startswith("ISL part 2") else "synonym list"
+        by_source[source] = by_source.get(source, 0) + 1
+    for source, n in sorted(by_source.items(), key=lambda kv: -kv[1]):
+        print(f"    already in {source}: {n}")
+    n_new = sum(1 for r in extract.values() if r == "new")
+    print(f"Extract (new or replacing a failed clip): {len(extract)} words, {n_videos} videos"
+          f"  [{n_new} new, {len(extract) - n_new} replacing a failed clip]")
     if args.plan:
+        print("\nLEFT OUT (too long to be a word):")
+        for name, seconds in sorted(too_long, key=lambda t: -t[1]):
+            print(f"  {seconds:6.1f} s  {name}")
         print("\nSKIPPED:")
         for k in sorted(skip):
-            print(f"  {k:<18} {skip[k]}")
+            print(f"  {k:<28} {skip[k]}")
         print("\nTO EXTRACT:")
         for k in sorted(extract):
-            print(f"  {k:<18} {len(words[k]['videos']):>3} videos  {words[k]['category']:<24} {extract[k]}")
+            print(f"  {k:<28} {len(words[k]['videos']):>3} videos  {extract[k]}")
         return
 
     selected = dict(extract)
@@ -418,6 +584,9 @@ def main():
             previous = json.load(f)
         entries = {k: e for k, e in previous.get("words", {}).items()
                    if k in words and os.path.isfile(os.path.join(args.out, e["file"]))}
+    if args.redo:  # selected words are extracted again; every other word stays in the index
+        for k in selected:
+            entries.pop(k, None)
     todo = {k: r for k, r in selected.items() if k not in entries}
     if len(todo) < len(selected):
         logger.info(f"Resuming: {len(selected) - len(todo)} words already done, {len(todo)} to go")
@@ -427,7 +596,7 @@ def main():
     def write_index():
         aliases = {a: k for k, e in entries.items() for a in e["aliases"] if a not in entries}
         index = {
-            "dataset": "INCLUDE (ravijavitharana/INCLUDE, CC0-1.0)",
+            "dataset": args.dataset_name,
             "format": {
                 "file": "<word>.npz, read by SignAvatars/bridgeconn_to_smplx.convert_bridgeconn_sample",
                 "body": "(F,33,3) MediaPipe pose", "left_hand": "(F,21,3)", "right_hand": "(F,21,3)",

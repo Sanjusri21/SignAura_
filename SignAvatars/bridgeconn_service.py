@@ -47,13 +47,23 @@ CACHE_SIGN_MOTION_DB_DIR = os.path.join(ISL_DICTIONARY_DIR, "smplx_cache", "sign
 ISL_DICTIONARY_SOURCE = "ISL Dictionary (bridgeconn/sign-dictionary-isl)"
 INCLUDE_ISL_DIR = os.environ.get("INCLUDE_ISL_DIR", os.path.join(REPO_ROOT, "Backend", "datasets", "include_isl"))
 INCLUDE_ISL_SOURCE = "INCLUDE (ravijavitharana/INCLUDE)"
+ISL_PART1_DIR = os.environ.get("ISL_PART1_DIR", os.path.join(REPO_ROOT, "Backend", "datasets", "ISL_part_1_408"))
+ISL_PART1_SOURCE = "Part 1 (ISL_part_1_408)"
+ISL_PART2_DIR = os.environ.get("ISL_PART2_DIR", os.path.join(REPO_ROOT, "Backend", "datasets", "ISL_Part2_452"))
+ISL_PART2_SOURCE = "Part 2 (ISL_Part2_452)"
 SYNONYMS_PATH = os.path.join(BASE_DIR, "word_synonyms.json")
+# Words whose clip failed the quality check are not served at all from these folders (the older
+# ISL dictionary and INCLUDE folders still serve theirs, flagged, when asked for directly)
+SKIP_FAILED_DIRS = {os.path.abspath(ISL_PART1_DIR), os.path.abspath(ISL_PART2_DIR)}
 
 # Keypoint dictionaries in lookup order after SignMotionDB: (folder, source label, SMPL-X cache folder).
 # Each folder holds <word>.npz + index.json and the quality_report.csv of Backend/scripts/analyze_isl_dataset.py.
+# The video datasets' reports also carry trim_start/trim_end, which are applied when a clip is converted.
 KEYPOINT_DICTIONARIES = [
     (ISL_DICTIONARY_DIR, ISL_DICTIONARY_SOURCE, CACHE_ISL_DICT_DIR),  # Backend/scripts/extract_isl_keypoints.py
     (INCLUDE_ISL_DIR, INCLUDE_ISL_SOURCE, os.path.join(INCLUDE_ISL_DIR, "smplx_cache")),  # extract_video_keypoints.py
+    (ISL_PART1_DIR, ISL_PART1_SOURCE, os.path.join(ISL_PART1_DIR, "smplx_cache")),
+    (ISL_PART2_DIR, ISL_PART2_SOURCE, os.path.join(ISL_PART2_DIR, "smplx_cache")),
 ]
 
 try:
@@ -243,13 +253,17 @@ def word_key(text: str) -> str:
     return re.sub(r"_+", "_", s).strip("_")
 
 
-def _load_cached(path: str, parse, default):
-    """Parses a data file, re-reading it only when its modification time changes."""
+def _load_cached(path: str, parse, default, tag: str = ""):
+    """
+    Parses a data file, re-reading it only when its modification time changes. `tag` names the
+    parser: two loaders can read the same file (the quality report) and must not share a cache entry.
+    """
     try:
         mtime = os.path.getmtime(path)
     except OSError:
         return default
-    cached = _file_cache.get(path)
+    key = f"{path}|{tag}"
+    cached = _file_cache.get(key)
     if cached and cached[0] == mtime:
         return cached[1]
     try:
@@ -258,7 +272,7 @@ def _load_cached(path: str, parse, default):
     except Exception as e:
         logger.error(f"Failed to read {path}: {e}")
         return default
-    _file_cache[path] = (mtime, data)
+    _file_cache[key] = (mtime, data)
     return data
 
 
@@ -277,7 +291,16 @@ def load_failed_clips(folder: str) -> Dict[str, str]:
         os.path.join(folder, "quality_report.csv"),
         lambda f: {r["word"]: r["flags"] for r in csv.DictReader(f) if r.get("status") == "fail"},
         {},
+        tag="failed",
     )
+
+
+def load_trim_ranges(folder: str) -> Dict[str, Tuple[int, int]]:
+    """Clip key -> (start, end) frames of the sign inside the clip; only video datasets have these columns."""
+    def parse(f):
+        return {r["word"]: (int(r["trim_start"]), int(r["trim_end"]))
+                for r in csv.DictReader(f) if r.get("trim_start") not in (None, "")}
+    return _load_cached(os.path.join(folder, "quality_report.csv"), parse, {}, tag="trim")
 
 
 def load_synonyms() -> Dict[str, str]:
@@ -300,6 +323,9 @@ def _dictionary_entry(folder: str, source: str, cache_dir: str, key: str) -> Opt
     if not os.path.isfile(npz_path):
         return None
     clip = words[key].get("best_variant") or key
+    trim = load_trim_ranges(folder).get(clip)
+    if trim and trim[0] <= 0 and trim[1] >= words[key].get("frames", 0):
+        trim = None  # nothing to cut
     return {
         **words[key],
         "word": key,
@@ -307,6 +333,8 @@ def _dictionary_entry(folder: str, source: str, cache_dir: str, key: str) -> Opt
         "source": source,
         "cache_dir": cache_dir,
         "failed_flags": load_failed_clips(folder).get(clip),
+        "skip_failed": os.path.abspath(folder) in SKIP_FAILED_DIRS,
+        "trim": trim,
     }
 
 
@@ -338,6 +366,8 @@ def search_isl_dictionary(query: str, limit: int = 50) -> List[Dict[str, Any]]:
     seen, results = set(), []
     for n in ranked:
         entry = lookup_isl_dictionary(names[n])
+        if entry and entry["failed_flags"] and entry["skip_failed"]:
+            continue
         if entry and entry["word"] not in seen:
             seen.add(entry["word"])
             results.append(entry)
@@ -354,10 +384,25 @@ def _is_fresh(cache_path: str, source_path: str) -> bool:
     )
 
 
+_FRAME_KEYS = ("body", "left_hand", "right_hand", "face", "confidence", "left_source", "right_source",
+               "left_wrist_edge", "right_wrist_edge")  # arrays with one row per frame
+
+
+def _write_trimmed_npz(npz_path: str, trim: Tuple[int, int], out_path: str) -> None:
+    """Copy of a keypoint .npz cut to frames [start:end), so the avatar skips the signer standing still."""
+    start, end = trim
+    with np.load(npz_path, allow_pickle=False) as z:
+        arrays = {k: (z[k][start:end] if k in _FRAME_KEYS else z[k]) for k in z.files}
+    np.savez_compressed(out_path, **arrays)
+
+
 def _from_isl_dictionary(entry: Dict[str, Any]) -> Dict[str, Any]:
     """Returns cached SMPL-X vertices for a dictionary word, converting its landmarks on first use."""
     word, npz_path, cache_dir, source = entry["word"], entry["npz_path"], entry["cache_dir"], entry["source"]
+    trim = entry.get("trim")
     stem = os.path.splitext(os.path.basename(npz_path))[0]  # 'water' and 'water_2' can share one file
+    if trim:  # the range is part of the cache name, so a new range never serves an old conversion
+        stem = f"{stem}_t{trim[0]}-{trim[1]}"
     out_npy = os.path.join(cache_dir, f"{stem}.npy")
     out_json = os.path.join(cache_dir, f"{stem}.json")
     result = {
@@ -375,16 +420,24 @@ def _from_isl_dictionary(entry: Dict[str, Any]) -> Dict[str, Any]:
         logger.info(f"Converting {source} word '{word}' ({entry.get('label')}) to SMPL-X...")
         os.makedirs(cache_dir, exist_ok=True)
         try:
+            convert_from = npz_path
+            if trim:
+                convert_from = os.path.join(cache_dir, f"{stem}.trimmed.npz")
+                _write_trimmed_npz(npz_path, trim, convert_from)
             convert_bridgeconn_sample(
-                npz_path,
+                convert_from,
                 output_npy_path=out_npy,
                 output_json_path=out_json,
                 output_params_npz_path=os.path.join(cache_dir, f"{stem}_smplx_params.npz"),
             )
+            if trim:
+                os.remove(convert_from)
             # The converter labels everything as BridgeConn; /motion reports the json's source as X-Source
             with open(out_json, "r", encoding="utf-8") as f:
                 meta = json.load(f)
             meta.update({"source": source, "word": word, "dataset_label": entry.get("label")})
+            if trim:
+                meta.update({"trim": list(trim), "original_frames": entry.get("frames")})
             with open(out_json, "w", encoding="utf-8") as f:
                 json.dump(meta, f, indent=4)
         except Exception as e:
@@ -473,15 +526,15 @@ def resolve_word(key: str) -> Dict[str, Any]:
 
 def resolve_text(text: str) -> List[Dict[str, Any]]:
     """
-    Splits text into words and resolves each. Phrases of up to three words that have their own sign
-    or synonym ('good morning', 'how are you', 'thank you') are matched first, longest first.
+    Splits text into words and resolves each. Phrases of up to four words that have their own sign
+    or synonym ('good morning', 'how are you', 'united states of america') are matched first, longest first.
     """
     normalized = text.lower().replace("’", "'")
     tokens = [t.strip("'_-") for t in re.findall(r"[a-z0-9_'\-]+", normalized)]
     tokens = [t for t in tokens if t]
     results, i = [], 0
     while i < len(tokens):
-        for n in (3, 2, 1):
+        for n in (4, 3, 2, 1):
             if i + n > len(tokens):
                 continue
             key = "_".join(word_key(t) for t in tokens[i:i + n])
@@ -526,10 +579,12 @@ def playable_words() -> Dict[str, Any]:
             items.setdefault(syn, {"word": syn, "type": "synonym", "target": found["key"], "source": found["source"]})
 
     words = sorted(items.values(), key=lambda w: w["word"])
-    by_source: Dict[str, int] = {}
+    counts: Dict[str, int] = {}
     for w in words:
         if w["type"] == "word":
-            by_source[w["source"]] = by_source.get(w["source"], 0) + 1
+            counts[w["source"]] = counts.get(w["source"], 0) + 1
+    # in lookup order (SignMotionDB first), not the order the words happen to be listed in
+    by_source = {s: counts[s] for s in ["SignMotionDB"] + [s for _, s, _ in KEYPOINT_DICTIONARIES] if s in counts}
     return {
         "count": len(words),
         "by_source": by_source,
@@ -574,7 +629,7 @@ def _get_or_convert_smplx(gloss_or_key: str) -> Dict[str, Any]:
         first_error = motion_db
 
     entry = lookup_isl_dictionary(gloss_or_key)
-    if entry:
+    if entry and not (entry["failed_flags"] and entry["skip_failed"]):
         res = _from_isl_dictionary(entry)
         if res["status"] != "error":
             return res

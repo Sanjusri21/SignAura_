@@ -37,7 +37,7 @@ def isl_dictionary_metadata(entry: Dict[str, Any]) -> Dict[str, Any]:
         "dataset_label": entry.get("label", entry["word"]),
         "motion_key": entry["word"],
         "safe_gloss": entry["word"],
-        "frames": entry.get("frames", 0),
+        "frames": (entry["trim"][1] - entry["trim"][0]) if entry.get("trim") else entry.get("frames", 0),
         "fps": entry.get("fps", FPS),
         "vertex_count": SMPLX_VERTEX_COUNT,
         "hands_used": {
@@ -421,7 +421,7 @@ def get_motion_metadata(gloss: str):
         return meta
 
     entry = lookup_isl_dictionary(safe_name)
-    if entry:
+    if entry and not (entry["failed_flags"] and entry["skip_failed"]):
         return isl_dictionary_metadata(entry)
 
     resolved_key = resolve_motion_key(safe_name)

@@ -8,6 +8,16 @@ Fail flags (the clip is likely to animate badly):
     SHORT / LONG        clip shorter than 0.5 s or longer than 8 s
     NO_HANDS            both hands missing in more than half the frames after cleaning
     DOMINANT_GAPS       the signing hand (the one that moves most) is missing > 20% after cleaning
+
+For video datasets LONG is only a warning, judged on the clip after its still frames are trimmed.
+The trim range (trim_start, trim_end, trimmed_duration_sec) goes into the report; the keypoint
+files are not changed, so a player applies the range when it converts the clip for the avatar.
+
+Video datasets (extract_video_keypoints.py) store each wrist's distance to the video frame edge. For
+those, "missing" counts only frames where the wrist is at least EDGE_MARGIN shoulder-widths inside
+the frame (a hand at or below the edge cannot be tracked); NO_HANDS then also means the signing hand
+never came into view. Datasets without that data (ISL dictionary, INCLUDE) are judged on every
+frame, as before.
     JITTERY             wrist jitter more than 3x the dataset median (outlier)
     LOW_BODY_CONF       shoulders/elbows/wrists low-confidence in > 20% of frames
     LOW_FPS             fps below 20
@@ -41,9 +51,19 @@ JITTER_MAX = 0.032           # mean wrist deviation from a 0.3 s smoothed path, 
                              # 3x the full-dataset median (0.0107), roughly the worst 1% of clips
 BODY_LOWCONF_MAX = 0.2
 MIN_FPS = 20.0
+MIN_INFRAME_FRAMES = 3       # in-frame rule: fewer in-frame wrist frames than this means the hand was never in view
+EDGE_MARGIN = 0.5            # in-frame rule: wrist this many shoulder-widths clear of every edge (hand found in
+                             # 63% of frames at 0, 87% at 0.5, 91% at 0.75 on 6 test videos)
 
 SRC_MISSING, SRC_MEDIAPIPE = 0, 1
 WARN_FLAGS = {"HEAVY_FILL"}
+
+# Idle-frame trim (video datasets): the signer stands still before and after the sign. The sign is
+# the span from the first to the last frame where a wrist is away from its resting position.
+TRIM_MOVE = 0.3              # shoulder-widths a wrist must be from its rest position to count as moving
+TRIM_RUN = 3                 # ...for this many frames in a row
+TRIM_PAD_SEC = 0.3           # still frames kept before and after the sign
+TRIM_REST_FRAMES = 5         # frames at each end that define the resting position
 
 
 def jitter_score(wrist: np.ndarray, present: np.ndarray, fps: float) -> float:
@@ -60,6 +80,36 @@ def jitter_score(wrist: np.ndarray, present: np.ndarray, fps: float) -> float:
     return float(np.concatenate(residuals).mean() / SHOULDER_WIDTH)
 
 
+def idle_trim(body: np.ndarray, fps: float) -> tuple:
+    """
+    (start, end) frame range of the sign, cutting the still frames at both ends. A wrist counts as
+    moving when it is TRIM_MOVE shoulder-widths from its resting position (the median of the first
+    frames for the start, of the last frames for the end) for TRIM_RUN frames in a row. Returns
+    (0, frames) when no clear motion is found or the result would be shorter than half a second.
+    """
+    frames = len(body)
+    wrists = body[:, [15, 16], :2]                                           # (F, 2 wrists, xy)
+    k = min(TRIM_REST_FRAMES, frames)
+
+    def moving(rest):
+        return (np.linalg.norm(wrists - rest[None], axis=2).max(axis=1) / SHOULDER_WIDTH) > TRIM_MOVE
+
+    def runs(mask):  # indices where a run of TRIM_RUN moving frames starts
+        ok = np.convolve(mask.astype(int), np.ones(TRIM_RUN, dtype=int), mode="valid") == TRIM_RUN
+        return np.where(ok)[0]
+
+    starts = runs(moving(np.median(wrists[:k], axis=0)))
+    ends = runs(moving(np.median(wrists[-k:], axis=0)))
+    if len(starts) == 0 or len(ends) == 0:
+        return 0, frames
+    first, last = int(starts[0]), int(ends[-1]) + TRIM_RUN - 1
+    pad = int(round(TRIM_PAD_SEC * fps))
+    start, end = max(0, first - pad), min(frames, last + 1 + pad)
+    if end - start < max(5, int(0.5 * fps)):
+        return 0, frames
+    return start, end
+
+
 def analyze_word(word: str, entry: dict, folder: str) -> dict:
     d = np.load(os.path.join(folder, entry["file"]), allow_pickle=False)
     fps = float(d["fps"])
@@ -67,27 +117,53 @@ def analyze_word(word: str, entry: dict, folder: str) -> dict:
     row = {"word": word, "label": entry.get("label", word), "frames": frames, "fps": round(fps, 2),
            "duration_sec": round(frames / fps, 2)}
 
-    motion = {}
+    # In-frame rule (video datasets): the extractor stores each wrist's distance to the nearest frame
+    # edge. A hand at or below the edge cannot be tracked, so it only counts as missing while its
+    # wrist is at least EDGE_MARGIN shoulder-widths inside the frame. Files without this data use
+    # every frame, as before.
+    in_frame_rule = "left_wrist_edge" in d.files
+    motion, n_expected = {}, {}
     for side in ("left", "right"):
         src = d[f"{side}_source"]
         present = src != SRC_MISSING
-        row[f"{side}_raw_missing_pct"] = round(100 * float((src != SRC_MEDIAPIPE).mean()), 1)
-        row[f"{side}_missing_pct"] = round(100 * float((~present).mean()), 1)
-        row[f"{side}_filled_pct"] = round(100 * float((present & (src != SRC_MEDIAPIPE)).mean()), 1)
+        expected = d[f"{side}_wrist_edge"] >= EDGE_MARGIN if in_frame_rule else np.ones(len(src), dtype=bool)
+        n_expected[side] = int(expected.sum())
+
+        def pct(mask):
+            return round(100 * ((mask & expected).sum() / n_expected[side]), 1) if n_expected[side] else 0.0
+
+        row[f"{side}_raw_missing_pct"] = pct(src != SRC_MEDIAPIPE)
+        row[f"{side}_missing_pct"] = pct(~present)
+        row[f"{side}_filled_pct"] = pct(present & (src != SRC_MEDIAPIPE))
+        if in_frame_rule:
+            row[f"{side}_inframe_pct"] = round(100 * n_expected[side] / len(src), 1)
         wrist = d[f"{side}_hand"][:, 0]
         row[f"{side}_jitter"] = round(jitter_score(wrist, present, fps), 4)
-        motion[side] = float(np.ptp(wrist[present, 1])) if present.sum() > 1 else 0.0
+        if in_frame_rule:  # body-pose wrist is always available; the hand landmark is missing exactly when lost
+            motion[side] = float(np.ptp(d["body"][:, 15 if side == "left" else 16, 1]))
+        else:
+            motion[side] = float(np.ptp(wrist[present, 1])) if present.sum() > 1 else 0.0
 
     dominant = max(motion, key=motion.get)
     row["dominant_hand"] = dominant
     row["body_lowconf_pct"] = round(100 * float((d["confidence"][:, 11:17] < 0.5).mean()), 1)
 
     flags = []
+    if in_frame_rule:  # video datasets: the still frames at both ends are cut when the clip is played
+        trim_start, trim_end = idle_trim(d["body"], fps)
+        row["trim_start"], row["trim_end"] = trim_start, trim_end
+        row["trimmed_duration_sec"] = round((trim_end - trim_start) / fps, 2)
     if row["duration_sec"] < MIN_SEC:
         flags.append("SHORT")
-    if row["duration_sec"] > MAX_SEC:
+    if row.get("trimmed_duration_sec", row["duration_sec"]) > MAX_SEC:
         flags.append("LONG")
-    if min(row["left_missing_pct"], row["right_missing_pct"]) > 100 * NO_HANDS_MISSING:
+    if in_frame_rule:
+        tracked_sides = [s for s in ("left", "right") if n_expected[s] >= MIN_INFRAME_FRAMES]
+        if n_expected[dominant] < MIN_INFRAME_FRAMES or all(row[f"{s}_missing_pct"] > 100 * NO_HANDS_MISSING for s in tracked_sides):
+            flags.append("NO_HANDS")  # the signing hand never entered the frame, or every in-frame hand is lost
+        elif row[f"{dominant}_missing_pct"] > 100 * DOMINANT_MISSING_MAX:
+            flags.append("DOMINANT_GAPS")
+    elif min(row["left_missing_pct"], row["right_missing_pct"]) > 100 * NO_HANDS_MISSING:
         flags.append("NO_HANDS")
     elif row[f"{dominant}_missing_pct"] > 100 * DOMINANT_MISSING_MAX:
         flags.append("DOMINANT_GAPS")
@@ -100,7 +176,8 @@ def analyze_word(word: str, entry: dict, folder: str) -> dict:
     if fps < MIN_FPS:
         flags.append("LOW_FPS")
     row["flags"] = " ".join(flags)
-    row["status"] = "fail" if set(flags) - WARN_FLAGS else ("warn" if flags else "ok")
+    warn_flags = WARN_FLAGS | ({"LONG"} if in_frame_rule else set())  # video clips: LONG is only a warning
+    row["status"] = "fail" if set(flags) - warn_flags else ("warn" if flags else "ok")
     return row
 
 

@@ -119,17 +119,15 @@ export const WordCheckPanel: React.FC<WordCheckPanelProps> = ({ check, isCheckin
         </div>
         {Object.keys(bySource).length > 0 && (
           <div className="flex flex-wrap gap-1.5">
-            {Object.entries(bySource)
-              .sort((a, b) => b[1] - a[1])
-              .map(([source, n]) => (
-                <span
-                  key={source}
-                  title={source}
-                  className="px-2 py-0.5 rounded-md bg-[#101735] border border-[#273154] text-[10px] text-[#A8B2D1]"
-                >
-                  {shortSourceName(source)} <span className="font-mono text-white">{n.toLocaleString()}</span>
-                </span>
-              ))}
+            {Object.entries(bySource).map(([source, n]) => (
+              <span
+                key={source}
+                title={source}
+                className="px-2 py-0.5 rounded-md bg-[#101735] border border-[#273154] text-[10px] text-[#A8B2D1]"
+              >
+                {shortSourceName(source)} <span className="font-mono text-white">{n.toLocaleString()}</span>
+              </span>
+            ))}
             {words.length > Object.values(bySource).reduce((a, b) => a + b, 0) && (
               <span className="px-2 py-0.5 text-[10px] text-[#6B7A99]">
                 + {(words.length - Object.values(bySource).reduce((a, b) => a + b, 0)).toLocaleString()} aliases &amp; synonyms
