@@ -46,6 +46,8 @@ SHOULDER_WIDTH = 320.0       # canvas units, set by extract_isl_keypoints.normal
 MIN_SEC, MAX_SEC = 0.5, 8.0
 NO_HANDS_MISSING = 0.5
 DOMINANT_MISSING_MAX = 0.2
+VIDEO_DOMINANT_MISSING_MAX = 0.25  # video datasets only: hand missing while its wrist is in view. 22-25% clips were
+                                   # checked on the avatar and play like clean clips (short gaps, no hand-shape jumps)
 FILL_MAX = 0.25
 JITTER_MAX = 0.032           # mean wrist deviation from a 0.3 s smoothed path, in shoulder widths;
                              # 3x the full-dataset median (0.0107), roughly the worst 1% of clips
@@ -146,7 +148,16 @@ def analyze_word(word: str, entry: dict, folder: str) -> dict:
 
     dominant = max(motion, key=motion.get)
     row["dominant_hand"] = dominant
-    row["body_lowconf_pct"] = round(100 * float((d["confidence"][:, 11:17] < 0.5).mean()), 1)
+    conf = d["confidence"][:, :33]
+    if in_frame_rule:
+        # Video clips: a wrist below the picture has no real confidence, so (as for the hands) wrists
+        # only count while inside the picture; shoulders and elbows count in every frame.
+        low = [(conf[:, 11:15] < 0.5).ravel()]
+        for col, side in ((15, "left"), (16, "right")):
+            low.append(conf[d[f"{side}_wrist_edge"] >= EDGE_MARGIN, col] < 0.5)
+        row["body_lowconf_pct"] = round(100 * float(np.concatenate(low).mean()), 1)
+    else:
+        row["body_lowconf_pct"] = round(100 * float((conf[:, 11:17] < 0.5).mean()), 1)
 
     flags = []
     if in_frame_rule:  # video datasets: the still frames at both ends are cut when the clip is played
@@ -161,7 +172,7 @@ def analyze_word(word: str, entry: dict, folder: str) -> dict:
         tracked_sides = [s for s in ("left", "right") if n_expected[s] >= MIN_INFRAME_FRAMES]
         if n_expected[dominant] < MIN_INFRAME_FRAMES or all(row[f"{s}_missing_pct"] > 100 * NO_HANDS_MISSING for s in tracked_sides):
             flags.append("NO_HANDS")  # the signing hand never entered the frame, or every in-frame hand is lost
-        elif row[f"{dominant}_missing_pct"] > 100 * DOMINANT_MISSING_MAX:
+        elif row[f"{dominant}_missing_pct"] > 100 * VIDEO_DOMINANT_MISSING_MAX:
             flags.append("DOMINANT_GAPS")
     elif min(row["left_missing_pct"], row["right_missing_pct"]) > 100 * NO_HANDS_MISSING:
         flags.append("NO_HANDS")
