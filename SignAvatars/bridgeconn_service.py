@@ -379,11 +379,15 @@ def search_isl_dictionary(query: str, limit: int = 50) -> List[Dict[str, Any]]:
     return results
 
 
+_CONVERTER_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "bridgeconn_to_smplx.py")
+
+
 def _is_fresh(cache_path: str, source_path: str) -> bool:
+    """A cached conversion is stale when its landmarks or the converter itself changed after it was made."""
     return (
         os.path.exists(cache_path)
         and os.path.getsize(cache_path) > 1000
-        and os.path.getmtime(cache_path) >= os.path.getmtime(source_path)
+        and os.path.getmtime(cache_path) >= max(os.path.getmtime(source_path), os.path.getmtime(_CONVERTER_PATH))
     )
 
 
