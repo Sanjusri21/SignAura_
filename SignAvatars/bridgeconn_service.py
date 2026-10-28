@@ -59,10 +59,12 @@ ISL_PART2_DIR = os.environ.get("ISL_PART2_DIR", os.path.join(REPO_ROOT, "Backend
 ISL_PART2_SOURCE = "Part 2 (ISL_Part2_452)"
 ISL_PART3_DIR = os.environ.get("ISL_PART3_DIR", os.path.join(REPO_ROOT, "Backend", "datasets", "ISL_part3_449"))
 ISL_PART3_SOURCE = "Part 3 (ISL_part3_449)"
+ISL_SIGN15_DIR = os.environ.get("ISL_SIGN15_DIR", os.path.join(REPO_ROOT, "Backend", "datasets", "ISL_Sign_15"))
+ISL_SIGN15_SOURCE = "Sign 15 (ISL_Sign_15)"
 SYNONYMS_PATH = os.path.join(BASE_DIR, "word_synonyms.json")
 # Words whose clip failed the quality check are not served at all from these folders (the older
 # ISL dictionary and INCLUDE folders still serve theirs, flagged, when asked for directly)
-SKIP_FAILED_DIRS = {os.path.abspath(d) for d in (ISL_PART1_DIR, ISL_PART2_DIR, ISL_PART3_DIR)}
+SKIP_FAILED_DIRS = {os.path.abspath(d) for d in (ISL_PART1_DIR, ISL_PART2_DIR, ISL_PART3_DIR, ISL_SIGN15_DIR)}
 
 # Keypoint dictionaries in lookup order after SignMotionDB: (folder, source label, SMPL-X cache folder).
 # Each folder holds <word>.npz + index.json and the quality_report.csv of Backend/scripts/analyze_isl_dataset.py.
@@ -73,6 +75,7 @@ KEYPOINT_DICTIONARIES = [
     (ISL_PART1_DIR, ISL_PART1_SOURCE, os.path.join(ISL_PART1_DIR, "smplx_cache")),
     (ISL_PART2_DIR, ISL_PART2_SOURCE, os.path.join(ISL_PART2_DIR, "smplx_cache")),
     (ISL_PART3_DIR, ISL_PART3_SOURCE, os.path.join(ISL_PART3_DIR, "smplx_cache")),
+    (ISL_SIGN15_DIR, ISL_SIGN15_SOURCE, os.path.join(ISL_SIGN15_DIR, "smplx_cache")),
 ]
 
 try:

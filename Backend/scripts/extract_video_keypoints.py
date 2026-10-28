@@ -61,6 +61,7 @@ INCLUDE_ISL_DIR = os.path.join(REPO_ROOT, "Backend", "datasets", "include_isl")
 ISL_PART1_DIR = os.path.join(REPO_ROOT, "Backend", "datasets", "ISL_part_1_408")
 ISL_PART2_DIR = os.path.join(REPO_ROOT, "Backend", "datasets", "ISL_Part2_452")
 ISL_PART3_DIR = os.path.join(REPO_ROOT, "Backend", "datasets", "ISL_part3_449")
+ISL_SIGN15_DIR = os.path.join(REPO_ROOT, "Backend", "datasets", "ISL_Sign_15")
 SIGN_MOTION_DB_DIR = os.path.join(REPO_ROOT, "SignMotionDB")
 SYNONYMS_PATH = os.path.join(REPO_ROOT, "SignAvatars", "word_synonyms.json")
 
@@ -203,7 +204,7 @@ def existing_words(exclude_dir: Optional[str] = None) -> Tuple[Dict[str, str], D
     failed: Dict[str, str] = {}
     for folder, name in ((ISL_DICTIONARY_DIR, "ISL dictionary"), (INCLUDE_ISL_DIR, "include_isl"),
                          (ISL_PART1_DIR, "ISL part 1"), (ISL_PART2_DIR, "ISL part 2"),
-                         (ISL_PART3_DIR, "ISL part 3")):
+                         (ISL_PART3_DIR, "ISL part 3"), (ISL_SIGN15_DIR, "ISL Sign 15")):
         if exclude_dir and os.path.abspath(folder) == os.path.abspath(exclude_dir):
             continue
         if not os.path.isfile(os.path.join(folder, "index.json")):
@@ -547,7 +548,7 @@ def main():
             "include_isl" if source.startswith("include_isl") else \
             "ISL part 1" if source.startswith("ISL part 1") else \
             "ISL part 2" if source.startswith("ISL part 2") else \
-            "ISL part 3" if source.startswith("ISL part 3") else "synonym list"
+            "ISL part 3" if source.startswith("ISL part 3") else             "ISL Sign 15" if source.startswith("ISL Sign 15") else "synonym list"
         by_source[source] = by_source.get(source, 0) + 1
     for source, n in sorted(by_source.items(), key=lambda kv: -kv[1]):
         print(f"    already in {source}: {n}")
