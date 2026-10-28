@@ -62,6 +62,8 @@ ISL_PART1_DIR = os.path.join(REPO_ROOT, "Backend", "datasets", "ISL_part_1_408")
 ISL_PART2_DIR = os.path.join(REPO_ROOT, "Backend", "datasets", "ISL_Part2_452")
 ISL_PART3_DIR = os.path.join(REPO_ROOT, "Backend", "datasets", "ISL_part3_449")
 ISL_SIGN15_DIR = os.path.join(REPO_ROOT, "Backend", "datasets", "ISL_Sign_15")
+ISL_50_DIR = os.path.join(REPO_ROOT, "Backend", "datasets", "ISL_50")
+ISL_ARCHIVE5_DIR = os.path.join(REPO_ROOT, "Backend", "datasets", "ISL_archive5")
 SIGN_MOTION_DB_DIR = os.path.join(REPO_ROOT, "SignMotionDB")
 SYNONYMS_PATH = os.path.join(REPO_ROOT, "SignAvatars", "word_synonyms.json")
 
@@ -145,6 +147,41 @@ def parse_file_name(stem: str) -> Tuple[str, Optional[int], Optional[str]]:
     return slugify(s) or slugify(stem), var, note
 
 
+def collect_word_folders(root: str) -> Dict[str, Dict]:
+    """ISL-50 layout: <root>/<word>/*.MOV, no category level; the word's best-scoring clip is kept."""
+    words: Dict[str, Dict] = {}
+    for folder in sorted(os.listdir(root)):
+        word_dir = os.path.join(root, folder)
+        if not os.path.isdir(word_dir):
+            continue
+        videos = sorted(os.path.join(d, f) for d, _, files in os.walk(word_dir) for f in files
+                        if f.lower().endswith(VIDEO_EXTS))
+        key, aliases, note = parse_folder_name(folder)
+        if key in words:
+            words[key]["videos"] += videos
+        else:
+            words[key] = {"label": folder, "category": "", "aliases": aliases, "note": note, "videos": videos}
+    return words
+
+
+# archive-5 numbered folders: <n>/<signer>/*.mp4, the folder number is the digit sign it shows. Only
+# the numbers missing from the other datasets (the rest are in isl_dictionary).
+NUMBERED_WORDS = {"4": "four", "9": "nine", "10": "ten", "11": "eleven"}
+
+
+def collect_numbered(root: str) -> Dict[str, Dict]:
+    """archive-5 layout: <root>/<n>/<signer>/*.mp4; every clip of every signer competes for its word."""
+    words: Dict[str, Dict] = {}
+    for number, label in NUMBERED_WORDS.items():
+        num_dir = os.path.join(root, number)
+        if not os.path.isdir(num_dir):
+            continue
+        videos = sorted(os.path.join(d, f) for d, _, files in os.walk(num_dir) for f in files
+                        if f.lower().endswith(VIDEO_EXTS))
+        words[slugify(label)] = {"label": label, "category": number, "aliases": [], "note": None, "videos": videos}
+    return words
+
+
 def video_seconds(path: str) -> float:
     import cv2
     cap = cv2.VideoCapture(path)
@@ -204,7 +241,7 @@ def existing_words(exclude_dir: Optional[str] = None) -> Tuple[Dict[str, str], D
     failed: Dict[str, str] = {}
     for folder, name in ((ISL_DICTIONARY_DIR, "ISL dictionary"), (INCLUDE_ISL_DIR, "include_isl"),
                          (ISL_PART1_DIR, "ISL part 1"), (ISL_PART2_DIR, "ISL part 2"),
-                         (ISL_PART3_DIR, "ISL part 3"), (ISL_SIGN15_DIR, "ISL Sign 15")):
+                         (ISL_PART3_DIR, "ISL part 3"), (ISL_SIGN15_DIR, "ISL Sign 15"), (ISL_50_DIR, "ISL 50"), (ISL_ARCHIVE5_DIR, "ISL archive5")):
         if exclude_dir and os.path.abspath(folder) == os.path.abspath(exclude_dir):
             continue
         if not os.path.isfile(os.path.join(folder, "index.json")):
@@ -502,8 +539,8 @@ def archive_all_videos(words: Dict[str, Dict], root: str, out_dir: str, workers:
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--root", default=DEFAULT_ROOT, help="dataset folder")
-    ap.add_argument("--layout", choices=("include", "flat"), default="include",
-                    help="include: <Category>/<n>. <word>/*.MOV (INCLUDE); flat: <word>[-n].mp4 files in one folder")
+    ap.add_argument("--layout", choices=("include", "flat", "words", "numbered"), default="include",
+                    help="include: <Category>/<n>. <word>/*.MOV (INCLUDE); flat: <word>[-n].mp4 files in one folder; words: <word>/*.MOV (no category level); numbered: archive-5 <n>/<signer>/*.mp4")
     ap.add_argument("--max-seconds", type=float, default=60.0,
                     help="flat layout: videos longer than this are stories/lectures, not words, and are skipped")
     ap.add_argument("--dataset-name", default="INCLUDE (ravijavitharana/INCLUDE, CC0-1.0)",
@@ -528,6 +565,10 @@ def main():
     too_long: List[Tuple[str, float]] = []
     if args.layout == "flat":
         words, too_long = collect_flat_words(args.root, args.max_seconds)
+    elif args.layout == "numbered":
+        words = collect_numbered(args.root)
+    elif args.layout == "words":
+        words = collect_word_folders(args.root)
     else:
         words = collect_words(args.root)
     if args.all_videos:
@@ -548,7 +589,7 @@ def main():
             "include_isl" if source.startswith("include_isl") else \
             "ISL part 1" if source.startswith("ISL part 1") else \
             "ISL part 2" if source.startswith("ISL part 2") else \
-            "ISL part 3" if source.startswith("ISL part 3") else             "ISL Sign 15" if source.startswith("ISL Sign 15") else "synonym list"
+            "ISL part 3" if source.startswith("ISL part 3") else             "ISL Sign 15" if source.startswith("ISL Sign 15") else             "ISL 50" if source.startswith("ISL 50") else             "ISL archive5" if source.startswith("ISL archive5") else "synonym list"
         by_source[source] = by_source.get(source, 0) + 1
     for source, n in sorted(by_source.items(), key=lambda kv: -kv[1]):
         print(f"    already in {source}: {n}")

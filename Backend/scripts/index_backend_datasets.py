@@ -7,6 +7,8 @@ Scans:
 - ISL_Part2_452
 - ISL_part3_449
 - ISL_Sign_15
+- ISL_50
+- ISL_archive5
 and SignMotionDB.
 """
 
@@ -35,6 +37,8 @@ DATASET_CONFIGS = [
     ("ISL_Part2_452", "Part 2 (ISL_Part2_452)"),
     ("ISL_part3_449", "Part 3 (ISL_part3_449)"),
     ("ISL_Sign_15", "Sign 15 (ISL_Sign_15)"),
+    ("ISL_50", "ISL 50 (ISL_50)"),
+    ("ISL_archive5", "Archive 5 (ISL_archive5)"),
 ]
 
 def init_db(db_path: str):
@@ -109,7 +113,7 @@ def index_all():
 
             clip_key = entry.get("best_variant") or word
             # Skip failed clips in ISL parts 1, 2, 3
-            if folder_name.startswith(("ISL_part", "ISL_Sign")) and clip_key in failed_clips:
+            if folder_name.startswith(("ISL_part", "ISL_Sign", "ISL_50", "ISL_archive5")) and clip_key in failed_clips:
                 continue
 
             norm_gloss = word.strip().lower()
