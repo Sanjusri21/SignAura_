@@ -1,0 +1,684 @@
+{
+  "dataset": "ISL archive5",
+  "format": {
+    "file": "<word>.npz, read by SignAvatars/bridgeconn_to_smplx.convert_bridgeconn_sample",
+    "body": "(F,33,3) MediaPipe pose",
+    "left_hand": "(F,21,3)",
+    "right_hand": "(F,21,3)",
+    "coordinates": "x,y on a 1920x1080 canvas, shoulder midpoint at [960.0, 400.0], shoulder width 320.0; z = MediaPipe depth times the same scale",
+    "missing": "a hand frame of all zeros means the hand was not tracked",
+    "source_codes": {
+      "0": "missing",
+      "1": "mediapipe",
+      "2": "dwpose fill",
+      "3": "interpolated"
+    }
+  },
+  "partial": false,
+  "count": 2,
+  "clips": 2,
+  "words": {
+    "four": {
+      "file": "four.npz",
+      "label": "four",
+      "category": "4",
+      "frames": 34,
+      "fps": 27.988,
+      "duration_sec": 1.215,
+      "source": {
+        "video": "4\\Manthan\\video_20200831_114720.mp4"
+      },
+      "quality": {
+        "left_hand": {
+          "mediapipe": 1.0,
+          "dwpose": 0.0,
+          "interpolated": 0.0,
+          "missing": 0.0
+        },
+        "right_hand": {
+          "mediapipe": 1.0,
+          "dwpose": 0.0,
+          "interpolated": 0.0,
+          "missing": 0.0
+        },
+        "upper_body_low_conf": 0.0,
+        "scale": 1.2546
+      },
+      "score": 3.0,
+      "note": null,
+      "reason": "new",
+      "aliases": [],
+      "other_videos": [
+        {
+          "video": "4\\Manthan\\video_20200831_114727.mp4",
+          "frames": 38,
+          "score": 2.9211
+        },
+        {
+          "video": "4\\Meet\\good1.mp4",
+          "frames": 34,
+          "score": 2.4264
+        },
+        {
+          "video": "4\\Meet\\good3.mp4",
+          "frames": 34,
+          "score": 2.4264
+        },
+        {
+          "video": "4\\Manthan\\video_20200831_114724.mp4",
+          "frames": 36,
+          "score": 1.5973
+        },
+        {
+          "video": "4\\Keval_new\\good1.mp4",
+          "frames": 32,
+          "score": 1.5
+        },
+        {
+          "video": "4\\Sarika\\VID20200830183642.mp4",
+          "frames": 45,
+          "score": 1.5
+        },
+        {
+          "video": "4\\Yashvi_new\\good2.mp4",
+          "frames": 33,
+          "score": 1.5
+        },
+        {
+          "video": "4\\Yashvi_new\\good3.mp4",
+          "frames": 43,
+          "score": 1.5
+        },
+        {
+          "video": "4\\Mitesh\\VID20200830190745.mp4",
+          "frames": 45,
+          "score": 1.4778
+        },
+        {
+          "video": "4\\Sarika\\VID20200830183658.mp4",
+          "frames": 45,
+          "score": 1.4778
+        },
+        {
+          "video": "4\\Siddh\\VID_20201122_145722.mp4",
+          "frames": 48,
+          "score": 1.4583
+        },
+        {
+          "video": "4\\Kapil\\VID-20200829-WA0046.mp4",
+          "frames": 46,
+          "score": 1.4565
+        },
+        {
+          "video": "4\\Yashvi\\VID_20201117_193402.mp4",
+          "frames": 35,
+          "score": 1.4429
+        },
+        {
+          "video": "4\\Siddh\\VID_20201122_145726.mp4",
+          "frames": 51,
+          "score": 1.4412
+        },
+        {
+          "video": "4\\Kapil\\VID-20200829-WA0034.mp4",
+          "frames": 44,
+          "score": 1.4318
+        },
+        {
+          "video": "4\\Yashvi_new\\good1.mp4",
+          "frames": 44,
+          "score": 1.4318
+        },
+        {
+          "video": "4\\Meet\\good2.mp4",
+          "frames": 36,
+          "score": 1.4167
+        },
+        {
+          "video": "4\\Yashvi\\VID_20201117_193406.mp4",
+          "frames": 42,
+          "score": 1.4167
+        },
+        {
+          "video": "4\\Kapil\\VID-20200829-WA0041.mp4",
+          "frames": 50,
+          "score": 1.4
+        },
+        {
+          "video": "4\\Sarika\\VID20200830183636.mp4",
+          "frames": 45,
+          "score": 1.3889
+        },
+        {
+          "video": "4\\Keval_new\\good3.mp4",
+          "frames": 24,
+          "score": 1.375
+        },
+        {
+          "video": "4\\Keval\\VID_20201115_222048.mp4",
+          "frames": 28,
+          "score": 1.3393
+        },
+        {
+          "video": "4\\Deep\\good.mp4",
+          "frames": 37,
+          "score": 1.3378
+        },
+        {
+          "video": "4\\Priya\\VID20200830175908.mp4",
+          "frames": 42,
+          "score": 1.3215
+        },
+        {
+          "video": "4\\Mitesh\\VID20200830190719.mp4",
+          "frames": 44,
+          "score": 1.3182
+        },
+        {
+          "video": "4\\Aesha\\20201013_211330.mp4",
+          "frames": 41,
+          "score": 1.317
+        },
+        {
+          "video": "4\\Kevin\\20201013_212254.mp4",
+          "frames": 36,
+          "score": 1.2916
+        },
+        {
+          "video": "4\\Mitesh\\VID20200830190713.mp4",
+          "frames": 48,
+          "score": 1.2813
+        },
+        {
+          "video": "4\\Smit\\VID20200830185622.mp4",
+          "frames": 41,
+          "score": 1.2805
+        },
+        {
+          "video": "4\\Deep\\good3.mp4",
+          "frames": 38,
+          "score": 1.2763
+        },
+        {
+          "video": "4\\Priya\\VID20200830185059.mp4",
+          "frames": 47,
+          "score": 1.234
+        },
+        {
+          "video": "4\\Smit\\VID20200830181722.mp4",
+          "frames": 44,
+          "score": 1.2273
+        },
+        {
+          "video": "4\\Aesha\\20201013_211327.mp4",
+          "frames": 35,
+          "score": 1.2
+        },
+        {
+          "video": "4\\Riya\\VID_20201122_145533.mp4",
+          "frames": 36,
+          "score": 1.1944
+        },
+        {
+          "video": "4\\Siddh\\VID_20201122_145737.mp4",
+          "frames": 51,
+          "score": 1.1863
+        },
+        {
+          "video": "4\\Keval\\VID_20201115_222044.mp4",
+          "frames": 33,
+          "score": 1.1364
+        },
+        {
+          "video": "4\\Tanish\\good2.mp4",
+          "frames": 48,
+          "score": 1.1354
+        },
+        {
+          "video": "4\\Aesha\\20201013_211322.mp4",
+          "frames": 45,
+          "score": 1.1334
+        },
+        {
+          "video": "4\\Smit\\VID20200830185616.mp4",
+          "frames": 49,
+          "score": 1.1326
+        },
+        {
+          "video": "4\\Riya\\VID_20201122_145517.mp4",
+          "frames": 37,
+          "score": 1.1216
+        },
+        {
+          "video": "4\\Priya\\VID20200830184944.mp4",
+          "frames": 51,
+          "score": 1.1177
+        },
+        {
+          "video": "4\\Deep\\good2.mp4",
+          "frames": 52,
+          "score": 1.0577
+        },
+        {
+          "video": "4\\Riya\\VID_20201122_145520.mp4",
+          "frames": 35,
+          "score": 1.0286
+        },
+        {
+          "video": "4\\Siddh\\VID_20201122_145748.mp4",
+          "frames": 59,
+          "score": 1.0254
+        },
+        {
+          "video": "4\\Tanish\\good1.mp4",
+          "frames": 44,
+          "score": 1.0227
+        },
+        {
+          "video": "4\\Tanish\\good3.mp4",
+          "frames": 55,
+          "score": 0.9909
+        },
+        {
+          "video": "4\\Riya\\VID_20201122_145524.mp4",
+          "frames": 40,
+          "score": 0.9375
+        },
+        {
+          "video": "4\\Siddh\\VID_20201122_145701.mp4",
+          "frames": 47,
+          "score": 0.9255
+        },
+        {
+          "video": "4\\Siddh\\VID_20201122_145732.mp4",
+          "frames": 50,
+          "score": 0.91
+        },
+        {
+          "video": "4\\Keval_new\\good2.mp4",
+          "frames": 33,
+          "score": 0.9092
+        },
+        {
+          "video": "4\\Siddh\\VID_20201122_145716.mp4",
+          "frames": 47,
+          "score": 0.8511
+        },
+        {
+          "video": "4\\Aesha\\20201013_211158.mp4",
+          "frames": 61,
+          "score": 0.8033
+        },
+        {
+          "video": "4\\Aesha\\20201013_211204.mp4",
+          "frames": 67,
+          "score": 0.7836
+        },
+        {
+          "video": "4\\Kevin\\20201013_212308.mp4",
+          "frames": 56,
+          "score": 0.7769
+        },
+        {
+          "video": "4\\Siddh\\VID_20201122_145743.mp4",
+          "frames": 41,
+          "score": 0.7683
+        },
+        {
+          "video": "4\\Kevin\\20201013_212315.mp4",
+          "frames": 53,
+          "score": 0.7359
+        },
+        {
+          "video": "4\\Riya\\VID_20201122_145513.mp4",
+          "frames": 30,
+          "score": 0.7001
+        },
+        {
+          "video": "4\\Kevin\\20201013_212303.mp4",
+          "frames": 44,
+          "score": 0.6137
+        },
+        {
+          "video": "4\\Kevin\\20201013_212239.mp4",
+          "frames": 86,
+          "score": 0.3489
+        }
+      ]
+    },
+    "nine": {
+      "file": "nine.npz",
+      "label": "nine",
+      "category": "9",
+      "frames": 34,
+      "fps": 30.457,
+      "duration_sec": 1.116,
+      "source": {
+        "video": "9\\Manthan\\video_20200831_115008.mp4"
+      },
+      "quality": {
+        "left_hand": {
+          "mediapipe": 1.0,
+          "dwpose": 0.0,
+          "interpolated": 0.0,
+          "missing": 0.0
+        },
+        "right_hand": {
+          "mediapipe": 1.0,
+          "dwpose": 0.0,
+          "interpolated": 0.0,
+          "missing": 0.0
+        },
+        "upper_body_low_conf": 0.0,
+        "scale": 1.29
+      },
+      "score": 3.0,
+      "note": null,
+      "reason": "new",
+      "aliases": [],
+      "other_videos": [
+        {
+          "video": "9\\Manthan\\video_20200831_115011.mp4",
+          "frames": 43,
+          "score": 2.907
+        },
+        {
+          "video": "9\\Manthan\\video_20200831_115014.mp4",
+          "frames": 47,
+          "score": 2.8935
+        },
+        {
+          "video": "9\\Keval_new\\yes1.mp4",
+          "frames": 32,
+          "score": 2.8907
+        },
+        {
+          "video": "9\\Keval_new\\yes3.mp4",
+          "frames": 34,
+          "score": 2.7059
+        },
+        {
+          "video": "9\\Keval\\VID_20201115_222218.mp4",
+          "frames": 34,
+          "score": 1.8089
+        },
+        {
+          "video": "9\\Keval_new\\yes2.mp4",
+          "frames": 30,
+          "score": 1.55
+        },
+        {
+          "video": "9\\Aesha\\20201013_211417.mp4",
+          "frames": 38,
+          "score": 1.5
+        },
+        {
+          "video": "9\\Aesha\\20201013_211426.mp4",
+          "frames": 36,
+          "score": 1.5
+        },
+        {
+          "video": "9\\Aesha\\20201013_211430.mp4",
+          "frames": 45,
+          "score": 1.5
+        },
+        {
+          "video": "9\\Deep\\yes.mp4",
+          "frames": 41,
+          "score": 1.5
+        },
+        {
+          "video": "9\\Kapil\\VID-20200829-WA0031.mp4",
+          "frames": 42,
+          "score": 1.5
+        },
+        {
+          "video": "9\\Kapil\\VID-20200829-WA0040.mp4",
+          "frames": 52,
+          "score": 1.5
+        },
+        {
+          "video": "9\\Kapil\\VID-20200829-WA0045.mp4",
+          "frames": 51,
+          "score": 1.5
+        },
+        {
+          "video": "9\\Keval\\VID_20201115_222214.mp4",
+          "frames": 33,
+          "score": 1.5
+        },
+        {
+          "video": "9\\Kevin\\20201013_212444.mp4",
+          "frames": 42,
+          "score": 1.5
+        },
+        {
+          "video": "9\\Meet\\yes2.mp4",
+          "frames": 38,
+          "score": 1.5
+        },
+        {
+          "video": "9\\Meet\\yes1.mp4",
+          "frames": 39,
+          "score": 1.5
+        },
+        {
+          "video": "9\\Mitesh\\VID20200830190404.mp4",
+          "frames": 53,
+          "score": 1.5
+        },
+        {
+          "video": "9\\Priya\\VID20200830184411.mp4",
+          "frames": 53,
+          "score": 1.5
+        },
+        {
+          "video": "9\\Priya\\VID20200830184404.mp4",
+          "frames": 58,
+          "score": 1.5
+        },
+        {
+          "video": "9\\Riya\\VID_20201123_142457.mp4",
+          "frames": 26,
+          "score": 1.5
+        },
+        {
+          "video": "9\\Sarika\\VID20200830182934.mp4",
+          "frames": 43,
+          "score": 1.5
+        },
+        {
+          "video": "9\\Siddh\\VID_20201123_142633.mp4",
+          "frames": 30,
+          "score": 1.5
+        },
+        {
+          "video": "9\\Sarika\\VID20200830182953.mp4",
+          "frames": 40,
+          "score": 1.5
+        },
+        {
+          "video": "9\\Siddh\\VID_20201123_142640.mp4",
+          "frames": 29,
+          "score": 1.5
+        },
+        {
+          "video": "9\\Siddh\\VID_20201123_142645.mp4",
+          "frames": 32,
+          "score": 1.5
+        },
+        {
+          "video": "9\\Siddh\\VID_20201123_142649(1).mp4",
+          "frames": 34,
+          "score": 1.5
+        },
+        {
+          "video": "9\\Siddh\\VID_20201123_142649.mp4",
+          "frames": 34,
+          "score": 1.5
+        },
+        {
+          "video": "9\\Siddh\\VID_20201123_142653.mp4",
+          "frames": 30,
+          "score": 1.5
+        },
+        {
+          "video": "9\\Siddh\\VID_20201123_142656.mp4",
+          "frames": 33,
+          "score": 1.5
+        },
+        {
+          "video": "9\\Siddh\\VID_20201123_142700.mp4",
+          "frames": 34,
+          "score": 1.5
+        },
+        {
+          "video": "9\\Smit\\VID20200830182059.mp4",
+          "frames": 43,
+          "score": 1.5
+        },
+        {
+          "video": "9\\Yashvi\\VID_20201117_193554.mp4",
+          "frames": 42,
+          "score": 1.5
+        },
+        {
+          "video": "9\\Yashvi_new\\yes1.mp4",
+          "frames": 34,
+          "score": 1.5
+        },
+        {
+          "video": "9\\Yashvi_new\\yes2.mp4",
+          "frames": 49,
+          "score": 1.5
+        },
+        {
+          "video": "9\\Yashvi_new\\yes3.mp4",
+          "frames": 42,
+          "score": 1.5
+        },
+        {
+          "video": "9\\Kevin\\20201013_212449.mp4",
+          "frames": 41,
+          "score": 1.4756
+        },
+        {
+          "video": "9\\Riya\\VID_20201123_142453(1).mp4",
+          "frames": 36,
+          "score": 1.4722
+        },
+        {
+          "video": "9\\Riya\\VID_20201123_142453.mp4",
+          "frames": 36,
+          "score": 1.4722
+        },
+        {
+          "video": "9\\Yashvi\\VID_20201117_193558.mp4",
+          "frames": 46,
+          "score": 1.4674
+        },
+        {
+          "video": "9\\Aesha\\20201013_211433.mp4",
+          "frames": 40,
+          "score": 1.4625
+        },
+        {
+          "video": "9\\Riya\\VID_20201123_142507.mp4",
+          "frames": 33,
+          "score": 1.4394
+        },
+        {
+          "video": "9\\Smit\\VID20200830185250.mp4",
+          "frames": 52,
+          "score": 1.4327
+        },
+        {
+          "video": "9\\Riya\\VID_20201123_142500.mp4",
+          "frames": 28,
+          "score": 1.4286
+        },
+        {
+          "video": "9\\Deep\\yes3.mp4",
+          "frames": 45,
+          "score": 1.4222
+        },
+        {
+          "video": "9\\Meet\\yes3.mp4",
+          "frames": 40,
+          "score": 1.375
+        },
+        {
+          "video": "9\\Mitesh\\VID20200830190419.mp4",
+          "frames": 48,
+          "score": 1.3645
+        },
+        {
+          "video": "9\\Deep\\yes2.mp4",
+          "frames": 44,
+          "score": 1.3637
+        },
+        {
+          "video": "9\\Smit\\VID20200830185245.mp4",
+          "frames": 37,
+          "score": 1.3514
+        },
+        {
+          "video": "9\\Tanish\\yes2.mp4",
+          "frames": 41,
+          "score": 1.3414
+        },
+        {
+          "video": "9\\Sarika\\VID20200830182947.mp4",
+          "frames": 46,
+          "score": 1.3369
+        },
+        {
+          "video": "9\\Kevin\\20201013_212453.mp4",
+          "frames": 47,
+          "score": 1.3084
+        },
+        {
+          "video": "9\\Aesha\\20201013_211422.mp4",
+          "frames": 55,
+          "score": 1.2818
+        },
+        {
+          "video": "9\\Tanish\\yes3.mp4",
+          "frames": 47,
+          "score": 1.2553
+        },
+        {
+          "video": "9\\Mitesh\\VID20200830190414.mp4",
+          "frames": 59,
+          "score": 1.2543
+        },
+        {
+          "video": "9\\Priya\\VID20200830180435.mp4",
+          "frames": 45,
+          "score": 1.1778
+        },
+        {
+          "video": "9\\Kevin\\20201013_212502.mp4",
+          "frames": 34,
+          "score": 1.1618
+        },
+        {
+          "video": "9\\Tanish\\yes1.mp4",
+          "frames": 48,
+          "score": 1.0938
+        },
+        {
+          "video": "9\\Kevin\\20201013_212458.mp4",
+          "frames": 60,
+          "score": 0.6417
+        }
+      ]
+    }
+  },
+  "aliases": {},
+  "skipped_existing": {
+    "eleven": "ISL dictionary",
+    "ten": "ISL dictionary"
+  },
+  "failures": []
+}

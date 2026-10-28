@@ -1,0 +1,3 @@
+word,label,frames,fps,duration_sec,left_raw_missing_pct,left_missing_pct,left_filled_pct,left_inframe_pct,left_jitter,right_raw_missing_pct,right_missing_pct,right_filled_pct,right_inframe_pct,right_jitter,dominant_hand,body_lowconf_pct,trim_start,trim_end,trimmed_duration_sec,flags,status,variant_of
+four,four,34,27.99,1.21,0.0,0.0,0.0,0.0,0.0015,0.0,0.0,0.0,73.5,0.0121,right,0.0,2,21,0.68,,ok,
+nine,nine,34,30.46,1.12,0.0,0.0,0.0,0.0,0.0011,0.0,0.0,0.0,100.0,0.011,right,0.0,0,34,1.12,,ok,
