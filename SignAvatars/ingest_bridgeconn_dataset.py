@@ -35,7 +35,13 @@ SHARDS_DIR = os.path.join(DEFAULT_ROOT, "shards")
 EXTRACTED_POSES_DIR = os.path.join(DEFAULT_ROOT, "extracted", "poses")
 INDEX_DIR = os.path.join(DEFAULT_ROOT, "index")
 CACHE_SMPLX_DIR = os.path.join(DEFAULT_ROOT, "cache", "smplx")
-DB_PATH = os.path.join(INDEX_DIR, "bridgeconn.db")
+REPO_ROOT = os.path.dirname(BASE_DIR)
+LOCAL_DB_PATH = os.path.join(REPO_ROOT, "Backend", "datasets", "bridgeconn.db")
+DB_PATH = (
+    os.environ.get("BRIDGECONN_DB_PATH")
+    or (LOCAL_DB_PATH if os.path.isfile(LOCAL_DB_PATH) else None)
+    or os.path.join(INDEX_DIR, "bridgeconn.db")
+)
 
 try:
     os.makedirs(SHARDS_DIR, exist_ok=True)

@@ -30,15 +30,21 @@ from ingest_bridgeconn_dataset import sanitize_gloss, normalize_gloss
 
 logger = logging.getLogger("BridgeConnService")
 
+REPO_ROOT = os.path.dirname(BASE_DIR)
+LOCAL_DB_PATH = os.path.join(REPO_ROOT, "Backend", "datasets", "bridgeconn.db")
 DEFAULT_ROOT = os.environ.get("BRIDGECONN_DATA_DIR", r"D:\SignAuraData\BridgeConn")
 INDEX_DIR = os.path.join(DEFAULT_ROOT, "index")
-DB_PATH = os.path.join(INDEX_DIR, "bridgeconn.db")
+EXTERNAL_DB_PATH = os.path.join(INDEX_DIR, "bridgeconn.db")
+DB_PATH = (
+    os.environ.get("BRIDGECONN_DB_PATH")
+    or (LOCAL_DB_PATH if os.path.isfile(LOCAL_DB_PATH) else None)
+    or EXTERNAL_DB_PATH
+)
 CACHE_SMPLX_DIR = os.path.join(DEFAULT_ROOT, "cache", "smplx")
 LOCAL_NPY_DIR = os.path.join(BASE_DIR, "outputs", "npy")
 
 # Per-word landmark files from Backend/scripts/extract_isl_keypoints.py (primary source),
 # then the validated SMPL-X pose parameters in SignMotionDB (fallback).
-REPO_ROOT = os.path.dirname(BASE_DIR)
 ISL_DICTIONARY_DIR = os.environ.get("ISL_DICTIONARY_DIR", os.path.join(REPO_ROOT, "Backend", "datasets", "isl_dictionary"))
 SIGN_MOTION_DB_DIR = os.environ.get("SIGN_MOTION_DB_DIR", os.path.join(REPO_ROOT, "SignMotionDB"))
 # Converted vertices for both live inside the repo so the avatar works without the D: data drive
@@ -78,17 +84,23 @@ _convert_lock = threading.Lock()
 _file_cache: Dict[str, Tuple[float, Any]] = {}
 
 
-def get_db_connection(db_path: str = DB_PATH) -> Optional[sqlite3.Connection]:
+def get_db_connection(db_path: Optional[str] = None) -> Optional[sqlite3.Connection]:
     """Returns SQLite connection with row factory and WAL mode."""
-    if not os.path.exists(db_path):
+    target_path = db_path or DB_PATH
+    if not target_path or not os.path.exists(target_path):
+        for candidate in [LOCAL_DB_PATH, EXTERNAL_DB_PATH]:
+            if os.path.exists(candidate):
+                target_path = candidate
+                break
+    if not target_path or not os.path.exists(target_path):
         return None
     try:
-        conn = sqlite3.connect(db_path, timeout=15.0)
+        conn = sqlite3.connect(target_path, timeout=15.0)
         conn.row_factory = sqlite3.Row
         conn.execute("PRAGMA journal_mode=WAL;")
         return conn
     except Exception as e:
-        logger.error(f"Failed to open database at {db_path}: {e}")
+        logger.error(f"Failed to open database at {target_path}: {e}")
         return None
 
 
