@@ -115,13 +115,99 @@ def smooth_landmarks(landmarks: np.ndarray, alpha: float = 0.65) -> np.ndarray:
 
 
 # ==============================================================================
+# 1b. DEPTH CONSTRAINTS (MediaPipe depth of shoulders/elbows/wrists is weak)
+# ==============================================================================
+
+# Anatomical limits, in shoulder widths (SW)
+UPPER_ARM_SW = 1.3          # shoulder -> elbow
+FOREARM_SW = 1.3            # elbow -> wrist
+TORSO_SW = 2.0              # hip -> shoulder (leaves room for leaning)
+WRIST_MIN_FRONT_SW = 0.50   # wrist centre must stay this far in front of the chest plane while over the torso
+ELBOW_MIN_FRONT_SW = 0.10
+TORSO_FOOTPRINT_SW = (0.30, 0.55)   # |x| from the chest centre: full constraint inside, none beyond (arms hanging at the sides stay free)
+DEPTH_SMOOTH_SEC = 0.06             # zero-phase gaussian sigma for the depth of elbows/wrists
+
+
+def _limit_bone_depth(parent: np.ndarray, child: np.ndarray, max_len: float) -> np.ndarray:
+    """New z for `child` so the bone parent->child is no longer than max_len; x/y never change.
+    The sign of the original depth difference (towards / away from the camera) is kept."""
+    l2 = np.linalg.norm(child[:, :2] - parent[:, :2], axis=1)
+    allowed = np.sqrt(np.maximum(max_len ** 2 - l2 ** 2, 0.0))
+    dz = np.clip(child[:, 2] - parent[:, 2], -allowed, allowed)
+    return parent[:, 2] + dz
+
+
+def _smoothstep(x: np.ndarray, lo: float, hi: float) -> np.ndarray:
+    t = np.clip((x - lo) / (hi - lo), 0.0, 1.0)
+    return t * t * (3.0 - 2.0 * t)
+
+
+def constrain_arm_depth(body: np.ndarray, lh: np.ndarray, rh: np.ndarray, fps: float) -> None:
+    """
+    In-place depth clean-up of the arms in SMPL-X coordinates (+Z = forward). x and y are never touched.
+      1. Bone-length limit: shoulder->elbow->wrist (and hip->shoulder) cannot be longer in 3D than the human body
+         allows, which removes the inflated depth of the video datasets.
+      2. Temporal smoothing of the depth of elbows and wrists (median + zero-phase gaussian), then the limit again.
+      3. Chest-plane limit: while a wrist/elbow is over the torso it stays a minimum distance in front of the chest.
+    Hands are moved along with their wrist; the shape of the hand is left as tracked.
+    """
+    from scipy.ndimage import gaussian_filter1d
+    from scipy.signal import medfilt
+
+    n = len(body)
+    sw = float(np.median(np.linalg.norm(body[:, 11, :2] - body[:, 12, :2], axis=1)))
+    if n == 0 or sw < 1.0:
+        return
+    old_wrist_z = body[:, [15, 16], 2].copy()
+
+    def limit_all():
+        for sh, hip in ((11, 23), (12, 24)):
+            body[:, sh, 2] = _limit_bone_depth(body[:, hip], body[:, sh], TORSO_SW * sw)
+        for sh, el, wr in ((11, 13, 15), (12, 14, 16)):
+            body[:, el, 2] = _limit_bone_depth(body[:, sh], body[:, el], UPPER_ARM_SW * sw)
+            body[:, wr, 2] = _limit_bone_depth(body[:, el], body[:, wr], FOREARM_SW * sw)
+
+    limit_all()
+
+    # temporal smoothing of the depth relative to the chest, so the arms do not jump back and forth
+    chest = body[:, [11, 12], 2].mean(axis=1)
+    sigma = max(DEPTH_SMOOTH_SEC * fps, 1.0)
+    kernel = 5 if n >= 5 else 1
+    for j in (13, 14, 15, 16):
+        rel = body[:, j, 2] - chest
+        if kernel > 1:
+            rel = medfilt(rel, kernel)
+        body[:, j, 2] = chest + gaussian_filter1d(rel, sigma, mode="nearest")
+    limit_all()
+
+    # chest plane: smooth weight = 1 over the torso, fading to 0 beside it; only from the hips up past the head
+    chest = body[:, [11, 12], 2].mean(axis=1)
+    cx = body[:, [11, 12], 0].mean(axis=1)
+    hip_y = body[:, [23, 24], 1].mean(axis=1)
+    sh_y = body[:, [11, 12], 1].mean(axis=1)
+    for j, front in ((13, ELBOW_MIN_FRONT_SW), (14, ELBOW_MIN_FRONT_SW), (15, WRIST_MIN_FRONT_SW), (16, WRIST_MIN_FRONT_SW)):
+        w_x = 1.0 - _smoothstep(np.abs(body[:, j, 0] - cx) / sw, *TORSO_FOOTPRINT_SW)
+        torso_len = np.maximum(sh_y - hip_y, 0.5 * sw)
+        w_y = _smoothstep(body[:, j, 1], hip_y + 0.35 * torso_len, hip_y + 0.6 * torso_len) \
+            * (1.0 - _smoothstep(body[:, j, 1], sh_y + 1.2 * sw, sh_y + 1.6 * sw))
+        floor = chest + front * sw
+        body[:, j, 2] += np.maximum(floor - body[:, j, 2], 0.0) * w_x * w_y
+
+    # keep each hand attached to its wrist
+    for hand, col in ((lh, 0), (rh, 1)):
+        present = np.abs(hand).sum(axis=(1, 2)) > 1e-4
+        hand[present, :, 2] += (body[present, 15 + col, 2] - old_wrist_z[present, col])[:, None]
+
+
+# ==============================================================================
 # 2. BRIDGECONN LANDMARK PREPROCESSING & ISOTROPIC COORDINATE CONVERSION
 # ==============================================================================
 
 def clean_and_preprocess_sample(
     npz_path: str,
     smoothing_enabled: bool = True,
-    smoothing_alpha: float = 0.70
+    smoothing_alpha: float = 0.70,
+    depth_constraints: bool = True
 ) -> Dict[str, Any]:
     """
     Loads BridgeConn sample .npz file, cleans missing/zero frames via temporal interpolation,
@@ -228,6 +314,9 @@ def clean_and_preprocess_sample(
     rh_smplx[:, :, 1] = -rh_clean[:, :, 1]
     rh_smplx[:, :, 2] = -rh_clean[:, :, 2] * DEPTH_SCALE
 
+    if depth_constraints:
+        constrain_arm_depth(body_smplx, lh_smplx, rh_smplx, fps)
+
     return {
         "frames": frames,
         "fps": fps,
@@ -257,6 +346,12 @@ class SMPLXRetargeter:
     def __init__(self, device: Optional[torch.device] = None):
         self.device = device or torch.device("cuda" if torch.cuda.is_available() else "cpu")
         logger.info(f"Initializing SMPL-X model on device: {self.device}")
+        model_file = os.path.join(HUMAN_MODEL_PATH, "smplx", "SMPLX_NEUTRAL.npz")
+        if not os.path.isfile(model_file):
+            raise FileNotFoundError(
+                f"SMPL-X body model not found at {model_file}. "
+                "Download SMPLX_NEUTRAL.npz (licence registration required) from https://smpl-x.is.tue.mpg.de"
+            )
 
         layer_arg = {
             "create_global_orient": False,
@@ -915,44 +1010,7 @@ class SMPLXRetargeter:
         rh_poses = np.array(rh_poses, dtype=np.float32)
         transls = np.array(transls, dtype=np.float32)
 
-        logger.info(f"Running SMPL-X forward pass on {self.device}...")
-        all_vertices = []
-
-        with torch.no_grad():
-            for start in range(0, frames, batch_size):
-                end = min(start + batch_size, frames)
-                b_size = end - start
-
-                b_go = torch.tensor(global_orients[start:end], device=self.device)
-                b_bp = torch.tensor(body_poses[start:end], device=self.device)
-                b_lhp = torch.tensor(lh_poses[start:end], device=self.device)
-                b_rhp = torch.tensor(rh_poses[start:end], device=self.device)
-                b_tr = torch.tensor(transls[start:end], device=self.device)
-
-                b_betas = torch.zeros((b_size, 10), dtype=torch.float32, device=self.device)
-                b_expr = torch.zeros((b_size, 10), dtype=torch.float32, device=self.device)
-                b_jaw = torch.zeros((b_size, 3), dtype=torch.float32, device=self.device)
-                b_leye = torch.zeros((b_size, 3), dtype=torch.float32, device=self.device)
-                b_reye = torch.zeros((b_size, 3), dtype=torch.float32, device=self.device)
-
-                output = self.model(
-                    global_orient=b_go,
-                    body_pose=b_bp,
-                    left_hand_pose=b_lhp,
-                    right_hand_pose=b_rhp,
-                    transl=b_tr,
-                    betas=b_betas,
-                    expression=b_expr,
-                    jaw_pose=b_jaw,
-                    leye_pose=b_leye,
-                    reye_pose=b_reye,
-                    return_verts=True
-                )
-
-                verts_batch = output.vertices.cpu().numpy().astype(np.float32)
-                all_vertices.append(verts_batch)
-
-        vertices = np.concatenate(all_vertices, axis=0)  # (frames, 10475, 3)
+        vertices = self.params_to_vertices(global_orients, body_poses, lh_poses, rh_poses, transls, batch_size)
 
         pose_params = {
             "global_orient": global_orients,
@@ -977,6 +1035,56 @@ class SMPLXRetargeter:
         }
 
         return vertices, metadata, pose_params
+
+    def params_to_vertices(
+        self,
+        global_orients: np.ndarray,
+        body_poses: np.ndarray,
+        lh_poses: np.ndarray,
+        rh_poses: np.ndarray,
+        transls: np.ndarray,
+        batch_size: int = 32
+    ) -> np.ndarray:
+        """Runs the SMPL-X forward pass on pose parameters, returning (frames, 10475, 3) vertices."""
+        frames = len(global_orients)
+        logger.info(f"Running SMPL-X forward pass on {self.device}...")
+        all_vertices = []
+
+        with torch.no_grad():
+            for start in range(0, frames, batch_size):
+                end = min(start + batch_size, frames)
+                b_size = end - start
+
+                b_go = torch.tensor(global_orients[start:end], dtype=torch.float32, device=self.device)
+                b_bp = torch.tensor(body_poses[start:end], dtype=torch.float32, device=self.device)
+                b_lhp = torch.tensor(lh_poses[start:end], dtype=torch.float32, device=self.device)
+                b_rhp = torch.tensor(rh_poses[start:end], dtype=torch.float32, device=self.device)
+                b_tr = torch.tensor(transls[start:end], dtype=torch.float32, device=self.device)
+
+                b_betas = torch.zeros((b_size, 10), dtype=torch.float32, device=self.device)
+                b_expr = torch.zeros((b_size, 10), dtype=torch.float32, device=self.device)
+                b_jaw = torch.zeros((b_size, 3), dtype=torch.float32, device=self.device)
+                b_leye = torch.zeros((b_size, 3), dtype=torch.float32, device=self.device)
+                b_reye = torch.zeros((b_size, 3), dtype=torch.float32, device=self.device)
+
+                output = self.model(
+                    global_orient=b_go,
+                    body_pose=b_bp,
+                    left_hand_pose=b_lhp,
+                    right_hand_pose=b_rhp,
+                    transl=b_tr,
+                    betas=b_betas,
+                    expression=b_expr,
+                    jaw_pose=b_jaw,
+                    leye_pose=b_leye,
+                    reye_pose=b_reye,
+                    return_verts=True
+                )
+
+                verts_batch = output.vertices.cpu().numpy().astype(np.float32)
+                all_vertices.append(verts_batch)
+
+        return np.concatenate(all_vertices, axis=0)  # (frames, 10475, 3)
 
 
 # ==============================================================================

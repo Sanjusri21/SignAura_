@@ -1,29 +1,71 @@
-import React, { useState, useMemo } from 'react';
-import { 
-  Copy, 
-  Check, 
-  FileEdit, 
-  Download, 
-  Sparkles, 
-  FileText, 
+import React, { useState, useMemo, useEffect, useRef } from 'react';
+import {
+  Copy,
+  Check,
+  FileEdit,
+  Download,
+  Sparkles,
+  FileText,
   Code2,
   ArrowRight,
-  Layers
+  Layers,
+  Play,
+  Pause,
+  RotateCcw
 } from 'lucide-react';
 import { GlossToken, VideoProject } from '../../types';
 import { GlassButton } from '../ui/GlassButton';
 import { translateEnglishToISLGloss } from '../../lib/islGrammar';
+import { hasSignMotion } from './SignAvatar3D';
 
 interface TranscriptPanelProps {
   project: VideoProject;
   activeTokenId?: string;
+  isPlaying?: boolean;
+  onTogglePlay?: () => void;
   onReplay?: () => void;
   onSelectToken?: (token: GlossToken) => void;
 }
 
+// Comparable forms of a transcript word: "Don't," -> ["dont", "don"]
+const wordForms = (word: string): string[] => {
+  const clean = word.toLowerCase().replace(/[^a-z0-9']/g, '');
+  if (!clean.replace(/'/g, '')) return [];
+  return [clean.replace(/'/g, ''), clean.split("'")[0]];
+};
+
+/**
+ * Maps each gloss token to the transcript word it came from. Tokens arrive in ISL order
+ * and as stems ("striv", "jame"), so each takes the first unused exact match, falling back
+ * to a prefix match for stems long enough to be unambiguous.
+ */
+const mapTokensToWords = (parts: string[], tokens: GlossToken[]): Map<string, number> => {
+  const forms = parts.map(wordForms);
+  const used = new Set<number>();
+  const mapping = new Map<string, number>();
+  const findUnused = (matches: (form: string) => boolean) =>
+    forms.findIndex((f, i) => !used.has(i) && f.some(matches));
+
+  for (const token of tokens) {
+    const target = (token.word || '').toLowerCase().replace(/[^a-z0-9]/g, '');
+    if (!target) continue;
+    let index = findUnused((f) => f === target);
+    if (index < 0 && target.length >= 3) {
+      index = findUnused((f) => f.startsWith(target));
+    }
+    if (index >= 0) {
+      used.add(index);
+      mapping.set(token.id, index);
+    }
+  }
+  return mapping;
+};
+
 export const TranscriptPanel: React.FC<TranscriptPanelProps> = ({
   project,
   activeTokenId,
+  isPlaying = false,
+  onTogglePlay,
   onReplay,
   onSelectToken
 }) => {
@@ -31,11 +73,58 @@ export const TranscriptPanel: React.FC<TranscriptPanelProps> = ({
   const [copied, setCopied] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [editableTranscript, setEditableTranscript] = useState(project.transcript);
+  const transcriptScrollRef = useRef<HTMLDivElement>(null);
+  const activeWordRef = useRef<HTMLSpanElement>(null);
+
+  useEffect(() => {
+    setEditableTranscript(project.transcript);
+    setIsEditing(false);
+  }, [project.transcript]);
 
   // Compute live real ISL grammar gloss and tagged tokens
   const islResult = useMemo(() => {
     return translateEnglishToISLGloss(editableTranscript);
   }, [editableTranscript]);
+
+  // Word-level sync between the transcript and the gloss token the avatar is signing
+  const transcriptParts = useMemo(() => editableTranscript.split(/(\s+)/), [editableTranscript]);
+  const tokenWordIndex = useMemo(
+    () => mapTokensToWords(transcriptParts, project.glossTokens),
+    [transcriptParts, project.glossTokens]
+  );
+  const wordTokens = useMemo(() => {
+    const byWord = new Map<number, GlossToken>();
+    project.glossTokens.forEach((t) => {
+      const index = tokenWordIndex.get(t.id);
+      if (index !== undefined) byWord.set(index, t);
+    });
+    return byWord;
+  }, [tokenWordIndex, project.glossTokens]);
+
+  const activeTokenIndex = project.glossTokens.findIndex((t) => t.id === activeTokenId);
+  const activeToken = activeTokenIndex >= 0 ? project.glossTokens[activeTokenIndex] : undefined;
+  const activeWordIndex = activeTokenId ? tokenWordIndex.get(activeTokenId) : undefined;
+  const activeHasMotion = activeToken ? hasSignMotion(activeToken.gloss) : false;
+  const signedWordIndexes = useMemo(() => {
+    const signed = new Set<number>();
+    project.glossTokens.slice(0, Math.max(0, activeTokenIndex)).forEach((t) => {
+      const index = tokenWordIndex.get(t.id);
+      if (index !== undefined) signed.add(index);
+    });
+    return signed;
+  }, [project.glossTokens, activeTokenIndex, tokenWordIndex]);
+
+  // Keep the glowing word visible inside the transcript box without scrolling the page
+  useEffect(() => {
+    const container = transcriptScrollRef.current;
+    const word = activeWordRef.current;
+    if (!container || !word) return;
+    // The container is position: relative, so offsetTop is measured from its top edge
+    const top = word.offsetTop;
+    if (top < container.scrollTop || top + word.offsetHeight > container.scrollTop + container.clientHeight) {
+      container.scrollTo({ top: top - container.clientHeight / 2, behavior: 'smooth' });
+    }
+  }, [activeWordIndex]);
 
   const handleCopy = () => {
     let textToCopy = '';
@@ -135,13 +224,33 @@ export const TranscriptPanel: React.FC<TranscriptPanelProps> = ({
                 <FileText className="w-3 h-3 text-[#22D3EE]" />
                 English Speech Input
               </span>
-              <button
-                onClick={() => setIsEditing(!isEditing)}
-                className="text-[#22D3EE] hover:underline flex items-center gap-1 font-medium text-[11px]"
-              >
-                <FileEdit className="w-3 h-3" />
-                <span>{isEditing ? 'Save edits' : 'Edit text'}</span>
-              </button>
+              <div className="flex items-center gap-3">
+                {onTogglePlay && project.glossTokens.length > 0 && (
+                  <button
+                    onClick={onTogglePlay}
+                    className="text-[#22D3EE] hover:underline flex items-center gap-1 font-medium text-[11px]"
+                  >
+                    {isPlaying ? <Pause className="w-3 h-3" /> : <Play className="w-3 h-3" />}
+                    <span>{isPlaying ? 'Pause' : 'Play with avatar'}</span>
+                  </button>
+                )}
+                {onReplay && project.glossTokens.length > 0 && (
+                  <button
+                    onClick={onReplay}
+                    className="text-[#A8B2D1] hover:text-white flex items-center gap-1 font-medium text-[11px]"
+                  >
+                    <RotateCcw className="w-3 h-3" />
+                    <span>Replay</span>
+                  </button>
+                )}
+                <button
+                  onClick={() => setIsEditing(!isEditing)}
+                  className="text-[#22D3EE] hover:underline flex items-center gap-1 font-medium text-[11px]"
+                >
+                  <FileEdit className="w-3 h-3" />
+                  <span>{isEditing ? 'Save edits' : 'Edit text'}</span>
+                </button>
+              </div>
             </div>
 
             {isEditing ? (
@@ -152,8 +261,52 @@ export const TranscriptPanel: React.FC<TranscriptPanelProps> = ({
                 rows={3}
               />
             ) : (
-              <div className="text-xs text-white bg-[#101735] p-3 rounded-xl border border-[#273154] leading-relaxed">
-                "{editableTranscript}"
+              <div
+                ref={transcriptScrollRef}
+                className="relative max-h-44 overflow-y-auto text-xs text-white bg-[#101735] p-3 rounded-xl border border-[#273154] leading-relaxed"
+              >
+                {transcriptParts.map((part, index) => {
+                  const token = wordTokens.get(index);
+                  if (!token) {
+                    return (
+                      <span key={index} className={isPlaying && part.trim() ? 'text-[#6B7A99]' : undefined}>
+                        {part}
+                      </span>
+                    );
+                  }
+
+                  const isActive = index === activeWordIndex;
+                  const isSigned = signedWordIndexes.has(index);
+                  return (
+                    <span
+                      key={index}
+                      ref={isActive ? activeWordRef : undefined}
+                      onClick={() => onSelectToken?.(token)}
+                      title={hasSignMotion(token.gloss) ? `ISL: ${token.gloss}` : `ISL: ${token.gloss} (no sign motion yet)`}
+                      className={`cursor-pointer rounded px-0.5 -mx-0.5 transition-all duration-200 ${
+                        isActive
+                          ? activeHasMotion
+                            ? 'bg-[#22D3EE]/25 text-[#22D3EE] font-bold shadow-[0_0_12px_rgba(34,211,238,0.55)]'
+                            : 'bg-amber-400/20 text-amber-300 font-bold shadow-[0_0_10px_rgba(251,191,36,0.4)]'
+                          : isPlaying && !isSigned
+                          ? 'text-[#A8B2D1] hover:text-white'
+                          : 'text-white hover:text-[#22D3EE]'
+                      }`}
+                    >
+                      {part}
+                    </span>
+                  );
+                })}
+              </div>
+            )}
+
+            {activeToken && activeWordIndex !== undefined && !isEditing && (
+              <div className="flex items-center gap-2 text-[10px] font-mono">
+                <span className="text-[#6B7A99]">Signing:</span>
+                <span className={activeHasMotion ? 'text-[#22D3EE] font-bold' : 'text-amber-300 font-bold'}>
+                  {activeToken.gloss}
+                </span>
+                {!activeHasMotion && <span className="text-[#6B7A99]">no sign motion available, skipped</span>}
               </div>
             )}
           </div>

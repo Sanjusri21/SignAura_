@@ -113,16 +113,17 @@ interface TopologyData {
   groups?: TopologyGroup[];
 }
 
-// Map verified ISL signs to authentic BridgeConn motion keys
+// Map verified ISL signs to authentic BridgeConn motion keys.
+// help/teacher resolve to the verified SignMotionDB clips; help_2/teacher_2 are now ISL dictionary variant keys.
 const SIGN_TO_MOTION_MAP: Record<string, string> = {
   WELCOME: 'welcome',
   GOOD: 'good',
   DRINK: 'drink',
   GO: 'go',
-  HELP: 'help_2',
-  HELP_2: 'help_2',
-  TEACHER: 'teacher_2',
-  TEACHER_2: 'teacher_2',
+  HELP: 'help',
+  HELP_2: 'help',
+  TEACHER: 'teacher',
+  TEACHER_2: 'teacher',
   ISHBOSHETH: 'ishbosheth',
   SAMPLE_1: 'sample_1',
   WELCOME_HELP_YOU: 'welcome_help_you',
@@ -143,6 +144,23 @@ const AUTHENTIC_MOTION_KEYS = new Set([
   'welcome_help_you',
   'book_drink_home',
 ]);
+
+// Word keys reported playable by the SignAvatars /words endpoint (filled once the list loads)
+const playableWordKeys = new Set<string>();
+
+export const registerPlayableWords = (words: string[]) => {
+  words.forEach((w) => playableWordKeys.add(w.toLowerCase()));
+};
+
+/** True when a gloss resolves to a motion clip in the local inventory or the playable word list. */
+export const hasSignMotion = (gloss: string): boolean => {
+  const upper = (gloss || '').trim().toUpperCase();
+  return (
+    upper in SIGN_TO_MOTION_MAP ||
+    AUTHENTIC_MOTION_KEYS.has(upper.toLowerCase()) ||
+    playableWordKeys.has(upper.toLowerCase().replace(/[\s-]+/g, '_'))
+  );
+};
 
 export interface SignAvatar3DProps {
   currentSign?: string;
@@ -248,6 +266,9 @@ export const SignAvatar3D: React.FC<SignAvatar3DProps> = ({
   const topologyReadyRef = useRef<boolean>(false);
   const isPlayingRef = useRef<boolean>(isPlaying);
   const playbackSpeedRef = useRef<number>(playbackSpeed);
+  // The render loop is created once on mount, so it must read the latest callback via a ref
+  const onFrameUpdateRef = useRef(onFrameUpdate);
+  onFrameUpdateRef.current = onFrameUpdate;
   const currentSignRef = useRef<string>(currentSign);
   const frameElapsedRef = useRef<number>(0);
   const currentFrameRef = useRef<number>(-1);
@@ -716,9 +737,18 @@ export const SignAvatar3D: React.FC<SignAvatar3DProps> = ({
         return { gloss: wUpper, motion: m };
       });
 
-      Promise.all(clipFetches)
-        .then((loadedClips) => {
+      // A sign that fails to load is skipped; the phrase only fails when no sign loads at all
+      Promise.allSettled(clipFetches)
+        .then((settled) => {
           if (cancelled) return;
+          const loadedClips = settled.flatMap((r) => (r.status === 'fulfilled' ? [r.value] : []));
+          settled.forEach((r) => {
+            if (r.status === 'rejected') console.warn('[SignAvatar3D] Skipping sign in sequence:', r.reason);
+          });
+          if (loadedClips.length === 0) {
+            const firstError = settled.find((r): r is PromiseRejectedResult => r.status === 'rejected');
+            throw firstError?.reason ?? new Error('No sign in the sequence could be loaded.');
+          }
           const blended = blendMotionClips(loadedClips, relaxedPoseRef.current, {
             holdFrames: 4,
             transitionFrames: 6,
@@ -1182,7 +1212,7 @@ export const SignAvatar3D: React.FC<SignAvatar3DProps> = ({
                 activeSegmentGlossRef.current = currentSegmentGloss;
                 setActiveSegmentGloss(currentSegmentGloss);
               }
-              onFrameUpdate?.(frameIndex, motion.frames, currentSegmentGloss);
+              onFrameUpdateRef.current?.(frameIndex, motion.frames, currentSegmentGloss);
             }
           }
         }

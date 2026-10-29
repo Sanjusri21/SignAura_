@@ -2,6 +2,7 @@ import asyncio
 import logging
 import os
 import shutil
+import threading
 from typing import Any, Dict
 
 from app.core.config import settings
@@ -19,6 +20,10 @@ class WhisperSpeechTranscriber:
     def __init__(self):
         self.model = None
         self._model_name = settings.WHISPER_MODEL
+
+        # Whisper's decoder keeps a per-layer KV cache on the shared model, so concurrent
+        # transcriptions corrupt each other (KeyError on a Linear layer). Run one at a time.
+        self._transcribe_lock = threading.Lock()
 
         # Configure FFmpeg immediately when the service starts.
         self._configure_ffmpeg()
@@ -145,7 +150,8 @@ class WhisperSpeechTranscriber:
 
         def _run_transcription() -> Dict[str, Any]:
 
-            model = self._load_model()
+            with self._transcribe_lock:
+                model = self._load_model()
 
             kwargs: Dict[str, Any] = {
                 "fp16": False,
@@ -163,10 +169,11 @@ class WhisperSpeechTranscriber:
 
             try:
 
-                result = model.transcribe(
-                    audio_path,
-                    **kwargs,
-                )
+                with self._transcribe_lock:
+                    result = model.transcribe(
+                        audio_path,
+                        **kwargs,
+                    )
 
             except Exception as exc:
 

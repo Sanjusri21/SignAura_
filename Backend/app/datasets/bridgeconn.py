@@ -39,7 +39,13 @@ class BridgeConnDatasetAdapter:
         self.motion_db = motion_db or get_motion_database()
         base_dir = Path(__file__).resolve().parents[3]
         self.base_dir = base_dir
-        self.bridgeconn_root = Path(bridgeconn_root) if bridgeconn_root else Path(r"D:\SignAuraData\BridgeConn")
+        datasets_candidate = base_dir / "Backend" / "datasets"
+        if bridgeconn_root:
+            self.bridgeconn_root = Path(bridgeconn_root)
+        elif datasets_candidate.is_dir():
+            self.bridgeconn_root = datasets_candidate
+        else:
+            self.bridgeconn_root = Path(r"D:\SignAuraData\BridgeConn")
         self.legacy_npy_dir = base_dir / "SignAvatars" / "outputs" / "npy"
 
     def get_or_ingest_sign(
@@ -118,8 +124,10 @@ class BridgeConnDatasetAdapter:
             sys.path.insert(0, signavatars_dir)
 
         try:
+            # pyrefly: ignore[missing-import]
             from bridgeconn_service import resolve_sample_for_gloss
-            from bridgeconn_to_smplx import convert_bridgeconn_sample
+            # pyrefly: ignore[missing-import]
+            from bridgeconn_to_smplx import convert_bridgeconn_sample 
 
             sample = resolve_sample_for_gloss(clean_id.lower())
             if sample and sample.get("pose_path") and os.path.exists(sample["pose_path"]):

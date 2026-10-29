@@ -35,12 +35,21 @@ SHARDS_DIR = os.path.join(DEFAULT_ROOT, "shards")
 EXTRACTED_POSES_DIR = os.path.join(DEFAULT_ROOT, "extracted", "poses")
 INDEX_DIR = os.path.join(DEFAULT_ROOT, "index")
 CACHE_SMPLX_DIR = os.path.join(DEFAULT_ROOT, "cache", "smplx")
-DB_PATH = os.path.join(INDEX_DIR, "bridgeconn.db")
+REPO_ROOT = os.path.dirname(BASE_DIR)
+LOCAL_DB_PATH = os.path.join(REPO_ROOT, "Backend", "datasets", "bridgeconn.db")
+DB_PATH = (
+    os.environ.get("BRIDGECONN_DB_PATH")
+    or (LOCAL_DB_PATH if os.path.isfile(LOCAL_DB_PATH) else None)
+    or os.path.join(INDEX_DIR, "bridgeconn.db")
+)
 
-os.makedirs(SHARDS_DIR, exist_ok=True)
-os.makedirs(EXTRACTED_POSES_DIR, exist_ok=True)
-os.makedirs(INDEX_DIR, exist_ok=True)
-os.makedirs(CACHE_SMPLX_DIR, exist_ok=True)
+try:
+    os.makedirs(SHARDS_DIR, exist_ok=True)
+    os.makedirs(EXTRACTED_POSES_DIR, exist_ok=True)
+    os.makedirs(INDEX_DIR, exist_ok=True)
+    os.makedirs(CACHE_SMPLX_DIR, exist_ok=True)
+except OSError as e:  # data drive absent: importers only need the gloss helpers
+    logger.warning(f"BridgeConn data root unavailable ({DEFAULT_ROOT}): {e}")
 
 
 def init_db(db_path: str = DB_PATH):
