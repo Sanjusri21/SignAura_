@@ -65,6 +65,8 @@ ISL_50_DIR = os.environ.get("ISL_50_DIR", os.path.join(REPO_ROOT, "Backend", "da
 ISL_50_SOURCE = "ISL 50 (ISL_50)"
 ISL_ARCHIVE5_DIR = os.environ.get("ISL_ARCHIVE5_DIR", os.path.join(REPO_ROOT, "Backend", "datasets", "ISL_archive5"))
 ISL_ARCHIVE5_SOURCE = "Archive 5 (ISL_archive5)"
+CISLR_DIR = os.environ.get("CISLR_DIR", os.path.join(REPO_ROOT, "Backend", "datasets", "CISLR"))
+CISLR_SOURCE = "CISLR (CISLR_v1.5-a)"  # <gloss>/<uid>.npz clips, listed by Backend/scripts/index_cislr.py
 SYNONYMS_PATH = os.path.join(BASE_DIR, "word_synonyms.json")
 # Words whose clip failed the quality check are not served at all from these folders (the older
 # ISL dictionary and INCLUDE folders still serve theirs, flagged, when asked for directly)
@@ -82,6 +84,7 @@ KEYPOINT_DICTIONARIES = [
     (ISL_SIGN15_DIR, ISL_SIGN15_SOURCE, os.path.join(ISL_SIGN15_DIR, "smplx_cache")),
     (ISL_50_DIR, ISL_50_SOURCE, os.path.join(ISL_50_DIR, "smplx_cache")),
     (ISL_ARCHIVE5_DIR, ISL_ARCHIVE5_SOURCE, os.path.join(ISL_ARCHIVE5_DIR, "smplx_cache")),
+    (CISLR_DIR, CISLR_SOURCE, os.path.join(CISLR_DIR, "smplx_cache")),
 ]
 
 try:

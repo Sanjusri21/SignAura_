@@ -1,0 +1,131 @@
+{
+  "dataset": "Group A - Uncertain Words",
+  "words": {
+    "aam_aadmi_party": {
+      "frames": 71,
+      "fps": 24.0,
+      "file": "aam_aadmi_party.npz",
+      "label": "Aam_Aadmi_Party_(AAP)",
+      "video": null
+    },
+    "able": {
+      "frames": 160,
+      "fps": 25.0,
+      "file": "able.npz",
+      "label": "Able_(Explanation)",
+      "video": null
+    },
+    "area": {
+      "frames": 1292,
+      "fps": 25.0,
+      "file": "area.npz",
+      "label": "Area_(Math)_(Explanation)",
+      "video": null
+    },
+    "account": {
+      "frames": 1006,
+      "fps": 30.0,
+      "file": "account.npz",
+      "label": "Account_(Financial_Term)",
+      "video": null
+    },
+    "advance": {
+      "frames": 67,
+      "fps": 24.0,
+      "file": "advance.npz",
+      "label": "Advance_(Administrator)",
+      "video": null
+    },
+    "agenda": {
+      "frames": 139,
+      "fps": 24.0,
+      "file": "agenda.npz",
+      "label": "Agenda_(Bihar)",
+      "video": null
+    },
+    "atom": {
+      "frames": 1928,
+      "fps": 25.0,
+      "file": "atom.npz",
+      "label": "Atom_(Science)",
+      "video": null
+    },
+    "ab": {
+      "frames": 958,
+      "fps": 25.0,
+      "file": "ab.npz",
+      "label": "Ab_(Symbol_of_Line)_(Math)",
+      "video": null
+    },
+    "absorption": {
+      "frames": 1894,
+      "fps": 25.0,
+      "file": "absorption.npz",
+      "label": "Absorption_(Miscellaneous)",
+      "video": null
+    },
+    "adult": {
+      "frames": 106,
+      "fps": 25.0,
+      "file": "adult.npz",
+      "label": "Adult(1)",
+      "video": null
+    },
+    "advocate_general": {
+      "frames": 147,
+      "fps": 24.0,
+      "file": "advocate_general.npz",
+      "label": "Advocate_General_(Bihar)",
+      "video": null
+    },
+    "affirm": {
+      "frames": 348,
+      "fps": 25.0,
+      "file": "affirm.npz",
+      "label": "Affirm_(Explanation)",
+      "video": null
+    },
+    "agreement": {
+      "frames": 144,
+      "fps": 24.0,
+      "file": "agreement.npz",
+      "label": "Agreement_(Business)",
+      "video": null
+    },
+    "anti_corruption_law": {
+      "frames": 111,
+      "fps": 24.0,
+      "file": "anti_corruption_law.npz",
+      "label": "Anti_Corruption_Law_(Bihar)",
+      "video": null
+    },
+    "agriculture": {
+      "frames": 935,
+      "fps": 25.0,
+      "file": "agriculture.npz",
+      "label": "Agriculture_(Geography)",
+      "video": null
+    },
+    "anonymous": {
+      "frames": 356,
+      "fps": 25.0,
+      "file": "anonymous.npz",
+      "label": "Anonymous_(Explanation)",
+      "video": null
+    },
+    "arabia": {
+      "frames": 1328,
+      "fps": 25.0,
+      "file": "arabia.npz",
+      "label": "Arabia_(Academic)",
+      "video": null
+    },
+    "autocracy": {
+      "frames": 160,
+      "fps": 24.0,
+      "file": "autocracy.npz",
+      "label": "Autocracy_(Bihar)",
+      "video": null
+    }
+  }
+}

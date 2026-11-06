@@ -115,3 +115,5 @@ SignAvatars/datasets/
 SignAvatars/visualizer/
 *.timestamp-*.mjs
 scratch/
+*.bak*
+Backend/datasets/CISLR/smplx_cache/

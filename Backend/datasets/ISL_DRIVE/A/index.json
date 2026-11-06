@@ -1,0 +1,4525 @@
+{
+  "dataset": "Group A - New Words",
+  "words": {
+    "abacus": {
+      "file": "abacus.npz",
+      "label": "Abacus",
+      "category": "temp_group_a_5test",
+      "frames": 163,
+      "fps": 25.0,
+      "duration_sec": 6.52,
+      "source": {
+        "video": "Abacus.mp4"
+      },
+      "quality": {
+        "left_hand": {
+          "mediapipe": 0.6442,
+          "dwpose": 0.0,
+          "interpolated": 0.0061,
+          "missing": 0.3497
+        },
+        "right_hand": {
+          "mediapipe": 0.6626,
+          "dwpose": 0.0,
+          "interpolated": 0.0,
+          "missing": 0.3374
+        },
+        "upper_body_low_conf": 0.0041,
+        "scale": 0.9383
+      },
+      "score": 1.9632,
+      "note": null,
+      "reason": "new",
+      "aliases": [],
+      "other_videos": []
+    },
+    "anatomy": {
+      "file": "anatomy.npz",
+      "label": "Anatomy",
+      "category": "temp_group_a_5test",
+      "frames": 76,
+      "fps": 25.0,
+      "duration_sec": 3.04,
+      "source": {
+        "video": "Anatomy.mp4"
+      },
+      "quality": {
+        "left_hand": {
+          "mediapipe": 0.9474,
+          "dwpose": 0.0,
+          "interpolated": 0.0526,
+          "missing": 0.0
+        },
+        "right_hand": {
+          "mediapipe": 0.9737,
+          "dwpose": 0.0,
+          "interpolated": 0.0263,
+          "missing": 0.0
+        },
+        "upper_body_low_conf": 0.0,
+        "scale": 0.685
+      },
+      "score": 2.9211,
+      "note": null,
+      "reason": "new",
+      "aliases": [],
+      "other_videos": []
+    },
+    "apostrophe": {
+      "file": "apostrophe.npz",
+      "label": "Apostrophe",
+      "category": "temp_group_a_5test",
+      "frames": 200,
+      "fps": 24.0,
+      "duration_sec": 8.333,
+      "source": {
+        "video": "Apostrophe.mp4"
+      },
+      "quality": {
+        "left_hand": {
+          "mediapipe": 0.93,
+          "dwpose": 0.0,
+          "interpolated": 0.005,
+          "missing": 0.065
+        },
+        "right_hand": {
+          "mediapipe": 0.925,
+          "dwpose": 0.0,
+          "interpolated": 0.005,
+          "missing": 0.07
+        },
+        "upper_body_low_conf": 0.0,
+        "scale": 0.9439
+      },
+      "score": 2.7875,
+      "note": null,
+      "reason": "new",
+      "aliases": [],
+      "other_videos": []
+    },
+    "a_line_dress": {
+      "frames": 276,
+      "fps": 25.0,
+      "file": "a_line_dress.npz",
+      "label": "A_Line_Dress",
+      "video": null
+    },
+    "a_penny_saved_is_a_penny_earned": {
+      "frames": 517,
+      "fps": 25.0,
+      "file": "a_penny_saved_is_a_penny_earned.npz",
+      "label": "A_penny_saved_is_a_penny_earned",
+      "video": null
+    },
+    "a_roll": {
+      "frames": 560,
+      "fps": 24.0,
+      "file": "a_roll.npz",
+      "label": "A-roll",
+      "video": null
+    },
+    "abate_subside": {
+      "frames": 1126,
+      "fps": 24.00002098083496,
+      "file": "abate_subside.npz",
+      "label": "Abate_Subside",
+      "video": null
+    },
+    "abhor_despise_detest_hate_loathe": {
+      "frames": 298,
+      "fps": 25.0,
+      "file": "abhor_despise_detest_hate_loathe.npz",
+      "label": "Abhor_Despise_Detest_Hate_Loathe",
+      "video": null
+    },
+    "ability_to_pay_principle": {
+      "frames": 692,
+      "fps": 24.0,
+      "file": "ability_to_pay_principle.npz",
+      "label": "Ability-to-pay_principle",
+      "video": null
+    },
+    "abolition": {
+      "frames": 924,
+      "fps": 25.0,
+      "file": "abolition.npz",
+      "label": "Abolition",
+      "video": null
+    },
+    "absentee_ballot": {
+      "frames": 819,
+      "fps": 24.0,
+      "file": "absentee_ballot.npz",
+      "label": "Absentee_ballot",
+      "video": null
+    },
+    "absolute_owner": {
+      "frames": 519,
+      "fps": 25.0,
+      "file": "absolute_owner.npz",
+      "label": "Absolute_owner",
+      "video": null
+    },
+    "abstain_or_abstention": {
+      "frames": 252,
+      "fps": 25.0,
+      "file": "abstain_or_abstention.npz",
+      "label": "Abstain_or_Abstention",
+      "video": null
+    },
+    "abstract_of_record": {
+      "frames": 497,
+      "fps": 25.0,
+      "file": "abstract_of_record.npz",
+      "label": "Abstract_of_Record",
+      "video": null
+    },
+    "ac_adapter": {
+      "frames": 523,
+      "fps": 25.0,
+      "file": "ac_adapter.npz",
+      "label": "AC_Adapter",
+      "video": null
+    },
+    "accession": {
+      "frames": 527,
+      "fps": 25.0,
+      "file": "accession.npz",
+      "label": "Accession",
+      "video": null
+    },
+    "accident_prone_area": {
+      "frames": 549,
+      "fps": 25.0,
+      "file": "accident_prone_area.npz",
+      "label": "Accident_Prone_Area",
+      "video": null
+    },
+    "accomplice_accessory": {
+      "frames": 1560,
+      "fps": 25.0,
+      "file": "accomplice_accessory.npz",
+      "label": "Accomplice_Accessory",
+      "video": null
+    },
+    "achilles_tendon": {
+      "frames": 165,
+      "fps": 25.0,
+      "file": "achilles_tendon.npz",
+      "label": "Achilles_Tendon",
+      "video": null
+    },
+    "acid_rain": {
+      "frames": 1248,
+      "fps": 25.0,
+      "file": "acid_rain.npz",
+      "label": "Acid_rain",
+      "video": null
+    },
+    "acidosis": {
+      "frames": 167,
+      "fps": 25.0,
+      "file": "acidosis.npz",
+      "label": "Acidosis",
+      "video": null
+    },
+    "acquaintance_rape_date_rape_marital_rape_custodial_rape": {
+      "frames": 1465,
+      "fps": 25.0,
+      "file": "acquaintance_rape_date_rape_marital_rape_custodial_rape.npz",
+      "label": "Acquaintance_Rape_Date_Rape_Marital_Rape_Custodial_Rape",
+      "video": null
+    },
+    "acquittal": {
+      "frames": 619,
+      "fps": 25.0,
+      "file": "acquittal.npz",
+      "label": "Acquittal",
+      "video": null
+    },
+    "act_of_god": {
+      "frames": 483,
+      "fps": 25.0,
+      "file": "act_of_god.npz",
+      "label": "Act_of_God",
+      "video": null
+    },
+    "act_of_war": {
+      "frames": 450,
+      "fps": 25.0,
+      "file": "act_of_war.npz",
+      "label": "Act_of_War",
+      "video": null
+    },
+    "action_replay": {
+      "frames": 574,
+      "fps": 25.0,
+      "file": "action_replay.npz",
+      "label": "Action_replay",
+      "video": null
+    },
+    "action_research": {
+      "frames": 648,
+      "fps": 24.0,
+      "file": "action_research.npz",
+      "label": "Action_research",
+      "video": null
+    },
+    "active_window": {
+      "frames": 648,
+      "fps": 25.0,
+      "file": "active_window.npz",
+      "label": "Active_Window",
+      "video": null
+    },
+    "actus_reus": {
+      "frames": 555,
+      "fps": 25.0,
+      "file": "actus_reus.npz",
+      "label": "Actus_reus",
+      "video": null
+    },
+    "acumen": {
+      "frames": 705,
+      "fps": 25.0,
+      "file": "acumen.npz",
+      "label": "Acumen",
+      "video": null
+    },
+    "acute": {
+      "frames": 660,
+      "fps": 25.0,
+      "file": "acute.npz",
+      "label": "Acute",
+      "video": null
+    },
+    "ad_valorem_taxes": {
+      "frames": 438,
+      "fps": 24.0,
+      "file": "ad_valorem_taxes.npz",
+      "label": "Ad_valorem_taxes",
+      "video": null
+    },
+    "adamant_insistent_rigid_stubborn": {
+      "frames": 1162,
+      "fps": 25.0,
+      "file": "adamant_insistent_rigid_stubborn.npz",
+      "label": "Adamant_Insistent_Rigid_Stubborn",
+      "video": null
+    },
+    "adaptive_radiation": {
+      "frames": 852,
+      "fps": 24.0,
+      "file": "adaptive_radiation.npz",
+      "label": "Adaptive_Radiation",
+      "video": null
+    },
+    "add_more": {
+      "frames": 86,
+      "fps": 25.0,
+      "file": "add_more.npz",
+      "label": "Add_More",
+      "video": null
+    },
+    "additional_charge": {
+      "frames": 559,
+      "fps": 25.0,
+      "file": "additional_charge.npz",
+      "label": "Additional_Charge",
+      "video": null
+    },
+    "additional_grant": {
+      "frames": 600,
+      "fps": 25.0,
+      "file": "additional_grant.npz",
+      "label": "Additional_Grant",
+      "video": null
+    },
+    "adjacent": {
+      "frames": 573,
+      "fps": 25.0,
+      "file": "adjacent.npz",
+      "label": "Adjacent",
+      "video": null
+    },
+    "adjectives": {
+      "frames": 1053,
+      "fps": 24.000022888183594,
+      "file": "adjectives.npz",
+      "label": "Adjectives",
+      "video": null
+    },
+    "adjustable_speed_drive": {
+      "frames": 841,
+      "fps": 25.0,
+      "file": "adjustable_speed_drive.npz",
+      "label": "Adjustable_Speed_Drive",
+      "video": null
+    },
+    "admire_commend_praise_appreciate": {
+      "frames": 87,
+      "fps": 25.0,
+      "file": "admire_commend_praise_appreciate.npz",
+      "label": "Admire_Commend_Praise_Appreciate",
+      "video": null
+    },
+    "adobe_after_effects": {
+      "frames": 519,
+      "fps": 24.0,
+      "file": "adobe_after_effects.npz",
+      "label": "Adobe_After_Effects",
+      "video": null
+    },
+    "adult_education_centre": {
+      "frames": 513,
+      "fps": 24.0,
+      "file": "adult_education_centre.npz",
+      "label": "Adult_Education_Centre_(AEC)",
+      "video": null
+    },
+    "adulteration": {
+      "frames": 1238,
+      "fps": 25.0,
+      "file": "adulteration.npz",
+      "label": "Adulteration_(Sign_3)",
+      "video": null
+    },
+    "adultery": {
+      "frames": 545,
+      "fps": 25.0,
+      "file": "adultery.npz",
+      "label": "Adultery",
+      "video": null
+    },
+    "advanced_electronics": {
+      "frames": 825,
+      "fps": 25.0,
+      "file": "advanced_electronics.npz",
+      "label": "Advanced_Electronics",
+      "video": null
+    },
+    "adverb": {
+      "frames": 1024,
+      "fps": 25.0,
+      "file": "adverb.npz",
+      "label": "Adverb",
+      "video": null
+    },
+    "adverse_witness": {
+      "frames": 1217,
+      "fps": 25.0,
+      "file": "adverse_witness.npz",
+      "label": "Adverse_witness",
+      "video": null
+    },
+    "affiliate": {
+      "frames": 1097,
+      "fps": 24.00002098083496,
+      "file": "affiliate.npz",
+      "label": "Affiliate",
+      "video": null
+    },
+    "affluenza": {
+      "frames": 1003,
+      "fps": 24.000024795532227,
+      "file": "affluenza.npz",
+      "label": "Affluenza",
+      "video": null
+    },
+    "afforestation": {
+      "frames": 636,
+      "fps": 25.0,
+      "file": "afforestation.npz",
+      "label": "Afforestation",
+      "video": null
+    },
+    "afghanistan": {
+      "frames": 91,
+      "fps": 25.0,
+      "file": "afghanistan.npz",
+      "label": "Afghanistan",
+      "video": null
+    },
+    "again_repeat": {
+      "frames": 98,
+      "fps": 25.0,
+      "file": "again_repeat.npz",
+      "label": "Again_Repeat_(Sign_2)",
+      "video": null
+    },
+    "agent": {
+      "frames": 1321,
+      "fps": 25.0,
+      "file": "agent.npz",
+      "label": "Agent",
+      "video": null
+    },
+    "aggravated_assault": {
+      "frames": 492,
+      "fps": 25.0,
+      "file": "aggravated_assault.npz",
+      "label": "Aggravated_assault",
+      "video": null
+    },
+    "agro_based_industry": {
+      "frames": 565,
+      "fps": 24.0,
+      "file": "agro_based_industry.npz",
+      "label": "Agro_based_industry",
+      "video": null
+    },
+    "aid": {
+      "frames": 855,
+      "fps": 24.0,
+      "file": "aid.npz",
+      "label": "Aid",
+      "video": null
+    },
+    "aid_and_abet_abettor": {
+      "frames": 867,
+      "fps": 25.0,
+      "file": "aid_and_abet_abettor.npz",
+      "label": "Aid_and_abet_abettor",
+      "video": null
+    },
+    "aids_related_cancers": {
+      "frames": 162,
+      "fps": 25.0,
+      "file": "aids_related_cancers.npz",
+      "label": "Aids-_Related_Cancers",
+      "video": null
+    },
+    "aim_target_goal": {
+      "frames": 78,
+      "fps": 25.0,
+      "file": "aim_target_goal.npz",
+      "label": "Aim_Target_Goal",
+      "video": null
+    },
+    "air_compressor": {
+      "frames": 438,
+      "fps": 24.0,
+      "file": "air_compressor.npz",
+      "label": "Air_compressor",
+      "video": null
+    },
+    "air_india_alliance_air": {
+      "frames": 144,
+      "fps": 25.0,
+      "file": "air_india_alliance_air.npz",
+      "label": "Air_India_Alliance_Air",
+      "video": null
+    },
+    "airspace": {
+      "frames": 1431,
+      "fps": 25.0,
+      "file": "airspace.npz",
+      "label": "Airspace",
+      "video": null
+    },
+    "algebra": {
+      "frames": 709,
+      "fps": 25.0,
+      "file": "algebra.npz",
+      "label": "Algebra",
+      "video": null
+    },
+    "alibi": {
+      "frames": 760,
+      "fps": 25.0,
+      "file": "alibi.npz",
+      "label": "Alibi",
+      "video": null
+    },
+    "aligator_clip": {
+      "frames": 88,
+      "fps": 25.0,
+      "file": "aligator_clip.npz",
+      "label": "Aligator_Clip",
+      "video": null
+    },
+    "all_by_yourself": {
+      "frames": 504,
+      "fps": 24.0,
+      "file": "all_by_yourself.npz",
+      "label": "All_by_yourself",
+      "video": null
+    },
+    "all_india_trinamool_congress_aitc_tmc": {
+      "frames": 92,
+      "fps": 24.0,
+      "file": "all_india_trinamool_congress_aitc_tmc.npz",
+      "label": "All_India_Trinamool_Congress_AITC_TMC",
+      "video": null
+    },
+    "all_the_best_good_luck": {
+      "frames": 293,
+      "fps": 24.0,
+      "file": "all_the_best_good_luck.npz",
+      "label": "All_the_best_Good_luck",
+      "video": null
+    },
+    "alley_cropping": {
+      "frames": 566,
+      "fps": 24.0,
+      "file": "alley_cropping.npz",
+      "label": "Alley_Cropping",
+      "video": null
+    },
+    "allocation_of_resources": {
+      "frames": 668,
+      "fps": 24.0,
+      "file": "allocation_of_resources.npz",
+      "label": "Allocation_of_resources",
+      "video": null
+    },
+    "alloy": {
+      "frames": 576,
+      "fps": 24.0,
+      "file": "alloy.npz",
+      "label": "Alloy_(Sign_2)",
+      "video": null
+    },
+    "almost_nearly": {
+      "frames": 114,
+      "fps": 25.0,
+      "file": "almost_nearly.npz",
+      "label": "Almost_Nearly",
+      "video": null
+    },
+    "alternator": {
+      "frames": 769,
+      "fps": 25.0,
+      "file": "alternator.npz",
+      "label": "Alternator",
+      "video": null
+    },
+    "amateur_non_professional": {
+      "frames": 1483,
+      "fps": 24.000015258789062,
+      "file": "amateur_non_professional.npz",
+      "label": "Amateur_Non-professional",
+      "video": null
+    },
+    "ambitious": {
+      "frames": 100,
+      "fps": 25.0,
+      "file": "ambitious.npz",
+      "label": "Ambitious",
+      "video": null
+    },
+    "amicus_curiae": {
+      "frames": 833,
+      "fps": 25.0,
+      "file": "amicus_curiae.npz",
+      "label": "Amicus_Curiae",
+      "video": null
+    },
+    "amniotic_fluid": {
+      "frames": 255,
+      "fps": 25.0,
+      "file": "amniotic_fluid.npz",
+      "label": "Amniotic_fluid",
+      "video": null
+    },
+    "amoeba": {
+      "frames": 1161,
+      "fps": 25.0,
+      "file": "amoeba.npz",
+      "label": "Amoeba_(Academic)",
+      "video": null
+    },
+    "amount_total": {
+      "frames": 111,
+      "fps": 25.0,
+      "file": "amount_total.npz",
+      "label": "Amount_Total",
+      "video": null
+    },
+    "anal_cancer": {
+      "frames": 233,
+      "fps": 25.0,
+      "file": "anal_cancer.npz",
+      "label": "Anal_Cancer",
+      "video": null
+    },
+    "ancestor": {
+      "frames": 127,
+      "fps": 25.0,
+      "file": "ancestor.npz",
+      "label": "Ancestor_(Sign_2)",
+      "video": null
+    },
+    "ancestral": {
+      "frames": 896,
+      "fps": 25.0,
+      "file": "ancestral.npz",
+      "label": "Ancestral",
+      "video": null
+    },
+    "android": {
+      "frames": 492,
+      "fps": 25.0,
+      "file": "android.npz",
+      "label": "Android",
+      "video": null
+    },
+    "android_tv": {
+      "frames": 586,
+      "fps": 24.0,
+      "file": "android_tv.npz",
+      "label": "Android_TV",
+      "video": null
+    },
+    "andrology": {
+      "frames": 175,
+      "fps": 25.0,
+      "file": "andrology.npz",
+      "label": "Andrology",
+      "video": null
+    },
+    "anesthesia": {
+      "frames": 247,
+      "fps": 25.0,
+      "file": "anesthesia.npz",
+      "label": "Anesthesia",
+      "video": null
+    },
+    "anesthetic": {
+      "frames": 379,
+      "fps": 25.0,
+      "file": "anesthetic.npz",
+      "label": "Anesthetic",
+      "video": null
+    },
+    "angioplasty": {
+      "frames": 420,
+      "fps": 25.0,
+      "file": "angioplasty.npz",
+      "label": "Angioplasty",
+      "video": null
+    },
+    "ankle": {
+      "frames": 112,
+      "fps": 25.0,
+      "file": "ankle.npz",
+      "label": "Ankle",
+      "video": null
+    },
+    "annual_accounts": {
+      "frames": 396,
+      "fps": 25.0,
+      "file": "annual_accounts.npz",
+      "label": "Annual_Accounts",
+      "video": null
+    },
+    "annual_or_short_range_planning": {
+      "frames": 461,
+      "fps": 24.0,
+      "file": "annual_or_short_range_planning.npz",
+      "label": "Annual_or_Short_Range_Planning",
+      "video": null
+    },
+    "anoxia": {
+      "frames": 384,
+      "fps": 25.0,
+      "file": "anoxia.npz",
+      "label": "Anoxia",
+      "video": null
+    },
+    "antacid": {
+      "frames": 348,
+      "fps": 25.0,
+      "file": "antacid.npz",
+      "label": "Antacid",
+      "video": null
+    },
+    "anthill_colony_mound": {
+      "frames": 183,
+      "fps": 24.0,
+      "file": "anthill_colony_mound.npz",
+      "label": "Anthill_Colony_Mound",
+      "video": null
+    },
+    "anthrax": {
+      "frames": 262,
+      "fps": 25.0,
+      "file": "anthrax.npz",
+      "label": "Anthrax",
+      "video": null
+    },
+    "anticoagulant": {
+      "frames": 552,
+      "fps": 25.0,
+      "file": "anticoagulant.npz",
+      "label": "Anticoagulant",
+      "video": null
+    },
+    "antonymy": {
+      "frames": 424,
+      "fps": 24.0,
+      "file": "antonymy.npz",
+      "label": "Antonymy",
+      "video": null
+    },
+    "anus": {
+      "frames": 150,
+      "fps": 25.0,
+      "file": "anus.npz",
+      "label": "Anus",
+      "video": null
+    },
+    "aorta": {
+      "frames": 408,
+      "fps": 25.0,
+      "file": "aorta.npz",
+      "label": "Aorta",
+      "video": null
+    },
+    "apex": {
+      "frames": 963,
+      "fps": 25.0,
+      "file": "apex.npz",
+      "label": "Apex",
+      "video": null
+    },
+    "appendieitis": {
+      "frames": 397,
+      "fps": 25.0,
+      "file": "appendieitis.npz",
+      "label": "Appendieitis",
+      "video": null
+    },
+    "apply": {
+      "frames": 98,
+      "fps": 25.0,
+      "file": "apply.npz",
+      "label": "Apply",
+      "video": null
+    },
+    "appurtenances": {
+      "frames": 818,
+      "fps": 25.0,
+      "file": "appurtenances.npz",
+      "label": "Appurtenances",
+      "video": null
+    },
+    "arbitrageur": {
+      "frames": 893,
+      "fps": 30.0,
+      "file": "arbitrageur.npz",
+      "label": "Arbitrageur",
+      "video": null
+    },
+    "arbo_virus": {
+      "frames": 336,
+      "fps": 25.0,
+      "file": "arbo_virus.npz",
+      "label": "Arbo_Virus",
+      "video": null
+    },
+    "archaic": {
+      "frames": 2835,
+      "fps": 25.0,
+      "file": "archaic.npz",
+      "label": "Archaic",
+      "video": null
+    },
+    "archeology": {
+      "frames": 944,
+      "fps": 24.0,
+      "file": "archeology.npz",
+      "label": "Archeology",
+      "video": null
+    },
+    "archive": {
+      "frames": 642,
+      "fps": 25.0,
+      "file": "archive.npz",
+      "label": "Archive",
+      "video": null
+    },
+    "argue_dispute_quarrel": {
+      "frames": 77,
+      "fps": 25.0,
+      "file": "argue_dispute_quarrel.npz",
+      "label": "Argue_Dispute_Quarrel",
+      "video": null
+    },
+    "argument": {
+      "frames": 375,
+      "fps": 25.0,
+      "file": "argument.npz",
+      "label": "Argument_(Sign_2)",
+      "video": null
+    },
+    "arid_regions": {
+      "frames": 622,
+      "fps": 24.0,
+      "file": "arid_regions.npz",
+      "label": "Arid_Regions",
+      "video": null
+    },
+    "arithmetic_mean": {
+      "frames": 521,
+      "fps": 24.0,
+      "file": "arithmetic_mean.npz",
+      "label": "Arithmetic_mean",
+      "video": null
+    },
+    "armour": {
+      "frames": 1059,
+      "fps": 25.0,
+      "file": "armour.npz",
+      "label": "Armour",
+      "video": null
+    },
+    "army_boots_combat_boots": {
+      "frames": 98,
+      "fps": 24.0,
+      "file": "army_boots_combat_boots.npz",
+      "label": "Army_boots_Combat_boots",
+      "video": null
+    },
+    "aromatherapy": {
+      "frames": 288,
+      "fps": 25.0,
+      "file": "aromatherapy.npz",
+      "label": "Aromatherapy",
+      "video": null
+    },
+    "artery": {
+      "frames": 207,
+      "fps": 25.0,
+      "file": "artery.npz",
+      "label": "Artery(1)",
+      "video": null
+    },
+    "arthralgia": {
+      "frames": 324,
+      "fps": 25.0,
+      "file": "arthralgia.npz",
+      "label": "Arthralgia",
+      "video": null
+    },
+    "article": {
+      "frames": 419,
+      "fps": 24.0,
+      "file": "article.npz",
+      "label": "Article",
+      "video": null
+    },
+    "ashoka": {
+      "frames": 1714,
+      "fps": 25.0,
+      "file": "ashoka.npz",
+      "label": "Ashoka_(Academic)",
+      "video": null
+    },
+    "aspiration": {
+      "frames": 100,
+      "fps": 25.0,
+      "file": "aspiration.npz",
+      "label": "Aspiration",
+      "video": null
+    },
+    "aspire_aim_for_pursue": {
+      "frames": 410,
+      "fps": 25.0,
+      "file": "aspire_aim_for_pursue.npz",
+      "label": "Aspire_Aim_for_pursue",
+      "video": null
+    },
+    "assimilation": {
+      "frames": 1422,
+      "fps": 25.0,
+      "file": "assimilation.npz",
+      "label": "Assimilation_(Academic)",
+      "video": null
+    },
+    "assumption": {
+      "frames": 853,
+      "fps": 24.0,
+      "file": "assumption.npz",
+      "label": "Assumption",
+      "video": null
+    },
+    "assure_reassure_relieve_doubt": {
+      "frames": 1540,
+      "fps": 24.000015258789062,
+      "file": "assure_reassure_relieve_doubt.npz",
+      "label": "Assure_Reassure_Relieve_doubt",
+      "video": null
+    },
+    "atlas": {
+      "frames": 780,
+      "fps": 25.0,
+      "file": "atlas.npz",
+      "label": "Atlas",
+      "video": null
+    },
+    "atmospheric_pressure": {
+      "frames": 682,
+      "fps": 25.0,
+      "file": "atmospheric_pressure.npz",
+      "label": "Atmospheric_pressure",
+      "video": null
+    },
+    "atmospheric_water_generation": {
+      "frames": 128,
+      "fps": 25.0,
+      "file": "atmospheric_water_generation.npz",
+      "label": "Atmospheric_Water_Generation",
+      "video": null
+    },
+    "attach_grafting": {
+      "frames": 1223,
+      "fps": 24.000019073486328,
+      "file": "attach_grafting.npz",
+      "label": "Attach_Grafting",
+      "video": null
+    },
+    "attendance_gov_in": {
+      "frames": 798,
+      "fps": 25.0,
+      "file": "attendance_gov_in.npz",
+      "label": "Attendance_gov_in",
+      "video": null
+    },
+    "attorney_at_law": {
+      "frames": 806,
+      "fps": 25.0,
+      "file": "attorney_at_law.npz",
+      "label": "Attorney_at_Law",
+      "video": null
+    },
+    "auctioneering_agreement": {
+      "frames": 1219,
+      "fps": 25.0,
+      "file": "auctioneering_agreement.npz",
+      "label": "Auctioneering_Agreement",
+      "video": null
+    },
+    "audit_auditor_auditor_s_report": {
+      "frames": 844,
+      "fps": 25.0,
+      "file": "audit_auditor_auditor_s_report.npz",
+      "label": "Audit_Auditor_Auditor_s_report",
+      "video": null
+    },
+    "augmenting_crops": {
+      "frames": 1017,
+      "fps": 24.000022888183594,
+      "file": "augmenting_crops.npz",
+      "label": "Augmenting_Crops",
+      "video": null
+    },
+    "automatic_film_processor": {
+      "frames": 259,
+      "fps": 25.0,
+      "file": "automatic_film_processor.npz",
+      "label": "Automatic_Film_Processor",
+      "video": null
+    },
+    "autonomous_government_expenditures": {
+      "frames": 415,
+      "fps": 24.0,
+      "file": "autonomous_government_expenditures.npz",
+      "label": "Autonomous_Government_Expenditures",
+      "video": null
+    },
+    "autonomy": {
+      "frames": 732,
+      "fps": 25.0,
+      "file": "autonomy.npz",
+      "label": "Autonomy",
+      "video": null
+    },
+    "autopsy_table": {
+      "frames": 182,
+      "fps": 25.0,
+      "file": "autopsy_table.npz",
+      "label": "Autopsy_Table",
+      "video": null
+    },
+    "autotrophic": {
+      "frames": 645,
+      "fps": 24.0,
+      "file": "autotrophic.npz",
+      "label": "Autotrophic",
+      "video": null
+    },
+    "available_water_capacity": {
+      "frames": 311,
+      "fps": 24.0,
+      "file": "available_water_capacity.npz",
+      "label": "Available_Water_Capacity",
+      "video": null
+    },
+    "award_prize_trophy": {
+      "frames": 190,
+      "fps": 25.0,
+      "file": "award_prize_trophy.npz",
+      "label": "Award_Prize_Trophy",
+      "video": null
+    },
+    "axiom": {
+      "frames": 291,
+      "fps": 24.0,
+      "file": "axiom.npz",
+      "label": "Axiom",
+      "video": null
+    },
+    "ayurveda_yoga_and_naturopathy_unani_siddha_and_homeopathy": {
+      "frames": 2338,
+      "fps": 24.000030517578125,
+      "file": "ayurveda_yoga_and_naturopathy_unani_siddha_and_homeopathy.npz",
+      "label": "Ayurveda_Yoga_and_Naturopathy_Unani_Siddha_and_Homeopathy_(AYUSH)",
+      "video": null
+    },
+    "a_penny_for_your_thoughts": {
+      "frames": 356,
+      "fps": 25.0,
+      "file": "a_penny_for_your_thoughts.npz",
+      "label": "A_penny_for_your_thoughts",
+      "video": null
+    },
+    "abandonment": {
+      "frames": 1044,
+      "fps": 25.0,
+      "file": "abandonment.npz",
+      "label": "Abandonment",
+      "video": null
+    },
+    "abandonment_of_child": {
+      "frames": 433,
+      "fps": 25.0,
+      "file": "abandonment_of_child.npz",
+      "label": "Abandonment_of_Child",
+      "video": null
+    },
+    "able_can": {
+      "frames": 71,
+      "fps": 25.0,
+      "file": "able_can.npz",
+      "label": "Able_Can",
+      "video": null
+    },
+    "abode": {
+      "frames": 245,
+      "fps": 25.0,
+      "file": "abode.npz",
+      "label": "Abode",
+      "video": null
+    },
+    "abolish": {
+      "frames": 346,
+      "fps": 25.0,
+      "file": "abolish.npz",
+      "label": "Abolish",
+      "video": null
+    },
+    "above_ground_symptoms": {
+      "frames": 384,
+      "fps": 25.0,
+      "file": "above_ground_symptoms.npz",
+      "label": "Above_Ground_Symptoms",
+      "video": null
+    },
+    "abrasion": {
+      "frames": 236,
+      "fps": 25.0,
+      "file": "abrasion.npz",
+      "label": "Abrasion",
+      "video": null
+    },
+    "abroad_overseas": {
+      "frames": 436,
+      "fps": 25.0,
+      "file": "abroad_overseas.npz",
+      "label": "Abroad_Overseas",
+      "video": null
+    },
+    "absolute_temperature_absolute_zero": {
+      "frames": 1384,
+      "fps": 24.000017166137695,
+      "file": "absolute_temperature_absolute_zero.npz",
+      "label": "Absolute_Temperature_&_Absolute_zero",
+      "video": null
+    },
+    "abstinence": {
+      "frames": 368,
+      "fps": 25.0,
+      "file": "abstinence.npz",
+      "label": "Abstinence",
+      "video": null
+    },
+    "abundant": {
+      "frames": 836,
+      "fps": 25.0,
+      "file": "abundant.npz",
+      "label": "Abundant_(Explanation)",
+      "video": null
+    },
+    "ac_express_train": {
+      "frames": 103,
+      "fps": 24.0,
+      "file": "ac_express_train.npz",
+      "label": "AC_Express_Train",
+      "video": null
+    },
+    "ac_to_dc_converter": {
+      "frames": 995,
+      "fps": 25.0,
+      "file": "ac_to_dc_converter.npz",
+      "label": "AC_to_DC_Converter",
+      "video": null
+    },
+    "academic_year": {
+      "frames": 1572,
+      "fps": 25.0,
+      "file": "academic_year.npz",
+      "label": "Academic_Year",
+      "video": null
+    },
+    "accelerated_graphics_port": {
+      "frames": 641,
+      "fps": 25.0,
+      "file": "accelerated_graphics_port.npz",
+      "label": "Accelerated_Graphics_Port",
+      "video": null
+    },
+    "access_time": {
+      "frames": 636,
+      "fps": 25.0,
+      "file": "access_time.npz",
+      "label": "Access_Time",
+      "video": null
+    },
+    "accessibility": {
+      "frames": 1753,
+      "fps": 25.0,
+      "file": "accessibility.npz",
+      "label": "Accessibility_(Geography)",
+      "video": null
+    },
+    "accommodation_endorsement": {
+      "frames": 195,
+      "fps": 24.0,
+      "file": "accommodation_endorsement.npz",
+      "label": "Accommodation_Endorsement_(Sign_3)",
+      "video": null
+    },
+    "accommodation_endorsement_2": {
+      "frames": 751,
+      "fps": 24.0,
+      "file": "accommodation_endorsement_2.npz",
+      "label": "Accommodation_Endorsement_(Sign_2)",
+      "video": null
+    },
+    "accommodation_land": {
+      "frames": 487,
+      "fps": 25.0,
+      "file": "accommodation_land.npz",
+      "label": "Accommodation_Land",
+      "video": null
+    },
+    "accounts": {
+      "frames": 97,
+      "fps": 25.0,
+      "file": "accounts.npz",
+      "label": "Accounts",
+      "video": null
+    },
+    "acid": {
+      "frames": 1314,
+      "fps": 25.0,
+      "file": "acid.npz",
+      "label": "Acid_(Academic)",
+      "video": null
+    },
+    "acne": {
+      "frames": 216,
+      "fps": 25.0,
+      "file": "acne.npz",
+      "label": "Acne",
+      "video": null
+    },
+    "acquire": {
+      "frames": 912,
+      "fps": 25.0,
+      "file": "acquire.npz",
+      "label": "Acquire",
+      "video": null
+    },
+    "acromegaly": {
+      "frames": 516,
+      "fps": 25.0,
+      "file": "acromegaly.npz",
+      "label": "Acromegaly",
+      "video": null
+    },
+    "act_your_age": {
+      "frames": 515,
+      "fps": 25.0,
+      "file": "act_your_age.npz",
+      "label": "Act_your_age",
+      "video": null
+    },
+    "action_taken_report": {
+      "frames": 500,
+      "fps": 25.0,
+      "file": "action_taken_report.npz",
+      "label": "Action_Taken_Report_(ATR)",
+      "video": null
+    },
+    "active_absorption": {
+      "frames": 1025,
+      "fps": 24.000022888183594,
+      "file": "active_absorption.npz",
+      "label": "Active_Absorption",
+      "video": null
+    },
+    "active_energetic": {
+      "frames": 133,
+      "fps": 25.0,
+      "file": "active_energetic.npz",
+      "label": "Active_Energetic",
+      "video": null
+    },
+    "active_tourism": {
+      "frames": 415,
+      "fps": 24.0,
+      "file": "active_tourism.npz",
+      "label": "Active_Tourism",
+      "video": null
+    },
+    "adaptation": {
+      "frames": 1939,
+      "fps": 25.0,
+      "file": "adaptation.npz",
+      "label": "Adaptation_(Academic)",
+      "video": null
+    },
+    "add_on": {
+      "frames": 660,
+      "fps": 25.0,
+      "file": "add_on.npz",
+      "label": "Add_On",
+      "video": null
+    },
+    "add_sum_up_tally_total": {
+      "frames": 92,
+      "fps": 25.0,
+      "file": "add_sum_up_tally_total.npz",
+      "label": "Add_Sum_up_Tally_Total",
+      "video": null
+    },
+    "addicted_dependent_hooked": {
+      "frames": 101,
+      "fps": 24.0,
+      "file": "addicted_dependent_hooked.npz",
+      "label": "Addicted_Dependent_Hooked_(Sign_2)",
+      "video": null
+    },
+    "addicted_dependent_hooked_2": {
+      "frames": 81,
+      "fps": 24.0,
+      "file": "addicted_dependent_hooked_2.npz",
+      "label": "Addicted_Dependent_Hooked_(Sign_4)",
+      "video": null
+    },
+    "additive_inverse": {
+      "frames": 1166,
+      "fps": 25.0,
+      "file": "additive_inverse.npz",
+      "label": "Additive_Inverse_(Math)",
+      "video": null
+    },
+    "ademption": {
+      "frames": 1171,
+      "fps": 25.0,
+      "file": "ademption.npz",
+      "label": "Ademption",
+      "video": null
+    },
+    "adjacent_angles": {
+      "frames": 1236,
+      "fps": 25.0,
+      "file": "adjacent_angles.npz",
+      "label": "Adjacent_Angles",
+      "video": null
+    },
+    "adjustable_tab": {
+      "frames": 460,
+      "fps": 25.0,
+      "file": "adjustable_tab.npz",
+      "label": "Adjustable_tab",
+      "video": null
+    },
+    "administrator": {
+      "frames": 659,
+      "fps": 25.0,
+      "file": "administrator.npz",
+      "label": "Administrator",
+      "video": null
+    },
+    "admixtures": {
+      "frames": 656,
+      "fps": 24.0,
+      "file": "admixtures.npz",
+      "label": "Admixtures",
+      "video": null
+    },
+    "adolescence": {
+      "frames": 684,
+      "fps": 25.0,
+      "file": "adolescence.npz",
+      "label": "Adolescence",
+      "video": null
+    },
+    "adpotion": {
+      "frames": 648,
+      "fps": 25.0,
+      "file": "adpotion.npz",
+      "label": "Adpotion",
+      "video": null
+    },
+    "adulteration_adulterator": {
+      "frames": 995,
+      "fps": 24.000024795532227,
+      "file": "adulteration_adulterator.npz",
+      "label": "Adulteration_Adulterator",
+      "video": null
+    },
+    "adventurers": {
+      "frames": 588,
+      "fps": 24.0,
+      "file": "adventurers.npz",
+      "label": "Adventurers",
+      "video": null
+    },
+    "adverse_possession": {
+      "frames": 2155,
+      "fps": 25.0,
+      "file": "adverse_possession.npz",
+      "label": "Adverse_Possession",
+      "video": null
+    },
+    "advertising_campaign": {
+      "frames": 593,
+      "fps": 24.0,
+      "file": "advertising_campaign.npz",
+      "label": "Advertising_campaign",
+      "video": null
+    },
+    "advise_counsel": {
+      "frames": 67,
+      "fps": 25.0,
+      "file": "advise_counsel.npz",
+      "label": "Advise_Counsel",
+      "video": null
+    },
+    "aedes": {
+      "frames": 163,
+      "fps": 25.0,
+      "file": "aedes.npz",
+      "label": "Aedes",
+      "video": null
+    },
+    "aegis_patronage": {
+      "frames": 686,
+      "fps": 25.0,
+      "file": "aegis_patronage.npz",
+      "label": "Aegis_Patronage",
+      "video": null
+    },
+    "affluent_wealthy": {
+      "frames": 558,
+      "fps": 25.0,
+      "file": "affluent_wealthy.npz",
+      "label": "Affluent_Wealthy",
+      "video": null
+    },
+    "affray": {
+      "frames": 971,
+      "fps": 25.0,
+      "file": "affray.npz",
+      "label": "Affray",
+      "video": null
+    },
+    "aftershave_lotion": {
+      "frames": 107,
+      "fps": 24.0,
+      "file": "aftershave_lotion.npz",
+      "label": "Aftershave_lotion",
+      "video": null
+    },
+    "aftershave_lotion_2": {
+      "frames": 131,
+      "fps": 24.0,
+      "file": "aftershave_lotion_2.npz",
+      "label": "Aftershave_lotion_(Sign_2)",
+      "video": null
+    },
+    "aftershocks": {
+      "frames": 335,
+      "fps": 25.0,
+      "file": "aftershocks.npz",
+      "label": "Aftershocks",
+      "video": null
+    },
+    "aggravated_vehicle_taking": {
+      "frames": 572,
+      "fps": 25.0,
+      "file": "aggravated_vehicle_taking.npz",
+      "label": "Aggravated_Vehicle_Taking",
+      "video": null
+    },
+    "aggregate_saving": {
+      "frames": 607,
+      "fps": 24.0,
+      "file": "aggregate_saving.npz",
+      "label": "Aggregate_saving",
+      "video": null
+    },
+    "agricultural_drought": {
+      "frames": 538,
+      "fps": 25.0,
+      "file": "agricultural_drought.npz",
+      "label": "Agricultural_Drought",
+      "video": null
+    },
+    "ahmedabad": {
+      "frames": 123,
+      "fps": 25.0,
+      "file": "ahmedabad.npz",
+      "label": "Ahmedabad",
+      "video": null
+    },
+    "air_flow": {
+      "frames": 500,
+      "fps": 24.0,
+      "file": "air_flow.npz",
+      "label": "Air_Flow",
+      "video": null
+    },
+    "air_hostess": {
+      "frames": 85,
+      "fps": 24.0,
+      "file": "air_hostess.npz",
+      "label": "Air_hostess",
+      "video": null
+    },
+    "air_pollution": {
+      "frames": 118,
+      "fps": 25.0,
+      "file": "air_pollution.npz",
+      "label": "Air_Pollution",
+      "video": null
+    },
+    "air_quality": {
+      "frames": 960,
+      "fps": 24.000024795532227,
+      "file": "air_quality.npz",
+      "label": "Air_Quality",
+      "video": null
+    },
+    "air_traffic_controller": {
+      "frames": 708,
+      "fps": 25.0,
+      "file": "air_traffic_controller.npz",
+      "label": "Air_traffic_controller",
+      "video": null
+    },
+    "akshay_kumar": {
+      "frames": 82,
+      "fps": 25.0,
+      "file": "akshay_kumar.npz",
+      "label": "Akshay_Kumar",
+      "video": null
+    },
+    "alcohol_education_program": {
+      "frames": 720,
+      "fps": 25.0,
+      "file": "alcohol_education_program.npz",
+      "label": "Alcohol_Education_Program",
+      "video": null
+    },
+    "alcoholism": {
+      "frames": 215,
+      "fps": 25.0,
+      "file": "alcoholism.npz",
+      "label": "Alcoholism",
+      "video": null
+    },
+    "algae": {
+      "frames": 840,
+      "fps": 25.0,
+      "file": "algae.npz",
+      "label": "Algae(1)",
+      "video": null
+    },
+    "alien_extraterrestrial": {
+      "frames": 287,
+      "fps": 24.0,
+      "file": "alien_extraterrestrial.npz",
+      "label": "Alien_Extraterrestrial",
+      "video": null
+    },
+    "alkaline_cell": {
+      "frames": 499,
+      "fps": 25.0,
+      "file": "alkaline_cell.npz",
+      "label": "Alkaline_Cell",
+      "video": null
+    },
+    "alligator_tool": {
+      "frames": 894,
+      "fps": 25.0,
+      "file": "alligator_tool.npz",
+      "label": "Alligator_Tool",
+      "video": null
+    },
+    "ally_allied_alliance": {
+      "frames": 347,
+      "fps": 25.0,
+      "file": "ally_allied_alliance.npz",
+      "label": "Ally_Allied_Alliance_(Explanation)",
+      "video": null
+    },
+    "alternative_current": {
+      "frames": 575,
+      "fps": 25.0,
+      "file": "alternative_current.npz",
+      "label": "Alternative_Current",
+      "video": null
+    },
+    "alternative_tourism": {
+      "frames": 530,
+      "fps": 24.0,
+      "file": "alternative_tourism.npz",
+      "label": "Alternative_tourism",
+      "video": null
+    },
+    "amalgam": {
+      "frames": 220,
+      "fps": 25.0,
+      "file": "amalgam.npz",
+      "label": "Amalgam",
+      "video": null
+    },
+    "amenorrhea": {
+      "frames": 349,
+      "fps": 25.0,
+      "file": "amenorrhea.npz",
+      "label": "Amenorrhea",
+      "video": null
+    },
+    "amino_acids": {
+      "frames": 86,
+      "fps": 25.0,
+      "file": "amino_acids.npz",
+      "label": "Amino_Acids",
+      "video": null
+    },
+    "amnesia": {
+      "frames": 276,
+      "fps": 25.0,
+      "file": "amnesia.npz",
+      "label": "Amnesia",
+      "video": null
+    },
+    "amoxicillin": {
+      "frames": 228,
+      "fps": 25.0,
+      "file": "amoxicillin.npz",
+      "label": "Amoxicillin",
+      "video": null
+    },
+    "amputee": {
+      "frames": 156,
+      "fps": 25.0,
+      "file": "amputee.npz",
+      "label": "Amputee",
+      "video": null
+    },
+    "anaerobic": {
+      "frames": 1138,
+      "fps": 24.00002098083496,
+      "file": "anaerobic.npz",
+      "label": "Anaerobic",
+      "video": null
+    },
+    "anchor_bolt": {
+      "frames": 434,
+      "fps": 25.0,
+      "file": "anchor_bolt.npz",
+      "label": "Anchor_Bolt",
+      "video": null
+    },
+    "ancient_writing": {
+      "frames": 1018,
+      "fps": 25.0,
+      "file": "ancient_writing.npz",
+      "label": "Ancient_Writing",
+      "video": null
+    },
+    "anemic": {
+      "frames": 128,
+      "fps": 25.0,
+      "file": "anemic.npz",
+      "label": "Anemic",
+      "video": null
+    },
+    "anemometer": {
+      "frames": 865,
+      "fps": 25.0,
+      "file": "anemometer.npz",
+      "label": "Anemometer(1)",
+      "video": null
+    },
+    "angioedema": {
+      "frames": 408,
+      "fps": 25.0,
+      "file": "angioedema.npz",
+      "label": "Angioedema",
+      "video": null
+    },
+    "angle_of_elevation_and_angle_of_depression": {
+      "frames": 891,
+      "fps": 25.0,
+      "file": "angle_of_elevation_and_angle_of_depression.npz",
+      "label": "Angle_of_Elevation_and_Angle_of_Depression",
+      "video": null
+    },
+    "animation": {
+      "frames": 671,
+      "fps": 25.0,
+      "file": "animation.npz",
+      "label": "Animation",
+      "video": null
+    },
+    "annual_exam": {
+      "frames": 644,
+      "fps": 25.0,
+      "file": "annual_exam.npz",
+      "label": "Annual_exam",
+      "video": null
+    },
+    "annual_interest": {
+      "frames": 721,
+      "fps": 30.0,
+      "file": "annual_interest.npz",
+      "label": "Annual_Interest",
+      "video": null
+    },
+    "annual_payment": {
+      "frames": 667,
+      "fps": 30.0,
+      "file": "annual_payment.npz",
+      "label": "Annual_Payment",
+      "video": null
+    },
+    "ante_meridian_and_post_meridian": {
+      "frames": 893,
+      "fps": 25.0,
+      "file": "ante_meridian_and_post_meridian.npz",
+      "label": "Ante_Meridian_and_Post_Meridian",
+      "video": null
+    },
+    "antedate": {
+      "frames": 921,
+      "fps": 25.0,
+      "file": "antedate.npz",
+      "label": "Antedate",
+      "video": null
+    },
+    "anti_money_laundering": {
+      "frames": 1024,
+      "fps": 30.0,
+      "file": "anti_money_laundering.npz",
+      "label": "Anti_Money_Laundering",
+      "video": null
+    },
+    "anti_social_behavior": {
+      "frames": 1216,
+      "fps": 25.0,
+      "file": "anti_social_behavior.npz",
+      "label": "Anti-social_Behavior",
+      "video": null
+    },
+    "anti_social_element": {
+      "frames": 508,
+      "fps": 25.0,
+      "file": "anti_social_element.npz",
+      "label": "Anti_Social_Element",
+      "video": null
+    },
+    "antiemetic": {
+      "frames": 408,
+      "fps": 25.0,
+      "file": "antiemetic.npz",
+      "label": "Antiemetic",
+      "video": null
+    },
+    "anton_piller_order": {
+      "frames": 1140,
+      "fps": 25.0,
+      "file": "anton_piller_order.npz",
+      "label": "Anton_Piller_Order",
+      "video": null
+    },
+    "anxiety": {
+      "frames": 187,
+      "fps": 25.0,
+      "file": "anxiety.npz",
+      "label": "Anxiety",
+      "video": null
+    },
+    "anything_goes": {
+      "frames": 820,
+      "fps": 25.0,
+      "file": "anything_goes.npz",
+      "label": "Anything_Goes",
+      "video": null
+    },
+    "apartheid": {
+      "frames": 752,
+      "fps": 25.0,
+      "file": "apartheid.npz",
+      "label": "Apartheid",
+      "video": null
+    },
+    "apis_dorsata": {
+      "frames": 887,
+      "fps": 24.0,
+      "file": "apis_dorsata.npz",
+      "label": "Apis_Dorsata",
+      "video": null
+    },
+    "apnea": {
+      "frames": 288,
+      "fps": 25.0,
+      "file": "apnea.npz",
+      "label": "Apnea",
+      "video": null
+    },
+    "application_efficiency": {
+      "frames": 1106,
+      "fps": 24.00002098083496,
+      "file": "application_efficiency.npz",
+      "label": "Application_Efficiency",
+      "video": null
+    },
+    "appoint_appointment_appointee_appointer": {
+      "frames": 636,
+      "fps": 25.0,
+      "file": "appoint_appointment_appointee_appointer.npz",
+      "label": "Appoint_&_Appointment_Appointee_Appointer",
+      "video": null
+    },
+    "apprentice_novice_trainee": {
+      "frames": 1279,
+      "fps": 25.0,
+      "file": "apprentice_novice_trainee.npz",
+      "label": "Apprentice_Novice_Trainee",
+      "video": null
+    },
+    "aquaculture": {
+      "frames": 587,
+      "fps": 24.0,
+      "file": "aquaculture.npz",
+      "label": "Aquaculture_(Sign_2)",
+      "video": null
+    },
+    "arable_land": {
+      "frames": 490,
+      "fps": 24.0,
+      "file": "arable_land.npz",
+      "label": "Arable_Land",
+      "video": null
+    },
+    "arboi_culture": {
+      "frames": 871,
+      "fps": 25.0,
+      "file": "arboi_culture.npz",
+      "label": "Arboi_Culture",
+      "video": null
+    },
+    "archipelago": {
+      "frames": 865,
+      "fps": 25.0,
+      "file": "archipelago.npz",
+      "label": "Archipelago",
+      "video": null
+    },
+    "argon": {
+      "frames": 1025,
+      "fps": 24.000022888183594,
+      "file": "argon.npz",
+      "label": "Argon",
+      "video": null
+    },
+    "arid": {
+      "frames": 493,
+      "fps": 25.0,
+      "file": "arid.npz",
+      "label": "Arid",
+      "video": null
+    },
+    "armed_dangerous": {
+      "frames": 102,
+      "fps": 24.0,
+      "file": "armed_dangerous.npz",
+      "label": "Armed_&_Dangerous_(Bihar)",
+      "video": null
+    },
+    "army_of_ants_swarm_of_ants": {
+      "frames": 216,
+      "fps": 25.0,
+      "file": "army_of_ants_swarm_of_ants.npz",
+      "label": "Army_of_ants_Swarm_of_ants",
+      "video": null
+    },
+    "arranged_marriage": {
+      "frames": 252,
+      "fps": 24.0,
+      "file": "arranged_marriage.npz",
+      "label": "Arranged_Marriage",
+      "video": null
+    },
+    "arrest_warrant": {
+      "frames": 912,
+      "fps": 25.0,
+      "file": "arrest_warrant.npz",
+      "label": "Arrest_Warrant",
+      "video": null
+    },
+    "articles_of_association": {
+      "frames": 467,
+      "fps": 25.0,
+      "file": "articles_of_association.npz",
+      "label": "Articles_of_association",
+      "video": null
+    },
+    "artificial_fake_imitation": {
+      "frames": 1186,
+      "fps": 24.00002098083496,
+      "file": "artificial_fake_imitation.npz",
+      "label": "Artificial_Fake_Imitation",
+      "video": null
+    },
+    "ascend_go_up": {
+      "frames": 672,
+      "fps": 25.0,
+      "file": "ascend_go_up.npz",
+      "label": "Ascend_Go_up",
+      "video": null
+    },
+    "aspect_ratio": {
+      "frames": 890,
+      "fps": 24.0,
+      "file": "aspect_ratio.npz",
+      "label": "Aspect_ratio",
+      "video": null
+    },
+    "assessment": {
+      "frames": 841,
+      "fps": 24.0,
+      "file": "assessment.npz",
+      "label": "Assessment",
+      "video": null
+    },
+    "asset": {
+      "frames": 816,
+      "fps": 24.0,
+      "file": "asset.npz",
+      "label": "Asset",
+      "video": null
+    },
+    "associative_property": {
+      "frames": 1942,
+      "fps": 25.0,
+      "file": "associative_property.npz",
+      "label": "Associative_Property_(Maths)",
+      "video": null
+    },
+    "astrocytoma_childhood_cerebellar": {
+      "frames": 576,
+      "fps": 25.0,
+      "file": "astrocytoma_childhood_cerebellar.npz",
+      "label": "Astrocytoma_Childhood_Cerebellar",
+      "video": null
+    },
+    "at_the_money": {
+      "frames": 593,
+      "fps": 30.0,
+      "file": "at_the_money.npz",
+      "label": "At_the_Money",
+      "video": null
+    },
+    "attachments": {
+      "frames": 638,
+      "fps": 30.0,
+      "file": "attachments.npz",
+      "label": "Attachments",
+      "video": null
+    },
+    "auctioneer": {
+      "frames": 423,
+      "fps": 24.0,
+      "file": "auctioneer.npz",
+      "label": "Auctioneer",
+      "video": null
+    },
+    "audience": {
+      "frames": 130,
+      "fps": 25.0,
+      "file": "audience.npz",
+      "label": "Audience",
+      "video": null
+    },
+    "audiogram": {
+      "frames": 154,
+      "fps": 25.0,
+      "file": "audiogram.npz",
+      "label": "Audiogram_(Sign_2)",
+      "video": null
+    },
+    "audiologists": {
+      "frames": 210,
+      "fps": 25.0,
+      "file": "audiologists.npz",
+      "label": "Audiologists",
+      "video": null
+    },
+    "audiometer": {
+      "frames": 399,
+      "fps": 24.0,
+      "file": "audiometer.npz",
+      "label": "Audiometer_(Sign_2)",
+      "video": null
+    },
+    "audiometer_2": {
+      "frames": 142,
+      "fps": 25.0,
+      "file": "audiometer_2.npz",
+      "label": "Audiometer_(Sign_3)",
+      "video": null
+    },
+    "austerity": {
+      "frames": 806,
+      "fps": 25.0,
+      "file": "austerity.npz",
+      "label": "Austerity",
+      "video": null
+    },
+    "autobiography": {
+      "frames": 806,
+      "fps": 25.0,
+      "file": "autobiography.npz",
+      "label": "Autobiography",
+      "video": null
+    },
+    "autospy": {
+      "frames": 504,
+      "fps": 25.0,
+      "file": "autospy.npz",
+      "label": "Autospy",
+      "video": null
+    },
+    "award_prize": {
+      "frames": 78,
+      "fps": 25.0,
+      "file": "award_prize.npz",
+      "label": "Award_Prize",
+      "video": null
+    },
+    "axilla": {
+      "frames": 90,
+      "fps": 25.0,
+      "file": "axilla.npz",
+      "label": "Axilla",
+      "video": null
+    },
+    "abandonment_of_child_2": {
+      "frames": 812,
+      "fps": 24.0,
+      "file": "abandonment_of_child_2.npz",
+      "label": "Abandonment_of_Child_(Sign_2)",
+      "video": null
+    },
+    "abort_discontinue_halt": {
+      "frames": 629,
+      "fps": 25.0,
+      "file": "abort_discontinue_halt.npz",
+      "label": "Abort_Discontinue_Halt",
+      "video": null
+    },
+    "accelerator": {
+      "frames": 749,
+      "fps": 24.0,
+      "file": "accelerator.npz",
+      "label": "Accelerator_(Sign_2)",
+      "video": null
+    },
+    "accent": {
+      "frames": 1968,
+      "fps": 25.0,
+      "file": "accent.npz",
+      "label": "Accent_(Sign_2)",
+      "video": null
+    },
+    "account_joint_joint_account": {
+      "frames": 1134,
+      "fps": 30.0,
+      "file": "account_joint_joint_account.npz",
+      "label": "Account_Joint_Joint_Account",
+      "video": null
+    },
+    "accumulate": {
+      "frames": 399,
+      "fps": 25.0,
+      "file": "accumulate.npz",
+      "label": "Accumulate",
+      "video": null
+    },
+    "achieve": {
+      "frames": 99,
+      "fps": 25.0,
+      "file": "achieve.npz",
+      "label": "Achieve",
+      "video": null
+    },
+    "acid_mine_drainage": {
+      "frames": 818,
+      "fps": 24.0,
+      "file": "acid_mine_drainage.npz",
+      "label": "Acid_Mine_Drainage",
+      "video": null
+    },
+    "acidic_soil_weeds": {
+      "frames": 749,
+      "fps": 25.0,
+      "file": "acidic_soil_weeds.npz",
+      "label": "Acidic_Soil_Weeds",
+      "video": null
+    },
+    "acidity": {
+      "frames": 213,
+      "fps": 25.0,
+      "file": "acidity.npz",
+      "label": "Acidity",
+      "video": null
+    },
+    "acronym": {
+      "frames": 679,
+      "fps": 24.0,
+      "file": "acronym.npz",
+      "label": "Acronym",
+      "video": null
+    },
+    "act_of_parliament": {
+      "frames": 517,
+      "fps": 25.0,
+      "file": "act_of_parliament.npz",
+      "label": "Act_of_Parliament",
+      "video": null
+    },
+    "actions_speak_louder_than_words": {
+      "frames": 899,
+      "fps": 25.0,
+      "file": "actions_speak_louder_than_words.npz",
+      "label": "Actions_speak_louder_than_words",
+      "video": null
+    },
+    "active_voice_and_passive_voice": {
+      "frames": 1318,
+      "fps": 25.0,
+      "file": "active_voice_and_passive_voice.npz",
+      "label": "Active_voice_and_Passive_voice",
+      "video": null
+    },
+    "acupuncture": {
+      "frames": 180,
+      "fps": 25.0,
+      "file": "acupuncture.npz",
+      "label": "Acupuncture",
+      "video": null
+    },
+    "acute_angle": {
+      "frames": 983,
+      "fps": 25.0,
+      "file": "acute_angle.npz",
+      "label": "Acute_Angle_(Math)",
+      "video": null
+    },
+    "adhere_to": {
+      "frames": 1331,
+      "fps": 25.0,
+      "file": "adhere_to.npz",
+      "label": "Adhere_to",
+      "video": null
+    },
+    "adjacent_vertices": {
+      "frames": 1038,
+      "fps": 25.0,
+      "file": "adjacent_vertices.npz",
+      "label": "Adjacent_Vertices",
+      "video": null
+    },
+    "adjective": {
+      "frames": 132,
+      "fps": 25.0,
+      "file": "adjective.npz",
+      "label": "Adjective_(Sign_2)",
+      "video": null
+    },
+    "adjudge_adjudicate": {
+      "frames": 239,
+      "fps": 25.0,
+      "file": "adjudge_adjudicate.npz",
+      "label": "Adjudge_Adjudicate",
+      "video": null
+    },
+    "administrator_2": {
+      "frames": 565,
+      "fps": 25.0,
+      "file": "administrator_2.npz",
+      "label": "Administrator_(Sign_2)",
+      "video": null
+    },
+    "admonish": {
+      "frames": 403,
+      "fps": 25.0,
+      "file": "admonish.npz",
+      "label": "Admonish",
+      "video": null
+    },
+    "adrift_aimless_directionless_goalless_purposeless": {
+      "frames": 476,
+      "fps": 24.0,
+      "file": "adrift_aimless_directionless_goalless_purposeless.npz",
+      "label": "Adrift_Aimless_Directionless_Goalless_Purposeless",
+      "video": null
+    },
+    "advantage_of_distant_markets": {
+      "frames": 1461,
+      "fps": 24.000017166137695,
+      "file": "advantage_of_distant_markets.npz",
+      "label": "Advantage_of_Distant_Markets",
+      "video": null
+    },
+    "advantage_of_kitchen_gardening": {
+      "frames": 667,
+      "fps": 25.0,
+      "file": "advantage_of_kitchen_gardening.npz",
+      "label": "Advantage_of_Kitchen_Gardening",
+      "video": null
+    },
+    "adverse_detrimental": {
+      "frames": 1288,
+      "fps": 25.0,
+      "file": "adverse_detrimental.npz",
+      "label": "Adverse_Detrimental",
+      "video": null
+    },
+    "aerosols": {
+      "frames": 680,
+      "fps": 24.0,
+      "file": "aerosols.npz",
+      "label": "Aerosols",
+      "video": null
+    },
+    "afford": {
+      "frames": 1012,
+      "fps": 24.000022888183594,
+      "file": "afford.npz",
+      "label": "Afford",
+      "video": null
+    },
+    "again_and_again_repeatedly_over_and_over_again": {
+      "frames": 98,
+      "fps": 25.0,
+      "file": "again_and_again_repeatedly_over_and_over_again.npz",
+      "label": "Again_and_again_Repeatedly_Over_and_over_again",
+      "video": null
+    },
+    "aggregate_expenditure": {
+      "frames": 439,
+      "fps": 25.0,
+      "file": "aggregate_expenditure.npz",
+      "label": "Aggregate_expenditure",
+      "video": null
+    },
+    "aggregate_supply": {
+      "frames": 334,
+      "fps": 24.0,
+      "file": "aggregate_supply.npz",
+      "label": "Aggregate_supply",
+      "video": null
+    },
+    "agm": {
+      "frames": 954,
+      "fps": 30.0,
+      "file": "agm.npz",
+      "label": "AGM",
+      "video": null
+    },
+    "agnate": {
+      "frames": 817,
+      "fps": 25.0,
+      "file": "agnate.npz",
+      "label": "Agnate",
+      "video": null
+    },
+    "agnostic": {
+      "frames": 373,
+      "fps": 25.0,
+      "file": "agnostic.npz",
+      "label": "Agnostic",
+      "video": null
+    },
+    "ahimsa": {
+      "frames": 1402,
+      "fps": 25.0,
+      "file": "ahimsa.npz",
+      "label": "Ahimsa_(Academic)",
+      "video": null
+    },
+    "air_pump_aquarium": {
+      "frames": 611,
+      "fps": 24.0,
+      "file": "air_pump_aquarium.npz",
+      "label": "Air_Pump_Aquarium",
+      "video": null
+    },
+    "aishwarya_rai_bachchan": {
+      "frames": 79,
+      "fps": 25.0,
+      "file": "aishwarya_rai_bachchan.npz",
+      "label": "Aishwarya_Rai_Bachchan",
+      "video": null
+    },
+    "aisle_passage": {
+      "frames": 837,
+      "fps": 24.0,
+      "file": "aisle_passage.npz",
+      "label": "Aisle_Passage",
+      "video": null
+    },
+    "algal_bloom": {
+      "frames": 1071,
+      "fps": 24.000022888183594,
+      "file": "algal_bloom.npz",
+      "label": "Algal_bloom",
+      "video": null
+    },
+    "alien": {
+      "frames": 564,
+      "fps": 25.0,
+      "file": "alien.npz",
+      "label": "Alien",
+      "video": null
+    },
+    "alimentary_system": {
+      "frames": 636,
+      "fps": 25.0,
+      "file": "alimentary_system.npz",
+      "label": "Alimentary_system",
+      "video": null
+    },
+    "allergen": {
+      "frames": 219,
+      "fps": 25.0,
+      "file": "allergen.npz",
+      "label": "Allergen",
+      "video": null
+    },
+    "allergist": {
+      "frames": 355,
+      "fps": 25.0,
+      "file": "allergist.npz",
+      "label": "Allergist",
+      "video": null
+    },
+    "allocation_of_work": {
+      "frames": 872,
+      "fps": 24.0,
+      "file": "allocation_of_work.npz",
+      "label": "Allocation_of_Work",
+      "video": null
+    },
+    "allopathy": {
+      "frames": 355,
+      "fps": 25.0,
+      "file": "allopathy.npz",
+      "label": "Allopathy",
+      "video": null
+    },
+    "alpine_plant": {
+      "frames": 999,
+      "fps": 24.000024795532227,
+      "file": "alpine_plant.npz",
+      "label": "Alpine_plant",
+      "video": null
+    },
+    "alternate_mating": {
+      "frames": 714,
+      "fps": 24.0,
+      "file": "alternate_mating.npz",
+      "label": "Alternate_Mating",
+      "video": null
+    },
+    "altruism_benevolenc_humanitarism_selflessness": {
+      "frames": 361,
+      "fps": 24.0,
+      "file": "altruism_benevolenc_humanitarism_selflessness.npz",
+      "label": "Altruism_Benevolenc_Humanitarism_Selflessness",
+      "video": null
+    },
+    "amass": {
+      "frames": 852,
+      "fps": 25.0,
+      "file": "amass.npz",
+      "label": "Amass",
+      "video": null
+    },
+    "ambidextrous": {
+      "frames": 334,
+      "fps": 24.0,
+      "file": "ambidextrous.npz",
+      "label": "Ambidextrous",
+      "video": null
+    },
+    "american_option": {
+      "frames": 647,
+      "fps": 30.0,
+      "file": "american_option.npz",
+      "label": "American_option",
+      "video": null
+    },
+    "amphitheatre": {
+      "frames": 1067,
+      "fps": 25.0,
+      "file": "amphitheatre.npz",
+      "label": "Amphitheatre_(Academic)",
+      "video": null
+    },
+    "amplifier": {
+      "frames": 1051,
+      "fps": 25.0,
+      "file": "amplifier.npz",
+      "label": "Amplifier",
+      "video": null
+    },
+    "amputation": {
+      "frames": 140,
+      "fps": 25.0,
+      "file": "amputation.npz",
+      "label": "Amputation",
+      "video": null
+    },
+    "anaerobic_digestion": {
+      "frames": 726,
+      "fps": 24.0,
+      "file": "anaerobic_digestion.npz",
+      "label": "Anaerobic_Digestion",
+      "video": null
+    },
+    "anaesthetic_machine": {
+      "frames": 311,
+      "fps": 25.0,
+      "file": "anaesthetic_machine.npz",
+      "label": "Anaesthetic_Machine",
+      "video": null
+    },
+    "analytics": {
+      "frames": 747,
+      "fps": 24.0,
+      "file": "analytics.npz",
+      "label": "Analytics",
+      "video": null
+    },
+    "ancestors": {
+      "frames": 87,
+      "fps": 24.0,
+      "file": "ancestors.npz",
+      "label": "Ancestors",
+      "video": null
+    },
+    "ancient_alphabets": {
+      "frames": 710,
+      "fps": 24.0,
+      "file": "ancient_alphabets.npz",
+      "label": "Ancient_Alphabets",
+      "video": null
+    },
+    "angle_of_incidence_and_angle_of_reflection": {
+      "frames": 763,
+      "fps": 25.0,
+      "file": "angle_of_incidence_and_angle_of_reflection.npz",
+      "label": "Angle_of_Incidence_and_Angle_of_Reflection",
+      "video": null
+    },
+    "angles_its_symbol": {
+      "frames": 1715,
+      "fps": 25.0,
+      "file": "angles_its_symbol.npz",
+      "label": "Angles_Its_Symbol",
+      "video": null
+    },
+    "anglo_indian": {
+      "frames": 614,
+      "fps": 25.0,
+      "file": "anglo_indian.npz",
+      "label": "Anglo_Indian",
+      "video": null
+    },
+    "angular_leat_spot_of_cucumber": {
+      "frames": 466,
+      "fps": 25.0,
+      "file": "angular_leat_spot_of_cucumber.npz",
+      "label": "Angular_Leat_Spot_of_Cucumber",
+      "video": null
+    },
+    "animal_fibres": {
+      "frames": 473,
+      "fps": 24.0,
+      "file": "animal_fibres.npz",
+      "label": "Animal_Fibres",
+      "video": null
+    },
+    "anion": {
+      "frames": 66,
+      "fps": 25.0,
+      "file": "anion.npz",
+      "label": "Anion",
+      "video": null
+    },
+    "anorexia": {
+      "frames": 207,
+      "fps": 25.0,
+      "file": "anorexia.npz",
+      "label": "Anorexia",
+      "video": null
+    },
+    "antarctica": {
+      "frames": 107,
+      "fps": 25.0,
+      "file": "antarctica.npz",
+      "label": "Antarctica",
+      "video": null
+    },
+    "antenuptial_agreement": {
+      "frames": 678,
+      "fps": 25.0,
+      "file": "antenuptial_agreement.npz",
+      "label": "Antenuptial_Agreement",
+      "video": null
+    },
+    "anthropogenic": {
+      "frames": 622,
+      "fps": 24.0,
+      "file": "anthropogenic.npz",
+      "label": "Anthropogenic",
+      "video": null
+    },
+    "anti_social_behaviour": {
+      "frames": 566,
+      "fps": 25.0,
+      "file": "anti_social_behaviour.npz",
+      "label": "Anti-social_Behaviour",
+      "video": null
+    },
+    "antidiuretic_hormone": {
+      "frames": 967,
+      "fps": 25.0,
+      "file": "antidiuretic_hormone.npz",
+      "label": "Antidiuretic_Hormone",
+      "video": null
+    },
+    "anxiety_attack": {
+      "frames": 698,
+      "fps": 25.0,
+      "file": "anxiety_attack.npz",
+      "label": "Anxiety_Attack",
+      "video": null
+    },
+    "apostasy": {
+      "frames": 417,
+      "fps": 25.0,
+      "file": "apostasy.npz",
+      "label": "Apostasy",
+      "video": null
+    },
+    "appendix_cancer": {
+      "frames": 348,
+      "fps": 25.0,
+      "file": "appendix_cancer.npz",
+      "label": "Appendix_Cancer",
+      "video": null
+    },
+    "appraise": {
+      "frames": 1877,
+      "fps": 25.0,
+      "file": "appraise.npz",
+      "label": "Appraise",
+      "video": null
+    },
+    "appropriate_relevant_suitable": {
+      "frames": 1130,
+      "fps": 24.00002098083496,
+      "file": "appropriate_relevant_suitable.npz",
+      "label": "Appropriate_Relevant_Suitable",
+      "video": null
+    },
+    "approver": {
+      "frames": 714,
+      "fps": 25.0,
+      "file": "approver.npz",
+      "label": "Approver",
+      "video": null
+    },
+    "apron": {
+      "frames": 420,
+      "fps": 25.0,
+      "file": "apron.npz",
+      "label": "Apron_(Sign_2)",
+      "video": null
+    },
+    "apron_2": {
+      "frames": 420,
+      "fps": 25.0,
+      "file": "apron_2.npz",
+      "label": "Apron_(Sign_2)",
+      "video": null
+    },
+    "aquifer": {
+      "frames": 564,
+      "fps": 24.0,
+      "file": "aquifer.npz",
+      "label": "Aquifer",
+      "video": null
+    },
+    "arable_farming": {
+      "frames": 690,
+      "fps": 25.0,
+      "file": "arable_farming.npz",
+      "label": "Arable_Farming",
+      "video": null
+    },
+    "arbitration_and_arbitrator": {
+      "frames": 2177,
+      "fps": 25.0,
+      "file": "arbitration_and_arbitrator.npz",
+      "label": "Arbitration_and_Arbitrator",
+      "video": null
+    },
+    "arc": {
+      "frames": 1250,
+      "fps": 25.0,
+      "file": "arc.npz",
+      "label": "Arc",
+      "video": null
+    },
+    "arctic_tern": {
+      "frames": 552,
+      "fps": 25.0,
+      "file": "arctic_tern.npz",
+      "label": "Arctic_Tern",
+      "video": null
+    },
+    "aristocracy": {
+      "frames": 816,
+      "fps": 25.0,
+      "file": "aristocracy.npz",
+      "label": "Aristocracy",
+      "video": null
+    },
+    "arsenal_armoury": {
+      "frames": 200,
+      "fps": 24.0,
+      "file": "arsenal_armoury.npz",
+      "label": "Arsenal_Armoury",
+      "video": null
+    },
+    "art_therapists": {
+      "frames": 528,
+      "fps": 25.0,
+      "file": "art_therapists.npz",
+      "label": "Art_Therapists",
+      "video": null
+    },
+    "articulatory_phonetics": {
+      "frames": 279,
+      "fps": 24.0,
+      "file": "articulatory_phonetics.npz",
+      "label": "Articulatory_Phonetics",
+      "video": null
+    },
+    "artificial_insemination": {
+      "frames": 680,
+      "fps": 24.0,
+      "file": "artificial_insemination.npz",
+      "label": "Artificial_Insemination",
+      "video": null
+    },
+    "ascending_order": {
+      "frames": 1177,
+      "fps": 25.0,
+      "file": "ascending_order.npz",
+      "label": "Ascending_Order_(Maths)",
+      "video": null
+    },
+    "ascent_of_sap": {
+      "frames": 898,
+      "fps": 24.0,
+      "file": "ascent_of_sap.npz",
+      "label": "Ascent_of_Sap",
+      "video": null
+    },
+    "ascii": {
+      "frames": 948,
+      "fps": 24.0,
+      "file": "ascii.npz",
+      "label": "ASCII",
+      "video": null
+    },
+    "ashrama": {
+      "frames": 3754,
+      "fps": 25.0,
+      "file": "ashrama.npz",
+      "label": "Ashrama_(Academic)",
+      "video": null
+    },
+    "ask_question": {
+      "frames": 73,
+      "fps": 25.0,
+      "file": "ask_question.npz",
+      "label": "Ask_Question",
+      "video": null
+    },
+    "assignment": {
+      "frames": 646,
+      "fps": 24.0,
+      "file": "assignment.npz",
+      "label": "Assignment",
+      "video": null
+    },
+    "assignment_task": {
+      "frames": 1164,
+      "fps": 25.0,
+      "file": "assignment_task.npz",
+      "label": "Assignment_Task",
+      "video": null
+    },
+    "asteroids": {
+      "frames": 671,
+      "fps": 25.0,
+      "file": "asteroids.npz",
+      "label": "Asteroids",
+      "video": null
+    },
+    "atheist": {
+      "frames": 172,
+      "fps": 25.0,
+      "file": "atheist.npz",
+      "label": "Atheist",
+      "video": null
+    },
+    "athletic_fit_active": {
+      "frames": 438,
+      "fps": 24.0,
+      "file": "athletic_fit_active.npz",
+      "label": "Athletic_Fit_Active",
+      "video": null
+    },
+    "atom_proton_neutron_and_electron": {
+      "frames": 1930,
+      "fps": 25.0,
+      "file": "atom_proton_neutron_and_electron.npz",
+      "label": "Atom_Proton_Neutron_and_Electron",
+      "video": null
+    },
+    "atomic_energy": {
+      "frames": 310,
+      "fps": 24.0,
+      "file": "atomic_energy.npz",
+      "label": "Atomic_Energy",
+      "video": null
+    },
+    "atoms": {
+      "frames": 299,
+      "fps": 24.0,
+      "file": "atoms.npz",
+      "label": "Atoms",
+      "video": null
+    },
+    "atone_make_amends_make_reparation": {
+      "frames": 1600,
+      "fps": 24.000030517578125,
+      "file": "atone_make_amends_make_reparation.npz",
+      "label": "Atone_Make_Amends_Make_reparation",
+      "video": null
+    },
+    "attest_attestation": {
+      "frames": 672,
+      "fps": 25.0,
+      "file": "attest_attestation.npz",
+      "label": "Attest_&_Attestation",
+      "video": null
+    },
+    "audible_perceptible": {
+      "frames": 1116,
+      "fps": 24.00002098083496,
+      "file": "audible_perceptible.npz",
+      "label": "Audible_Perceptible",
+      "video": null
+    },
+    "audio_type": {
+      "frames": 708,
+      "fps": 25.0,
+      "file": "audio_type.npz",
+      "label": "Audio_Type",
+      "video": null
+    },
+    "audiology": {
+      "frames": 128,
+      "fps": 25.0,
+      "file": "audiology.npz",
+      "label": "Audiology_(Sign_3)",
+      "video": null
+    },
+    "audiology_2": {
+      "frames": 228,
+      "fps": 25.0,
+      "file": "audiology_2.npz",
+      "label": "Audiology_(Sign_2)",
+      "video": null
+    },
+    "autism": {
+      "frames": 444,
+      "fps": 25.0,
+      "file": "autism.npz",
+      "label": "Autism",
+      "video": null
+    },
+    "autocracy_autocrat": {
+      "frames": 354,
+      "fps": 24.0,
+      "file": "autocracy_autocrat.npz",
+      "label": "Autocracy_Autocrat",
+      "video": null
+    },
+    "autograph": {
+      "frames": 343,
+      "fps": 24.0,
+      "file": "autograph.npz",
+      "label": "Autograph",
+      "video": null
+    },
+    "automatic_stabilizer": {
+      "frames": 1014,
+      "fps": 24.000022888183594,
+      "file": "automatic_stabilizer.npz",
+      "label": "Automatic_Stabilizer",
+      "video": null
+    },
+    "autonomous_degree_granting_college": {
+      "frames": 1175,
+      "fps": 24.00002098083496,
+      "file": "autonomous_degree_granting_college.npz",
+      "label": "Autonomous_Degree-Granting_College",
+      "video": null
+    },
+    "autotrophic_2": {
+      "frames": 1152,
+      "fps": 24.00002098083496,
+      "file": "autotrophic_2.npz",
+      "label": "Autotrophic_(Sign_2)",
+      "video": null
+    },
+    "availble_water": {
+      "frames": 674,
+      "fps": 25.0,
+      "file": "availble_water.npz",
+      "label": "Availble_Water",
+      "video": null
+    },
+    "average_not_worthy_of_praise": {
+      "frames": 667,
+      "fps": 25.0,
+      "file": "average_not_worthy_of_praise.npz",
+      "label": "Average_Not_Worthy_of_Praise",
+      "video": null
+    },
+    "a_bird_in_the_hand_is_worth_two_in_the_bush": {
+      "frames": 1483,
+      "fps": 25.0,
+      "file": "a_bird_in_the_hand_is_worth_two_in_the_bush.npz",
+      "label": "A_bird_in_the_hand_is_worth_two_in_the_bush",
+      "video": null
+    },
+    "a_blessing_in_disguise": {
+      "frames": 1139,
+      "fps": 25.0,
+      "file": "a_blessing_in_disguise.npz",
+      "label": "A_blessing_in_disguise",
+      "video": null
+    },
+    "a_lot": {
+      "frames": 84,
+      "fps": 25.0,
+      "file": "a_lot.npz",
+      "label": "A_Lot",
+      "video": null
+    },
+    "abortion": {
+      "frames": 95,
+      "fps": 25.0,
+      "file": "abortion.npz",
+      "label": "Abortion",
+      "video": null
+    },
+    "abortive_trial": {
+      "frames": 645,
+      "fps": 24.0,
+      "file": "abortive_trial.npz",
+      "label": "Abortive_Trial_(Sign_2)",
+      "video": null
+    },
+    "above_board_honest_proper": {
+      "frames": 660,
+      "fps": 25.0,
+      "file": "above_board_honest_proper.npz",
+      "label": "Above_board_Honest_Proper",
+      "video": null
+    },
+    "absentee_landlord": {
+      "frames": 922,
+      "fps": 24.0,
+      "file": "absentee_landlord.npz",
+      "label": "Absentee_Landlord",
+      "video": null
+    },
+    "absolute_advantage": {
+      "frames": 1612,
+      "fps": 24.000030517578125,
+      "file": "absolute_advantage.npz",
+      "label": "Absolute_Advantage",
+      "video": null
+    },
+    "accentuating": {
+      "frames": 639,
+      "fps": 25.0,
+      "file": "accentuating.npz",
+      "label": "Accentuating",
+      "video": null
+    },
+    "acclimation": {
+      "frames": 991,
+      "fps": 24.000024795532227,
+      "file": "acclimation.npz",
+      "label": "Acclimation",
+      "video": null
+    },
+    "accomplish": {
+      "frames": 405,
+      "fps": 25.0,
+      "file": "accomplish.npz",
+      "label": "Accomplish",
+      "video": null
+    },
+    "accomplish_achieve_attain_realize": {
+      "frames": 302,
+      "fps": 25.0,
+      "file": "accomplish_achieve_attain_realize.npz",
+      "label": "Accomplish_Achieve_Attain_Realize",
+      "video": null
+    },
+    "accounting_year": {
+      "frames": 527,
+      "fps": 25.0,
+      "file": "accounting_year.npz",
+      "label": "Accounting_Year",
+      "video": null
+    },
+    "accuse_blame": {
+      "frames": 94,
+      "fps": 25.0,
+      "file": "accuse_blame.npz",
+      "label": "Accuse_Blame",
+      "video": null
+    },
+    "ache_pain": {
+      "frames": 86,
+      "fps": 25.0,
+      "file": "ache_pain.npz",
+      "label": "Ache, Pain",
+      "video": null
+    },
+    "achromatic_hues": {
+      "frames": 564,
+      "fps": 25.0,
+      "file": "achromatic_hues.npz",
+      "label": "Achromatic_Hues",
+      "video": null
+    },
+    "acid_reflex_disorder": {
+      "frames": 804,
+      "fps": 25.0,
+      "file": "acid_reflex_disorder.npz",
+      "label": "Acid-reflex_disorder",
+      "video": null
+    },
+    "acquaintance": {
+      "frames": 304,
+      "fps": 25.0,
+      "file": "acquaintance.npz",
+      "label": "Acquaintance",
+      "video": null
+    },
+    "acquired_deafness": {
+      "frames": 253,
+      "fps": 24.0,
+      "file": "acquired_deafness.npz",
+      "label": "Acquired_Deafness",
+      "video": null
+    },
+    "act_of_war_2": {
+      "frames": 789,
+      "fps": 24.0,
+      "file": "act_of_war_2.npz",
+      "label": "Act_of_War_(Sign_2)",
+      "video": null
+    },
+    "actual_loss": {
+      "frames": 798,
+      "fps": 30.0,
+      "file": "actual_loss.npz",
+      "label": "Actual_Loss_(Financial_Term)",
+      "video": null
+    },
+    "actuary": {
+      "frames": 94,
+      "fps": 25.0,
+      "file": "actuary.npz",
+      "label": "Actuary",
+      "video": null
+    },
+    "acupressure": {
+      "frames": 236,
+      "fps": 25.0,
+      "file": "acupressure.npz",
+      "label": "Acupressure",
+      "video": null
+    },
+    "acute_angled_triangle": {
+      "frames": 985,
+      "fps": 25.0,
+      "file": "acute_angled_triangle.npz",
+      "label": "Acute_Angled_Triangle_(Math)",
+      "video": null
+    },
+    "ad_hoc": {
+      "frames": 1123,
+      "fps": 25.0,
+      "file": "ad_hoc.npz",
+      "label": "Ad_hoc",
+      "video": null
+    },
+    "adams_apple": {
+      "frames": 228,
+      "fps": 25.0,
+      "file": "adams_apple.npz",
+      "label": "Adam’s_apple",
+      "video": null
+    },
+    "adaptive_expectations_theory": {
+      "frames": 1141,
+      "fps": 24.00002098083496,
+      "file": "adaptive_expectations_theory.npz",
+      "label": "Adaptive_Expectations_Theory",
+      "video": null
+    },
+    "addict": {
+      "frames": 228,
+      "fps": 25.0,
+      "file": "addict.npz",
+      "label": "Addict",
+      "video": null
+    },
+    "addition": {
+      "frames": 131,
+      "fps": 25.0,
+      "file": "addition.npz",
+      "label": "Addition",
+      "video": null
+    },
+    "additive_hue_system": {
+      "frames": 384,
+      "fps": 25.0,
+      "file": "additive_hue_system.npz",
+      "label": "Additive_Hue_System",
+      "video": null
+    },
+    "adenoids": {
+      "frames": 360,
+      "fps": 25.0,
+      "file": "adenoids.npz",
+      "label": "Adenoids",
+      "video": null
+    },
+    "adjacent_sides": {
+      "frames": 507,
+      "fps": 25.0,
+      "file": "adjacent_sides.npz",
+      "label": "Adjacent_sides",
+      "video": null
+    },
+    "adjourned_and_adjourned_sine_die": {
+      "frames": 984,
+      "fps": 25.0,
+      "file": "adjourned_and_adjourned_sine_die.npz",
+      "label": "Adjourned_and_Adjourned_sine_die",
+      "video": null
+    },
+    "adrift_unmoored_unanchored": {
+      "frames": 318,
+      "fps": 24.0,
+      "file": "adrift_unmoored_unanchored.npz",
+      "label": "Adrift_Unmoored_Unanchored",
+      "video": null
+    },
+    "adulteration_2": {
+      "frames": 627,
+      "fps": 24.0,
+      "file": "adulteration_2.npz",
+      "label": "Adulteration_(Sign_2)",
+      "video": null
+    },
+    "affect_influence": {
+      "frames": 1412,
+      "fps": 24.000017166137695,
+      "file": "affect_influence.npz",
+      "label": "Affect_Influence",
+      "video": null
+    },
+    "affiant_and_deponent": {
+      "frames": 1222,
+      "fps": 25.0,
+      "file": "affiant_and_deponent.npz",
+      "label": "Affiant_and_deponent",
+      "video": null
+    },
+    "afraid_scared": {
+      "frames": 92,
+      "fps": 25.0,
+      "file": "afraid_scared.npz",
+      "label": "Afraid_Scared",
+      "video": null
+    },
+    "aftermath": {
+      "frames": 1006,
+      "fps": 24.000024795532227,
+      "file": "aftermath.npz",
+      "label": "Aftermath",
+      "video": null
+    },
+    "age_of_consent": {
+      "frames": 1749,
+      "fps": 25.0,
+      "file": "age_of_consent.npz",
+      "label": "Age_of_consent",
+      "video": null
+    },
+    "ageism_age_bias": {
+      "frames": 1291,
+      "fps": 25.0,
+      "file": "ageism_age_bias.npz",
+      "label": "Ageism_Age_bias",
+      "video": null
+    },
+    "agnosia": {
+      "frames": 720,
+      "fps": 25.0,
+      "file": "agnosia.npz",
+      "label": "Agnosia",
+      "video": null
+    },
+    "agony_suffering": {
+      "frames": 482,
+      "fps": 24.0,
+      "file": "agony_suffering.npz",
+      "label": "Agony_Suffering",
+      "video": null
+    },
+    "air_conditioner_ac": {
+      "frames": 98,
+      "fps": 25.0,
+      "file": "air_conditioner_ac.npz",
+      "label": "Air_conditioner_AC_(Window_AC)",
+      "video": null
+    },
+    "air_cooler": {
+      "frames": 110,
+      "fps": 24.0,
+      "file": "air_cooler.npz",
+      "label": "Air_cooler",
+      "video": null
+    },
+    "airbubble": {
+      "frames": 45,
+      "fps": 25.0,
+      "file": "airbubble.npz",
+      "label": "Airbubble",
+      "video": null
+    },
+    "albedo": {
+      "frames": 1278,
+      "fps": 24.000019073486328,
+      "file": "albedo.npz",
+      "label": "Albedo",
+      "video": null
+    },
+    "alencon_lace": {
+      "frames": 448,
+      "fps": 25.0,
+      "file": "alencon_lace.npz",
+      "label": "Alencon_Lace",
+      "video": null
+    },
+    "alert": {
+      "frames": 134,
+      "fps": 25.0,
+      "file": "alert.npz",
+      "label": "Alert",
+      "video": null
+    },
+    "algeria": {
+      "frames": 89,
+      "fps": 25.0,
+      "file": "algeria.npz",
+      "label": "Algeria",
+      "video": null
+    },
+    "alien_species": {
+      "frames": 691,
+      "fps": 24.0,
+      "file": "alien_species.npz",
+      "label": "Alien_species",
+      "video": null
+    },
+    "alike": {
+      "frames": 98,
+      "fps": 25.0,
+      "file": "alike.npz",
+      "label": "Alike",
+      "video": null
+    },
+    "alike_similar": {
+      "frames": 80,
+      "fps": 25.0,
+      "file": "alike_similar.npz",
+      "label": "Alike_similar",
+      "video": null
+    },
+    "all_rounder": {
+      "frames": 373,
+      "fps": 25.0,
+      "file": "all_rounder.npz",
+      "label": "All_rounder",
+      "video": null
+    },
+    "allegation_accusation": {
+      "frames": 642,
+      "fps": 25.0,
+      "file": "allegation_accusation.npz",
+      "label": "Allegation_&_Accusation",
+      "video": null
+    },
+    "allergies": {
+      "frames": 95,
+      "fps": 25.0,
+      "file": "allergies.npz",
+      "label": "Allergies",
+      "video": null
+    },
+    "alliance": {
+      "frames": 401,
+      "fps": 24.0,
+      "file": "alliance.npz",
+      "label": "Alliance",
+      "video": null
+    },
+    "almond": {
+      "frames": 147,
+      "fps": 25.0,
+      "file": "almond.npz",
+      "label": "Almond_(Sign_2)",
+      "video": null
+    },
+    "alone_solo": {
+      "frames": 79,
+      "fps": 25.0,
+      "file": "alone_solo.npz",
+      "label": "Alone_Solo",
+      "video": null
+    },
+    "alopecia": {
+      "frames": 189,
+      "fps": 25.0,
+      "file": "alopecia.npz",
+      "label": "Alopecia",
+      "video": null
+    },
+    "alternative_fuels": {
+      "frames": 611,
+      "fps": 24.0,
+      "file": "alternative_fuels.npz",
+      "label": "Alternative_fuels",
+      "video": null
+    },
+    "alternative_option": {
+      "frames": 113,
+      "fps": 25.0,
+      "file": "alternative_option.npz",
+      "label": "Alternative_Option",
+      "video": null
+    },
+    "alzheimer_s_disease": {
+      "frames": 162,
+      "fps": 25.0,
+      "file": "alzheimer_s_disease.npz",
+      "label": "Alzheimer_s_Disease",
+      "video": null
+    },
+    "amalgamator": {
+      "frames": 250,
+      "fps": 25.0,
+      "file": "amalgamator.npz",
+      "label": "Amalgamator",
+      "video": null
+    },
+    "ambassador": {
+      "frames": 950,
+      "fps": 25.0,
+      "file": "ambassador.npz",
+      "label": "Ambassador",
+      "video": null
+    },
+    "ammonia": {
+      "frames": 399,
+      "fps": 24.0,
+      "file": "ammonia.npz",
+      "label": "Ammonia",
+      "video": null
+    },
+    "amount_quantity": {
+      "frames": 86,
+      "fps": 25.0,
+      "file": "amount_quantity.npz",
+      "label": "Amount_Quantity",
+      "video": null
+    },
+    "anaerobic_bacteria": {
+      "frames": 1323,
+      "fps": 24.000019073486328,
+      "file": "anaerobic_bacteria.npz",
+      "label": "Anaerobic_Bacteria",
+      "video": null
+    },
+    "anaesthetists": {
+      "frames": 124,
+      "fps": 25.0,
+      "file": "anaesthetists.npz",
+      "label": "Anaesthetists",
+      "video": null
+    },
+    "analog_signal": {
+      "frames": 1111,
+      "fps": 25.0,
+      "file": "analog_signal.npz",
+      "label": "Analog_Signal",
+      "video": null
+    },
+    "ancient_civilization": {
+      "frames": 1366,
+      "fps": 24.000017166137695,
+      "file": "ancient_civilization.npz",
+      "label": "Ancient_Civilization",
+      "video": null
+    },
+    "andropause": {
+      "frames": 443,
+      "fps": 25.0,
+      "file": "andropause.npz",
+      "label": "Andropause",
+      "video": null
+    },
+    "anemia": {
+      "frames": 252,
+      "fps": 25.0,
+      "file": "anemia.npz",
+      "label": "Anemia",
+      "video": null
+    },
+    "anesthesiology": {
+      "frames": 300,
+      "fps": 25.0,
+      "file": "anesthesiology.npz",
+      "label": "Anesthesiology",
+      "video": null
+    },
+    "anesthetist": {
+      "frames": 276,
+      "fps": 25.0,
+      "file": "anesthetist.npz",
+      "label": "Anesthetist",
+      "video": null
+    },
+    "anganwadi": {
+      "frames": 1032,
+      "fps": 25.0,
+      "file": "anganwadi.npz",
+      "label": "Anganwadi_(Academic)",
+      "video": null
+    },
+    "angry_enraged_furious": {
+      "frames": 62,
+      "fps": 25.0,
+      "file": "angry_enraged_furious.npz",
+      "label": "Angry_Enraged_Furious",
+      "video": null
+    },
+    "anitibiotic": {
+      "frames": 117,
+      "fps": 25.0,
+      "file": "anitibiotic.npz",
+      "label": "Anitibiotic",
+      "video": null
+    },
+    "annex_states": {
+      "frames": 1187,
+      "fps": 24.00002098083496,
+      "file": "annex_states.npz",
+      "label": "Annex_States",
+      "video": null
+    },
+    "annual_flowering_plants": {
+      "frames": 923,
+      "fps": 25.0,
+      "file": "annual_flowering_plants.npz",
+      "label": "Annual_Flowering_Plants",
+      "video": null
+    },
+    "annual_yearly": {
+      "frames": 116,
+      "fps": 25.0,
+      "file": "annual_yearly.npz",
+      "label": "Annual_Yearly",
+      "video": null
+    },
+    "annualised_return": {
+      "frames": 626,
+      "fps": 30.0,
+      "file": "annualised_return.npz",
+      "label": "Annualised_Return",
+      "video": null
+    },
+    "anti_virus": {
+      "frames": 168,
+      "fps": 25.0,
+      "file": "anti_virus.npz",
+      "label": "Anti_Virus_(Sign_2)",
+      "video": null
+    },
+    "antibody": {
+      "frames": 376,
+      "fps": 25.0,
+      "file": "antibody.npz",
+      "label": "Antibody",
+      "video": null
+    },
+    "antitussive": {
+      "frames": 204,
+      "fps": 25.0,
+      "file": "antitussive.npz",
+      "label": "Antitussive",
+      "video": null
+    },
+    "aphasia": {
+      "frames": 606,
+      "fps": 25.0,
+      "file": "aphasia.npz",
+      "label": "Aphasia",
+      "video": null
+    },
+    "apparel_garment": {
+      "frames": 456,
+      "fps": 25.0,
+      "file": "apparel_garment.npz",
+      "label": "Apparel_Garment",
+      "video": null
+    },
+    "aquatic_weeds": {
+      "frames": 824,
+      "fps": 24.0,
+      "file": "aquatic_weeds.npz",
+      "label": "Aquatic_Weeds",
+      "video": null
+    },
+    "arable_crops": {
+      "frames": 1234,
+      "fps": 25.0,
+      "file": "arable_crops.npz",
+      "label": "Arable_Crops",
+      "video": null
+    },
+    "arc_fault_circuit_interrupter": {
+      "frames": 1364,
+      "fps": 25.0,
+      "file": "arc_fault_circuit_interrupter.npz",
+      "label": "Arc_Fault_Circuit_Interrupter",
+      "video": null
+    },
+    "arch": {
+      "frames": 1465,
+      "fps": 25.0,
+      "file": "arch.npz",
+      "label": "Arch",
+      "video": null
+    },
+    "arms_arsenal": {
+      "frames": 231,
+      "fps": 24.0,
+      "file": "arms_arsenal.npz",
+      "label": "Arms_Arsenal",
+      "video": null
+    },
+    "arrhythmia": {
+      "frames": 408,
+      "fps": 25.0,
+      "file": "arrhythmia.npz",
+      "label": "Arrhythmia",
+      "video": null
+    },
+    "arson": {
+      "frames": 442,
+      "fps": 25.0,
+      "file": "arson.npz",
+      "label": "Arson",
+      "video": null
+    },
+    "arthritis": {
+      "frames": 145,
+      "fps": 25.0,
+      "file": "arthritis.npz",
+      "label": "Arthritis",
+      "video": null
+    },
+    "artifact": {
+      "frames": 862,
+      "fps": 25.0,
+      "file": "artifact.npz",
+      "label": "Artifact",
+      "video": null
+    },
+    "artificial_intelligence": {
+      "frames": 3512,
+      "fps": 24.00003433227539,
+      "file": "artificial_intelligence.npz",
+      "label": "Artificial_Intelligence_(AI)",
+      "video": null
+    },
+    "ashvamedha": {
+      "frames": 2297,
+      "fps": 25.0,
+      "file": "ashvamedha.npz",
+      "label": "Ashvamedha_(History)",
+      "video": null
+    },
+    "asphlat_cutter": {
+      "frames": 577,
+      "fps": 25.0,
+      "file": "asphlat_cutter.npz",
+      "label": "Asphlat_Cutter",
+      "video": null
+    },
+    "assembly_drawing": {
+      "frames": 424,
+      "fps": 25.0,
+      "file": "assembly_drawing.npz",
+      "label": "Assembly_Drawing",
+      "video": null
+    },
+    "assent_agree_approve": {
+      "frames": 745,
+      "fps": 25.0,
+      "file": "assent_agree_approve.npz",
+      "label": "Assent_Agree_Approve",
+      "video": null
+    },
+    "assess_check_investigate": {
+      "frames": 100,
+      "fps": 25.0,
+      "file": "assess_check_investigate.npz",
+      "label": "Assess_Check_Investigate",
+      "video": null
+    },
+    "asset_management_company": {
+      "frames": 981,
+      "fps": 30.0,
+      "file": "asset_management_company.npz",
+      "label": "Asset_Management_Company",
+      "video": null
+    },
+    "assets_and_liabilities": {
+      "frames": 806,
+      "fps": 25.0,
+      "file": "assets_and_liabilities.npz",
+      "label": "Assets_and_Liabilities",
+      "video": null
+    },
+    "assyrians": {
+      "frames": 925,
+      "fps": 24.0,
+      "file": "assyrians.npz",
+      "label": "Assyrians",
+      "video": null
+    },
+    "asterisk": {
+      "frames": 362,
+      "fps": 24.0,
+      "file": "asterisk.npz",
+      "label": "Asterisk",
+      "video": null
+    },
+    "at_large_on_the_loose": {
+      "frames": 247,
+      "fps": 24.0,
+      "file": "at_large_on_the_loose.npz",
+      "label": "At_large_On_the_loose",
+      "video": null
+    },
+    "ataxia": {
+      "frames": 456,
+      "fps": 25.0,
+      "file": "ataxia.npz",
+      "label": "Ataxia",
+      "video": null
+    },
+    "athlete_sportsperson": {
+      "frames": 238,
+      "fps": 24.0,
+      "file": "athlete_sportsperson.npz",
+      "label": "Athlete_Sportsperson",
+      "video": null
+    },
+    "atrial_natriuretic_peptide": {
+      "frames": 492,
+      "fps": 25.0,
+      "file": "atrial_natriuretic_peptide.npz",
+      "label": "Atrial-Natriuretic_Peptide",
+      "video": null
+    },
+    "attention_deficit_hyperactivity_disorder": {
+      "frames": 496,
+      "fps": 25.0,
+      "file": "attention_deficit_hyperactivity_disorder.npz",
+      "label": "Attention-deficit_Hyperactivity_disorder",
+      "video": null
+    },
+    "auction": {
+      "frames": 707,
+      "fps": 30.0,
+      "file": "auction.npz",
+      "label": "Auction",
+      "video": null
+    },
+    "auditory_phonetics": {
+      "frames": 244,
+      "fps": 24.0,
+      "file": "auditory_phonetics.npz",
+      "label": "Auditory_Phonetics",
+      "video": null
+    },
+    "auscultation": {
+      "frames": 342,
+      "fps": 25.0,
+      "file": "auscultation.npz",
+      "label": "Auscultation",
+      "video": null
+    },
+    "authentic_original": {
+      "frames": 98,
+      "fps": 25.0,
+      "file": "authentic_original.npz",
+      "label": "Authentic_Original",
+      "video": null
+    },
+    "authorised_capital": {
+      "frames": 1271,
+      "fps": 30.0,
+      "file": "authorised_capital.npz",
+      "label": "Authorised_Capital",
+      "video": null
+    },
+    "auto_answer_group": {
+      "frames": 930,
+      "fps": 25.0,
+      "file": "auto_answer_group.npz",
+      "label": "Auto_Answer_Group",
+      "video": null
+    },
+    "autoclave": {
+      "frames": 577,
+      "fps": 25.0,
+      "file": "autoclave.npz",
+      "label": "Autoclave",
+      "video": null
+    },
+    "autoimmune_disease": {
+      "frames": 612,
+      "fps": 25.0,
+      "file": "autoimmune_disease.npz",
+      "label": "Autoimmune_Disease",
+      "video": null
+    },
+    "autopsy_instruments": {
+      "frames": 318,
+      "fps": 25.0,
+      "file": "autopsy_instruments.npz",
+      "label": "Autopsy_Instruments",
+      "video": null
+    },
+    "autosum": {
+      "frames": 835,
+      "fps": 25.0,
+      "file": "autosum.npz",
+      "label": "Autosum",
+      "video": null
+    },
+    "autotrophs_and_heterotrophs": {
+      "frames": 1404,
+      "fps": 25.0,
+      "file": "autotrophs_and_heterotrophs.npz",
+      "label": "Autotrophs_and_Heterotrophs",
+      "video": null
+    },
+    "axes": {
+      "frames": 736,
+      "fps": 25.0,
+      "file": "axes.npz",
+      "label": "Axes",
+      "video": null
+    },
+    "a_dime_a_dozen": {
+      "frames": 755,
+      "fps": 25.0,
+      "file": "a_dime_a_dozen.npz",
+      "label": "A_dime_a_dozen",
+      "video": null
+    },
+    "a_line_silhouette": {
+      "frames": 156,
+      "fps": 25.0,
+      "file": "a_line_silhouette.npz",
+      "label": "A_Line_Silhouette",
+      "video": null
+    },
+    "aamir_khan": {
+      "frames": 79,
+      "fps": 25.0,
+      "file": "aamir_khan.npz",
+      "label": "Aamir_Khan",
+      "video": null
+    },
+    "aamir_khan_2": {
+      "frames": 79,
+      "fps": 25.0,
+      "file": "aamir_khan_2.npz",
+      "label": "Aamir_Khan_(Sign_2)",
+      "video": null
+    },
+    "abandonment_of_copyright": {
+      "frames": 539,
+      "fps": 25.0,
+      "file": "abandonment_of_copyright.npz",
+      "label": "Abandonment_of_copyright",
+      "video": null
+    },
+    "abdomen": {
+      "frames": 192,
+      "fps": 25.0,
+      "file": "abdomen.npz",
+      "label": "Abdomen",
+      "video": null
+    },
+    "abide_by_comply_with_follow": {
+      "frames": 376,
+      "fps": 25.0,
+      "file": "abide_by_comply_with_follow.npz",
+      "label": "Abide_by_Comply_with_Follow",
+      "video": null
+    },
+    "aborigine": {
+      "frames": 698,
+      "fps": 24.0,
+      "file": "aborigine.npz",
+      "label": "Aborigine",
+      "video": null
+    },
+    "abort_cancel": {
+      "frames": 713,
+      "fps": 25.0,
+      "file": "abort_cancel.npz",
+      "label": "Abort_Cancel",
+      "video": null
+    },
+    "abrogation": {
+      "frames": 1117,
+      "fps": 24.00002098083496,
+      "file": "abrogation.npz",
+      "label": "Abrogation",
+      "video": null
+    },
+    "abscess": {
+      "frames": 286,
+      "fps": 25.0,
+      "file": "abscess.npz",
+      "label": "Abscess",
+      "video": null
+    },
+    "absolute_weeds": {
+      "frames": 695,
+      "fps": 24.0,
+      "file": "absolute_weeds.npz",
+      "label": "Absolute_Weeds",
+      "video": null
+    },
+    "absorption_of_food": {
+      "frames": 1236,
+      "fps": 23.976024627685547,
+      "file": "absorption_of_food.npz",
+      "label": "Absorption_of_Food",
+      "video": null
+    },
+    "absorption_pit": {
+      "frames": 1083,
+      "fps": 24.000022888183594,
+      "file": "absorption_pit.npz",
+      "label": "Absorption_pit",
+      "video": null
+    },
+    "academic_bank_of_credit": {
+      "frames": 2639,
+      "fps": 24.00002670288086,
+      "file": "academic_bank_of_credit.npz",
+      "label": "Academic_Bank_of_Credit_(ABC)",
+      "video": null
+    },
+    "access_accessible": {
+      "frames": 84,
+      "fps": 25.0,
+      "file": "access_accessible.npz",
+      "label": "Access_Accessible",
+      "video": null
+    },
+    "accountable_answerable_liable_responsible": {
+      "frames": 377,
+      "fps": 25.0,
+      "file": "accountable_answerable_liable_responsible.npz",
+      "label": "Accountable_Answerable_Liable_Responsible",
+      "video": null
+    },
+    "achalasia": {
+      "frames": 435,
+      "fps": 25.0,
+      "file": "achalasia.npz",
+      "label": "Achalasia",
+      "video": null
+    },
+    "acid_and_base": {
+      "frames": 1742,
+      "fps": 25.0,
+      "file": "acid_and_base.npz",
+      "label": "Acid_and_Base",
+      "video": null
+    },
+    "acquit": {
+      "frames": 984,
+      "fps": 25.0,
+      "file": "acquit.npz",
+      "label": "Acquit_(Social_Science)",
+      "video": null
+    },
+    "act_or_statute_bill": {
+      "frames": 1158,
+      "fps": 25.0,
+      "file": "act_or_statute_bill.npz",
+      "label": "Act_or_Statute_Bill",
+      "video": null
+    },
+    "action_plan": {
+      "frames": 546,
+      "fps": 25.0,
+      "file": "action_plan.npz",
+      "label": "Action_Plan",
+      "video": null
+    },
+    "activist_advocate_campaigner": {
+      "frames": 429,
+      "fps": 25.0,
+      "file": "activist_advocate_campaigner.npz",
+      "label": "Activist_Advocate_Campaigner",
+      "video": null
+    },
+    "acuity": {
+      "frames": 565,
+      "fps": 25.0,
+      "file": "acuity.npz",
+      "label": "Acuity",
+      "video": null
+    },
+    "acute_coronary_syndrome": {
+      "frames": 451,
+      "fps": 25.0,
+      "file": "acute_coronary_syndrome.npz",
+      "label": "Acute_Coronary_Syndrome",
+      "video": null
+    },
+    "addicted_dependent_hooked_3": {
+      "frames": 96,
+      "fps": 24.0,
+      "file": "addicted_dependent_hooked_3.npz",
+      "label": "Addicted_Dependent_Hooked_(Sign_3)",
+      "video": null
+    },
+    "adequate_sufficient": {
+      "frames": 422,
+      "fps": 25.0,
+      "file": "adequate_sufficient.npz",
+      "label": "Adequate_Sufficient",
+      "video": null
+    },
+    "adipsia": {
+      "frames": 168,
+      "fps": 25.0,
+      "file": "adipsia.npz",
+      "label": "Adipsia",
+      "video": null
+    },
+    "adjacent_side": {
+      "frames": 1180,
+      "fps": 25.0,
+      "file": "adjacent_side.npz",
+      "label": "Adjacent_Side_(Math)",
+      "video": null
+    },
+    "administrative_order": {
+      "frames": 641,
+      "fps": 25.0,
+      "file": "administrative_order.npz",
+      "label": "Administrative_Order",
+      "video": null
+    },
+    "adsense": {
+      "frames": 755,
+      "fps": 24.0,
+      "file": "adsense.npz",
+      "label": "Adsense",
+      "video": null
+    },
+    "adventure_toursim": {
+      "frames": 587,
+      "fps": 24.0,
+      "file": "adventure_toursim.npz",
+      "label": "Adventure_toursim",
+      "video": null
+    },
+    "adversary_or_opponent": {
+      "frames": 626,
+      "fps": 25.0,
+      "file": "adversary_or_opponent.npz",
+      "label": "Adversary_or_Opponent",
+      "video": null
+    },
+    "aeroplane_duster": {
+      "frames": 415,
+      "fps": 24.0,
+      "file": "aeroplane_duster.npz",
+      "label": "Aeroplane_duster",
+      "video": null
+    },
+    "affect_impact_influence": {
+      "frames": 70,
+      "fps": 25.0,
+      "file": "affect_impact_influence.npz",
+      "label": "Affect_Impact_Influence",
+      "video": null
+    },
+    "age_appropriate_learning": {
+      "frames": 1227,
+      "fps": 25.0,
+      "file": "age_appropriate_learning.npz",
+      "label": "Age-appropriate_learning",
+      "video": null
+    },
+    "age_old": {
+      "frames": 937,
+      "fps": 24.0,
+      "file": "age_old.npz",
+      "label": "Age-old",
+      "video": null
+    },
+    "aggregate_demand": {
+      "frames": 530,
+      "fps": 24.0,
+      "file": "aggregate_demand.npz",
+      "label": "Aggregate_demand",
+      "video": null
+    },
+    "agnate_2": {
+      "frames": 399,
+      "fps": 24.0,
+      "file": "agnate_2.npz",
+      "label": "Agnate_(Sign_2)",
+      "video": null
+    },
+    "agoraphobia": {
+      "frames": 337,
+      "fps": 25.0,
+      "file": "agoraphobia.npz",
+      "label": "Agoraphobia",
+      "video": null
+    },
+    "agree_concur_consent": {
+      "frames": 131,
+      "fps": 25.0,
+      "file": "agree_concur_consent.npz",
+      "label": "Agree_Concur_Consent",
+      "video": null
+    },
+    "agroforestry": {
+      "frames": 1003,
+      "fps": 24.000024795532227,
+      "file": "agroforestry.npz",
+      "label": "Agroforestry",
+      "video": null
+    },
+    "air_pressure": {
+      "frames": 1045,
+      "fps": 24.000022888183594,
+      "file": "air_pressure.npz",
+      "label": "Air_Pressure",
+      "video": null
+    },
+    "air_space_of_egg": {
+      "frames": 726,
+      "fps": 24.0,
+      "file": "air_space_of_egg.npz",
+      "label": "Air_Space_of_Egg",
+      "video": null
+    },
+    "albumin": {
+      "frames": 553,
+      "fps": 24.0,
+      "file": "albumin.npz",
+      "label": "Albumin",
+      "video": null
+    },
+    "alimony": {
+      "frames": 1378,
+      "fps": 25.0,
+      "file": "alimony.npz",
+      "label": "Alimony",
+      "video": null
+    },
+    "alkaline_soil_weeds": {
+      "frames": 506,
+      "fps": 25.0,
+      "file": "alkaline_soil_weeds.npz",
+      "label": "Alkaline_Soil_Weeds",
+      "video": null
+    },
+    "alkalis": {
+      "frames": 300,
+      "fps": 24.0,
+      "file": "alkalis.npz",
+      "label": "Alkalis",
+      "video": null
+    },
+    "allocate_allot_apportion": {
+      "frames": 1595,
+      "fps": 24.000030517578125,
+      "file": "allocate_allot_apportion.npz",
+      "label": "Allocate_Allot_Apportion",
+      "video": null
+    },
+    "aloo_tikki": {
+      "frames": 138,
+      "fps": 24.0,
+      "file": "aloo_tikki.npz",
+      "label": "Aloo_tikki",
+      "video": null
+    },
+    "alternative_dispute_resolution": {
+      "frames": 1105,
+      "fps": 25.0,
+      "file": "alternative_dispute_resolution.npz",
+      "label": "Alternative_Dispute_Resolution_(ADR)",
+      "video": null
+    },
+    "always_every_time": {
+      "frames": 88,
+      "fps": 25.0,
+      "file": "always_every_time.npz",
+      "label": "Always_Every_time",
+      "video": null
+    },
+    "ambulance_technicians": {
+      "frames": 155,
+      "fps": 25.0,
+      "file": "ambulance_technicians.npz",
+      "label": "Ambulance_Technicians",
+      "video": null
+    },
+    "amitabh_bachchan": {
+      "frames": 87,
+      "fps": 25.0,
+      "file": "amitabh_bachchan.npz",
+      "label": "Amitabh_Bachchan",
+      "video": null
+    },
+    "amnesty": {
+      "frames": 1212,
+      "fps": 25.0,
+      "file": "amnesty.npz",
+      "label": "Amnesty",
+      "video": null
+    },
+    "ampacity": {
+      "frames": 1094,
+      "fps": 25.0,
+      "file": "ampacity.npz",
+      "label": "Ampacity",
+      "video": null
+    },
+    "ample_plenty": {
+      "frames": 1164,
+      "fps": 24.00002098083496,
+      "file": "ample_plenty.npz",
+      "label": "Ample_Plenty",
+      "video": null
+    },
+    "anabolic_agent": {
+      "frames": 268,
+      "fps": 25.0,
+      "file": "anabolic_agent.npz",
+      "label": "Anabolic_agent",
+      "video": null
+    },
+    "analysis": {
+      "frames": 92,
+      "fps": 25.0,
+      "file": "analysis.npz",
+      "label": "Analysis",
+      "video": null
+    },
+    "ancient_forest": {
+      "frames": 341,
+      "fps": 24.0,
+      "file": "ancient_forest.npz",
+      "label": "Ancient_Forest",
+      "video": null
+    },
+    "androgen": {
+      "frames": 434,
+      "fps": 25.0,
+      "file": "androgen.npz",
+      "label": "Androgen",
+      "video": null
+    },
+    "android_auto": {
+      "frames": 907,
+      "fps": 24.0,
+      "file": "android_auto.npz",
+      "label": "Android_auto",
+      "video": null
+    },
+    "anesthesiologist": {
+      "frames": 269,
+      "fps": 25.0,
+      "file": "anesthesiologist.npz",
+      "label": "Anesthesiologist",
+      "video": null
+    },
+    "angle_of_declination": {
+      "frames": 464,
+      "fps": 25.0,
+      "file": "angle_of_declination.npz",
+      "label": "Angle_of_Declination",
+      "video": null
+    },
+    "anguina_tritici": {
+      "frames": 492,
+      "fps": 25.0,
+      "file": "anguina_tritici.npz",
+      "label": "Anguina_Tritici",
+      "video": null
+    },
+    "animal_husbandry": {
+      "frames": 986,
+      "fps": 25.0,
+      "file": "animal_husbandry.npz",
+      "label": "Animal_Husbandry",
+      "video": null
+    },
+    "animal_sources": {
+      "frames": 700,
+      "fps": 25.0,
+      "file": "animal_sources.npz",
+      "label": "Animal_Sources",
+      "video": null
+    },
+    "ankle_2": {
+      "frames": 348,
+      "fps": 25.0,
+      "file": "ankle_2.npz",
+      "label": "Ankle_(Sign_2)",
+      "video": null
+    },
+    "annexation": {
+      "frames": 673,
+      "fps": 25.0,
+      "file": "annexation.npz",
+      "label": "Annexation",
+      "video": null
+    },
+    "announce_declare_release": {
+      "frames": 83,
+      "fps": 25.0,
+      "file": "announce_declare_release.npz",
+      "label": "Announce_Declare_Release",
+      "video": null
+    },
+    "annul_and_cancel": {
+      "frames": 1422,
+      "fps": 25.0,
+      "file": "annul_and_cancel.npz",
+      "label": "Annul_and_Cancel",
+      "video": null
+    },
+    "anode": {
+      "frames": 74,
+      "fps": 25.0,
+      "file": "anode.npz",
+      "label": "Anode",
+      "video": null
+    },
+    "anode_cathode": {
+      "frames": 604,
+      "fps": 25.0,
+      "file": "anode_cathode.npz",
+      "label": "Anode_&_Cathode",
+      "video": null
+    },
+    "anorehidism": {
+      "frames": 487,
+      "fps": 25.0,
+      "file": "anorehidism.npz",
+      "label": "Anorehidism",
+      "video": null
+    },
+    "anoxic": {
+      "frames": 725,
+      "fps": 24.0,
+      "file": "anoxic.npz",
+      "label": "Anoxic",
+      "video": null
+    },
+    "anti_biotic_resistance": {
+      "frames": 324,
+      "fps": 25.0,
+      "file": "anti_biotic_resistance.npz",
+      "label": "Anti_Biotic_Resistance",
+      "video": null
+    },
+    "anti_mullerian_hormone": {
+      "frames": 660,
+      "fps": 25.0,
+      "file": "anti_mullerian_hormone.npz",
+      "label": "Anti-Mullerian_Hormone",
+      "video": null
+    },
+    "anticipatory_bail": {
+      "frames": 873,
+      "fps": 25.0,
+      "file": "anticipatory_bail.npz",
+      "label": "Anticipatory_Bail",
+      "video": null
+    },
+    "antidepressant": {
+      "frames": 264,
+      "fps": 25.0,
+      "file": "antidepressant.npz",
+      "label": "Antidepressant",
+      "video": null
+    },
+    "antidote": {
+      "frames": 264,
+      "fps": 25.0,
+      "file": "antidote.npz",
+      "label": "Antidote",
+      "video": null
+    },
+    "antimicrobial": {
+      "frames": 251,
+      "fps": 25.0,
+      "file": "antimicrobial.npz",
+      "label": "Antimicrobial",
+      "video": null
+    },
+    "antiperspirant": {
+      "frames": 361,
+      "fps": 25.0,
+      "file": "antiperspirant.npz",
+      "label": "Antiperspirant",
+      "video": null
+    },
+    "antiseptic": {
+      "frames": 250,
+      "fps": 25.0,
+      "file": "antiseptic.npz",
+      "label": "Antiseptic",
+      "video": null
+    },
+    "antitrust_policy": {
+      "frames": 945,
+      "fps": 24.0,
+      "file": "antitrust_policy.npz",
+      "label": "Antitrust_Policy",
+      "video": null
+    },
+    "anxiety_disorders": {
+      "frames": 617,
+      "fps": 25.0,
+      "file": "anxiety_disorders.npz",
+      "label": "Anxiety_Disorders",
+      "video": null
+    },
+    "apis_indica": {
+      "frames": 611,
+      "fps": 24.0,
+      "file": "apis_indica.npz",
+      "label": "Apis_Indica",
+      "video": null
+    },
+    "apocrine_sweat_glands": {
+      "frames": 374,
+      "fps": 25.0,
+      "file": "apocrine_sweat_glands.npz",
+      "label": "Apocrine_Sweat_Glands",
+      "video": null
+    },
+    "appropriated_carrying_capacity": {
+      "frames": 452,
+      "fps": 24.0,
+      "file": "appropriated_carrying_capacity.npz",
+      "label": "Appropriated_Carrying_Capacity",
+      "video": null
+    },
+    "aquarium_fish_tank": {
+      "frames": 144,
+      "fps": 24.0,
+      "file": "aquarium_fish_tank.npz",
+      "label": "Aquarium_Fish_Tank",
+      "video": null
+    },
+    "archive_2": {
+      "frames": 1450,
+      "fps": 25.0,
+      "file": "archive_2.npz",
+      "label": "Archive_(Sign_2)",
+      "video": null
+    },
+    "arctic_circle_and_antarctic_circle": {
+      "frames": 468,
+      "fps": 25.0,
+      "file": "arctic_circle_and_antarctic_circle.npz",
+      "label": "Arctic_circle_and_Antarctic_circle",
+      "video": null
+    },
+    "arithematic_and_logic_unit": {
+      "frames": 1270,
+      "fps": 25.0,
+      "file": "arithematic_and_logic_unit.npz",
+      "label": "Arithematic_and_Logic_Unit",
+      "video": null
+    },
+    "armature": {
+      "frames": 444,
+      "fps": 25.0,
+      "file": "armature.npz",
+      "label": "Armature",
+      "video": null
+    },
+    "arms_trafficking": {
+      "frames": 516,
+      "fps": 25.0,
+      "file": "arms_trafficking.npz",
+      "label": "Arms_Trafficking",
+      "video": null
+    },
+    "aroma_fragrance": {
+      "frames": 567,
+      "fps": 25.0,
+      "file": "aroma_fragrance.npz",
+      "label": "Aroma_Fragrance",
+      "video": null
+    },
+    "arrogant": {
+      "frames": 101,
+      "fps": 25.0,
+      "file": "arrogant.npz",
+      "label": "Arrogant",
+      "video": null
+    },
+    "artifical_intelligence": {
+      "frames": 828,
+      "fps": 25.0,
+      "file": "artifical_intelligence.npz",
+      "label": "Artifical_Intelligence",
+      "video": null
+    },
+    "artisan_craftsman": {
+      "frames": 1074,
+      "fps": 25.0,
+      "file": "artisan_craftsman.npz",
+      "label": "Artisan_Craftsman",
+      "video": null
+    },
+    "ascariasis": {
+      "frames": 768,
+      "fps": 25.0,
+      "file": "ascariasis.npz",
+      "label": "Ascariasis",
+      "video": null
+    },
+    "ascender": {
+      "frames": 564,
+      "fps": 24.0,
+      "file": "ascender.npz",
+      "label": "Ascender",
+      "video": null
+    },
+    "ash": {
+      "frames": 579,
+      "fps": 25.0,
+      "file": "ash.npz",
+      "label": "Ash",
+      "video": null
+    },
+    "ashamed": {
+      "frames": 81,
+      "fps": 25.0,
+      "file": "ashamed.npz",
+      "label": "Ashamed",
+      "video": null
+    },
+    "aspergers_disorder": {
+      "frames": 588,
+      "fps": 25.0,
+      "file": "aspergers_disorder.npz",
+      "label": "Asperger’s_disorder",
+      "video": null
+    },
+    "aspirin": {
+      "frames": 384,
+      "fps": 25.0,
+      "file": "aspirin.npz",
+      "label": "Aspirin",
+      "video": null
+    },
+    "assembly_robot": {
+      "frames": 374,
+      "fps": 24.0,
+      "file": "assembly_robot.npz",
+      "label": "Assembly_robot",
+      "video": null
+    },
+    "asset_flows": {
+      "frames": 1152,
+      "fps": 30.0,
+      "file": "asset_flows.npz",
+      "label": "Asset_Flows",
+      "video": null
+    },
+    "athletics_track_and_field_events": {
+      "frames": 522,
+      "fps": 24.0,
+      "file": "athletics_track_and_field_events.npz",
+      "label": "Athletics_Track_and_Field_events",
+      "video": null
+    },
+    "attachment_alert": {
+      "frames": 735,
+      "fps": 24.0,
+      "file": "attachment_alert.npz",
+      "label": "Attachment_alert",
+      "video": null
+    },
+    "attribute": {
+      "frames": 1118,
+      "fps": 24.00002098083496,
+      "file": "attribute.npz",
+      "label": "Attribute",
+      "video": null
+    },
+    "autoclaved_aerated_concrete": {
+      "frames": 968,
+      "fps": 24.000024795532227,
+      "file": "autoclaved_aerated_concrete.npz",
+      "label": "Autoclaved_Aerated_Concrete",
+      "video": null
+    },
+    "average_measures": {
+      "frames": 416,
+      "fps": 24.0,
+      "file": "average_measures.npz",
+      "label": "Average_Measures",
+      "video": null
+    },
+    "average_mediocre": {
+      "frames": 82,
+      "fps": 25.0,
+      "file": "average_mediocre.npz",
+      "label": "Average_Mediocre",
+      "video": null
+    },
+    "average_propensity_to_consume": {
+      "frames": 1037,
+      "fps": 24.000022888183594,
+      "file": "average_propensity_to_consume.npz",
+      "label": "Average_Propensity_to_Consume",
+      "video": null
+    },
+    "average_tax_rate": {
+      "frames": 610,
+      "fps": 24.0,
+      "file": "average_tax_rate.npz",
+      "label": "Average_Tax_Rate",
+      "video": null
+    },
+    "avoidance": {
+      "frames": 818,
+      "fps": 24.0,
+      "file": "avoidance.npz",
+      "label": "Avoidance",
+      "video": null
+    }
+  }
+}

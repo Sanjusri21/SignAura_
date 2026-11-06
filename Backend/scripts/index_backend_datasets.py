@@ -9,6 +9,7 @@ Scans:
 - ISL_Sign_15
 - ISL_50
 - ISL_archive5
+- CISLR (run Backend/scripts/index_cislr.py first to build its index.json)
 and SignMotionDB.
 """
 
@@ -39,6 +40,7 @@ DATASET_CONFIGS = [
     ("ISL_Sign_15", "Sign 15 (ISL_Sign_15)"),
     ("ISL_50", "ISL 50 (ISL_50)"),
     ("ISL_archive5", "Archive 5 (ISL_archive5)"),
+    ("CISLR", "CISLR (CISLR_v1.5-a)"),  # index.json from Backend/scripts/index_cislr.py
 ]
 
 def init_db(db_path: str):
