@@ -48,7 +48,7 @@ from scipy.signal import savgol_filter
 
 try:
     
-   from pose_format import Pose
+   from pose_format import Pose 
 except ImportError:  # only needed for reading shards; clean_landmarks() works without it
     Pose = None
 
