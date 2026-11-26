@@ -59,9 +59,17 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
             setUser(profile);
             localStorage.setItem(USER_KEY, JSON.stringify(profile));
           }
-        } catch (err) {
-          // If backend is offline or network error, retain existing stored local user
-          console.warn('Backend auth sync unreachable, operating in persistent session mode.');
+        } catch (err: any) {
+          if (err?.response?.status === 401) {
+            // Stored token is no longer valid (expired, demo token, or server secret changed)
+            setToken(null);
+            setUser(null);
+            localStorage.removeItem(TOKEN_KEY);
+            localStorage.removeItem(USER_KEY);
+          } else {
+            // If backend is offline or network error, retain existing stored local user
+            console.warn('Backend auth sync unreachable, operating in persistent session mode.');
+          }
         }
       }
       setIsLoading(false);
@@ -88,22 +96,12 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       setUser(profile);
       localStorage.setItem(USER_KEY, JSON.stringify(profile));
       return true;
-    } catch (err) {
-      // Graceful offline demo fallback
-      const authToken = `demo-token-${Date.now()}`;
-      setToken(authToken);
-      localStorage.setItem(TOKEN_KEY, authToken);
-
-      const profile: UserProfile = {
-        id: 'demo-user-1',
-        email: email,
-        full_name: email.split('@')[0].replace(/\./g, ' ').replace(/\b\w/g, c => c.toUpperCase()) || 'SignAura User',
-        role: 'Educator',
-        is_active: true
-      };
-      setUser(profile);
-      localStorage.setItem(USER_KEY, JSON.stringify(profile));
-      return true;
+    } catch (err: any) {
+      // Never fake a login: a made-up token is rejected by every protected endpoint (401)
+      if (!err?.response) {
+        throw new Error('Cannot reach the SignAura server. Please make sure the backend is running and try again.');
+      }
+      throw err;
     }
   };
 
@@ -125,22 +123,11 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       setUser(profile);
       localStorage.setItem(USER_KEY, JSON.stringify(profile));
       return true;
-    } catch (err) {
-      // Graceful demo fallback
-      const authToken = `demo-token-${Date.now()}`;
-      setToken(authToken);
-      localStorage.setItem(TOKEN_KEY, authToken);
-
-      const profile: UserProfile = {
-        id: `user-${Date.now()}`,
-        email: email,
-        full_name: fullName,
-        role: role as any,
-        is_active: true
-      };
-      setUser(profile);
-      localStorage.setItem(USER_KEY, JSON.stringify(profile));
-      return true;
+    } catch (err: any) {
+      if (!err?.response) {
+        throw new Error('Cannot reach the SignAura server. Please make sure the backend is running and try again.');
+      }
+      throw err;
     }
   };
 

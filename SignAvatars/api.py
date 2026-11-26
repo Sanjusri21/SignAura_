@@ -8,6 +8,7 @@ import re
 import sys
 import json
 import glob
+import hashlib
 from pathlib import Path
 from typing import Dict, Any, List, Optional
 import numpy as np
@@ -17,8 +18,37 @@ from bridgeconn_service import (
     resolve_sample_for_gloss,
     get_or_convert_smplx,
     get_signs_paginated,
+    resolve_text,
+    playable_words,
     get_db_connection,
+    lookup_isl_dictionary,
+    search_isl_dictionary,
+    SIGN_MOTION_DB_DIR,
 )
+
+
+def isl_dictionary_metadata(entry: Dict[str, Any]) -> Dict[str, Any]:
+    """Shapes an ISL dictionary index entry like the other /motions responses."""
+    q = entry.get("quality", {})
+    return {
+        "gloss": entry["word"],
+        "canonical_gloss": entry["word"],
+        "normalized_gloss": entry["word"],
+        "dataset_label": entry.get("label", entry["word"]),
+        "motion_key": entry["word"],
+        "safe_gloss": entry["word"],
+        "frames": (entry["trim"][1] - entry["trim"][0]) if entry.get("trim") else entry.get("frames", 0),
+        "fps": entry.get("fps", FPS),
+        "vertex_count": SMPLX_VERTEX_COUNT,
+        "hands_used": {
+            "left": q.get("left_hand", {}).get("missing", 0) < 1.0,
+            "right": q.get("right_hand", {}).get("missing", 0) < 1.0,
+        },
+        "aliases": entry.get("aliases", []),
+        "status": "AVAILABLE",
+        "source": entry.get("source", "ISL Dictionary (bridgeconn/sign-dictionary-isl)"),
+        "animation_url": f"/motion/{entry['word']}",
+    }
 
 
 # ============================================================
@@ -322,7 +352,11 @@ def search_motions(query: str, limit: int = 50):
     if not clean_q:
         raise HTTPException(status_code=400, detail="Search query cannot be empty")
 
-    matches = search_signs(clean_q, limit=limit)
+    matches = [isl_dictionary_metadata(e) for e in search_isl_dictionary(clean_q, limit=limit)]
+    for m in search_signs(clean_q, limit=limit):
+        if m.get("normalized_gloss") in {d["normalized_gloss"] for d in matches}:
+            continue
+        matches.append(m)
     for m in matches:
         m.setdefault("canonical_gloss", m.get("normalized_gloss"))
         m.setdefault("animation_url", f"/motion/{m.get('normalized_gloss')}")
@@ -367,9 +401,29 @@ def search_motions(query: str, limit: int = 50):
 def get_motion_metadata(gloss: str):
     """
     Return JSON metadata for a specific gloss with canonical and variant resolution.
-    Checks local verified motions first, then resolves from BridgeConn dataset.
+    Same lookup order as /motion: SignMotionDB, ISL dictionary, local verified motions, BridgeConn index.
     """
     safe_name = normalize_gloss(gloss)
+
+    motion_db_path = Path(SIGN_MOTION_DB_DIR) / safe_name.upper() / "metadata.json"
+    if motion_db_path.is_file():
+        with open(motion_db_path, "r", encoding="utf-8") as f:
+            meta = json.load(f)
+        meta.update({
+            "canonical_gloss": safe_name,
+            "motion_key": safe_name,
+            "safe_gloss": safe_name,
+            "frames": meta.get("frames", meta.get("num_frames", 0)),
+            "vertex_count": SMPLX_VERTEX_COUNT,
+            "source": "SignMotionDB",
+            "animation_url": f"/motion/{safe_name}",
+        })
+        return meta
+
+    entry = lookup_isl_dictionary(safe_name)
+    if entry and not (entry["failed_flags"] and entry["skip_failed"]):
+        return isl_dictionary_metadata(entry)
+
     resolved_key = resolve_motion_key(safe_name)
 
     # Check local first
@@ -574,28 +628,70 @@ def get_animation(filename: str):
 # DATASET-DRIVEN MULTI-WORD GENERATION (NO FAKE / NO EXTERNAL DEPENDENCY)
 # ============================================================
 
+@app.get("/words")
+def list_playable_words():
+    """All words the avatar can sign (SignMotionDB + quality-passed ISL dictionary words, aliases, synonyms)."""
+    return playable_words()
+
+
+@app.post("/resolve")
+def resolve_sentence(request: SentenceRequest):
+    """Per-word availability for a sentence, without generating any motion."""
+    tokens = resolve_text(request.sentence)
+    available = sum(1 for t in tokens if t["status"] != "missing")
+    return {"tokens": tokens, "available": available, "total": len(tokens)}
+
+
+def read_clip_fps(json_path: Optional[str]) -> float:
+    """Frame rate recorded in a motion's metadata json (FPS if absent)."""
+    try:
+        with open(json_path, "r", encoding="utf-8") as f:
+            return float(json.load(f).get("fps", FPS))
+    except Exception:
+        return float(FPS)
+
+
+def resample_motion(arr: np.ndarray, src_fps: float, dst_fps: float) -> np.ndarray:
+    """Linearly resamples (F, V, 3) vertices in time so the clip keeps its duration at dst_fps."""
+    if abs(src_fps - dst_fps) < 1e-3 or len(arr) < 2:
+        return arr
+    n_out = max(2, int(round(len(arr) * dst_fps / src_fps)))
+    t = np.linspace(0.0, len(arr) - 1, n_out)
+    i0 = np.floor(t).astype(int)
+    i1 = np.minimum(i0 + 1, len(arr) - 1)
+    w = (t - i0).astype(np.float32)[:, None, None]
+    return ((1.0 - w) * arr[i0] + w * arr[i1]).astype(np.float32)
+
+
 @app.post("/generate")
 def generate_animation(request: SentenceRequest):
     """
     Synthesizes real BridgeConn ISL 3D animations for a given word sequence.
-    Resolves each word against local verified motions or lazy-converts from BridgeConn.
+    Each word is resolved like /resolve (SignMotionDB, quality-passed dictionary words, synonyms);
+    words without a clip are skipped and reported in skipped_words instead of failing the sentence.
     Works seamlessly for arbitrary sequence lengths beyond 3 words.
     """
     sentence = request.sentence.strip()
     if not sentence:
         raise HTTPException(status_code=400, detail="Sentence cannot be empty")
 
-    safe_sentence = re.sub(r"[^a-zA-Z0-9_\- ]", " ", sentence).strip()
-    words = [w.strip().lower() for w in safe_sentence.split() if w.strip()]
-    if not words:
+    resolved = resolve_text(sentence)
+    if not resolved:
         raise HTTPException(status_code=400, detail="Invalid sentence")
 
     segments = []
     anim_chunks = []
+    chunk_fps = []
     missing_words = []
+    words = []
 
-    for word in words:
-        conv_res = get_or_convert_smplx(word)
+    for item in resolved:
+        word = item["input"]
+        if item["status"] == "missing":
+            missing_words.append(word)
+            continue
+
+        conv_res = get_or_convert_smplx(item["key"])
         if conv_res["status"] in ("unavailable", "error"):
             missing_words.append(word)
             continue
@@ -609,10 +705,14 @@ def generate_animation(request: SentenceRequest):
             arr = np.load(npy_path, allow_pickle=False).astype(np.float32)
             if arr.ndim == 3 and arr.shape[1] == SMPLX_VERTEX_COUNT and np.isfinite(arr).all():
                 anim_chunks.append(arr)
+                chunk_fps.append(read_clip_fps(conv_res.get("json_path")))
+                words.append(item["key"])
                 segments.append({
                     "word": word,
                     "motion_id": conv_res.get("gloss", word),
+                    "synonym_of": item.get("synonym_of"),
                     "frames": int(arr.shape[0]),
+                    "source_fps": chunk_fps[-1],
                     "source": conv_res.get("source", "BridgeConn")
                 })
             else:
@@ -621,7 +721,7 @@ def generate_animation(request: SentenceRequest):
             print(f"Error loading {npy_path}: {e}")
             missing_words.append(word)
 
-    if missing_words:
+    if not anim_chunks:
         raise HTTPException(
             status_code=400,
             detail={
@@ -630,6 +730,12 @@ def generate_animation(request: SentenceRequest):
                 "status": "UNAVAILABLE"
             }
         )
+
+    # Play every clip at its real speed: resample to the highest clip fps (50 for most dictionary signs)
+    seq_fps = max(chunk_fps)
+    anim_chunks = [resample_motion(c, f, seq_fps) for c, f in zip(anim_chunks, chunk_fps)]
+    for seg, chunk in zip(segments, anim_chunks):
+        seg["frames"] = int(chunk.shape[0])
 
     # Concatenate animation chunks with smooth cosine transitions
     combined_arr = None
@@ -648,7 +754,9 @@ def generate_animation(request: SentenceRequest):
             pieces.append(chunk)
         combined_arr = np.concatenate(pieces, axis=0)
 
-    filename = "_".join(words[:4]) + f"_{len(words)}w"
+    # Hash of the full word list keeps sentences that share their first words from overwriting each other
+    digest = hashlib.sha1(" ".join(words).encode("utf-8")).hexdigest()[:6]
+    filename = "_".join(words[:4]) + f"_{len(words)}w_{digest}"
     out_npy = NPY_PATH / f"{filename}.npy"
     out_json = NPY_PATH / f"{filename}.json"
 
@@ -658,8 +766,8 @@ def generate_animation(request: SentenceRequest):
     meta_info = {
         "gloss": " ".join(words),
         "safe_gloss": filename,
-        "source": "BridgeConn Sign Dictionary ISL",
-        "fps": FPS,
+        "source": " + ".join(dict.fromkeys(s["source"] for s in segments)),
+        "fps": seq_fps,
         "frames": total_frames,
         "vertex_count": SMPLX_VERTEX_COUNT,
         "vertex_shape": list(combined_arr.shape),
@@ -674,8 +782,9 @@ def generate_animation(request: SentenceRequest):
         "motion": f"/motion/{filename}",
         "npy": f"/motion/{filename}",
         "segments": segments,
+        "skipped_words": missing_words,
         "total_frames": total_frames,
-        "fps": FPS,
+        "fps": seq_fps,
         "vertices": SMPLX_VERTEX_COUNT,
         "components": COORDINATE_DIM
     }

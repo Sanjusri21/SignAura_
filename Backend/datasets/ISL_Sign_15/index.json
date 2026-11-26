@@ -1,0 +1,1634 @@
+{
+  "dataset": "ISL Sign 15",
+  "format": {
+    "file": "<word>.npz, read by SignAvatars/bridgeconn_to_smplx.convert_bridgeconn_sample",
+    "body": "(F,33,3) MediaPipe pose",
+    "left_hand": "(F,21,3)",
+    "right_hand": "(F,21,3)",
+    "coordinates": "x,y on a 1920x1080 canvas, shoulder midpoint at [960.0, 400.0], shoulder width 320.0; z = MediaPipe depth times the same scale",
+    "missing": "a hand frame of all zeros means the hand was not tracked",
+    "source_codes": {
+      "0": "missing",
+      "1": "mediapipe",
+      "2": "dwpose fill",
+      "3": "interpolated"
+    }
+  },
+  "partial": false,
+  "count": 47,
+  "clips": 47,
+  "words": {
+    "0": {
+      "file": "0.npz",
+      "label": "0",
+      "category": "INDIAN SIGN LANGUAGE ANIMATED VIDEOS",
+      "frames": 35,
+      "fps": 24.0,
+      "duration_sec": 1.458,
+      "source": {
+        "video": "0.mp4"
+      },
+      "quality": {
+        "left_hand": {
+          "mediapipe": 0.0,
+          "dwpose": 0.0,
+          "interpolated": 0.0,
+          "missing": 1.0
+        },
+        "right_hand": {
+          "mediapipe": 0.7714,
+          "dwpose": 0.0,
+          "interpolated": 0.0,
+          "missing": 0.2286
+        },
+        "upper_body_low_conf": 0.0762,
+        "scale": 1.1352
+      },
+      "score": 1.1571,
+      "note": null,
+      "reason": "new",
+      "aliases": [],
+      "other_videos": []
+    },
+    "1": {
+      "file": "1.npz",
+      "label": "1",
+      "category": "INDIAN SIGN LANGUAGE ANIMATED VIDEOS",
+      "frames": 35,
+      "fps": 24.0,
+      "duration_sec": 1.458,
+      "source": {
+        "video": "1.mp4"
+      },
+      "quality": {
+        "left_hand": {
+          "mediapipe": 0.0,
+          "dwpose": 0.0,
+          "interpolated": 0.0,
+          "missing": 1.0
+        },
+        "right_hand": {
+          "mediapipe": 0.7714,
+          "dwpose": 0.0,
+          "interpolated": 0.0,
+          "missing": 0.2286
+        },
+        "upper_body_low_conf": 0.0762,
+        "scale": 1.1351
+      },
+      "score": 1.1571,
+      "note": null,
+      "reason": "new",
+      "aliases": [],
+      "other_videos": []
+    },
+    "2": {
+      "file": "2.npz",
+      "label": "2",
+      "category": "INDIAN SIGN LANGUAGE ANIMATED VIDEOS",
+      "frames": 35,
+      "fps": 24.0,
+      "duration_sec": 1.458,
+      "source": {
+        "video": "2.mp4"
+      },
+      "quality": {
+        "left_hand": {
+          "mediapipe": 0.0,
+          "dwpose": 0.0,
+          "interpolated": 0.0,
+          "missing": 1.0
+        },
+        "right_hand": {
+          "mediapipe": 0.7714,
+          "dwpose": 0.0,
+          "interpolated": 0.0,
+          "missing": 0.2286
+        },
+        "upper_body_low_conf": 0.0667,
+        "scale": 1.1351
+      },
+      "score": 1.1571,
+      "note": null,
+      "reason": "new",
+      "aliases": [],
+      "other_videos": []
+    },
+    "3": {
+      "file": "3.npz",
+      "label": "3",
+      "category": "INDIAN SIGN LANGUAGE ANIMATED VIDEOS",
+      "frames": 35,
+      "fps": 24.0,
+      "duration_sec": 1.458,
+      "source": {
+        "video": "3.mp4"
+      },
+      "quality": {
+        "left_hand": {
+          "mediapipe": 0.0,
+          "dwpose": 0.0,
+          "interpolated": 0.0,
+          "missing": 1.0
+        },
+        "right_hand": {
+          "mediapipe": 0.7714,
+          "dwpose": 0.0,
+          "interpolated": 0.0,
+          "missing": 0.2286
+        },
+        "upper_body_low_conf": 0.0762,
+        "scale": 1.1307
+      },
+      "score": 1.1571,
+      "note": null,
+      "reason": "new",
+      "aliases": [],
+      "other_videos": []
+    },
+    "4": {
+      "file": "4.npz",
+      "label": "4",
+      "category": "INDIAN SIGN LANGUAGE ANIMATED VIDEOS",
+      "frames": 35,
+      "fps": 24.0,
+      "duration_sec": 1.458,
+      "source": {
+        "video": "4.mp4"
+      },
+      "quality": {
+        "left_hand": {
+          "mediapipe": 0.0,
+          "dwpose": 0.0,
+          "interpolated": 0.0,
+          "missing": 1.0
+        },
+        "right_hand": {
+          "mediapipe": 0.7714,
+          "dwpose": 0.0,
+          "interpolated": 0.0,
+          "missing": 0.2286
+        },
+        "upper_body_low_conf": 0.0762,
+        "scale": 1.1378
+      },
+      "score": 1.1571,
+      "note": null,
+      "reason": "new",
+      "aliases": [],
+      "other_videos": []
+    },
+    "5": {
+      "file": "5.npz",
+      "label": "5",
+      "category": "INDIAN SIGN LANGUAGE ANIMATED VIDEOS",
+      "frames": 35,
+      "fps": 24.0,
+      "duration_sec": 1.458,
+      "source": {
+        "video": "5.mp4"
+      },
+      "quality": {
+        "left_hand": {
+          "mediapipe": 0.0,
+          "dwpose": 0.0,
+          "interpolated": 0.0,
+          "missing": 1.0
+        },
+        "right_hand": {
+          "mediapipe": 0.7714,
+          "dwpose": 0.0,
+          "interpolated": 0.0,
+          "missing": 0.2286
+        },
+        "upper_body_low_conf": 0.0714,
+        "scale": 1.1322
+      },
+      "score": 1.1571,
+      "note": null,
+      "reason": "new",
+      "aliases": [],
+      "other_videos": []
+    },
+    "6": {
+      "file": "6.npz",
+      "label": "6",
+      "category": "INDIAN SIGN LANGUAGE ANIMATED VIDEOS",
+      "frames": 35,
+      "fps": 24.0,
+      "duration_sec": 1.458,
+      "source": {
+        "video": "6.mp4"
+      },
+      "quality": {
+        "left_hand": {
+          "mediapipe": 0.0,
+          "dwpose": 0.0,
+          "interpolated": 0.0,
+          "missing": 1.0
+        },
+        "right_hand": {
+          "mediapipe": 0.7143,
+          "dwpose": 0.0,
+          "interpolated": 0.0,
+          "missing": 0.2857
+        },
+        "upper_body_low_conf": 0.0524,
+        "scale": 1.1093
+      },
+      "score": 1.0715,
+      "note": null,
+      "reason": "new",
+      "aliases": [],
+      "other_videos": []
+    },
+    "7": {
+      "file": "7.npz",
+      "label": "7",
+      "category": "INDIAN SIGN LANGUAGE ANIMATED VIDEOS",
+      "frames": 35,
+      "fps": 24.0,
+      "duration_sec": 1.458,
+      "source": {
+        "video": "7.mp4"
+      },
+      "quality": {
+        "left_hand": {
+          "mediapipe": 0.0,
+          "dwpose": 0.0,
+          "interpolated": 0.0,
+          "missing": 1.0
+        },
+        "right_hand": {
+          "mediapipe": 0.7714,
+          "dwpose": 0.0,
+          "interpolated": 0.0,
+          "missing": 0.2286
+        },
+        "upper_body_low_conf": 0.0857,
+        "scale": 1.15
+      },
+      "score": 1.1571,
+      "note": null,
+      "reason": "new",
+      "aliases": [],
+      "other_videos": []
+    },
+    "8": {
+      "file": "8.npz",
+      "label": "8",
+      "category": "INDIAN SIGN LANGUAGE ANIMATED VIDEOS",
+      "frames": 35,
+      "fps": 24.0,
+      "duration_sec": 1.458,
+      "source": {
+        "video": "8.mp4"
+      },
+      "quality": {
+        "left_hand": {
+          "mediapipe": 0.0,
+          "dwpose": 0.0,
+          "interpolated": 0.0,
+          "missing": 1.0
+        },
+        "right_hand": {
+          "mediapipe": 0.7143,
+          "dwpose": 0.0,
+          "interpolated": 0.0,
+          "missing": 0.2857
+        },
+        "upper_body_low_conf": 0.1143,
+        "scale": 1.1267
+      },
+      "score": 1.0715,
+      "note": null,
+      "reason": "new",
+      "aliases": [],
+      "other_videos": []
+    },
+    "9": {
+      "file": "9.npz",
+      "label": "9",
+      "category": "INDIAN SIGN LANGUAGE ANIMATED VIDEOS",
+      "frames": 35,
+      "fps": 24.0,
+      "duration_sec": 1.458,
+      "source": {
+        "video": "9.mp4"
+      },
+      "quality": {
+        "left_hand": {
+          "mediapipe": 0.0,
+          "dwpose": 0.0,
+          "interpolated": 0.0,
+          "missing": 1.0
+        },
+        "right_hand": {
+          "mediapipe": 0.7714,
+          "dwpose": 0.0,
+          "interpolated": 0.0,
+          "missing": 0.2286
+        },
+        "upper_body_low_conf": 0.081,
+        "scale": 1.1324
+      },
+      "score": 1.1571,
+      "note": null,
+      "reason": "new",
+      "aliases": [],
+      "other_videos": []
+    },
+    "also": {
+      "file": "also.npz",
+      "label": "Also",
+      "category": "INDIAN SIGN LANGUAGE ANIMATED VIDEOS",
+      "frames": 50,
+      "fps": 24.0,
+      "duration_sec": 2.083,
+      "source": {
+        "video": "Also.mp4"
+      },
+      "quality": {
+        "left_hand": {
+          "mediapipe": 0.28,
+          "dwpose": 0.0,
+          "interpolated": 0.1,
+          "missing": 0.62
+        },
+        "right_hand": {
+          "mediapipe": 0.12,
+          "dwpose": 0.0,
+          "interpolated": 0.2,
+          "missing": 0.68
+        },
+        "upper_body_low_conf": 0.0567,
+        "scale": 1.1178
+      },
+      "score": 0.75,
+      "note": null,
+      "reason": "new",
+      "aliases": [],
+      "other_videos": []
+    },
+    "and": {
+      "file": "and.npz",
+      "label": "And",
+      "category": "INDIAN SIGN LANGUAGE ANIMATED VIDEOS",
+      "frames": 32,
+      "fps": 24.0,
+      "duration_sec": 1.333,
+      "source": {
+        "video": "And.mp4"
+      },
+      "quality": {
+        "left_hand": {
+          "mediapipe": 0.0,
+          "dwpose": 0.0,
+          "interpolated": 0.0,
+          "missing": 1.0
+        },
+        "right_hand": {
+          "mediapipe": 0.6562,
+          "dwpose": 0.0,
+          "interpolated": 0.0,
+          "missing": 0.3438
+        },
+        "upper_body_low_conf": 0.1146,
+        "scale": 1.0975
+      },
+      "score": 0.9843,
+      "note": null,
+      "reason": "new",
+      "aliases": [],
+      "other_videos": []
+    },
+    "b": {
+      "file": "b.npz",
+      "label": "B",
+      "category": "INDIAN SIGN LANGUAGE ANIMATED VIDEOS",
+      "frames": 40,
+      "fps": 30.0,
+      "duration_sec": 1.333,
+      "source": {
+        "video": "B.mp4"
+      },
+      "quality": {
+        "left_hand": {
+          "mediapipe": 0.0,
+          "dwpose": 0.0,
+          "interpolated": 0.0,
+          "missing": 1.0
+        },
+        "right_hand": {
+          "mediapipe": 0.7,
+          "dwpose": 0.0,
+          "interpolated": 0.025,
+          "missing": 0.275
+        },
+        "upper_body_low_conf": 0.1042,
+        "scale": 1.1169
+      },
+      "score": 1.0625,
+      "note": null,
+      "reason": "new",
+      "aliases": [],
+      "other_videos": []
+    },
+    "be": {
+      "file": "be.npz",
+      "label": "Be",
+      "category": "INDIAN SIGN LANGUAGE ANIMATED VIDEOS",
+      "frames": 30,
+      "fps": 25.0,
+      "duration_sec": 1.2,
+      "source": {
+        "video": "Be.mp4"
+      },
+      "quality": {
+        "left_hand": {
+          "mediapipe": 0.0,
+          "dwpose": 0.0,
+          "interpolated": 0.0,
+          "missing": 1.0
+        },
+        "right_hand": {
+          "mediapipe": 0.3333,
+          "dwpose": 0.0,
+          "interpolated": 0.0,
+          "missing": 0.6667
+        },
+        "upper_body_low_conf": 0.0833,
+        "scale": 1.1327
+      },
+      "score": 0.5,
+      "note": null,
+      "reason": "new",
+      "aliases": [],
+      "other_videos": []
+    },
+    "c": {
+      "file": "c.npz",
+      "label": "C",
+      "category": "INDIAN SIGN LANGUAGE ANIMATED VIDEOS",
+      "frames": 41,
+      "fps": 24.0,
+      "duration_sec": 1.708,
+      "source": {
+        "video": "C.mp4"
+      },
+      "quality": {
+        "left_hand": {
+          "mediapipe": 0.0,
+          "dwpose": 0.0,
+          "interpolated": 0.0,
+          "missing": 1.0
+        },
+        "right_hand": {
+          "mediapipe": 0.6829,
+          "dwpose": 0.0,
+          "interpolated": 0.0244,
+          "missing": 0.2927
+        },
+        "upper_body_low_conf": 0.0569,
+        "scale": 1.1246
+      },
+      "score": 1.0366,
+      "note": null,
+      "reason": "new",
+      "aliases": [],
+      "other_videos": []
+    },
+    "d": {
+      "file": "d.npz",
+      "label": "D",
+      "category": "INDIAN SIGN LANGUAGE ANIMATED VIDEOS",
+      "frames": 40,
+      "fps": 24.0,
+      "duration_sec": 1.667,
+      "source": {
+        "video": "D.mp4"
+      },
+      "quality": {
+        "left_hand": {
+          "mediapipe": 0.0,
+          "dwpose": 0.0,
+          "interpolated": 0.0,
+          "missing": 1.0
+        },
+        "right_hand": {
+          "mediapipe": 0.725,
+          "dwpose": 0.0,
+          "interpolated": 0.0,
+          "missing": 0.275
+        },
+        "upper_body_low_conf": 0.0417,
+        "scale": 1.1455
+      },
+      "score": 1.0875,
+      "note": null,
+      "reason": "new",
+      "aliases": [],
+      "other_videos": []
+    },
+    "does_not": {
+      "file": "does_not.npz",
+      "label": "Does Not",
+      "category": "INDIAN SIGN LANGUAGE ANIMATED VIDEOS",
+      "frames": 30,
+      "fps": 24.0,
+      "duration_sec": 1.25,
+      "source": {
+        "video": "Does Not.mp4"
+      },
+      "quality": {
+        "left_hand": {
+          "mediapipe": 0.0,
+          "dwpose": 0.0,
+          "interpolated": 0.0,
+          "missing": 1.0
+        },
+        "right_hand": {
+          "mediapipe": 0.7333,
+          "dwpose": 0.0,
+          "interpolated": 0.0,
+          "missing": 0.2667
+        },
+        "upper_body_low_conf": 0.0556,
+        "scale": 1.1856
+      },
+      "score": 1.0999,
+      "note": null,
+      "reason": "new",
+      "aliases": [],
+      "other_videos": []
+    },
+    "e": {
+      "file": "e.npz",
+      "label": "E",
+      "category": "INDIAN SIGN LANGUAGE ANIMATED VIDEOS",
+      "frames": 41,
+      "fps": 24.0,
+      "duration_sec": 1.708,
+      "source": {
+        "video": "E.mp4"
+      },
+      "quality": {
+        "left_hand": {
+          "mediapipe": 0.0,
+          "dwpose": 0.0,
+          "interpolated": 0.0,
+          "missing": 1.0
+        },
+        "right_hand": {
+          "mediapipe": 0.7073,
+          "dwpose": 0.0,
+          "interpolated": 0.0,
+          "missing": 0.2927
+        },
+        "upper_body_low_conf": 0.061,
+        "scale": 1.1374
+      },
+      "score": 1.061,
+      "note": null,
+      "reason": "new",
+      "aliases": [],
+      "other_videos": []
+    },
+    "engineer": {
+      "file": "engineer.npz",
+      "label": "Engineer",
+      "category": "INDIAN SIGN LANGUAGE ANIMATED VIDEOS",
+      "frames": 35,
+      "fps": 24.0,
+      "duration_sec": 1.458,
+      "source": {
+        "video": "Engineer.mp4"
+      },
+      "quality": {
+        "left_hand": {
+          "mediapipe": 0.4,
+          "dwpose": 0.0,
+          "interpolated": 0.1429,
+          "missing": 0.4571
+        },
+        "right_hand": {
+          "mediapipe": 0.7143,
+          "dwpose": 0.0,
+          "interpolated": 0.1143,
+          "missing": 0.1714
+        },
+        "upper_body_low_conf": 0.0667,
+        "scale": 1.1621
+      },
+      "score": 1.8001,
+      "note": null,
+      "reason": "new",
+      "aliases": [],
+      "other_videos": []
+    },
+    "f": {
+      "file": "f.npz",
+      "label": "F",
+      "category": "INDIAN SIGN LANGUAGE ANIMATED VIDEOS",
+      "frames": 41,
+      "fps": 24.0,
+      "duration_sec": 1.708,
+      "source": {
+        "video": "F.mp4"
+      },
+      "quality": {
+        "left_hand": {
+          "mediapipe": 0.0,
+          "dwpose": 0.0,
+          "interpolated": 0.0,
+          "missing": 1.0
+        },
+        "right_hand": {
+          "mediapipe": 0.6829,
+          "dwpose": 0.0,
+          "interpolated": 0.0244,
+          "missing": 0.2927
+        },
+        "upper_body_low_conf": 0.0813,
+        "scale": 1.1525
+      },
+      "score": 1.0366,
+      "note": null,
+      "reason": "new",
+      "aliases": [],
+      "other_videos": []
+    },
+    "g": {
+      "file": "g.npz",
+      "label": "G",
+      "category": "INDIAN SIGN LANGUAGE ANIMATED VIDEOS",
+      "frames": 40,
+      "fps": 24.0,
+      "duration_sec": 1.667,
+      "source": {
+        "video": "G.mp4"
+      },
+      "quality": {
+        "left_hand": {
+          "mediapipe": 0.0,
+          "dwpose": 0.0,
+          "interpolated": 0.0,
+          "missing": 1.0
+        },
+        "right_hand": {
+          "mediapipe": 0.725,
+          "dwpose": 0.0,
+          "interpolated": 0.0,
+          "missing": 0.275
+        },
+        "upper_body_low_conf": 0.0542,
+        "scale": 1.1362
+      },
+      "score": 1.0875,
+      "note": null,
+      "reason": "new",
+      "aliases": [],
+      "other_videos": []
+    },
+    "glitter": {
+      "file": "glitter.npz",
+      "label": "Glitter",
+      "category": "INDIAN SIGN LANGUAGE ANIMATED VIDEOS",
+      "frames": 32,
+      "fps": 25.0,
+      "duration_sec": 1.28,
+      "source": {
+        "video": "Glitter.mp4"
+      },
+      "quality": {
+        "left_hand": {
+          "mediapipe": 0.0,
+          "dwpose": 0.0,
+          "interpolated": 0.0,
+          "missing": 1.0
+        },
+        "right_hand": {
+          "mediapipe": 0.75,
+          "dwpose": 0.0,
+          "interpolated": 0.1562,
+          "missing": 0.0938
+        },
+        "upper_body_low_conf": 0.0729,
+        "scale": 1.1335
+      },
+      "score": 1.2031,
+      "note": null,
+      "reason": "new",
+      "aliases": [],
+      "other_videos": []
+    },
+    "great": {
+      "file": "great.npz",
+      "label": "Great",
+      "category": "INDIAN SIGN LANGUAGE ANIMATED VIDEOS",
+      "frames": 45,
+      "fps": 25.0,
+      "duration_sec": 1.8,
+      "source": {
+        "video": "Great.mp4"
+      },
+      "quality": {
+        "left_hand": {
+          "mediapipe": 0.7778,
+          "dwpose": 0.0,
+          "interpolated": 0.0,
+          "missing": 0.2222
+        },
+        "right_hand": {
+          "mediapipe": 0.7778,
+          "dwpose": 0.0,
+          "interpolated": 0.0,
+          "missing": 0.2222
+        },
+        "upper_body_low_conf": 0.0741,
+        "scale": 1.1817
+      },
+      "score": 2.3334,
+      "note": null,
+      "reason": "new",
+      "aliases": [],
+      "other_videos": []
+    },
+    "h": {
+      "file": "h.npz",
+      "label": "H",
+      "category": "INDIAN SIGN LANGUAGE ANIMATED VIDEOS",
+      "frames": 41,
+      "fps": 24.0,
+      "duration_sec": 1.708,
+      "source": {
+        "video": "H.mp4"
+      },
+      "quality": {
+        "left_hand": {
+          "mediapipe": 0.0,
+          "dwpose": 0.0,
+          "interpolated": 0.0,
+          "missing": 1.0
+        },
+        "right_hand": {
+          "mediapipe": 0.6829,
+          "dwpose": 0.0,
+          "interpolated": 0.0244,
+          "missing": 0.2927
+        },
+        "upper_body_low_conf": 0.0488,
+        "scale": 1.1359
+      },
+      "score": 1.0366,
+      "note": null,
+      "reason": "new",
+      "aliases": [],
+      "other_videos": []
+    },
+    "homepage": {
+      "file": "homepage.npz",
+      "label": "Homepage",
+      "category": "INDIAN SIGN LANGUAGE ANIMATED VIDEOS",
+      "frames": 45,
+      "fps": 24.0,
+      "duration_sec": 1.875,
+      "source": {
+        "video": "Homepage.mp4"
+      },
+      "quality": {
+        "left_hand": {
+          "mediapipe": 0.0,
+          "dwpose": 0.0,
+          "interpolated": 0.0,
+          "missing": 1.0
+        },
+        "right_hand": {
+          "mediapipe": 0.8667,
+          "dwpose": 0.0,
+          "interpolated": 0.0,
+          "missing": 0.1333
+        },
+        "upper_body_low_conf": 0.037,
+        "scale": 1.1271
+      },
+      "score": 1.3001,
+      "note": null,
+      "reason": "new",
+      "aliases": [],
+      "other_videos": []
+    },
+    "j": {
+      "file": "j.npz",
+      "label": "J",
+      "category": "INDIAN SIGN LANGUAGE ANIMATED VIDEOS",
+      "frames": 60,
+      "fps": 24.0,
+      "duration_sec": 2.5,
+      "source": {
+        "video": "J.mp4"
+      },
+      "quality": {
+        "left_hand": {
+          "mediapipe": 0.0,
+          "dwpose": 0.0,
+          "interpolated": 0.0,
+          "missing": 1.0
+        },
+        "right_hand": {
+          "mediapipe": 0.7833,
+          "dwpose": 0.0,
+          "interpolated": 0.0333,
+          "missing": 0.1833
+        },
+        "upper_body_low_conf": 0.0278,
+        "scale": 1.1471
+      },
+      "score": 1.1917,
+      "note": null,
+      "reason": "new",
+      "aliases": [],
+      "other_videos": []
+    },
+    "k": {
+      "file": "k.npz",
+      "label": "K",
+      "category": "INDIAN SIGN LANGUAGE ANIMATED VIDEOS",
+      "frames": 40,
+      "fps": 24.0,
+      "duration_sec": 1.667,
+      "source": {
+        "video": "K.mp4"
+      },
+      "quality": {
+        "left_hand": {
+          "mediapipe": 0.0,
+          "dwpose": 0.0,
+          "interpolated": 0.0,
+          "missing": 1.0
+        },
+        "right_hand": {
+          "mediapipe": 0.725,
+          "dwpose": 0.0,
+          "interpolated": 0.0,
+          "missing": 0.275
+        },
+        "upper_body_low_conf": 0.0458,
+        "scale": 1.1415
+      },
+      "score": 1.0875,
+      "note": null,
+      "reason": "new",
+      "aliases": [],
+      "other_videos": []
+    },
+    "l": {
+      "file": "l.npz",
+      "label": "L",
+      "category": "INDIAN SIGN LANGUAGE ANIMATED VIDEOS",
+      "frames": 40,
+      "fps": 30.0,
+      "duration_sec": 1.333,
+      "source": {
+        "video": "L.mp4"
+      },
+      "quality": {
+        "left_hand": {
+          "mediapipe": 0.0,
+          "dwpose": 0.0,
+          "interpolated": 0.0,
+          "missing": 1.0
+        },
+        "right_hand": {
+          "mediapipe": 0.725,
+          "dwpose": 0.0,
+          "interpolated": 0.0,
+          "missing": 0.275
+        },
+        "upper_body_low_conf": 0.0625,
+        "scale": 1.5147
+      },
+      "score": 1.0875,
+      "note": null,
+      "reason": "new",
+      "aliases": [],
+      "other_videos": []
+    },
+    "m": {
+      "file": "m.npz",
+      "label": "M",
+      "category": "INDIAN SIGN LANGUAGE ANIMATED VIDEOS",
+      "frames": 40,
+      "fps": 24.0,
+      "duration_sec": 1.667,
+      "source": {
+        "video": "M.mp4"
+      },
+      "quality": {
+        "left_hand": {
+          "mediapipe": 0.0,
+          "dwpose": 0.0,
+          "interpolated": 0.0,
+          "missing": 1.0
+        },
+        "right_hand": {
+          "mediapipe": 0.725,
+          "dwpose": 0.0,
+          "interpolated": 0.0,
+          "missing": 0.275
+        },
+        "upper_body_low_conf": 0.0458,
+        "scale": 1.1448
+      },
+      "score": 1.0875,
+      "note": null,
+      "reason": "new",
+      "aliases": [],
+      "other_videos": []
+    },
+    "n": {
+      "file": "n.npz",
+      "label": "N",
+      "category": "INDIAN SIGN LANGUAGE ANIMATED VIDEOS",
+      "frames": 40,
+      "fps": 24.0,
+      "duration_sec": 1.667,
+      "source": {
+        "video": "N.mp4"
+      },
+      "quality": {
+        "left_hand": {
+          "mediapipe": 0.0,
+          "dwpose": 0.0,
+          "interpolated": 0.0,
+          "missing": 1.0
+        },
+        "right_hand": {
+          "mediapipe": 0.725,
+          "dwpose": 0.0,
+          "interpolated": 0.0,
+          "missing": 0.275
+        },
+        "upper_body_low_conf": 0.0458,
+        "scale": 1.1449
+      },
+      "score": 1.0875,
+      "note": null,
+      "reason": "new",
+      "aliases": [],
+      "other_videos": []
+    },
+    "o": {
+      "file": "o.npz",
+      "label": "O",
+      "category": "INDIAN SIGN LANGUAGE ANIMATED VIDEOS",
+      "frames": 40,
+      "fps": 24.0,
+      "duration_sec": 1.667,
+      "source": {
+        "video": "O.mp4"
+      },
+      "quality": {
+        "left_hand": {
+          "mediapipe": 0.0,
+          "dwpose": 0.0,
+          "interpolated": 0.0,
+          "missing": 1.0
+        },
+        "right_hand": {
+          "mediapipe": 0.7,
+          "dwpose": 0.0,
+          "interpolated": 0.025,
+          "missing": 0.275
+        },
+        "upper_body_low_conf": 0.0542,
+        "scale": 1.1274
+      },
+      "score": 1.0625,
+      "note": null,
+      "reason": "new",
+      "aliases": [],
+      "other_videos": []
+    },
+    "p": {
+      "file": "p.npz",
+      "label": "P",
+      "category": "INDIAN SIGN LANGUAGE ANIMATED VIDEOS",
+      "frames": 40,
+      "fps": 24.0,
+      "duration_sec": 1.667,
+      "source": {
+        "video": "P.mp4"
+      },
+      "quality": {
+        "left_hand": {
+          "mediapipe": 0.0,
+          "dwpose": 0.0,
+          "interpolated": 0.0,
+          "missing": 1.0
+        },
+        "right_hand": {
+          "mediapipe": 0.725,
+          "dwpose": 0.0,
+          "interpolated": 0.0,
+          "missing": 0.275
+        },
+        "upper_body_low_conf": 0.0458,
+        "scale": 1.1396
+      },
+      "score": 1.0875,
+      "note": null,
+      "reason": "new",
+      "aliases": [],
+      "other_videos": []
+    },
+    "pretty": {
+      "file": "pretty.npz",
+      "label": "Pretty",
+      "category": "INDIAN SIGN LANGUAGE ANIMATED VIDEOS",
+      "frames": 45,
+      "fps": 25.0,
+      "duration_sec": 1.8,
+      "source": {
+        "video": "Pretty.mp4"
+      },
+      "quality": {
+        "left_hand": {
+          "mediapipe": 0.0,
+          "dwpose": 0.0,
+          "interpolated": 0.0,
+          "missing": 1.0
+        },
+        "right_hand": {
+          "mediapipe": 0.6889,
+          "dwpose": 0.0,
+          "interpolated": 0.0667,
+          "missing": 0.2444
+        },
+        "upper_body_low_conf": 0.0519,
+        "scale": 1.1456
+      },
+      "score": 1.0667,
+      "note": null,
+      "reason": "new",
+      "aliases": [],
+      "other_videos": []
+    },
+    "q": {
+      "file": "q.npz",
+      "label": "Q",
+      "category": "INDIAN SIGN LANGUAGE ANIMATED VIDEOS",
+      "frames": 40,
+      "fps": 24.0,
+      "duration_sec": 1.667,
+      "source": {
+        "video": "Q.mp4"
+      },
+      "quality": {
+        "left_hand": {
+          "mediapipe": 0.0,
+          "dwpose": 0.0,
+          "interpolated": 0.0,
+          "missing": 1.0
+        },
+        "right_hand": {
+          "mediapipe": 0.725,
+          "dwpose": 0.0,
+          "interpolated": 0.0,
+          "missing": 0.275
+        },
+        "upper_body_low_conf": 0.0583,
+        "scale": 1.1463
+      },
+      "score": 1.0875,
+      "note": null,
+      "reason": "new",
+      "aliases": [],
+      "other_videos": []
+    },
+    "r": {
+      "file": "r.npz",
+      "label": "R",
+      "category": "INDIAN SIGN LANGUAGE ANIMATED VIDEOS",
+      "frames": 40,
+      "fps": 24.0,
+      "duration_sec": 1.667,
+      "source": {
+        "video": "R.mp4"
+      },
+      "quality": {
+        "left_hand": {
+          "mediapipe": 0.0,
+          "dwpose": 0.0,
+          "interpolated": 0.0,
+          "missing": 1.0
+        },
+        "right_hand": {
+          "mediapipe": 0.725,
+          "dwpose": 0.0,
+          "interpolated": 0.0,
+          "missing": 0.275
+        },
+        "upper_body_low_conf": 0.0458,
+        "scale": 1.1475
+      },
+      "score": 1.0875,
+      "note": null,
+      "reason": "new",
+      "aliases": [],
+      "other_videos": []
+    },
+    "s": {
+      "file": "s.npz",
+      "label": "S",
+      "category": "INDIAN SIGN LANGUAGE ANIMATED VIDEOS",
+      "frames": 40,
+      "fps": 24.0,
+      "duration_sec": 1.667,
+      "source": {
+        "video": "S.mp4"
+      },
+      "quality": {
+        "left_hand": {
+          "mediapipe": 0.0,
+          "dwpose": 0.0,
+          "interpolated": 0.0,
+          "missing": 1.0
+        },
+        "right_hand": {
+          "mediapipe": 0.75,
+          "dwpose": 0.0,
+          "interpolated": 0.0,
+          "missing": 0.25
+        },
+        "upper_body_low_conf": 0.0792,
+        "scale": 1.1211
+      },
+      "score": 1.125,
+      "note": null,
+      "reason": "new",
+      "aliases": [],
+      "other_videos": []
+    },
+    "so": {
+      "file": "so.npz",
+      "label": "So",
+      "category": "INDIAN SIGN LANGUAGE ANIMATED VIDEOS",
+      "frames": 20,
+      "fps": 24.0,
+      "duration_sec": 0.833,
+      "source": {
+        "video": "So.mp4"
+      },
+      "quality": {
+        "left_hand": {
+          "mediapipe": 0.0,
+          "dwpose": 0.0,
+          "interpolated": 0.0,
+          "missing": 1.0
+        },
+        "right_hand": {
+          "mediapipe": 0.65,
+          "dwpose": 0.0,
+          "interpolated": 0.0,
+          "missing": 0.35
+        },
+        "upper_body_low_conf": 0.075,
+        "scale": 1.1711
+      },
+      "score": 0.975,
+      "note": null,
+      "reason": "new",
+      "aliases": [],
+      "other_videos": []
+    },
+    "sound": {
+      "file": "sound.npz",
+      "label": "Sound",
+      "category": "INDIAN SIGN LANGUAGE ANIMATED VIDEOS",
+      "frames": 40,
+      "fps": 24.0,
+      "duration_sec": 1.667,
+      "source": {
+        "video": "Sound.mp4"
+      },
+      "quality": {
+        "left_hand": {
+          "mediapipe": 0.0,
+          "dwpose": 0.0,
+          "interpolated": 0.0,
+          "missing": 1.0
+        },
+        "right_hand": {
+          "mediapipe": 0.125,
+          "dwpose": 0.0,
+          "interpolated": 0.0,
+          "missing": 0.875
+        },
+        "upper_body_low_conf": 0.0917,
+        "scale": 1.0737
+      },
+      "score": 0.1875,
+      "note": null,
+      "reason": "replaces a failed clip (ISL part 1: DOMINANT_GAPS HEAVY_FILL)",
+      "aliases": [],
+      "other_videos": []
+    },
+    "t": {
+      "file": "t.npz",
+      "label": "T",
+      "category": "INDIAN SIGN LANGUAGE ANIMATED VIDEOS",
+      "frames": 40,
+      "fps": 24.0,
+      "duration_sec": 1.667,
+      "source": {
+        "video": "T.mp4"
+      },
+      "quality": {
+        "left_hand": {
+          "mediapipe": 0.0,
+          "dwpose": 0.0,
+          "interpolated": 0.0,
+          "missing": 1.0
+        },
+        "right_hand": {
+          "mediapipe": 0.725,
+          "dwpose": 0.0,
+          "interpolated": 0.0,
+          "missing": 0.275
+        },
+        "upper_body_low_conf": 0.0583,
+        "scale": 1.1589
+      },
+      "score": 1.0875,
+      "note": null,
+      "reason": "new",
+      "aliases": [],
+      "other_videos": []
+    },
+    "u": {
+      "file": "u.npz",
+      "label": "U",
+      "category": "INDIAN SIGN LANGUAGE ANIMATED VIDEOS",
+      "frames": 40,
+      "fps": 24.0,
+      "duration_sec": 1.667,
+      "source": {
+        "video": "U.mp4"
+      },
+      "quality": {
+        "left_hand": {
+          "mediapipe": 0.0,
+          "dwpose": 0.0,
+          "interpolated": 0.0,
+          "missing": 1.0
+        },
+        "right_hand": {
+          "mediapipe": 0.725,
+          "dwpose": 0.0,
+          "interpolated": 0.0,
+          "missing": 0.275
+        },
+        "upper_body_low_conf": 0.0458,
+        "scale": 1.1466
+      },
+      "score": 1.0875,
+      "note": null,
+      "reason": "new",
+      "aliases": [],
+      "other_videos": []
+    },
+    "v": {
+      "file": "v.npz",
+      "label": "V",
+      "category": "INDIAN SIGN LANGUAGE ANIMATED VIDEOS",
+      "frames": 40,
+      "fps": 24.0,
+      "duration_sec": 1.667,
+      "source": {
+        "video": "V.mp4"
+      },
+      "quality": {
+        "left_hand": {
+          "mediapipe": 0.0,
+          "dwpose": 0.0,
+          "interpolated": 0.0,
+          "missing": 1.0
+        },
+        "right_hand": {
+          "mediapipe": 0.725,
+          "dwpose": 0.0,
+          "interpolated": 0.0,
+          "missing": 0.275
+        },
+        "upper_body_low_conf": 0.0458,
+        "scale": 1.1415
+      },
+      "score": 1.0875,
+      "note": null,
+      "reason": "new",
+      "aliases": [],
+      "other_videos": []
+    },
+    "w": {
+      "file": "w.npz",
+      "label": "W",
+      "category": "INDIAN SIGN LANGUAGE ANIMATED VIDEOS",
+      "frames": 40,
+      "fps": 24.0,
+      "duration_sec": 1.667,
+      "source": {
+        "video": "W.mp4"
+      },
+      "quality": {
+        "left_hand": {
+          "mediapipe": 0.0,
+          "dwpose": 0.0,
+          "interpolated": 0.0,
+          "missing": 1.0
+        },
+        "right_hand": {
+          "mediapipe": 0.725,
+          "dwpose": 0.0,
+          "interpolated": 0.0,
+          "missing": 0.275
+        },
+        "upper_body_low_conf": 0.0458,
+        "scale": 1.1474
+      },
+      "score": 1.0875,
+      "note": null,
+      "reason": "new",
+      "aliases": [],
+      "other_videos": []
+    },
+    "whole": {
+      "file": "whole.npz",
+      "label": "Whole",
+      "category": "INDIAN SIGN LANGUAGE ANIMATED VIDEOS",
+      "frames": 40,
+      "fps": 24.0,
+      "duration_sec": 1.667,
+      "source": {
+        "video": "Whole.mp4"
+      },
+      "quality": {
+        "left_hand": {
+          "mediapipe": 0.2,
+          "dwpose": 0.0,
+          "interpolated": 0.0,
+          "missing": 0.8
+        },
+        "right_hand": {
+          "mediapipe": 0.725,
+          "dwpose": 0.0,
+          "interpolated": 0.05,
+          "missing": 0.225
+        },
+        "upper_body_low_conf": 0.0875,
+        "scale": 1.1309
+      },
+      "score": 1.4125,
+      "note": null,
+      "reason": "new",
+      "aliases": [],
+      "other_videos": []
+    },
+    "words": {
+      "file": "words.npz",
+      "label": "Words",
+      "category": "INDIAN SIGN LANGUAGE ANIMATED VIDEOS",
+      "frames": 25,
+      "fps": 24.0,
+      "duration_sec": 1.042,
+      "source": {
+        "video": "Words.mp4"
+      },
+      "quality": {
+        "left_hand": {
+          "mediapipe": 0.0,
+          "dwpose": 0.0,
+          "interpolated": 0.0,
+          "missing": 1.0
+        },
+        "right_hand": {
+          "mediapipe": 0.72,
+          "dwpose": 0.0,
+          "interpolated": 0.0,
+          "missing": 0.28
+        },
+        "upper_body_low_conf": 0.0667,
+        "scale": 1.1167
+      },
+      "score": 1.08,
+      "note": null,
+      "reason": "new",
+      "aliases": [],
+      "other_videos": []
+    },
+    "x": {
+      "file": "x.npz",
+      "label": "X",
+      "category": "INDIAN SIGN LANGUAGE ANIMATED VIDEOS",
+      "frames": 40,
+      "fps": 24.0,
+      "duration_sec": 1.667,
+      "source": {
+        "video": "X.mp4"
+      },
+      "quality": {
+        "left_hand": {
+          "mediapipe": 0.0,
+          "dwpose": 0.0,
+          "interpolated": 0.0,
+          "missing": 1.0
+        },
+        "right_hand": {
+          "mediapipe": 0.725,
+          "dwpose": 0.0,
+          "interpolated": 0.0,
+          "missing": 0.275
+        },
+        "upper_body_low_conf": 0.0625,
+        "scale": 1.1423
+      },
+      "score": 1.0875,
+      "note": null,
+      "reason": "new",
+      "aliases": [],
+      "other_videos": []
+    },
+    "y": {
+      "file": "y.npz",
+      "label": "Y",
+      "category": "INDIAN SIGN LANGUAGE ANIMATED VIDEOS",
+      "frames": 40,
+      "fps": 24.0,
+      "duration_sec": 1.667,
+      "source": {
+        "video": "Y.mp4"
+      },
+      "quality": {
+        "left_hand": {
+          "mediapipe": 0.0,
+          "dwpose": 0.0,
+          "interpolated": 0.0,
+          "missing": 1.0
+        },
+        "right_hand": {
+          "mediapipe": 0.725,
+          "dwpose": 0.0,
+          "interpolated": 0.0,
+          "missing": 0.275
+        },
+        "upper_body_low_conf": 0.0417,
+        "scale": 1.1474
+      },
+      "score": 1.0875,
+      "note": null,
+      "reason": "new",
+      "aliases": [],
+      "other_videos": []
+    },
+    "z": {
+      "file": "z.npz",
+      "label": "Z",
+      "category": "INDIAN SIGN LANGUAGE ANIMATED VIDEOS",
+      "frames": 61,
+      "fps": 30.0,
+      "duration_sec": 2.033,
+      "source": {
+        "video": "Z.mp4"
+      },
+      "quality": {
+        "left_hand": {
+          "mediapipe": 0.0,
+          "dwpose": 0.0,
+          "interpolated": 0.0,
+          "missing": 1.0
+        },
+        "right_hand": {
+          "mediapipe": 0.8033,
+          "dwpose": 0.0,
+          "interpolated": 0.0,
+          "missing": 0.1967
+        },
+        "upper_body_low_conf": 0.0492,
+        "scale": 1.1292
+      },
+      "score": 1.2049,
+      "note": null,
+      "reason": "new",
+      "aliases": [],
+      "other_videos": []
+    }
+  },
+  "aliases": {},
+  "skipped_existing": {
+    "a": "ISL dictionary",
+    "after": "ISL part 3",
+    "again": "ISL dictionary",
+    "against": "ISL dictionary",
+    "age": "ISL dictionary",
+    "all": "ISL dictionary",
+    "alone": "ISL dictionary",
+    "ask": "ISL dictionary",
+    "at": "ISL part 3",
+    "beautiful": "ISL dictionary",
+    "before": "ISL dictionary",
+    "best": "ISL dictionary",
+    "better": "ISL dictionary",
+    "busy": "ISL dictionary",
+    "but": "ISL dictionary",
+    "bye": "ISL dictionary",
+    "can": "ISL dictionary",
+    "cannot": "ISL dictionary",
+    "change": "ISL dictionary",
+    "college": "ISL part 3",
+    "come": "ISL dictionary",
+    "computer": "include_isl",
+    "day": "ISL dictionary",
+    "distance": "ISL dictionary",
+    "do": "ISL dictionary",
+    "do_not": "ISL dictionary",
+    "eat": "ISL dictionary",
+    "fight": "ISL dictionary",
+    "finish": "ISL dictionary",
+    "from": "ISL dictionary",
+    "go": "ISL dictionary",
+    "god": "ISL dictionary",
+    "gold": "ISL dictionary",
+    "good": "SignMotionDB",
+    "hand": "ISL dictionary",
+    "hands": "ISL dictionary",
+    "happy": "ISL dictionary",
+    "hello": "ISL dictionary",
+    "help": "SignMotionDB",
+    "her": "ISL dictionary",
+    "here": "ISL dictionary",
+    "his": "ISL dictionary",
+    "home": "ISL dictionary",
+    "how": "ISL dictionary",
+    "i": "ISL dictionary",
+    "invent": "ISL part 2",
+    "it": "include_isl",
+    "keep": "ISL dictionary",
+    "language": "ISL dictionary",
+    "laugh": "ISL dictionary",
+    "learn": "ISL dictionary",
+    "me": "ISL dictionary alias of 'i'",
+    "more": "ISL dictionary",
+    "my": "ISL part 2",
+    "name": "ISL dictionary",
+    "next": "ISL dictionary",
+    "not": "ISL dictionary",
+    "now": "ISL dictionary",
+    "of": "ISL part 2",
+    "on": "ISL dictionary",
+    "our": "ISL dictionary",
+    "out": "ISL dictionary",
+    "right": "ISL dictionary",
+    "sad": "ISL dictionary",
+    "safe": "ISL dictionary",
+    "see": "ISL dictionary",
+    "self": "ISL dictionary",
+    "sign": "include_isl",
+    "sing": "ISL part 1",
+    "stay": "ISL dictionary",
+    "study": "ISL dictionary",
+    "talk": "ISL dictionary",
+    "television": "include_isl",
+    "thank": "ISL dictionary",
+    "thank_you": "synonym of 'thank'",
+    "that": "ISL part 1",
+    "they": "ISL dictionary",
+    "this": "ISL part 1",
+    "those": "ISL part 1",
+    "time": "ISL dictionary",
+    "to": "ISL part 1",
+    "type": "ISL dictionary",
+    "us": "ISL dictionary alias of 'we'",
+    "walk": "ISL dictionary",
+    "wash": "ISL dictionary",
+    "way": "ISL dictionary",
+    "we": "ISL dictionary",
+    "welcome": "SignMotionDB",
+    "what": "ISL dictionary",
+    "when": "ISL dictionary",
+    "where": "ISL dictionary",
+    "which": "ISL dictionary",
+    "who": "ISL dictionary",
+    "whose": "ISL part 1",
+    "why": "ISL dictionary",
+    "will": "ISL dictionary",
+    "with": "ISL dictionary",
+    "without": "ISL dictionary",
+    "work": "ISL dictionary",
+    "world": "ISL dictionary",
+    "wrong": "ISL dictionary",
+    "you": "ISL dictionary",
+    "your": "ISL dictionary",
+    "yourself": "ISL dictionary"
+  },
+  "failures": []
+}

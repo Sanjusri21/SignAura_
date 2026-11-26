@@ -39,7 +39,7 @@ export const SignInView: React.FC<SignInViewProps> = ({ onNavigate, onSuccess })
         setErrorMessage('Invalid credentials. Please verify your email and password.');
       }
     } catch (err: any) {
-      setErrorMessage(err.response?.data?.detail || 'Sign in failed. Please try again.');
+      setErrorMessage(err.response?.data?.detail || err.message || 'Sign in failed. Please try again.');
     } finally {
       setIsLoading(false);
     }

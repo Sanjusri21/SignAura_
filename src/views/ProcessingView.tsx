@@ -18,6 +18,9 @@ import { ISLDialect, VideoProject, GlossToken } from '../types';
 import { signAuraApi } from '../services/api';
 import { GlassButton } from '../components/ui/GlassButton';
 
+// ~10 minutes at 1.5s intervals: Whisper on CPU needs well over 30s for longer speech
+const MAX_JOB_POLL_ATTEMPTS = 400;
+
 interface ProcessingViewProps {
   title: string;
   payload: ConvertPayload | null;
@@ -43,6 +46,8 @@ export const ProcessingView: React.FC<ProcessingViewProps> = ({
     transcript?: string;
   } | null>(null);
   const hasFinishedRef = useRef(false);
+  const mountedRef = useRef(false);
+  const startedPayloadRef = useRef<ConvertPayload | null | undefined>(undefined);
 
   const steps = [
     {
@@ -78,7 +83,16 @@ export const ProcessingView: React.FC<ProcessingViewProps> = ({
   ];
 
   useEffect(() => {
-    let isMounted = true;
+    mountedRef.current = true;
+    // StrictMode and parent re-renders re-run this effect; uploading twice would start two
+    // concurrent Whisper jobs, so the pipeline starts only once per payload
+    if (startedPayloadRef.current === payload) {
+      return () => {
+        mountedRef.current = false;
+      };
+    }
+    startedPayloadRef.current = payload;
+    const isActive = () => mountedRef.current && startedPayloadRef.current === payload;
 
     const processPipeline = async () => {
       try {
@@ -99,9 +113,8 @@ export const ProcessingView: React.FC<ProcessingViewProps> = ({
           const jobId = uploadRes.job_id || uploadRes.id;
 
           let pollAttempts = 0;
-          const maxAttempts = 20;
 
-          while (pollAttempts < maxAttempts && isMounted) {
+          while (pollAttempts < MAX_JOB_POLL_ATTEMPTS && isActive()) {
             await new Promise((r) => setTimeout(r, 1500));
             pollAttempts++;
             
@@ -128,11 +141,15 @@ export const ProcessingView: React.FC<ProcessingViewProps> = ({
                 throw new Error(jobStatus.error || 'Video processing failed on server');
               }
             } catch (pollErr: any) {
-              if (pollErr?.message?.includes('Language not supported')) {
+              // Only transient network errors are retried; job failures surface to the user
+              if (!pollErr?.isAxiosError) {
                 throw pollErr;
               }
               console.warn('Polling error:', pollErr);
             }
+          }
+          if (isActive() && !finalTranscript) {
+            throw new Error('Speech extraction is taking longer than expected. Please try again with a shorter video.');
           }
         } else if (payload?.url) {
           setCurrentStepIndex(1);
@@ -142,7 +159,7 @@ export const ProcessingView: React.FC<ProcessingViewProps> = ({
           const jobId = urlRes.job_id || urlRes.id;
 
           let pollAttempts = 0;
-          while (pollAttempts < 20 && isMounted) {
+          while (pollAttempts < MAX_JOB_POLL_ATTEMPTS && isActive()) {
             await new Promise((r) => setTimeout(r, 1500));
             pollAttempts++;
             try {
@@ -160,31 +177,40 @@ export const ProcessingView: React.FC<ProcessingViewProps> = ({
                 finalTokens = (jobStatus.gloss_tokens as any) || [];
                 if (jobStatus.duration) jobDuration = jobStatus.duration;
                 break;
+              } else if (jobStatus.status === 'failed') {
+                throw new Error(jobStatus.error || 'Video processing failed on server');
               }
-            } catch {}
+            } catch (pollErr: any) {
+              if (!pollErr?.isAxiosError) {
+                throw pollErr;
+              }
+            }
+          }
+          if (isActive() && !finalTranscript) {
+            throw new Error('Speech extraction is taking longer than expected. Please try again with a shorter video.');
           }
         } else {
           // Preset simulated step progression
           await new Promise((r) => setTimeout(r, 1000));
-          if (!isMounted) return;
+          if (!isActive()) return;
           setCurrentStepIndex(1);
           setProgress(40);
           setStatusMessage('Transcribing speech with Whisper ASR...');
 
           await new Promise((r) => setTimeout(r, 1200));
-          if (!isMounted) return;
+          if (!isActive()) return;
           setCurrentStepIndex(2);
           setProgress(65);
           setStatusMessage('Parsing semantics & grammar structures...');
 
           await new Promise((r) => setTimeout(r, 1000));
-          if (!isMounted) return;
+          if (!isActive()) return;
           setCurrentStepIndex(3);
           setProgress(85);
           setStatusMessage('Generating ISL Subject-Object-Verb syntactic tokens...');
 
           await new Promise((r) => setTimeout(r, 1200));
-          if (!isMounted) return;
+          if (!isActive()) return;
           setCurrentStepIndex(4);
           setProgress(98);
           setStatusMessage('Synthesizing articulated 3D humanoid avatar motion...');
@@ -227,11 +253,11 @@ export const ProcessingView: React.FC<ProcessingViewProps> = ({
 
         hasFinishedRef.current = true;
         setTimeout(() => {
-          if (isMounted) onComplete(completedProject);
+          if (isActive()) onComplete(completedProject);
         }, 1200);
 
       } catch (err: any) {
-        if (!isMounted) return;
+        if (!isActive()) return;
         setErrorMessage(err?.message || 'Processing failed. Switching to default avatar sequence.');
       }
     };
@@ -239,7 +265,7 @@ export const ProcessingView: React.FC<ProcessingViewProps> = ({
     processPipeline();
 
     return () => {
-      isMounted = false;
+      mountedRef.current = false;
     };
   }, [payload, currentDialect, title, onComplete]);
 

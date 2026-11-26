@@ -1,0 +1,1676 @@
+{
+  "dataset": "ISL 50",
+  "format": {
+    "file": "<word>.npz, read by SignAvatars/bridgeconn_to_smplx.convert_bridgeconn_sample",
+    "body": "(F,33,3) MediaPipe pose",
+    "left_hand": "(F,21,3)",
+    "right_hand": "(F,21,3)",
+    "coordinates": "x,y on a 1920x1080 canvas, shoulder midpoint at [960.0, 400.0], shoulder width 320.0; z = MediaPipe depth times the same scale",
+    "missing": "a hand frame of all zeros means the hand was not tracked",
+    "source_codes": {
+      "0": "missing",
+      "1": "mediapipe",
+      "2": "dwpose fill",
+      "3": "interpolated"
+    }
+  },
+  "partial": false,
+  "count": 15,
+  "clips": 15,
+  "words": {
+    "aunt": {
+      "file": "aunt.npz",
+      "label": "aunt",
+      "category": "",
+      "frames": 198,
+      "fps": 59.97,
+      "duration_sec": 3.302,
+      "source": {
+        "video": "aunt\\IMG_5721.MOV"
+      },
+      "quality": {
+        "left_hand": {
+          "mediapipe": 1.0,
+          "dwpose": 0.0,
+          "interpolated": 0.0,
+          "missing": 0.0
+        },
+        "right_hand": {
+          "mediapipe": 1.0,
+          "dwpose": 0.0,
+          "interpolated": 0.0,
+          "missing": 0.0
+        },
+        "upper_body_low_conf": 0.0,
+        "scale": 0.5252
+      },
+      "score": 3.0,
+      "note": null,
+      "reason": "new",
+      "aliases": [],
+      "other_videos": [
+        {
+          "video": "aunt\\IMG_6568.MOV",
+          "frames": 143,
+          "score": 3.0
+        },
+        {
+          "video": "aunt\\IMG_6567.MOV",
+          "frames": 203,
+          "score": 3.0
+        },
+        {
+          "video": "aunt\\IMG_6569.MOV",
+          "frames": 159,
+          "score": 3.0
+        },
+        {
+          "video": "aunt\\IMG_6570.MOV",
+          "frames": 171,
+          "score": 2.9883
+        },
+        {
+          "video": "aunt\\IMG_6049.MOV",
+          "frames": 155,
+          "score": 2.9871
+        },
+        {
+          "video": "aunt\\IMG_5725.MOV",
+          "frames": 198,
+          "score": 2.9848
+        },
+        {
+          "video": "aunt\\IMG_5723.MOV",
+          "frames": 188,
+          "score": 2.984
+        },
+        {
+          "video": "aunt\\IMG_6050.MOV",
+          "frames": 151,
+          "score": 2.9735
+        },
+        {
+          "video": "aunt\\IMG_6571.MOV",
+          "frames": 138,
+          "score": 2.971
+        },
+        {
+          "video": "aunt\\IMG_6051.MOV",
+          "frames": 154,
+          "score": 2.9545
+        },
+        {
+          "video": "aunt\\IMG_5724.MOV",
+          "frames": 207,
+          "score": 2.9517
+        },
+        {
+          "video": "aunt\\IMG_6572.MOV",
+          "frames": 152,
+          "score": 2.9408
+        },
+        {
+          "video": "aunt\\IMG_6052.MOV",
+          "frames": 158,
+          "score": 2.9336
+        },
+        {
+          "video": "aunt\\IMG_5722.MOV",
+          "frames": 174,
+          "score": 2.8937
+        },
+        {
+          "video": "aunt\\IMG_6053.MOV",
+          "frames": 151,
+          "score": 2.8113
+        }
+      ]
+    },
+    "baby_boy": {
+      "file": "baby_boy.npz",
+      "label": "baby boy",
+      "category": "",
+      "frames": 166,
+      "fps": 59.964,
+      "duration_sec": 2.768,
+      "source": {
+        "video": "baby boy\\IMG_6056.MOV"
+      },
+      "quality": {
+        "left_hand": {
+          "mediapipe": 1.0,
+          "dwpose": 0.0,
+          "interpolated": 0.0,
+          "missing": 0.0
+        },
+        "right_hand": {
+          "mediapipe": 1.0,
+          "dwpose": 0.0,
+          "interpolated": 0.0,
+          "missing": 0.0
+        },
+        "upper_body_low_conf": 0.0,
+        "scale": 0.4971
+      },
+      "score": 3.0,
+      "note": null,
+      "reason": "new",
+      "aliases": [],
+      "other_videos": [
+        {
+          "video": "baby boy\\IMG_6057.MOV",
+          "frames": 173,
+          "score": 3.0
+        },
+        {
+          "video": "baby boy\\IMG_6579.MOV",
+          "frames": 167,
+          "score": 3.0
+        },
+        {
+          "video": "baby boy\\IMG_6578.MOV",
+          "frames": 173,
+          "score": 2.9942
+        },
+        {
+          "video": "baby boy\\IMG_6055.MOV",
+          "frames": 160,
+          "score": 2.9938
+        },
+        {
+          "video": "baby boy\\IMG_6577.MOV",
+          "frames": 150,
+          "score": 2.9933
+        },
+        {
+          "video": "baby boy\\IMG_6058.MOV",
+          "frames": 169,
+          "score": 2.9912
+        },
+        {
+          "video": "baby boy\\IMG_6576.MOV",
+          "frames": 143,
+          "score": 2.9895
+        },
+        {
+          "video": "baby boy\\IMG_5726.MOV",
+          "frames": 168,
+          "score": 2.9762
+        },
+        {
+          "video": "baby boy\\IMG_6054.MOV",
+          "frames": 184,
+          "score": 2.9728
+        },
+        {
+          "video": "baby boy\\IMG_5730.MOV",
+          "frames": 162,
+          "score": 2.9383
+        },
+        {
+          "video": "baby boy\\IMG_5731.MOV",
+          "frames": 191,
+          "score": 2.8325
+        },
+        {
+          "video": "baby boy\\IMG_5728.MOV",
+          "frames": 174,
+          "score": 2.8103
+        },
+        {
+          "video": "baby boy\\IMG_5732.MOV",
+          "frames": 159,
+          "score": 2.805
+        },
+        {
+          "video": "baby boy\\IMG_5729.MOV",
+          "frames": 219,
+          "score": 2.7717
+        },
+        {
+          "video": "baby boy\\IMG_5727.MOV",
+          "frames": 253,
+          "score": 2.7292
+        }
+      ]
+    },
+    "baby_girl": {
+      "file": "baby_girl.npz",
+      "label": "baby girl",
+      "category": "",
+      "frames": 108,
+      "fps": 59.944,
+      "duration_sec": 1.802,
+      "source": {
+        "video": "baby girl\\IMG_6586.MOV"
+      },
+      "quality": {
+        "left_hand": {
+          "mediapipe": 1.0,
+          "dwpose": 0.0,
+          "interpolated": 0.0,
+          "missing": 0.0
+        },
+        "right_hand": {
+          "mediapipe": 1.0,
+          "dwpose": 0.0,
+          "interpolated": 0.0,
+          "missing": 0.0
+        },
+        "upper_body_low_conf": 0.0,
+        "scale": 0.6363
+      },
+      "score": 3.0,
+      "note": null,
+      "reason": "new",
+      "aliases": [],
+      "other_videos": [
+        {
+          "video": "baby girl\\IMG_6588.MOV",
+          "frames": 136,
+          "score": 3.0
+        },
+        {
+          "video": "baby girl\\IMG_6587.MOV",
+          "frames": 193,
+          "score": 2.9948
+        },
+        {
+          "video": "baby girl\\IMG_5740.MOV",
+          "frames": 173,
+          "score": 2.9942
+        },
+        {
+          "video": "baby girl\\IMG_6061.MOV",
+          "frames": 158,
+          "score": 2.9873
+        },
+        {
+          "video": "baby girl\\IMG_6060.MOV",
+          "frames": 164,
+          "score": 2.9817
+        },
+        {
+          "video": "baby girl\\IMG_5739.MOV",
+          "frames": 179,
+          "score": 2.9776
+        },
+        {
+          "video": "baby girl\\IMG_5737.MOV",
+          "frames": 214,
+          "score": 2.9766
+        },
+        {
+          "video": "baby girl\\IMG_6059.MOV",
+          "frames": 155,
+          "score": 2.9645
+        },
+        {
+          "video": "baby girl\\IMG_6063.MOV",
+          "frames": 169,
+          "score": 2.9527
+        },
+        {
+          "video": "baby girl\\IMG_5735.MOV",
+          "frames": 178,
+          "score": 2.9326
+        },
+        {
+          "video": "baby girl\\IMG_5736.MOV",
+          "frames": 187,
+          "score": 2.9198
+        },
+        {
+          "video": "baby girl\\IMG_5738.MOV",
+          "frames": 112,
+          "score": 2.9197
+        },
+        {
+          "video": "baby girl\\IMG_6062.MOV",
+          "frames": 160,
+          "score": 2.9093
+        },
+        {
+          "video": "baby girl\\IMG_5734.MOV",
+          "frames": 160,
+          "score": 2.8906
+        },
+        {
+          "video": "baby girl\\IMG_5733.MOV",
+          "frames": 155,
+          "score": 2.8871
+        }
+      ]
+    },
+    "blazer": {
+      "file": "blazer.npz",
+      "label": "BLAZER",
+      "category": "",
+      "frames": 180,
+      "fps": 59.967,
+      "duration_sec": 3.002,
+      "source": {
+        "video": "BLAZER\\IMG_6340.MOV"
+      },
+      "quality": {
+        "left_hand": {
+          "mediapipe": 1.0,
+          "dwpose": 0.0,
+          "interpolated": 0.0,
+          "missing": 0.0
+        },
+        "right_hand": {
+          "mediapipe": 0.9944,
+          "dwpose": 0.0,
+          "interpolated": 0.0056,
+          "missing": 0.0
+        },
+        "upper_body_low_conf": 0.0,
+        "scale": 0.6079
+      },
+      "score": 2.9944,
+      "note": null,
+      "reason": "new",
+      "aliases": [],
+      "other_videos": [
+        {
+          "video": "BLAZER\\IMG_6338.MOV",
+          "frames": 153,
+          "score": 2.9869
+        },
+        {
+          "video": "BLAZER\\IMG_5595.MOV",
+          "frames": 172,
+          "score": 2.9826
+        },
+        {
+          "video": "BLAZER\\IMG_5596.MOV",
+          "frames": 179,
+          "score": 2.9777
+        },
+        {
+          "video": "BLAZER\\IMG_6339.MOV",
+          "frames": 207,
+          "score": 2.971
+        },
+        {
+          "video": "BLAZER\\IMG_6087.MOV",
+          "frames": 157,
+          "score": 2.9682
+        },
+        {
+          "video": "BLAZER\\IMG_6337.MOV",
+          "frames": 180,
+          "score": 2.9667
+        },
+        {
+          "video": "BLAZER\\IMG_6333.MOV",
+          "frames": 165,
+          "score": 2.9636
+        },
+        {
+          "video": "BLAZER\\IMG_6332.MOV",
+          "frames": 218,
+          "score": 2.9633
+        },
+        {
+          "video": "BLAZER\\IMG_6084.MOV",
+          "frames": 144,
+          "score": 2.9514
+        },
+        {
+          "video": "BLAZER\\IMG_6342.MOV",
+          "frames": 165,
+          "score": 2.9454
+        },
+        {
+          "video": "BLAZER\\IMG_6086.MOV",
+          "frames": 166,
+          "score": 2.9338
+        },
+        {
+          "video": "BLAZER\\IMG_6341.MOV",
+          "frames": 177,
+          "score": 2.904
+        },
+        {
+          "video": "BLAZER\\IMG_5928.MOV",
+          "frames": 165,
+          "score": 2.7939
+        },
+        {
+          "video": "BLAZER\\IMG_5929.MOV",
+          "frames": 146,
+          "score": 2.6028
+        }
+      ]
+    },
+    "brushing": {
+      "file": "brushing.npz",
+      "label": "BRUSHING",
+      "category": "",
+      "frames": 162,
+      "fps": 59.963,
+      "duration_sec": 2.702,
+      "source": {
+        "video": "BRUSHING\\IMG_6344.MOV"
+      },
+      "quality": {
+        "left_hand": {
+          "mediapipe": 0.9938,
+          "dwpose": 0.0,
+          "interpolated": 0.0062,
+          "missing": 0.0
+        },
+        "right_hand": {
+          "mediapipe": 1.0,
+          "dwpose": 0.0,
+          "interpolated": 0.0,
+          "missing": 0.0
+        },
+        "upper_body_low_conf": 0.0,
+        "scale": 0.6108
+      },
+      "score": 2.9938,
+      "note": null,
+      "reason": "new",
+      "aliases": [],
+      "other_videos": [
+        {
+          "video": "BRUSHING\\IMG_5935.MOV",
+          "frames": 154,
+          "score": 2.9935
+        },
+        {
+          "video": "BRUSHING\\IMG_6343.MOV",
+          "frames": 146,
+          "score": 2.9932
+        },
+        {
+          "video": "BRUSHING\\IMG_6346.MOV",
+          "frames": 178,
+          "score": 2.9775
+        },
+        {
+          "video": "BRUSHING\\IMG_5597.MOV",
+          "frames": 178,
+          "score": 2.9607
+        },
+        {
+          "video": "BRUSHING\\IMG_5600.MOV",
+          "frames": 200,
+          "score": 2.96
+        },
+        {
+          "video": "BRUSHING\\IMG_5603.MOV",
+          "frames": 195,
+          "score": 2.9436
+        },
+        {
+          "video": "BRUSHING\\IMG_5933.MOV",
+          "frames": 149,
+          "score": 2.9329
+        },
+        {
+          "video": "BRUSHING\\IMG_5599.MOV",
+          "frames": 190,
+          "score": 2.9289
+        },
+        {
+          "video": "BRUSHING\\IMG_5601.MOV",
+          "frames": 182,
+          "score": 2.9176
+        },
+        {
+          "video": "BRUSHING\\IMG_5934.MOV",
+          "frames": 157,
+          "score": 2.8695
+        },
+        {
+          "video": "BRUSHING\\IMG_5602.MOV",
+          "frames": 195,
+          "score": 2.8667
+        },
+        {
+          "video": "BRUSHING\\IMG_6345.MOV",
+          "frames": 162,
+          "score": 2.7439
+        },
+        {
+          "video": "BRUSHING\\IMG_5598.MOV",
+          "frames": 200,
+          "score": 2.7
+        },
+        {
+          "video": "BRUSHING\\IMG_5932.MOV",
+          "frames": 154,
+          "score": 2.6753
+        },
+        {
+          "video": "BRUSHING\\IMG_6347.MOV",
+          "frames": 153,
+          "score": 2.5752
+        }
+      ]
+    },
+    "document_folder": {
+      "file": "document_folder.npz",
+      "label": "Document folder",
+      "category": "",
+      "frames": 141,
+      "fps": 59.957,
+      "duration_sec": 2.352,
+      "source": {
+        "video": "Document folder\\IMG_6617.MOV"
+      },
+      "quality": {
+        "left_hand": {
+          "mediapipe": 0.9929,
+          "dwpose": 0.0,
+          "interpolated": 0.0071,
+          "missing": 0.0
+        },
+        "right_hand": {
+          "mediapipe": 1.0,
+          "dwpose": 0.0,
+          "interpolated": 0.0,
+          "missing": 0.0
+        },
+        "upper_body_low_conf": 0.0,
+        "scale": 0.5162
+      },
+      "score": 2.9929,
+      "note": null,
+      "reason": "new",
+      "aliases": [],
+      "other_videos": [
+        {
+          "video": "Document folder\\IMG_6078.MOV",
+          "frames": 172,
+          "score": 2.9884
+        },
+        {
+          "video": "Document folder\\IMG_5755.MOV",
+          "frames": 201,
+          "score": 2.9801
+        },
+        {
+          "video": "Document folder\\IMG_6618.MOV",
+          "frames": 194,
+          "score": 2.9742
+        },
+        {
+          "video": "Document folder\\IMG_5754.MOV",
+          "frames": 179,
+          "score": 2.9721
+        },
+        {
+          "video": "Document folder\\IMG_6619.MOV",
+          "frames": 204,
+          "score": 2.9657
+        },
+        {
+          "video": "Document folder\\IMG_6075.MOV",
+          "frames": 163,
+          "score": 2.9632
+        },
+        {
+          "video": "Document folder\\IMG_6620.MOV",
+          "frames": 169,
+          "score": 2.9586
+        },
+        {
+          "video": "Document folder\\IMG_6079.MOV",
+          "frames": 186,
+          "score": 2.9516
+        },
+        {
+          "video": "Document folder\\IMG_6081.MOV",
+          "frames": 172,
+          "score": 2.9477
+        },
+        {
+          "video": "Document folder\\IMG_5756.MOV",
+          "frames": 204,
+          "score": 2.9412
+        },
+        {
+          "video": "Document folder\\IMG_6076.MOV",
+          "frames": 171,
+          "score": 2.9299
+        },
+        {
+          "video": "Document folder\\IMG_6074.MOV",
+          "frames": 199,
+          "score": 2.9196
+        },
+        {
+          "video": "Document folder\\IMG_5757.MOV",
+          "frames": 199,
+          "score": 2.8945
+        },
+        {
+          "video": "Document folder\\IMG_5758.MOV",
+          "frames": 201,
+          "score": 2.7885
+        },
+        {
+          "video": "Document folder\\IMG_5759.MOV",
+          "frames": 197,
+          "score": 2.5534
+        }
+      ]
+    },
+    "exam_result": {
+      "file": "exam_result.npz",
+      "label": "exam result",
+      "category": "",
+      "frames": 191,
+      "fps": 59.969,
+      "duration_sec": 3.185,
+      "source": {
+        "video": "exam result\\IMG_5877.MOV"
+      },
+      "quality": {
+        "left_hand": {
+          "mediapipe": 1.0,
+          "dwpose": 0.0,
+          "interpolated": 0.0,
+          "missing": 0.0
+        },
+        "right_hand": {
+          "mediapipe": 1.0,
+          "dwpose": 0.0,
+          "interpolated": 0.0,
+          "missing": 0.0
+        },
+        "upper_body_low_conf": 0.0,
+        "scale": 0.5085
+      },
+      "score": 3.0,
+      "note": null,
+      "reason": "new",
+      "aliases": [],
+      "other_videos": [
+        {
+          "video": "exam result\\IMG_5876.MOV",
+          "frames": 175,
+          "score": 2.9943
+        },
+        {
+          "video": "exam result\\IMG_6235.MOV",
+          "frames": 222,
+          "score": 2.991
+        },
+        {
+          "video": "exam result\\IMG_5880.MOV",
+          "frames": 170,
+          "score": 2.9647
+        },
+        {
+          "video": "exam result\\IMG_5879.MOV",
+          "frames": 224,
+          "score": 2.9554
+        },
+        {
+          "video": "exam result\\IMG_5539.MOV",
+          "frames": 300,
+          "score": 2.9533
+        },
+        {
+          "video": "exam result\\IMG_6236.MOV",
+          "frames": 218,
+          "score": 2.945
+        },
+        {
+          "video": "exam result\\IMG_5536.MOV",
+          "frames": 296,
+          "score": 2.9392
+        },
+        {
+          "video": "exam result\\IMG_5878.MOV",
+          "frames": 189,
+          "score": 2.9365
+        },
+        {
+          "video": "exam result\\IMG_5535.MOV",
+          "frames": 236,
+          "score": 2.9279
+        },
+        {
+          "video": "exam result\\IMG_5538.MOV",
+          "frames": 244,
+          "score": 2.9221
+        },
+        {
+          "video": "exam result\\IMG_5533.MOV",
+          "frames": 207,
+          "score": 2.9154
+        },
+        {
+          "video": "exam result\\IMG_5540.MOV",
+          "frames": 196,
+          "score": 2.898
+        },
+        {
+          "video": "exam result\\IMG_5537.MOV",
+          "frames": 233,
+          "score": 2.897
+        },
+        {
+          "video": "exam result\\IMG_5534.MOV",
+          "frames": 219,
+          "score": 2.8584
+        },
+        {
+          "video": "exam result\\IMG_5532.MOV",
+          "frames": 150,
+          "score": 2.8467
+        }
+      ]
+    },
+    "namaste": {
+      "file": "namaste.npz",
+      "label": "namaste",
+      "category": "",
+      "frames": 157,
+      "fps": 59.962,
+      "duration_sec": 2.618,
+      "source": {
+        "video": "namaste\\IMG_5828.MOV"
+      },
+      "quality": {
+        "left_hand": {
+          "mediapipe": 1.0,
+          "dwpose": 0.0,
+          "interpolated": 0.0,
+          "missing": 0.0
+        },
+        "right_hand": {
+          "mediapipe": 0.9873,
+          "dwpose": 0.0,
+          "interpolated": 0.0127,
+          "missing": 0.0
+        },
+        "upper_body_low_conf": 0.0,
+        "scale": 0.4485
+      },
+      "score": 2.9873,
+      "note": null,
+      "reason": "new",
+      "aliases": [],
+      "other_videos": [
+        {
+          "video": "namaste\\IMG_5826.MOV",
+          "frames": 141,
+          "score": 2.9858
+        },
+        {
+          "video": "namaste\\IMG_5825.MOV",
+          "frames": 162,
+          "score": 2.9815
+        },
+        {
+          "video": "namaste\\IMG_5829.MOV",
+          "frames": 161,
+          "score": 2.9814
+        },
+        {
+          "video": "namaste\\IMG_5827.MOV",
+          "frames": 159,
+          "score": 2.9811
+        },
+        {
+          "video": "namaste\\IMG_6100.MOV",
+          "frames": 152,
+          "score": 2.9572
+        },
+        {
+          "video": "namaste\\IMG_5442.MOV",
+          "frames": 202,
+          "score": 2.9306
+        },
+        {
+          "video": "namaste\\IMG_5830.MOV",
+          "frames": 145,
+          "score": 2.9103
+        },
+        {
+          "video": "namaste\\IMG_6099.MOV",
+          "frames": 152,
+          "score": 2.8947
+        },
+        {
+          "video": "namaste\\IMG_5444.MOV",
+          "frames": 199,
+          "score": 2.8417
+        },
+        {
+          "video": "namaste\\IMG_5443.MOV",
+          "frames": 192,
+          "score": 2.6666
+        },
+        {
+          "video": "namaste\\IMG_5441.MOV",
+          "frames": 182,
+          "score": 2.5082
+        },
+        {
+          "video": "namaste\\IMG_6101.MOV",
+          "frames": 190,
+          "score": 2.4684
+        },
+        {
+          "video": "namaste\\IMG_5445.MOV",
+          "frames": 229,
+          "score": 2.4432
+        },
+        {
+          "video": "namaste\\IMG_5440.MOV",
+          "frames": 209,
+          "score": 2.3851
+        },
+        {
+          "video": "namaste\\IMG_5446.MOV",
+          "frames": 232,
+          "score": 2.2005
+        }
+      ]
+    },
+    "please": {
+      "file": "please.npz",
+      "label": "please",
+      "category": "",
+      "frames": 175,
+      "fps": 59.966,
+      "duration_sec": 2.918,
+      "source": {
+        "video": "please\\IMG_5806.MOV"
+      },
+      "quality": {
+        "left_hand": {
+          "mediapipe": 1.0,
+          "dwpose": 0.0,
+          "interpolated": 0.0,
+          "missing": 0.0
+        },
+        "right_hand": {
+          "mediapipe": 1.0,
+          "dwpose": 0.0,
+          "interpolated": 0.0,
+          "missing": 0.0
+        },
+        "upper_body_low_conf": 0.0,
+        "scale": 0.4678
+      },
+      "score": 3.0,
+      "note": null,
+      "reason": "new",
+      "aliases": [],
+      "other_videos": [
+        {
+          "video": "please\\IMG_5811.MOV",
+          "frames": 171,
+          "score": 2.9884
+        },
+        {
+          "video": "please\\IMG_5807.MOV",
+          "frames": 166,
+          "score": 2.988
+        },
+        {
+          "video": "please\\IMG_5810.MOV",
+          "frames": 168,
+          "score": 2.988
+        },
+        {
+          "video": "please\\IMG_5809.MOV",
+          "frames": 174,
+          "score": 2.9828
+        },
+        {
+          "video": "please\\IMG_5808.MOV",
+          "frames": 168,
+          "score": 2.9762
+        },
+        {
+          "video": "please\\IMG_6121.MOV",
+          "frames": 154,
+          "score": 2.8182
+        },
+        {
+          "video": "please\\IMG_5456.MOV",
+          "frames": 164,
+          "score": 2.8171
+        },
+        {
+          "video": "please\\IMG_6122.MOV",
+          "frames": 157,
+          "score": 2.742
+        },
+        {
+          "video": "please\\IMG_6123.MOV",
+          "frames": 163,
+          "score": 2.724
+        },
+        {
+          "video": "please\\IMG_6124.MOV",
+          "frames": 163,
+          "score": 2.6871
+        },
+        {
+          "video": "please\\IMG_5454.MOV",
+          "frames": 197,
+          "score": 2.665
+        },
+        {
+          "video": "please\\IMG_5458.MOV",
+          "frames": 164,
+          "score": 2.5854
+        },
+        {
+          "video": "please\\IMG_5453.MOV",
+          "frames": 181,
+          "score": 2.4834
+        },
+        {
+          "video": "please\\IMG_5457.MOV",
+          "frames": 201,
+          "score": 2.4527
+        },
+        {
+          "video": "please\\IMG_5455.MOV",
+          "frames": 209,
+          "score": 2.4139
+        }
+      ]
+    },
+    "stand_up": {
+      "file": "stand_up.npz",
+      "label": "stand up",
+      "category": "",
+      "frames": 170,
+      "fps": 59.965,
+      "duration_sec": 2.835,
+      "source": {
+        "video": "stand up\\IMG_6388.MOV"
+      },
+      "quality": {
+        "left_hand": {
+          "mediapipe": 1.0,
+          "dwpose": 0.0,
+          "interpolated": 0.0,
+          "missing": 0.0
+        },
+        "right_hand": {
+          "mediapipe": 1.0,
+          "dwpose": 0.0,
+          "interpolated": 0.0,
+          "missing": 0.0
+        },
+        "upper_body_low_conf": 0.0,
+        "scale": 0.6169
+      },
+      "score": 3.0,
+      "note": null,
+      "reason": "new",
+      "aliases": [],
+      "other_videos": [
+        {
+          "video": "stand up\\IMG_6389.MOV",
+          "frames": 151,
+          "score": 3.0
+        },
+        {
+          "video": "stand up\\IMG_6390.MOV",
+          "frames": 158,
+          "score": 3.0
+        },
+        {
+          "video": "stand up\\IMG_6387.MOV",
+          "frames": 142,
+          "score": 2.9859
+        },
+        {
+          "video": "stand up\\IMG_5624.MOV",
+          "frames": 196,
+          "score": 2.9796
+        },
+        {
+          "video": "stand up\\IMG_5951.MOV",
+          "frames": 146,
+          "score": 2.9795
+        },
+        {
+          "video": "stand up\\IMG_5622.MOV",
+          "frames": 170,
+          "score": 2.9647
+        },
+        {
+          "video": "stand up\\IMG_5625.MOV",
+          "frames": 227,
+          "score": 2.9559
+        },
+        {
+          "video": "stand up\\IMG_5623.MOV",
+          "frames": 158,
+          "score": 2.9241
+        },
+        {
+          "video": "stand up\\IMG_5626.MOV",
+          "frames": 218,
+          "score": 2.9174
+        },
+        {
+          "video": "stand up\\IMG_5627.MOV",
+          "frames": 179,
+          "score": 2.9106
+        },
+        {
+          "video": "stand up\\IMG_5621.MOV",
+          "frames": 175,
+          "score": 2.9057
+        },
+        {
+          "video": "stand up\\IMG_5955.MOV",
+          "frames": 152,
+          "score": 2.8914
+        },
+        {
+          "video": "stand up\\IMG_5953.MOV",
+          "frames": 152,
+          "score": 2.8816
+        },
+        {
+          "video": "stand up\\IMG_5952.MOV",
+          "frames": 147,
+          "score": 2.8742
+        },
+        {
+          "video": "stand up\\IMG_5954.MOV",
+          "frames": 161,
+          "score": 2.8571
+        }
+      ]
+    },
+    "talking": {
+      "file": "talking.npz",
+      "label": "talking",
+      "category": "",
+      "frames": 170,
+      "fps": 59.965,
+      "duration_sec": 2.835,
+      "source": {
+        "video": "talking\\IMG_5640.MOV"
+      },
+      "quality": {
+        "left_hand": {
+          "mediapipe": 1.0,
+          "dwpose": 0.0,
+          "interpolated": 0.0,
+          "missing": 0.0
+        },
+        "right_hand": {
+          "mediapipe": 1.0,
+          "dwpose": 0.0,
+          "interpolated": 0.0,
+          "missing": 0.0
+        },
+        "upper_body_low_conf": 0.0,
+        "scale": 0.5442
+      },
+      "score": 3.0,
+      "note": null,
+      "reason": "new",
+      "aliases": [],
+      "other_videos": [
+        {
+          "video": "talking\\IMG_5923.MOV",
+          "frames": 136,
+          "score": 3.0
+        },
+        {
+          "video": "talking\\IMG_5926.MOV",
+          "frames": 152,
+          "score": 3.0
+        },
+        {
+          "video": "talking\\IMG_6324.MOV",
+          "frames": 154,
+          "score": 2.987
+        },
+        {
+          "video": "talking\\IMG_6321.MOV",
+          "frames": 146,
+          "score": 2.9863
+        },
+        {
+          "video": "talking\\IMG_5925.MOV",
+          "frames": 152,
+          "score": 2.9803
+        },
+        {
+          "video": "talking\\IMG_6322.MOV",
+          "frames": 151,
+          "score": 2.9801
+        },
+        {
+          "video": "talking\\IMG_6323.MOV",
+          "frames": 141,
+          "score": 2.9716
+        },
+        {
+          "video": "talking\\IMG_5924.MOV",
+          "frames": 158,
+          "score": 2.9114
+        },
+        {
+          "video": "talking\\IMG_5585.MOV",
+          "frames": 165,
+          "score": 2.8455
+        },
+        {
+          "video": "talking\\IMG_5922.MOV",
+          "frames": 142,
+          "score": 2.838
+        },
+        {
+          "video": "talking\\IMG_5588.MOV",
+          "frames": 212,
+          "score": 2.7877
+        },
+        {
+          "video": "talking\\IMG_5589.MOV",
+          "frames": 194,
+          "score": 2.7036
+        },
+        {
+          "video": "talking\\IMG_5586.MOV",
+          "frames": 197,
+          "score": 2.6497
+        },
+        {
+          "video": "talking\\IMG_5584.MOV",
+          "frames": 186,
+          "score": 2.5026
+        },
+        {
+          "video": "talking\\IMG_5587.MOV",
+          "frames": 224,
+          "score": 2.4308
+        }
+      ]
+    },
+    "tv": {
+      "file": "tv.npz",
+      "label": "TV",
+      "category": "",
+      "frames": 211,
+      "fps": 59.972,
+      "duration_sec": 3.518,
+      "source": {
+        "video": "TV\\IMG_6428.MOV"
+      },
+      "quality": {
+        "left_hand": {
+          "mediapipe": 1.0,
+          "dwpose": 0.0,
+          "interpolated": 0.0,
+          "missing": 0.0
+        },
+        "right_hand": {
+          "mediapipe": 1.0,
+          "dwpose": 0.0,
+          "interpolated": 0.0,
+          "missing": 0.0
+        },
+        "upper_body_low_conf": 0.0,
+        "scale": 0.6166
+      },
+      "score": 3.0,
+      "note": null,
+      "reason": "new",
+      "aliases": [],
+      "other_videos": [
+        {
+          "video": "TV\\IMG_6430.MOV",
+          "frames": 196,
+          "score": 3.0
+        },
+        {
+          "video": "TV\\IMG_6429.MOV",
+          "frames": 216,
+          "score": 3.0
+        },
+        {
+          "video": "TV\\IMG_5649.MOV",
+          "frames": 258,
+          "score": 2.9883
+        },
+        {
+          "video": "TV\\IMG_5981.MOV",
+          "frames": 173,
+          "score": 2.9827
+        },
+        {
+          "video": "TV\\IMG_5980.MOV",
+          "frames": 180,
+          "score": 2.9778
+        },
+        {
+          "video": "TV\\IMG_6427.MOV",
+          "frames": 165,
+          "score": 2.9758
+        },
+        {
+          "video": "TV\\IMG_5648.MOV",
+          "frames": 234,
+          "score": 2.9743
+        },
+        {
+          "video": "TV\\IMG_5978.MOV",
+          "frames": 175,
+          "score": 2.9657
+        },
+        {
+          "video": "TV\\IMG_5979.MOV",
+          "frames": 162,
+          "score": 2.9629
+        },
+        {
+          "video": "TV\\IMG_5650.MOV",
+          "frames": 238,
+          "score": 2.9538
+        },
+        {
+          "video": "TV\\IMG_5647.MOV",
+          "frames": 239,
+          "score": 2.9456
+        },
+        {
+          "video": "TV\\IMG_5645.MOV",
+          "frames": 221,
+          "score": 2.9412
+        },
+        {
+          "video": "TV\\IMG_5977.MOV",
+          "frames": 175,
+          "score": 2.94
+        },
+        {
+          "video": "TV\\IMG_5646.MOV",
+          "frames": 215,
+          "score": 2.9
+        },
+        {
+          "video": "TV\\IMG_5976.MOV",
+          "frames": 200,
+          "score": 2.6975
+        }
+      ]
+    },
+    "uncle": {
+      "file": "uncle.npz",
+      "label": "uncle",
+      "category": "",
+      "frames": 187,
+      "fps": 59.968,
+      "duration_sec": 3.118,
+      "source": {
+        "video": "uncle\\IMG_6044.MOV"
+      },
+      "quality": {
+        "left_hand": {
+          "mediapipe": 1.0,
+          "dwpose": 0.0,
+          "interpolated": 0.0,
+          "missing": 0.0
+        },
+        "right_hand": {
+          "mediapipe": 1.0,
+          "dwpose": 0.0,
+          "interpolated": 0.0,
+          "missing": 0.0
+        },
+        "upper_body_low_conf": 0.0,
+        "scale": 0.5108
+      },
+      "score": 3.0,
+      "note": null,
+      "reason": "new",
+      "aliases": [],
+      "other_videos": [
+        {
+          "video": "uncle\\IMG_6556.MOV",
+          "frames": 156,
+          "score": 3.0
+        },
+        {
+          "video": "uncle\\IMG_6043.MOV",
+          "frames": 156,
+          "score": 2.9936
+        },
+        {
+          "video": "uncle\\IMG_6046.MOV",
+          "frames": 184,
+          "score": 2.9892
+        },
+        {
+          "video": "uncle\\IMG_6047.MOV",
+          "frames": 174,
+          "score": 2.9885
+        },
+        {
+          "video": "uncle\\IMG_6558.MOV",
+          "frames": 169,
+          "score": 2.9882
+        },
+        {
+          "video": "uncle\\IMG_6560.MOV",
+          "frames": 168,
+          "score": 2.9762
+        },
+        {
+          "video": "uncle\\IMG_6557.MOV",
+          "frames": 187,
+          "score": 2.9679
+        },
+        {
+          "video": "uncle\\IMG_6045.MOV",
+          "frames": 167,
+          "score": 2.9641
+        },
+        {
+          "video": "uncle\\IMG_6559.MOV",
+          "frames": 195,
+          "score": 2.9641
+        },
+        {
+          "video": "uncle\\IMG_5719.MOV",
+          "frames": 209,
+          "score": 2.9569
+        },
+        {
+          "video": "uncle\\IMG_5720.MOV",
+          "frames": 182,
+          "score": 2.9505
+        },
+        {
+          "video": "uncle\\IMG_5718.MOV",
+          "frames": 236,
+          "score": 2.8876
+        },
+        {
+          "video": "uncle\\IMG_5715.MOV",
+          "frames": 229,
+          "score": 2.8865
+        },
+        {
+          "video": "uncle\\IMG_5717.MOV",
+          "frames": 206,
+          "score": 2.8592
+        },
+        {
+          "video": "uncle\\IMG_5716.MOV",
+          "frames": 250,
+          "score": 2.686
+        }
+      ]
+    },
+    "walking": {
+      "file": "walking.npz",
+      "label": "walking",
+      "category": "",
+      "frames": 153,
+      "fps": 59.961,
+      "duration_sec": 2.552,
+      "source": {
+        "video": "walking\\IMG_5942.MOV"
+      },
+      "quality": {
+        "left_hand": {
+          "mediapipe": 0.9804,
+          "dwpose": 0.0,
+          "interpolated": 0.0196,
+          "missing": 0.0
+        },
+        "right_hand": {
+          "mediapipe": 1.0,
+          "dwpose": 0.0,
+          "interpolated": 0.0,
+          "missing": 0.0
+        },
+        "upper_body_low_conf": 0.0,
+        "scale": 0.4932
+      },
+      "score": 2.9804,
+      "note": null,
+      "reason": "new",
+      "aliases": [],
+      "other_videos": [
+        {
+          "video": "walking\\IMG_5610.MOV",
+          "frames": 187,
+          "score": 2.9786
+        },
+        {
+          "video": "walking\\IMG_6364.MOV",
+          "frames": 146,
+          "score": 2.9726
+        },
+        {
+          "video": "walking\\IMG_6366.MOV",
+          "frames": 182,
+          "score": 2.967
+        },
+        {
+          "video": "walking\\IMG_6365.MOV",
+          "frames": 179,
+          "score": 2.9665
+        },
+        {
+          "video": "walking\\IMG_5946.MOV",
+          "frames": 158,
+          "score": 2.962
+        },
+        {
+          "video": "walking\\IMG_6367.MOV",
+          "frames": 242,
+          "score": 2.9339
+        },
+        {
+          "video": "walking\\IMG_5609.MOV",
+          "frames": 180,
+          "score": 2.9223
+        },
+        {
+          "video": "walking\\IMG_5945.MOV",
+          "frames": 153,
+          "score": 2.9216
+        },
+        {
+          "video": "walking\\IMG_5943.MOV",
+          "frames": 155,
+          "score": 2.8065
+        },
+        {
+          "video": "walking\\IMG_5611.MOV",
+          "frames": 211,
+          "score": 2.7962
+        },
+        {
+          "video": "walking\\IMG_5615.MOV",
+          "frames": 194,
+          "score": 2.7887
+        },
+        {
+          "video": "walking\\IMG_5944.MOV",
+          "frames": 158,
+          "score": 2.7721
+        },
+        {
+          "video": "walking\\IMG_5614.MOV",
+          "frames": 222,
+          "score": 2.6284
+        },
+        {
+          "video": "walking\\IMG_5613.MOV",
+          "frames": 195,
+          "score": 2.523
+        },
+        {
+          "video": "walking\\IMG_5612.MOV",
+          "frames": 205,
+          "score": 2.4585
+        }
+      ]
+    },
+    "writing": {
+      "file": "writing.npz",
+      "label": "writing",
+      "category": "",
+      "frames": 167,
+      "fps": 59.964,
+      "duration_sec": 2.785,
+      "source": {
+        "video": "writing\\IMG_6398.MOV"
+      },
+      "quality": {
+        "left_hand": {
+          "mediapipe": 0.994,
+          "dwpose": 0.0,
+          "interpolated": 0.006,
+          "missing": 0.0
+        },
+        "right_hand": {
+          "mediapipe": 1.0,
+          "dwpose": 0.0,
+          "interpolated": 0.0,
+          "missing": 0.0
+        },
+        "upper_body_low_conf": 0.0,
+        "scale": 0.5243
+      },
+      "score": 2.994,
+      "note": null,
+      "reason": "new",
+      "aliases": [],
+      "other_videos": [
+        {
+          "video": "writing\\IMG_5629.MOV",
+          "frames": 218,
+          "score": 2.9908
+        },
+        {
+          "video": "writing\\IMG_5630.MOV",
+          "frames": 194,
+          "score": 2.9897
+        },
+        {
+          "video": "writing\\IMG_5628.MOV",
+          "frames": 187,
+          "score": 2.9893
+        },
+        {
+          "video": "writing\\IMG_6399.MOV",
+          "frames": 183,
+          "score": 2.9836
+        },
+        {
+          "video": "writing\\IMG_6402.MOV",
+          "frames": 170,
+          "score": 2.9824
+        },
+        {
+          "video": "writing\\IMG_6401.MOV",
+          "frames": 162,
+          "score": 2.9815
+        },
+        {
+          "video": "writing\\IMG_6400.MOV",
+          "frames": 157,
+          "score": 2.9809
+        },
+        {
+          "video": "writing\\IMG_5632.MOV",
+          "frames": 175,
+          "score": 2.96
+        },
+        {
+          "video": "writing\\IMG_5958.MOV",
+          "frames": 123,
+          "score": 2.935
+        },
+        {
+          "video": "writing\\IMG_5960.MOV",
+          "frames": 137,
+          "score": 2.9343
+        },
+        {
+          "video": "writing\\IMG_5633.MOV",
+          "frames": 185,
+          "score": 2.9189
+        },
+        {
+          "video": "writing\\IMG_5959.MOV",
+          "frames": 138,
+          "score": 2.9167
+        },
+        {
+          "video": "writing\\IMG_5957.MOV",
+          "frames": 143,
+          "score": 2.8951
+        },
+        {
+          "video": "writing\\IMG_5956.MOV",
+          "frames": 128,
+          "score": 2.8711
+        },
+        {
+          "video": "writing\\IMG_5631.MOV",
+          "frames": 197,
+          "score": 2.5711
+        }
+      ]
+    }
+  },
+  "aliases": {},
+  "skipped_existing": {
+    "bag": "ISL dictionary",
+    "brother": "ISL dictionary",
+    "bye": "ISL dictionary",
+    "clean": "ISL dictionary",
+    "doctor": "ISL dictionary",
+    "drink": "SignMotionDB",
+    "eat": "ISL dictionary",
+    "exam": "ISL dictionary",
+    "family": "ISL dictionary",
+    "father": "ISL dictionary",
+    "feel": "ISL dictionary",
+    "friend": "ISL dictionary",
+    "grandfather": "ISL dictionary",
+    "grandmother": "ISL dictionary",
+    "husband": "ISL dictionary",
+    "mother": "ISL dictionary",
+    "neighbour": "ISL dictionary",
+    "nurse": "ISL dictionary",
+    "paper": "ISL dictionary",
+    "pencil": "include_isl",
+    "sister": "include_isl",
+    "sit": "ISL dictionary",
+    "sleep": "ISL dictionary",
+    "sorry": "ISL dictionary",
+    "sports": "ISL part 1",
+    "student": "ISL dictionary alias of 'pupil'",
+    "table": "ISL dictionary",
+    "teacher": "SignMotionDB",
+    "thank_you": "synonym of 'thank'",
+    "time": "ISL dictionary",
+    "topic": "ISL dictionary",
+    "tree": "ISL dictionary",
+    "visit": "ISL dictionary",
+    "wife": "ISL dictionary",
+    "work": "ISL dictionary"
+  },
+  "failures": []
+}
