@@ -76,8 +76,20 @@ export const fetchPlayableWords = async (): Promise<PlayableWordsResponse> => {
   return res.json();
 };
 
+export interface PrecacheResponse {
+  status: string;
+  cached_count: number;
+  total_count: number;
+  cached_words: string[];
+  missing_words: string[];
+}
+
 export const checkSentenceWords = (sentence: string) =>
   postJson<WordCheckResponse>('/resolve', { sentence });
+
+/** Pre-caches SMPL-X motions for all words in the sentence in advance. */
+export const precacheSentenceWords = (sentence: string) =>
+  postJson<PrecacheResponse>('/precache', { sentence });
 
 /** Signs every available word of the sentence; missing words are skipped (see skipped_words). */
 export const generateWordSequence = (sentence: string) =>

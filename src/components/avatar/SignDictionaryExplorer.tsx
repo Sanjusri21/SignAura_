@@ -11,7 +11,8 @@ import {
   Sparkles,
   ChevronLeft,
   ChevronRight,
-  Filter
+  Filter,
+  Folder
 } from 'lucide-react';
 import { GlassButton } from '../ui/GlassButton';
 
@@ -38,6 +39,61 @@ interface SignDictionaryExplorerProps {
 const BACKEND_API = (import.meta as any).env?.VITE_API_URL || 'http://127.0.0.1:8002';
 const SIGNAVATAR_API = 'http://127.0.0.1:8001';
 
+const DATASET_TABS = [
+  { id: 'all', label: 'All Datasets', match: '' },
+  { id: 'isl_dictionary', label: 'ISL Dictionary', match: 'ISL Dictionary' },
+  { id: 'cislr', label: 'CISLR', match: 'CISLR' },
+  { id: 'drive_a', label: 'Drive Group A', match: 'Drive Group A' },
+  { id: 'drive_b', label: 'Drive Group B', match: 'Drive Group B' },
+  { id: 'drive_c', label: 'Drive Group C', match: 'Drive Group C' },
+  { id: 'drive_d', label: 'Drive Group D', match: 'Drive Group D' },
+  { id: 'drive_e', label: 'Drive Group E', match: 'Drive Group E' },
+  { id: 'drive_f', label: 'Drive Group F', match: 'Drive Group F' },
+  { id: 'drive_g', label: 'Drive Group G', match: 'Drive Group G' },
+  { id: 'drive_h', label: 'Drive Group H', match: 'Drive Group H' },
+  { id: 'drive_i', label: 'Drive Group I', match: 'Drive Group I' },
+  { id: 'drive_j', label: 'Drive Group J', match: 'Drive Group J' },
+  { id: 'drive_k', label: 'Drive Group K', match: 'Drive Group K' },
+  { id: 'drive_l', label: 'Drive Group L', match: 'Drive Group L' },
+  { id: 'drive_m', label: 'Drive Group M', match: 'Drive Group M' },
+  { id: 'drive_n', label: 'Drive Group N', match: 'Drive Group N' },
+  { id: 'part1', label: 'Part 1', match: 'Part 1' },
+  { id: 'part2', label: 'Part 2', match: 'Part 2' },
+  { id: 'part3', label: 'Part 3', match: 'Part 3' },
+  { id: 'include', label: 'INCLUDE', match: 'INCLUDE' },
+  { id: 'sign15', label: 'Sign 15', match: 'Sign 15' },
+  { id: 'isl50', label: 'ISL 50', match: 'ISL 50' },
+  { id: 'archive5', label: 'Archive 5', match: 'Archive 5' },
+];
+
+const shortShard = (shard?: string) => {
+  if (!shard) return '';
+  if (shard.includes('ISL Dictionary')) return 'ISL Dict';
+  if (shard.includes('CISLR')) return 'CISLR';
+  if (shard.includes('Group A')) return 'Drive A';
+  if (shard.includes('Group B')) return 'Drive B';
+  if (shard.includes('Group C')) return 'Drive C';
+  if (shard.includes('Group D')) return 'Drive D';
+  if (shard.includes('Group E')) return 'Drive E';
+  if (shard.includes('Group F')) return 'Drive F';
+  if (shard.includes('Group G')) return 'Drive G';
+  if (shard.includes('Group H')) return 'Drive H';
+  if (shard.includes('Group I')) return 'Drive I';
+  if (shard.includes('Group J')) return 'Drive J';
+  if (shard.includes('Group K')) return 'Drive K';
+  if (shard.includes('Group L')) return 'Drive L';
+  if (shard.includes('Group M')) return 'Drive M';
+  if (shard.includes('Group N')) return 'Drive N';
+  if (shard.includes('Part 1')) return 'Part 1';
+  if (shard.includes('Part 2')) return 'Part 2';
+  if (shard.includes('Part 3')) return 'Part 3';
+  if (shard.includes('INCLUDE')) return 'INCLUDE';
+  if (shard.includes('Sign 15')) return 'Sign 15';
+  if (shard.includes('50')) return 'ISL 50';
+  if (shard.includes('archive5') || shard.includes('Archive 5')) return 'Arch 5';
+  return shard.split(' ')[0];
+};
+
 export const SignDictionaryExplorer: React.FC<SignDictionaryExplorerProps> = ({
   onSelectSign,
   currentSignName
@@ -49,6 +105,8 @@ export const SignDictionaryExplorer: React.FC<SignDictionaryExplorerProps> = ({
   const [totalPages, setTotalPages] = useState<number>(1);
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [handFilter, setHandFilter] = useState<string>('');
+  const [selectedDataset, setSelectedDataset] = useState<string>('all');
+  const [datasetCounts, setDatasetCounts] = useState<Record<string, number>>({});
   const [loading, setLoading] = useState<boolean>(false);
   const [convertingKey, setConvertingKey] = useState<string | null>(null);
   const [statusMessage, setStatusMessage] = useState<string>('');
@@ -65,6 +123,12 @@ export const SignDictionaryExplorer: React.FC<SignDictionaryExplorerProps> = ({
       if (handFilter) {
         params.set('hand_filter', handFilter);
       }
+      if (selectedDataset && selectedDataset !== 'all') {
+        const tab = DATASET_TABS.find((t) => t.id === selectedDataset);
+        if (tab?.match) {
+          params.set('dataset', tab.match);
+        }
+      }
 
       const res = await fetch(`${BACKEND_API}/api/signavatar/motions?${params.toString()}`);
       if (res.ok) {
@@ -72,17 +136,34 @@ export const SignDictionaryExplorer: React.FC<SignDictionaryExplorerProps> = ({
         setSigns(data.signs || data.motions || []);
         setTotalSigns(data.total || data.count || 0);
         setTotalPages(data.total_pages || Math.ceil((data.total || 0) / pageSize) || 1);
+        if (data.by_shard) {
+          setDatasetCounts(data.by_shard);
+        }
       }
     } catch (err) {
       console.warn('Error fetching sign dictionary:', err);
     } finally {
       setLoading(false);
     }
-  }, [currentPage, pageSize, searchQuery, handFilter]);
+  }, [currentPage, pageSize, searchQuery, handFilter, selectedDataset]);
 
   useEffect(() => {
     fetchSigns();
   }, [fetchSigns]);
+
+  const getDatasetCount = (matchStr: string) => {
+    if (!matchStr) return 0;
+    let sum = 0;
+    for (const [k, v] of Object.entries(datasetCounts)) {
+      if (k.toLowerCase().includes(matchStr.toLowerCase())) {
+        sum += v;
+      }
+    }
+    return sum;
+  };
+
+  const allDatasetsCount =
+    Object.values(datasetCounts).reduce((a, b) => a + b, 0) || (selectedDataset === 'all' ? totalSigns : 8218);
 
   const handlePlaySign = async (sign: SignRecord) => {
     setConvertingKey(sign.sample_key);
@@ -120,13 +201,13 @@ export const SignDictionaryExplorer: React.FC<SignDictionaryExplorerProps> = ({
           </div>
           <div>
             <div className="flex items-center gap-2">
-              <h2 className="text-lg font-bold text-white tracking-tight">BridgeConn ISL Dictionary</h2>
+              <h2 className="text-lg font-bold text-white tracking-tight">SignAura Master ISL Dictionary</h2>
               <span className="text-[10px] uppercase tracking-wider px-2 py-0.5 rounded-full bg-[#101735] text-[#22D3EE] border border-[#273154] font-mono">
-                {totalSigns > 0 ? `${totalSigns.toLocaleString()} signs` : 'Loading...'}
+                {allDatasetsCount > 0 ? `${allDatasetsCount.toLocaleString()} signs` : 'Loading...'}
               </span>
             </div>
             <p className="text-xs text-[#A8B2D1]">
-              Authentic Indian Sign Language vocabulary with on-demand SMPL-X kinematics
+              Comprehensive Indian Sign Language vocabulary with on-demand SMPL-X kinematics
             </p>
           </div>
         </div>
@@ -137,6 +218,46 @@ export const SignDictionaryExplorer: React.FC<SignDictionaryExplorerProps> = ({
             {statusMessage}
           </div>
         )}
+      </div>
+
+      {/* Dataset Folder Dividing Tabs */}
+      <div className="flex items-center gap-1.5 overflow-x-auto pb-1 scrollbar-thin">
+        <div className="flex items-center gap-1.5 text-xs text-[#6B7A99] mr-1 shrink-0 font-medium">
+          <Folder className="w-3.5 h-3.5 text-[#22D3EE]" />
+          <span>Datasets:</span>
+        </div>
+        {DATASET_TABS.map((tab) => {
+          const isSelected = selectedDataset === tab.id;
+          const count = tab.id === 'all'
+            ? allDatasetsCount
+            : getDatasetCount(tab.match);
+
+          return (
+            <button
+              key={tab.id}
+              onClick={() => {
+                setSelectedDataset(tab.id);
+                setCurrentPage(1);
+              }}
+              className={`shrink-0 flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs transition-all border ${
+                isSelected
+                  ? 'bg-[#22D3EE]/20 border-[#22D3EE] text-[#22D3EE] font-semibold shadow-[0_0_12px_rgba(34,211,238,0.25)]'
+                  : 'bg-[#101735] hover:bg-[#1A244D] border-[#273154] text-[#A8B2D1] hover:text-white'
+              }`}
+            >
+              <span>{tab.label}</span>
+              {count > 0 && (
+                <span
+                  className={`text-[10px] px-1.5 py-0.2 rounded-md font-mono ${
+                    isSelected ? 'bg-[#22D3EE] text-[#0A0E24] font-bold' : 'bg-[#151D40] text-white'
+                  }`}
+                >
+                  {count.toLocaleString()}
+                </span>
+              )}
+            </button>
+          );
+        })}
       </div>
 
       {/* Search Bar & Filters */}
@@ -150,7 +271,7 @@ export const SignDictionaryExplorer: React.FC<SignDictionaryExplorerProps> = ({
               setSearchQuery(e.target.value);
               setCurrentPage(1);
             }}
-            placeholder="Search over 3,000+ signs (e.g. good, water, drink, teacher)..."
+            placeholder="Search over 8,200+ signs (e.g. good, water, drink, teacher)..."
             className="w-full bg-[#101735] text-xs py-2.5 pl-10 pr-4 rounded-xl border border-[#273154] focus:border-[#22D3EE] text-white placeholder-[#6B7A99] outline-none transition-colors"
           />
         </div>
@@ -217,8 +338,8 @@ export const SignDictionaryExplorer: React.FC<SignDictionaryExplorerProps> = ({
                 >
                   <div>
                     <div className="flex items-center justify-between gap-1 mb-1">
-                      <span className="text-[9px] font-mono text-[#6B7A99] truncate">
-                        #{sign.sample_key}
+                      <span className="text-[9px] font-mono text-[#6B7A99] truncate" title={sign.shard || sign.sample_key}>
+                        {shortShard(sign.shard) || `#${sign.sample_key}`}
                       </span>
                       <span
                         className={`text-[9px] px-1.5 py-0.2 rounded font-mono uppercase ${

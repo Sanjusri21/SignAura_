@@ -14,16 +14,29 @@ import {
   XCircle,
   Cpu
 } from 'lucide-react';
-import { SignAvatar3D, CameraPreset, LightingPreset, hasSignMotion } from '../components/avatar/SignAvatar3D';
+import {
+  SignAvatar3D,
+  CameraPreset,
+  LightingPreset,
+  hasSignMotion,
+  registerPlayableWords,
+  motionBufferCache,
+  processAndNormalizeMotion
+} from '../components/avatar/SignAvatar3D';
 import { GlossTimeline } from '../components/avatar/GlossTimeline';
 import { TranscriptPanel } from '../components/avatar/TranscriptPanel';
 import { SignDictionaryExplorer } from '../components/avatar/SignDictionaryExplorer';
 import { ExperimentalHandPoseModal } from '../components/avatar/ExperimentalHandPoseModal';
-import { WordCheckPanel } from '../components/avatar/WordCheckPanel';
 import { VideoProject, GlossToken } from '../types';
 import { GlassButton } from '../components/ui/GlassButton';
 import { signAuraApi, SignAvatarResponse, ISignSentenceResponse, ISignTranslateMotionResponse, API_BASE_URL } from '../services/api';
-import { checkSentenceWords, generateWordSequence, WordCheckResponse } from '../services/signAvatarWords';
+import {
+  checkSentenceWords,
+  generateWordSequence,
+  fetchPlayableWords,
+  precacheSentenceWords,
+  WordCheckResponse
+} from '../services/signAvatarWords';
 
 const SIGNAVATAR_API_URL = 'http://127.0.0.1:8001';
 
@@ -91,12 +104,60 @@ export const SignAvatarStudioView: React.FC<SignAvatarStudioViewProps> = ({
   const avatarSign = currentSignName || activeToken.gloss || 'WELCOME';
   const avatarSignRef = useRef(avatarSign);
   avatarSignRef.current = avatarSign;
+  const activeTokenRef = useRef(activeToken);
+  activeTokenRef.current = activeToken;
 
-  const startTranscriptPlayback = (fromIndex: number = 0) => {
-    setGeneratedMotionUrl('');
-    setMotionSegments([]);
+  // Eagerly load dictionary playable words and pre-cache all words from the video transcript
+  useEffect(() => {
+    fetchPlayableWords()
+      .then((res) => {
+        registerPlayableWords(res.words.map((w) => w.word));
+      })
+      .catch((err) => console.warn('[SignAvatarStudio] Could not load playable words:', err));
+
+    if (project?.transcript) {
+      precacheSentenceWords(project.transcript)
+        .then((res) => {
+          console.log(`[SignAvatarStudio] Precached ${res.cached_count}/${res.total_count} words into cache memory`);
+          // Buffer each word directly into frontend memory cache for instant 0ms playback
+          res.cached_words.forEach((w) => {
+            const cleanWord = w.toLowerCase().replace(/[\s-]+/g, '_');
+            const clipUrl = `${SIGNAVATAR_API_URL}/motion/${cleanWord}`;
+            if (!motionBufferCache.has(clipUrl)) {
+              fetch(clipUrl)
+                .then(async (r) => {
+                  if (r.ok) {
+                    const buf = await r.arrayBuffer();
+                    const m = processAndNormalizeMotion(buf);
+                    motionBufferCache.set(clipUrl, m);
+                  }
+                })
+                .catch(() => {});
+            }
+          });
+        })
+        .catch((err) => console.warn('[SignAvatarStudio] Precache failed:', err));
+    }
+  }, [project?.id, project?.transcript]);
+
+  const startTranscriptPlayback = async (fromIndex: number = 0) => {
     setActiveCaption(project.transcript || '');
     setActiveGlossTokens(project.glossTokens || []);
+
+    // If starting from the beginning and transcript exists, synthesize the full continuous sequence
+    if (fromIndex === 0 && project?.transcript && project.transcript.trim()) {
+      try {
+        await playWordSequence(project.transcript);
+        setIsTimelinePlaying(true);
+        setIsPlaying(true);
+        return;
+      } catch (err) {
+        console.warn('[SignAvatarStudio] Continuous playback synthesis fallback to word-by-word:', err);
+      }
+    }
+
+    setGeneratedMotionUrl('');
+    setMotionSegments([]);
     setSequenceIndex(fromIndex);
     setIsTimelinePlaying(true);
     setIsPlaying(true);
@@ -111,9 +172,9 @@ export const SignAvatarStudioView: React.FC<SignAvatarStudioViewProps> = ({
     }
   }, [project]);
 
-  // Apply the current sequence token to the avatar
+  // Apply the current sequence token to the avatar for step-by-step playback
   useEffect(() => {
-    if (!isTimelinePlaying) return;
+    if (!isTimelinePlaying || generatedMotionUrl) return;
     const token = project.glossTokens[sequenceIndex];
     if (!token) {
       setIsTimelinePlaying(false);
@@ -123,18 +184,20 @@ export const SignAvatarStudioView: React.FC<SignAvatarStudioViewProps> = ({
     setActiveToken(token);
     setCurrentTime(token.startTime);
     if (hasSignMotion(token.gloss)) {
-      // Re-signing the gloss already loaded fires no new load, so it counts as loaded
       const alreadyLoaded = token.gloss.toUpperCase() === avatarSignRef.current.toUpperCase();
       sequenceStepRef.current = { awaitingMotion: true, loaded: alreadyLoaded, maxFrame: 0 };
+      const cleanWord = token.gloss.toLowerCase().replace(/[\s-]+/g, '_');
+      const targetUrl = `${SIGNAVATAR_API_URL}/motion/${cleanWord}`;
+      setGeneratedMotionUrl(targetUrl);
       setCurrentSignName(token.gloss);
     } else {
       sequenceStepRef.current = { awaitingMotion: false, loaded: false, maxFrame: 0 };
     }
-  }, [isTimelinePlaying, sequenceIndex, project.glossTokens]);
+  }, [isTimelinePlaying, sequenceIndex, project.glossTokens, generatedMotionUrl]);
 
   // Dwell on words without motion, and guard against clips that never complete
   useEffect(() => {
-    if (!isTimelinePlaying || !isPlaying) return;
+    if (!isTimelinePlaying || !isPlaying || generatedMotionUrl) return;
     const token = project.glossTokens[sequenceIndex];
     if (!token) return;
 
@@ -145,7 +208,7 @@ export const SignAvatarStudioView: React.FC<SignAvatarStudioViewProps> = ({
       setSequenceIndex((i) => (i === sequenceIndex ? i + 1 : i));
     }, delay);
     return () => clearTimeout(timer);
-  }, [isTimelinePlaying, isPlaying, sequenceIndex, playbackSpeed, project.glossTokens]);
+  }, [isTimelinePlaying, isPlaying, sequenceIndex, playbackSpeed, project.glossTokens, generatedMotionUrl]);
 
   const handleAvatarMotionLoaded = useCallback((info: { frames: number; fps: number }) => {
     setAvatarMotionInfo(info);
@@ -153,8 +216,21 @@ export const SignAvatarStudioView: React.FC<SignAvatarStudioViewProps> = ({
     sequenceStepRef.current.maxFrame = 0;
   }, []);
 
-  // A clip has finished once the looping frame index wraps back to the start
-  const handleAvatarFrame = useCallback((frame: number) => {
+  // Frame update handler: tracks continuous multi-word segments and wraps single-word clips
+  const handleAvatarFrame = useCallback((frame: number, totalFrames?: number, currentGloss?: string) => {
+    // 1. Sync active gloss token when playing a continuous combined motionUrl sequence
+    if (currentGloss) {
+      const match = project.glossTokens.find(
+        (t) => t.gloss?.toUpperCase() === currentGloss.toUpperCase() || t.word?.toLowerCase() === currentGloss.toLowerCase()
+      );
+      if (match && match.id !== activeTokenRef.current?.id) {
+        setActiveToken(match);
+        setCurrentSignName(match.gloss);
+      }
+      return;
+    }
+
+    // 2. Wrap single-word clips in step-by-step mode
     const step = sequenceStepRef.current;
     if (!step.awaitingMotion || !step.loaded) return;
     if (frame < step.maxFrame - 2) {
@@ -163,7 +239,7 @@ export const SignAvatarStudioView: React.FC<SignAvatarStudioViewProps> = ({
       return;
     }
     step.maxFrame = Math.max(step.maxFrame, frame);
-  }, []);
+  }, [project.glossTokens]);
 
   const handleSelectToken = (token: GlossToken) => {
     const index = project.glossTokens.findIndex((t) => t.id === token.id);
@@ -457,9 +533,6 @@ export const SignAvatarStudioView: React.FC<SignAvatarStudioViewProps> = ({
               />
             </div>
           )}
-
-          {/* Word Check: per-word availability of the last sentence + searchable word list */}
-          <WordCheckPanel check={wordCheck} isChecking={isCheckingWords} onSelectWord={handlePlayWord} />
         </div>
 
         {/* Right Controls Panel (4 cols on desktop) */}

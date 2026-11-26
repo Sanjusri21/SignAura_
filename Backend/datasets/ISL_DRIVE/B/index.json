@@ -1,0 +1,2960 @@
+{
+  "dataset": "Group B - New Words",
+  "count": 422,
+  "words": {
+    "b_sc": {
+      "frames": 620,
+      "fps": 25.0,
+      "file": "b_sc.npz",
+      "label": "B Sc",
+      "video": null
+    },
+    "baby_bot": {
+      "frames": 104,
+      "fps": 25.0,
+      "file": "baby_bot.npz",
+      "label": "Baby Bot",
+      "video": null
+    },
+    "babylonians": {
+      "frames": 796,
+      "fps": 24.0,
+      "file": "babylonians.npz",
+      "label": "Babylonians",
+      "video": null
+    },
+    "bachelor_of_vocational_education": {
+      "frames": 319,
+      "fps": 24.0,
+      "file": "bachelor_of_vocational_education.npz",
+      "label": "Bachelor Of Vocational Education (B Voc)",
+      "video": null
+    },
+    "back_up": {
+      "frames": 515,
+      "fps": 25.0,
+      "file": "back_up.npz",
+      "label": "Back Up(Sign 2)",
+      "video": null
+    },
+    "backflow": {
+      "frames": 415,
+      "fps": 24.0,
+      "file": "backflow.npz",
+      "label": "Backflow",
+      "video": null
+    },
+    "backlog": {
+      "frames": 854,
+      "fps": 25.0,
+      "file": "backlog.npz",
+      "label": "Backlog",
+      "video": null
+    },
+    "bad_blood": {
+      "frames": 235,
+      "fps": 24.0,
+      "file": "bad_blood.npz",
+      "label": "Bad Blood",
+      "video": null
+    },
+    "bag_sling_bag": {
+      "frames": 120,
+      "fps": 25.0,
+      "file": "bag_sling_bag.npz",
+      "label": "Bag Sling Bag",
+      "video": null
+    },
+    "bagasse": {
+      "frames": 403,
+      "fps": 24.0,
+      "file": "bagasse.npz",
+      "label": "Bagasse",
+      "video": null
+    },
+    "baggage_reclaim": {
+      "frames": 729,
+      "fps": 29.970029830932617,
+      "file": "baggage_reclaim.npz",
+      "label": "Baggage Reclaim (Explanation) (Sign 2)",
+      "video": null
+    },
+    "bailee_bailor_bailment": {
+      "frames": 696,
+      "fps": 25.0,
+      "file": "bailee_bailor_bailment.npz",
+      "label": "Bailee Bailor Bailment",
+      "video": null
+    },
+    "bailout": {
+      "frames": 399,
+      "fps": 25.0,
+      "file": "bailout.npz",
+      "label": "Bailout",
+      "video": null
+    },
+    "baking_soda": {
+      "frames": 1407,
+      "fps": 23.976024627685547,
+      "file": "baking_soda.npz",
+      "label": "Baking Soda",
+      "video": null
+    },
+    "balm": {
+      "frames": 151,
+      "fps": 24.0,
+      "file": "balm.npz",
+      "label": "Balm",
+      "video": null
+    },
+    "bandit": {
+      "frames": 123,
+      "fps": 24.0,
+      "file": "bandit.npz",
+      "label": "Bandit",
+      "video": null
+    },
+    "bank_holiday": {
+      "frames": 497,
+      "fps": 25.0,
+      "file": "bank_holiday.npz",
+      "label": "Bank Holiday",
+      "video": null
+    },
+    "banquet": {
+      "frames": 906,
+      "fps": 24.0,
+      "file": "banquet.npz",
+      "label": "Banquet",
+      "video": null
+    },
+    "bar_graph": {
+      "frames": 1081,
+      "fps": 24.000022888183594,
+      "file": "bar_graph.npz",
+      "label": "Bar Graph",
+      "video": null
+    },
+    "bariatrics": {
+      "frames": 299,
+      "fps": 25.0,
+      "file": "bariatrics.npz",
+      "label": "Bariatrics",
+      "video": null
+    },
+    "base_board": {
+      "frames": 182,
+      "fps": 25.0,
+      "file": "base_board.npz",
+      "label": "Base Board",
+      "video": null
+    },
+    "base_line": {
+      "frames": 388,
+      "fps": 25.0,
+      "file": "base_line.npz",
+      "label": "Base Line",
+      "video": null
+    },
+    "baseline": {
+      "frames": 418,
+      "fps": 24.0,
+      "file": "baseline.npz",
+      "label": "Baseline",
+      "video": null
+    },
+    "basic_needs": {
+      "frames": 1238,
+      "fps": 25.0,
+      "file": "basic_needs.npz",
+      "label": "Basic Needs (Social Science)",
+      "video": null
+    },
+    "basting": {
+      "frames": 648,
+      "fps": 25.0,
+      "file": "basting.npz",
+      "label": "Basting",
+      "video": null
+    },
+    "batching": {
+      "frames": 533,
+      "fps": 25.0,
+      "file": "batching.npz",
+      "label": "Batching",
+      "video": null
+    },
+    "bateau_neckline": {
+      "frames": 273,
+      "fps": 25.0,
+      "file": "bateau_neckline.npz",
+      "label": "Bateau Neckline",
+      "video": null
+    },
+    "batter": {
+      "frames": 552,
+      "fps": 25.0,
+      "file": "batter.npz",
+      "label": "Batter (Sign 2)",
+      "video": null
+    },
+    "battery_spousal_battery": {
+      "frames": 1305,
+      "fps": 25.0,
+      "file": "battery_spousal_battery.npz",
+      "label": "Battery Spousal Battery",
+      "video": null
+    },
+    "battle_of_buxar": {
+      "frames": 1454,
+      "fps": 25.0,
+      "file": "battle_of_buxar.npz",
+      "label": "Battle Of Buxar",
+      "video": null
+    },
+    "bcc": {
+      "frames": 753,
+      "fps": 25.0,
+      "file": "bcc.npz",
+      "label": "Bcc",
+      "video": null
+    },
+    "bear_endure_tolerate": {
+      "frames": 94,
+      "fps": 25.0,
+      "file": "bear_endure_tolerate.npz",
+      "label": "Bear Endure Tolerate (Sign 2)",
+      "video": null
+    },
+    "beat_beat_officer": {
+      "frames": 953,
+      "fps": 24.000024795532227,
+      "file": "beat_beat_officer.npz",
+      "label": "Beat Beat Officer",
+      "video": null
+    },
+    "bedwetting": {
+      "frames": 370,
+      "fps": 24.0,
+      "file": "bedwetting.npz",
+      "label": "Bedwetting (Explanation)",
+      "video": null
+    },
+    "beehive_hive": {
+      "frames": 125,
+      "fps": 24.0,
+      "file": "beehive_hive.npz",
+      "label": "Beehive Hive",
+      "video": null
+    },
+    "behind_omeone_s_back": {
+      "frames": 1663,
+      "fps": 24.000028610229492,
+      "file": "behind_omeone_s_back.npz",
+      "label": "Behind Omeone S Back",
+      "video": null
+    },
+    "bell_bottom": {
+      "frames": 332,
+      "fps": 25.0,
+      "file": "bell_bottom.npz",
+      "label": "Bell Bottom",
+      "video": null
+    },
+    "benchmark": {
+      "frames": 1019,
+      "fps": 24.000022888183594,
+      "file": "benchmark.npz",
+      "label": "Benchmark",
+      "video": null
+    },
+    "benefeciary": {
+      "frames": 675,
+      "fps": 30.0,
+      "file": "benefeciary.npz",
+      "label": "Benefeciary",
+      "video": null
+    },
+    "beneficiary_bequeath_bequest_will": {
+      "frames": 1301,
+      "fps": 25.0,
+      "file": "beneficiary_bequeath_bequest_will.npz",
+      "label": "Beneficiary Bequeath Bequest Will",
+      "video": null
+    },
+    "best_practice": {
+      "frames": 934,
+      "fps": 24.0,
+      "file": "best_practice.npz",
+      "label": "Best Practice",
+      "video": null
+    },
+    "betray_or_deceive": {
+      "frames": 444,
+      "fps": 25.0,
+      "file": "betray_or_deceive.npz",
+      "label": "Betray Or Deceive",
+      "video": null
+    },
+    "beverage_drink": {
+      "frames": 242,
+      "fps": 24.0,
+      "file": "beverage_drink.npz",
+      "label": "Beverage Drink",
+      "video": null
+    },
+    "bhakti": {
+      "frames": 2045,
+      "fps": 25.0,
+      "file": "bhakti.npz",
+      "label": "Bhakti (Academic)",
+      "video": null
+    },
+    "bhakti_movement": {
+      "frames": 1356,
+      "fps": 25.0,
+      "file": "bhakti_movement.npz",
+      "label": "Bhakti Movement",
+      "video": null
+    },
+    "bharat": {
+      "frames": 78,
+      "fps": 25.0,
+      "file": "bharat.npz",
+      "label": "Bharat (Sign 2)",
+      "video": null
+    },
+    "bi_focal_lenses": {
+      "frames": 454,
+      "fps": 24.0,
+      "file": "bi_focal_lenses.npz",
+      "label": "Bi-Focal Lenses",
+      "video": null
+    },
+    "biennial_weeds": {
+      "frames": 432,
+      "fps": 25.0,
+      "file": "biennial_weeds.npz",
+      "label": "Biennial Weeds",
+      "video": null
+    },
+    "bifocal": {
+      "frames": 432,
+      "fps": 25.0,
+      "file": "bifocal.npz",
+      "label": "Bifocal",
+      "video": null
+    },
+    "big_bang_theory": {
+      "frames": 1157,
+      "fps": 25.0,
+      "file": "big_bang_theory.npz",
+      "label": "Big Bang Theory",
+      "video": null
+    },
+    "bimodal": {
+      "frames": 484,
+      "fps": 24.0,
+      "file": "bimodal.npz",
+      "label": "Bimodal",
+      "video": null
+    },
+    "bio_chemistry": {
+      "frames": 1364,
+      "fps": 24.000017166137695,
+      "file": "bio_chemistry.npz",
+      "label": "Bio Chemistry",
+      "video": null
+    },
+    "bioaccumulation": {
+      "frames": 414,
+      "fps": 24.0,
+      "file": "bioaccumulation.npz",
+      "label": "Bioaccumulation",
+      "video": null
+    },
+    "biochemistry": {
+      "frames": 68,
+      "fps": 25.0,
+      "file": "biochemistry.npz",
+      "label": "Biochemistry",
+      "video": null
+    },
+    "biocoenosis_biocoenose_biocenose": {
+      "frames": 507,
+      "fps": 24.0,
+      "file": "biocoenosis_biocoenose_biocenose.npz",
+      "label": "Biocoenosis Biocoenose Biocenose",
+      "video": null
+    },
+    "biodiversity": {
+      "frames": 872,
+      "fps": 25.0,
+      "file": "biodiversity.npz",
+      "label": "Biodiversity",
+      "video": null
+    },
+    "biogas": {
+      "frames": 1124,
+      "fps": 25.0,
+      "file": "biogas.npz",
+      "label": "Biogas",
+      "video": null
+    },
+    "biogeochemical_cycle": {
+      "frames": 921,
+      "fps": 24.0,
+      "file": "biogeochemical_cycle.npz",
+      "label": "Biogeochemical Cycle",
+      "video": null
+    },
+    "biological_control": {
+      "frames": 657,
+      "fps": 24.0,
+      "file": "biological_control.npz",
+      "label": "Biological Control",
+      "video": null
+    },
+    "biophysical": {
+      "frames": 657,
+      "fps": 24.0,
+      "file": "biophysical.npz",
+      "label": "Biophysical",
+      "video": null
+    },
+    "biopsy": {
+      "frames": 372,
+      "fps": 25.0,
+      "file": "biopsy.npz",
+      "label": "Biopsy",
+      "video": null
+    },
+    "birth_certificate": {
+      "frames": 410,
+      "fps": 25.0,
+      "file": "birth_certificate.npz",
+      "label": "Birth Certificate",
+      "video": null
+    },
+    "birth_rate": {
+      "frames": 272,
+      "fps": 25.0,
+      "file": "birth_rate.npz",
+      "label": "Birth Rate",
+      "video": null
+    },
+    "birthmark": {
+      "frames": 552,
+      "fps": 24.0,
+      "file": "birthmark.npz",
+      "label": "Birthmark",
+      "video": null
+    },
+    "bite_the_bullet": {
+      "frames": 1427,
+      "fps": 25.0,
+      "file": "bite_the_bullet.npz",
+      "label": "Bite The Bullet",
+      "video": null
+    },
+    "blacklist": {
+      "frames": 1100,
+      "fps": 25.0,
+      "file": "blacklist.npz",
+      "label": "Blacklist",
+      "video": null
+    },
+    "bladder": {
+      "frames": 336,
+      "fps": 25.0,
+      "file": "bladder.npz",
+      "label": "Bladder",
+      "video": null
+    },
+    "blanket": {
+      "frames": 214,
+      "fps": 25.0,
+      "file": "blanket.npz",
+      "label": "Blanket",
+      "video": null
+    },
+    "bleat_baa": {
+      "frames": 180,
+      "fps": 25.0,
+      "file": "bleat_baa.npz",
+      "label": "Bleat Baa (Sheep)",
+      "video": null
+    },
+    "blindfold": {
+      "frames": 198,
+      "fps": 24.0,
+      "file": "blindfold.npz",
+      "label": "Blindfold",
+      "video": null
+    },
+    "block_institute_of_teacher_education": {
+      "frames": 385,
+      "fps": 24.0,
+      "file": "block_institute_of_teacher_education.npz",
+      "label": "Block Institute Of Teacher Education (Bite)",
+      "video": null
+    },
+    "block_resource_centre": {
+      "frames": 1255,
+      "fps": 24.000019073486328,
+      "file": "block_resource_centre.npz",
+      "label": "Block Resource Centre (Brc)",
+      "video": null
+    },
+    "blocky_structure": {
+      "frames": 437,
+      "fps": 25.0,
+      "file": "blocky_structure.npz",
+      "label": "Blocky Structure",
+      "video": null
+    },
+    "blogger": {
+      "frames": 566,
+      "fps": 24.0,
+      "file": "blogger.npz",
+      "label": "Blogger",
+      "video": null
+    },
+    "blood_bank": {
+      "frames": 459,
+      "fps": 25.0,
+      "file": "blood_bank.npz",
+      "label": "Blood Bank",
+      "video": null
+    },
+    "blotting_papter_filter_paper": {
+      "frames": 1410,
+      "fps": 25.0,
+      "file": "blotting_papter_filter_paper.npz",
+      "label": "Blotting Papter Filter Paper",
+      "video": null
+    },
+    "bluewater": {
+      "frames": 242,
+      "fps": 24.0,
+      "file": "bluewater.npz",
+      "label": "Bluewater",
+      "video": null
+    },
+    "board_of_governors": {
+      "frames": 240,
+      "fps": 24.0,
+      "file": "board_of_governors.npz",
+      "label": "Board Of Governors (Bog)",
+      "video": null
+    },
+    "bodily_harm_actual_bodily_harm_grievous_bodily_harm": {
+      "frames": 900,
+      "fps": 25.0,
+      "file": "bodily_harm_actual_bodily_harm_grievous_bodily_harm.npz",
+      "label": "Bodily Harm Actual Bodily Harm Grievous Bodily Harm",
+      "video": null
+    },
+    "bona_vacantia": {
+      "frames": 692,
+      "fps": 25.0,
+      "file": "bona_vacantia.npz",
+      "label": "Bona Vacantia",
+      "video": null
+    },
+    "bookmark": {
+      "frames": 477,
+      "fps": 25.0,
+      "file": "bookmark.npz",
+      "label": "Bookmark",
+      "video": null
+    },
+    "border": {
+      "frames": 517,
+      "fps": 25.0,
+      "file": "border.npz",
+      "label": "Border",
+      "video": null
+    },
+    "boreal": {
+      "frames": 357,
+      "fps": 24.0,
+      "file": "boreal.npz",
+      "label": "Boreal",
+      "video": null
+    },
+    "borrowing": {
+      "frames": 772,
+      "fps": 24.0,
+      "file": "borrowing.npz",
+      "label": "Borrowing (Linguistic)",
+      "video": null
+    },
+    "bottlefeed": {
+      "frames": 389,
+      "fps": 24.0,
+      "file": "bottlefeed.npz",
+      "label": "Bottlefeed",
+      "video": null
+    },
+    "bounce_rebound": {
+      "frames": 575,
+      "fps": 24.0,
+      "file": "bounce_rebound.npz",
+      "label": "Bounce Rebound",
+      "video": null
+    },
+    "brackets": {
+      "frames": 71,
+      "fps": 24.0,
+      "file": "brackets.npz",
+      "label": "Brackets",
+      "video": null
+    },
+    "brahmi_script": {
+      "frames": 1425,
+      "fps": 25.0,
+      "file": "brahmi_script.npz",
+      "label": "Brahmi Script (Academic)",
+      "video": null
+    },
+    "brahmin": {
+      "frames": 1353,
+      "fps": 25.0,
+      "file": "brahmin.npz",
+      "label": "Brahmin (Academic)",
+      "video": null
+    },
+    "brain_mapping_test_brain_electrical_activation_profile_test_p300_waves_test": {
+      "frames": 744,
+      "fps": 25.0,
+      "file": "brain_mapping_test_brain_electrical_activation_profile_test_p300_waves_test.npz",
+      "label": "Brain Mapping Test Brain Electrical Activation Profile Test P300 Waves Test",
+      "video": null
+    },
+    "brake_light": {
+      "frames": 419,
+      "fps": 24.0,
+      "file": "brake_light.npz",
+      "label": "Brake Light",
+      "video": null
+    },
+    "brand": {
+      "frames": 947,
+      "fps": 24.0,
+      "file": "brand.npz",
+      "label": "Brand (Sign 2)",
+      "video": null
+    },
+    "brand_loyalty": {
+      "frames": 910,
+      "fps": 24.0,
+      "file": "brand_loyalty.npz",
+      "label": "Brand Loyalty",
+      "video": null
+    },
+    "brand_manager": {
+      "frames": 563,
+      "fps": 24.0,
+      "file": "brand_manager.npz",
+      "label": "Brand Manager",
+      "video": null
+    },
+    "bray_hee_haw": {
+      "frames": 143,
+      "fps": 24.0,
+      "file": "bray_hee_haw.npz",
+      "label": "Bray Hee-Haw",
+      "video": null
+    },
+    "breach_of_duty": {
+      "frames": 624,
+      "fps": 25.0,
+      "file": "breach_of_duty.npz",
+      "label": "Breach Of Duty",
+      "video": null
+    },
+    "breadth_of_a_rectangle": {
+      "frames": 1018,
+      "fps": 25.0,
+      "file": "breadth_of_a_rectangle.npz",
+      "label": "Breadth Of A Rectangle (Math)",
+      "video": null
+    },
+    "break_the_ice": {
+      "frames": 1158,
+      "fps": 25.0,
+      "file": "break_the_ice.npz",
+      "label": "Break The Ice",
+      "video": null
+    },
+    "breakout_rooms": {
+      "frames": 773,
+      "fps": 25.0,
+      "file": "breakout_rooms.npz",
+      "label": "Breakout Rooms",
+      "video": null
+    },
+    "breeding": {
+      "frames": 1179,
+      "fps": 25.0,
+      "file": "breeding.npz",
+      "label": "Breeding (Miscellaneous)",
+      "video": null
+    },
+    "bright_and_early": {
+      "frames": 92,
+      "fps": 24.0,
+      "file": "bright_and_early.npz",
+      "label": "Bright And Early",
+      "video": null
+    },
+    "broad_acre_farm": {
+      "frames": 450,
+      "fps": 24.0,
+      "file": "broad_acre_farm.npz",
+      "label": "Broad-Acre Farm",
+      "video": null
+    },
+    "broadcast": {
+      "frames": 384,
+      "fps": 25.0,
+      "file": "broadcast.npz",
+      "label": "Broadcast",
+      "video": null
+    },
+    "broker": {
+      "frames": 933,
+      "fps": 25.0,
+      "file": "broker.npz",
+      "label": "Broker",
+      "video": null
+    },
+    "bromeliads": {
+      "frames": 869,
+      "fps": 25.0,
+      "file": "bromeliads.npz",
+      "label": "Bromeliads",
+      "video": null
+    },
+    "brown_rice": {
+      "frames": 92,
+      "fps": 25.0,
+      "file": "brown_rice.npz",
+      "label": "Brown Rice",
+      "video": null
+    },
+    "brownian_motion": {
+      "frames": 468,
+      "fps": 25.0,
+      "file": "brownian_motion.npz",
+      "label": "Brownian Motion",
+      "video": null
+    },
+    "bte": {
+      "frames": 403,
+      "fps": 25.0,
+      "file": "bte.npz",
+      "label": "Bte",
+      "video": null
+    },
+    "budget_revenues": {
+      "frames": 472,
+      "fps": 24.0,
+      "file": "budget_revenues.npz",
+      "label": "Budget Revenues",
+      "video": null
+    },
+    "building_lifting_technique": {
+      "frames": 581,
+      "fps": 24.0,
+      "file": "building_lifting_technique.npz",
+      "label": "Building Lifting Technique",
+      "video": null
+    },
+    "bulimia": {
+      "frames": 528,
+      "fps": 25.0,
+      "file": "bulimia.npz",
+      "label": "Bulimia",
+      "video": null
+    },
+    "bullet_proof_glass": {
+      "frames": 783,
+      "fps": 24.0,
+      "file": "bullet_proof_glass.npz",
+      "label": "Bullet Proof Glass",
+      "video": null
+    },
+    "bullet_proof_vehicle": {
+      "frames": 395,
+      "fps": 25.0,
+      "file": "bullet_proof_vehicle.npz",
+      "label": "Bullet Proof Vehicle",
+      "video": null
+    },
+    "bulletproof": {
+      "frames": 613,
+      "fps": 24.0,
+      "file": "bulletproof.npz",
+      "label": "Bulletproof",
+      "video": null
+    },
+    "burqa": {
+      "frames": 95,
+      "fps": 24.0,
+      "file": "burqa.npz",
+      "label": "Burqa (Sign 2)",
+      "video": null
+    },
+    "business_cycles": {
+      "frames": 1003,
+      "fps": 24.000024795532227,
+      "file": "business_cycles.npz",
+      "label": "Business Cycles",
+      "video": null
+    },
+    "butter_up_cajole": {
+      "frames": 94,
+      "fps": 25.0,
+      "file": "butter_up_cajole.npz",
+      "label": "Butter Up Cajole",
+      "video": null
+    },
+    "buy_ins": {
+      "frames": 579,
+      "fps": 30.0,
+      "file": "buy_ins.npz",
+      "label": "Buy Ins",
+      "video": null
+    },
+    "by_the_skin_of_one_s_teeth": {
+      "frames": 741,
+      "fps": 25.0,
+      "file": "by_the_skin_of_one_s_teeth.npz",
+      "label": "By The Skin Of One S Teeth",
+      "video": null
+    },
+    "b_a": {
+      "frames": 783,
+      "fps": 25.0,
+      "file": "b_a.npz",
+      "label": "B A",
+      "video": null
+    },
+    "b_ed": {
+      "frames": 1143,
+      "fps": 25.0,
+      "file": "b_ed.npz",
+      "label": "B Ed",
+      "video": null
+    },
+    "b_pharma": {
+      "frames": 808,
+      "fps": 25.0,
+      "file": "b_pharma.npz",
+      "label": "B Pharma",
+      "video": null
+    },
+    "b_roll": {
+      "frames": 528,
+      "fps": 24.0,
+      "file": "b_roll.npz",
+      "label": "B Roll",
+      "video": null
+    },
+    "bachelor_of_medicine_and_bachelor_of_surgery": {
+      "frames": 392,
+      "fps": 24.0,
+      "file": "bachelor_of_medicine_and_bachelor_of_surgery.npz",
+      "label": "Bachelor Of Medicine And Bachelor Of Surgery (Mbbs)",
+      "video": null
+    },
+    "back_link": {
+      "frames": 1026,
+      "fps": 24.000022888183594,
+      "file": "back_link.npz",
+      "label": "Back Link",
+      "video": null
+    },
+    "back_stitch": {
+      "frames": 457,
+      "fps": 25.0,
+      "file": "back_stitch.npz",
+      "label": "Back Stitch",
+      "video": null
+    },
+    "backlash_adverse_reaction": {
+      "frames": 999,
+      "fps": 24.000024795532227,
+      "file": "backlash_adverse_reaction.npz",
+      "label": "Backlash Adverse Reaction",
+      "video": null
+    },
+    "backstab_betray": {
+      "frames": 79,
+      "fps": 24.0,
+      "file": "backstab_betray.npz",
+      "label": "Backstab Betray",
+      "video": null
+    },
+    "bad_climate_allowance": {
+      "frames": 793,
+      "fps": 24.0,
+      "file": "bad_climate_allowance.npz",
+      "label": "Bad Climate Allowance",
+      "video": null
+    },
+    "bad_language_verbal_abuse": {
+      "frames": 89,
+      "fps": 25.0,
+      "file": "bad_language_verbal_abuse.npz",
+      "label": "Bad Language Verbal Abuse (Sign 2)",
+      "video": null
+    },
+    "badge": {
+      "frames": 481,
+      "fps": 25.0,
+      "file": "badge.npz",
+      "label": "Badge",
+      "video": null
+    },
+    "bag_backpack": {
+      "frames": 96,
+      "fps": 25.0,
+      "file": "bag_backpack.npz",
+      "label": "Bag Backpack",
+      "video": null
+    },
+    "bag_mask_device": {
+      "frames": 288,
+      "fps": 25.0,
+      "file": "bag_mask_device.npz",
+      "label": "Bag Mask Device",
+      "video": null
+    },
+    "bahujan_samaj_party": {
+      "frames": 83,
+      "fps": 24.0,
+      "file": "bahujan_samaj_party.npz",
+      "label": "Bahujan Samaj Party (Bsp)",
+      "video": null
+    },
+    "bailable_offence_non_bailable_offence": {
+      "frames": 1963,
+      "fps": 25.0,
+      "file": "bailable_offence_non_bailable_offence.npz",
+      "label": "Bailable Offence Non-Bailable Offence",
+      "video": null
+    },
+    "bake_baking": {
+      "frames": 390,
+      "fps": 24.0,
+      "file": "bake_baking.npz",
+      "label": "Bake Baking",
+      "video": null
+    },
+    "ballet": {
+      "frames": 150,
+      "fps": 29.970029830932617,
+      "file": "ballet.npz",
+      "label": "Ballet",
+      "video": null
+    },
+    "bandh_general_strike": {
+      "frames": 105,
+      "fps": 24.0,
+      "file": "bandh_general_strike.npz",
+      "label": "Bandh General Strike",
+      "video": null
+    },
+    "bank_rate": {
+      "frames": 670,
+      "fps": 25.0,
+      "file": "bank_rate.npz",
+      "label": "Bank Rate",
+      "video": null
+    },
+    "bank_statement": {
+      "frames": 583,
+      "fps": 24.0,
+      "file": "bank_statement.npz",
+      "label": "Bank Statement",
+      "video": null
+    },
+    "bankrupt": {
+      "frames": 647,
+      "fps": 25.0,
+      "file": "bankrupt.npz",
+      "label": "Bankrupt",
+      "video": null
+    },
+    "banyan": {
+      "frames": 162,
+      "fps": 25.0,
+      "file": "banyan.npz",
+      "label": "Banyan (Sign 2)",
+      "video": null
+    },
+    "barrier_free_environment": {
+      "frames": 1625,
+      "fps": 25.0,
+      "file": "barrier_free_environment.npz",
+      "label": "Barrier Free Environment",
+      "video": null
+    },
+    "barter_system": {
+      "frames": 854,
+      "fps": 25.0,
+      "file": "barter_system.npz",
+      "label": "Barter System",
+      "video": null
+    },
+    "base": {
+      "frames": 1390,
+      "fps": 25.0,
+      "file": "base.npz",
+      "label": "Base (Academic)",
+      "video": null
+    },
+    "base_and_height": {
+      "frames": 269,
+      "fps": 25.0,
+      "file": "base_and_height.npz",
+      "label": "Base And Height",
+      "video": null
+    },
+    "base_population": {
+      "frames": 852,
+      "fps": 25.0,
+      "file": "base_population.npz",
+      "label": "Base Population",
+      "video": null
+    },
+    "basic_needs_and_universal_access": {
+      "frames": 1401,
+      "fps": 25.0,
+      "file": "basic_needs_and_universal_access.npz",
+      "label": "Basic Needs And Universal Access",
+      "video": null
+    },
+    "baton_or_night_stick": {
+      "frames": 256,
+      "fps": 25.0,
+      "file": "baton_or_night_stick.npz",
+      "label": "Baton Or Night Stick",
+      "video": null
+    },
+    "battered_wife_syndrome": {
+      "frames": 1042,
+      "fps": 25.0,
+      "file": "battered_wife_syndrome.npz",
+      "label": "Battered Wife Syndrome",
+      "video": null
+    },
+    "battery_eliminator": {
+      "frames": 1108,
+      "fps": 25.0,
+      "file": "battery_eliminator.npz",
+      "label": "Battery Eliminator",
+      "video": null
+    },
+    "battle_of_plassey": {
+      "frames": 590,
+      "fps": 25.0,
+      "file": "battle_of_plassey.npz",
+      "label": "Battle Of Plassey",
+      "video": null
+    },
+    "be_yourself": {
+      "frames": 610,
+      "fps": 24.0,
+      "file": "be_yourself.npz",
+      "label": "Be Yourself",
+      "video": null
+    },
+    "bear_fruit": {
+      "frames": 569,
+      "fps": 24.0,
+      "file": "bear_fruit.npz",
+      "label": "Bear Fruit",
+      "video": null
+    },
+    "beat_around_the_bush": {
+      "frames": 1242,
+      "fps": 25.0,
+      "file": "beat_around_the_bush.npz",
+      "label": "Beat Around The Bush",
+      "video": null
+    },
+    "beat_triumph_outdo_be_victorious": {
+      "frames": 97,
+      "fps": 25.0,
+      "file": "beat_triumph_outdo_be_victorious.npz",
+      "label": "Beat Triumph Outdo Be Victorious (Sign 2)",
+      "video": null
+    },
+    "bed_cradle": {
+      "frames": 331,
+      "fps": 25.0,
+      "file": "bed_cradle.npz",
+      "label": "Bed Cradle",
+      "video": null
+    },
+    "bed_rest": {
+      "frames": 161,
+      "fps": 24.0,
+      "file": "bed_rest.npz",
+      "label": "Bed Rest",
+      "video": null
+    },
+    "bedridden": {
+      "frames": 640,
+      "fps": 24.0,
+      "file": "bedridden.npz",
+      "label": "Bedridden",
+      "video": null
+    },
+    "beehive": {
+      "frames": 905,
+      "fps": 24.0,
+      "file": "beehive.npz",
+      "label": "Beehive",
+      "video": null
+    },
+    "before_christ_and_anno_domoni": {
+      "frames": 434,
+      "fps": 25.0,
+      "file": "before_christ_and_anno_domoni.npz",
+      "label": "Before Christ And Anno Domoni",
+      "video": null
+    },
+    "behaviourism": {
+      "frames": 1024,
+      "fps": 25.0,
+      "file": "behaviourism.npz",
+      "label": "Behaviourism",
+      "video": null
+    },
+    "behead": {
+      "frames": 113,
+      "fps": 24.0,
+      "file": "behead.npz",
+      "label": "Behead",
+      "video": null
+    },
+    "behind_bars": {
+      "frames": 288,
+      "fps": 24.0,
+      "file": "behind_bars.npz",
+      "label": "Behind Bars",
+      "video": null
+    },
+    "bertha": {
+      "frames": 211,
+      "fps": 25.0,
+      "file": "bertha.npz",
+      "label": "Bertha",
+      "video": null
+    },
+    "bet": {
+      "frames": 1408,
+      "fps": 25.0,
+      "file": "bet.npz",
+      "label": "Bet(1)",
+      "video": null
+    },
+    "bias_tape": {
+      "frames": 544,
+      "fps": 25.0,
+      "file": "bias_tape.npz",
+      "label": "Bias Tape",
+      "video": null
+    },
+    "bicep_line": {
+      "frames": 413,
+      "fps": 25.0,
+      "file": "bicep_line.npz",
+      "label": "Bicep Line",
+      "video": null
+    },
+    "bidder": {
+      "frames": 467,
+      "fps": 24.0,
+      "file": "bidder.npz",
+      "label": "Bidder",
+      "video": null
+    },
+    "bigger_integer": {
+      "frames": 363,
+      "fps": 24.0,
+      "file": "bigger_integer.npz",
+      "label": "Bigger Integer",
+      "video": null
+    },
+    "bike_motorcycle": {
+      "frames": 108,
+      "fps": 25.0,
+      "file": "bike_motorcycle.npz",
+      "label": "Bike Motorcycle",
+      "video": null
+    },
+    "bilateral_trade": {
+      "frames": 542,
+      "fps": 24.0,
+      "file": "bilateral_trade.npz",
+      "label": "Bilateral Trade",
+      "video": null
+    },
+    "bile": {
+      "frames": 324,
+      "fps": 25.0,
+      "file": "bile.npz",
+      "label": "Bile",
+      "video": null
+    },
+    "bile_duct_cancer_extrahepatic": {
+      "frames": 375,
+      "fps": 25.0,
+      "file": "bile_duct_cancer_extrahepatic.npz",
+      "label": "Bile Duct Cancer Extrahepatic",
+      "video": null
+    },
+    "bilingualism": {
+      "frames": 1121,
+      "fps": 25.0,
+      "file": "bilingualism.npz",
+      "label": "Bilingualism",
+      "video": null
+    },
+    "bilirubin_meter": {
+      "frames": 428,
+      "fps": 25.0,
+      "file": "bilirubin_meter.npz",
+      "label": "Bilirubin Meter",
+      "video": null
+    },
+    "bioelement": {
+      "frames": 358,
+      "fps": 24.0,
+      "file": "bioelement.npz",
+      "label": "Bioelement",
+      "video": null
+    },
+    "bioinformatics": {
+      "frames": 75,
+      "fps": 25.0,
+      "file": "bioinformatics.npz",
+      "label": "Bioinformatics",
+      "video": null
+    },
+    "biological_evidence": {
+      "frames": 600,
+      "fps": 25.0,
+      "file": "biological_evidence.npz",
+      "label": "Biological Evidence",
+      "video": null
+    },
+    "biological_psychology": {
+      "frames": 903,
+      "fps": 25.0,
+      "file": "biological_psychology.npz",
+      "label": "Biological Psychology",
+      "video": null
+    },
+    "biology": {
+      "frames": 710,
+      "fps": 25.0,
+      "file": "biology.npz",
+      "label": "Biology (Science)",
+      "video": null
+    },
+    "biomedical_scientists": {
+      "frames": 259,
+      "fps": 25.0,
+      "file": "biomedical_scientists.npz",
+      "label": "Biomedical Scientists",
+      "video": null
+    },
+    "biometric": {
+      "frames": 402,
+      "fps": 25.0,
+      "file": "biometric.npz",
+      "label": "Biometric",
+      "video": null
+    },
+    "bioremediation": {
+      "frames": 322,
+      "fps": 24.0,
+      "file": "bioremediation.npz",
+      "label": "Bioremediation",
+      "video": null
+    },
+    "biotic_and_abiotic": {
+      "frames": 911,
+      "fps": 25.0,
+      "file": "biotic_and_abiotic.npz",
+      "label": "Biotic And Abiotic",
+      "video": null
+    },
+    "birth_contral_pill": {
+      "frames": 180,
+      "fps": 25.0,
+      "file": "birth_contral_pill.npz",
+      "label": "Birth Contral Pill",
+      "video": null
+    },
+    "bit_rate": {
+      "frames": 830,
+      "fps": 24.0,
+      "file": "bit_rate.npz",
+      "label": "Bit Rate",
+      "video": null
+    },
+    "black_market_or_shadow_economy_or_underground_economy": {
+      "frames": 605,
+      "fps": 25.0,
+      "file": "black_market_or_shadow_economy_or_underground_economy.npz",
+      "label": "Black Market Or Shadow Economy Or Underground Economy",
+      "video": null
+    },
+    "blackhole": {
+      "frames": 1142,
+      "fps": 25.0,
+      "file": "blackhole.npz",
+      "label": "Blackhole",
+      "video": null
+    },
+    "blank": {
+      "frames": 384,
+      "fps": 25.0,
+      "file": "blank.npz",
+      "label": "Blank",
+      "video": null
+    },
+    "bleed": {
+      "frames": 497,
+      "fps": 24.0,
+      "file": "bleed.npz",
+      "label": "Bleed",
+      "video": null
+    },
+    "blend": {
+      "frames": 296,
+      "fps": 24.0,
+      "file": "blend.npz",
+      "label": "Blend",
+      "video": null
+    },
+    "blood_group": {
+      "frames": 362,
+      "fps": 25.0,
+      "file": "blood_group.npz",
+      "label": "Blood Group",
+      "video": null
+    },
+    "blood_lancet": {
+      "frames": 156,
+      "fps": 25.0,
+      "file": "blood_lancet.npz",
+      "label": "Blood Lancet (Disposable)",
+      "video": null
+    },
+    "blower": {
+      "frames": 603,
+      "fps": 25.0,
+      "file": "blower.npz",
+      "label": "Blower",
+      "video": null
+    },
+    "blue_revolution": {
+      "frames": 611,
+      "fps": 24.0,
+      "file": "blue_revolution.npz",
+      "label": "Blue Revolution",
+      "video": null
+    },
+    "blur_snapshot": {
+      "frames": 1179,
+      "fps": 24.00002098083496,
+      "file": "blur_snapshot.npz",
+      "label": "Blur Snapshot",
+      "video": null
+    },
+    "board": {
+      "frames": 113,
+      "fps": 24.0,
+      "file": "board.npz",
+      "label": "Board (Panel) (Sign 2)",
+      "video": null
+    },
+    "board_of_assessment": {
+      "frames": 327,
+      "fps": 24.0,
+      "file": "board_of_assessment.npz",
+      "label": "Board Of Assessment (Boa)",
+      "video": null
+    },
+    "board_or_board_of_directors": {
+      "frames": 781,
+      "fps": 24.0,
+      "file": "board_or_board_of_directors.npz",
+      "label": "Board Or Board Of Directors",
+      "video": null
+    },
+    "boarding_pass": {
+      "frames": 294,
+      "fps": 25.0,
+      "file": "boarding_pass.npz",
+      "label": "Boarding Pass",
+      "video": null
+    },
+    "boiled": {
+      "frames": 301,
+      "fps": 25.0,
+      "file": "boiled.npz",
+      "label": "Boiled",
+      "video": null
+    },
+    "boiling_point": {
+      "frames": 1317,
+      "fps": 25.0,
+      "file": "boiling_point.npz",
+      "label": "Boiling Point",
+      "video": null
+    },
+    "bomb_squad_or_bomb_disposal": {
+      "frames": 509,
+      "fps": 24.0,
+      "file": "bomb_squad_or_bomb_disposal.npz",
+      "label": "Bomb Squad Or Bomb Disposal",
+      "video": null
+    },
+    "bonded_labour": {
+      "frames": 1057,
+      "fps": 25.0,
+      "file": "bonded_labour.npz",
+      "label": "Bonded Labour",
+      "video": null
+    },
+    "bookmaker_or_bookie": {
+      "frames": 676,
+      "fps": 25.0,
+      "file": "bookmaker_or_bookie.npz",
+      "label": "Bookmaker Or Bookie",
+      "video": null
+    },
+    "boom": {
+      "frames": 590,
+      "fps": 24.0,
+      "file": "boom.npz",
+      "label": "Boom",
+      "video": null
+    },
+    "borrowing_core_borrowing_cultural_borrowing": {
+      "frames": 1993,
+      "fps": 24.000024795532227,
+      "file": "borrowing_core_borrowing_cultural_borrowing.npz",
+      "label": "Borrowing Core Borrowing Cultural Borrowing",
+      "video": null
+    },
+    "borstal_school": {
+      "frames": 963,
+      "fps": 25.0,
+      "file": "borstal_school.npz",
+      "label": "Borstal School",
+      "video": null
+    },
+    "botanical_classification": {
+      "frames": 389,
+      "fps": 25.0,
+      "file": "botanical_classification.npz",
+      "label": "Botanical Classification",
+      "video": null
+    },
+    "bounce_rate": {
+      "frames": 1079,
+      "fps": 24.000022888183594,
+      "file": "bounce_rate.npz",
+      "label": "Bounce Rate",
+      "video": null
+    },
+    "bouquet": {
+      "frames": 83,
+      "fps": 25.0,
+      "file": "bouquet.npz",
+      "label": "Bouquet",
+      "video": null
+    },
+    "bowel_incontinence": {
+      "frames": 576,
+      "fps": 25.0,
+      "file": "bowel_incontinence.npz",
+      "label": "Bowel Incontinence",
+      "video": null
+    },
+    "bowel_rest": {
+      "frames": 670,
+      "fps": 25.0,
+      "file": "bowel_rest.npz",
+      "label": "Bowel Rest",
+      "video": null
+    },
+    "braille": {
+      "frames": 468,
+      "fps": 25.0,
+      "file": "braille.npz",
+      "label": "Braille",
+      "video": null
+    },
+    "brain_stem_glioma_childhood": {
+      "frames": 286,
+      "fps": 25.0,
+      "file": "brain_stem_glioma_childhood.npz",
+      "label": "Brain Stem Glioma Childhood",
+      "video": null
+    },
+    "bramhcharya_grihastha_vanprastha_sanyas_and_ashram": {
+      "frames": 2523,
+      "fps": 25.0,
+      "file": "bramhcharya_grihastha_vanprastha_sanyas_and_ashram.npz",
+      "label": "Bramhcharya Grihastha Vanprastha Sanyas And Ashram",
+      "video": null
+    },
+    "branch_subdivision_classification": {
+      "frames": 117,
+      "fps": 25.0,
+      "file": "branch_subdivision_classification.npz",
+      "label": "Branch Subdivision Classification",
+      "video": null
+    },
+    "brave_bold_courageous_strong": {
+      "frames": 125,
+      "fps": 25.0,
+      "file": "brave_bold_courageous_strong.npz",
+      "label": "Brave Bold Courageous Strong",
+      "video": null
+    },
+    "break_a_leg": {
+      "frames": 740,
+      "fps": 25.0,
+      "file": "break_a_leg.npz",
+      "label": "Break A Leg",
+      "video": null
+    },
+    "break_up": {
+      "frames": 321,
+      "fps": 25.0,
+      "file": "break_up.npz",
+      "label": "Break Up",
+      "video": null
+    },
+    "breathing_rate": {
+      "frames": 778,
+      "fps": 25.0,
+      "file": "breathing_rate.npz",
+      "label": "Breathing Rate (Academic)",
+      "video": null
+    },
+    "breeds": {
+      "frames": 1141,
+      "fps": 24.00002098083496,
+      "file": "breeds.npz",
+      "label": "Breeds",
+      "video": null
+    },
+    "bride": {
+      "frames": 369,
+      "fps": 25.0,
+      "file": "bride.npz",
+      "label": "Bride",
+      "video": null
+    },
+    "bride_burning": {
+      "frames": 792,
+      "fps": 25.0,
+      "file": "bride_burning.npz",
+      "label": "Bride Burning",
+      "video": null
+    },
+    "bridegroom_groom": {
+      "frames": 217,
+      "fps": 25.0,
+      "file": "bridegroom_groom.npz",
+      "label": "Bridegroom Groom",
+      "video": null
+    },
+    "brinjal_eggplant": {
+      "frames": 135,
+      "fps": 25.0,
+      "file": "brinjal_eggplant.npz",
+      "label": "Brinjal Eggplant",
+      "video": null
+    },
+    "british_rulers": {
+      "frames": 444,
+      "fps": 24.0,
+      "file": "british_rulers.npz",
+      "label": "British Rulers",
+      "video": null
+    },
+    "brokers": {
+      "frames": 1239,
+      "fps": 30.0,
+      "file": "brokers.npz",
+      "label": "Brokers",
+      "video": null
+    },
+    "bronchitis": {
+      "frames": 408,
+      "fps": 25.0,
+      "file": "bronchitis.npz",
+      "label": "Bronchitis",
+      "video": null
+    },
+    "browse_peruse_flip_through_leaf_through": {
+      "frames": 287,
+      "fps": 24.0,
+      "file": "browse_peruse_flip_through_leaf_through.npz",
+      "label": "Browse Peruse Flip Through Leaf Through (Read)",
+      "video": null
+    },
+    "bruise": {
+      "frames": 648,
+      "fps": 25.0,
+      "file": "bruise.npz",
+      "label": "Bruise",
+      "video": null
+    },
+    "buddhism_buddhist": {
+      "frames": 91,
+      "fps": 25.0,
+      "file": "buddhism_buddhist.npz",
+      "label": "Buddhism Buddhist",
+      "video": null
+    },
+    "budget_deficit": {
+      "frames": 530,
+      "fps": 24.0,
+      "file": "budget_deficit.npz",
+      "label": "Budget Deficit",
+      "video": null
+    },
+    "buffalow_farming": {
+      "frames": 426,
+      "fps": 24.0,
+      "file": "buffalow_farming.npz",
+      "label": "Buffalow Farming",
+      "video": null
+    },
+    "bugs_bunny": {
+      "frames": 94,
+      "fps": 25.0,
+      "file": "bugs_bunny.npz",
+      "label": "Bugs Bunny",
+      "video": null
+    },
+    "building_blocks": {
+      "frames": 175,
+      "fps": 24.0,
+      "file": "building_blocks.npz",
+      "label": "Building Blocks",
+      "video": null
+    },
+    "building_site": {
+      "frames": 850,
+      "fps": 25.0,
+      "file": "building_site.npz",
+      "label": "Building Site",
+      "video": null
+    },
+    "bulbourethral_glands_cowper_s_glands_mery_s_glands": {
+      "frames": 676,
+      "fps": 25.0,
+      "file": "bulbourethral_glands_cowper_s_glands_mery_s_glands.npz",
+      "label": "Bulbourethral Glands Cowper S Glands Mery S Glands",
+      "video": null
+    },
+    "bulk": {
+      "frames": 262,
+      "fps": 25.0,
+      "file": "bulk.npz",
+      "label": "Bulk",
+      "video": null
+    },
+    "bun": {
+      "frames": 95,
+      "fps": 24.0,
+      "file": "bun.npz",
+      "label": "Bun (Hair Style)",
+      "video": null
+    },
+    "bungee_jumping": {
+      "frames": 268,
+      "fps": 29.970029830932617,
+      "file": "bungee_jumping.npz",
+      "label": "Bungee Jumping",
+      "video": null
+    },
+    "burden_of_proof": {
+      "frames": 608,
+      "fps": 25.0,
+      "file": "burden_of_proof.npz",
+      "label": "Burden Of Proof",
+      "video": null
+    },
+    "burden_overload_strain": {
+      "frames": 76,
+      "fps": 25.0,
+      "file": "burden_overload_strain.npz",
+      "label": "Burden Overload Strain",
+      "video": null
+    },
+    "burette": {
+      "frames": 140,
+      "fps": 25.0,
+      "file": "burette.npz",
+      "label": "Burette",
+      "video": null
+    },
+    "burglary_or_breaking_entering_burglar": {
+      "frames": 792,
+      "fps": 25.0,
+      "file": "burglary_or_breaking_entering_burglar.npz",
+      "label": "Burglary Or Breaking & Entering Burglar",
+      "video": null
+    },
+    "burrow_warren": {
+      "frames": 160,
+      "fps": 24.0,
+      "file": "burrow_warren.npz",
+      "label": "Burrow Warren",
+      "video": null
+    },
+    "bury_the_hatchet": {
+      "frames": 181,
+      "fps": 24.0,
+      "file": "bury_the_hatchet.npz",
+      "label": "Bury The Hatchet",
+      "video": null
+    },
+    "bus_bar": {
+      "frames": 922,
+      "fps": 25.0,
+      "file": "bus_bar.npz",
+      "label": "Bus Bar",
+      "video": null
+    },
+    "business_card_visiting_card": {
+      "frames": 870,
+      "fps": 25.0,
+      "file": "business_card_visiting_card.npz",
+      "label": "Business Card Visiting Card",
+      "video": null
+    },
+    "business_tourism": {
+      "frames": 634,
+      "fps": 24.0,
+      "file": "business_tourism.npz",
+      "label": "Business Tourism",
+      "video": null
+    },
+    "butter_up_flatter": {
+      "frames": 100,
+      "fps": 25.0,
+      "file": "butter_up_flatter.npz",
+      "label": "Butter Up Flatter",
+      "video": null
+    },
+    "by_bulb_roots_rhizomes": {
+      "frames": 1027,
+      "fps": 25.0,
+      "file": "by_bulb_roots_rhizomes.npz",
+      "label": "By Bulb Roots  Rhizomes",
+      "video": null
+    },
+    "by_law": {
+      "frames": 524,
+      "fps": 25.0,
+      "file": "by_law.npz",
+      "label": "By Law",
+      "video": null
+    },
+    "bystander_onlooker": {
+      "frames": 530,
+      "fps": 24.0,
+      "file": "bystander_onlooker.npz",
+      "label": "Bystander Onlooker",
+      "video": null
+    },
+    "b_com": {
+      "frames": 405,
+      "fps": 25.0,
+      "file": "b_com.npz",
+      "label": "B Com",
+      "video": null
+    },
+    "b_e": {
+      "frames": 557,
+      "fps": 25.0,
+      "file": "b_e.npz",
+      "label": "B E",
+      "video": null
+    },
+    "back_office": {
+      "frames": 923,
+      "fps": 30.0,
+      "file": "back_office.npz",
+      "label": "Back Office",
+      "video": null
+    },
+    "backbreaking_arduous_strenuous_gruelling": {
+      "frames": 854,
+      "fps": 24.0,
+      "file": "backbreaking_arduous_strenuous_gruelling.npz",
+      "label": "Backbreaking Arduous Strenuous Gruelling",
+      "video": null
+    },
+    "backdoor_or_trapdoor": {
+      "frames": 488,
+      "fps": 25.0,
+      "file": "backdoor_or_trapdoor.npz",
+      "label": "Backdoor Or Trapdoor",
+      "video": null
+    },
+    "bacteria_of_plants": {
+      "frames": 1157,
+      "fps": 24.00002098083496,
+      "file": "bacteria_of_plants.npz",
+      "label": "Bacteria Of Plants",
+      "video": null
+    },
+    "badge_pin": {
+      "frames": 542,
+      "fps": 25.0,
+      "file": "badge_pin.npz",
+      "label": "Badge Pin",
+      "video": null
+    },
+    "baffle": {
+      "frames": 426,
+      "fps": 24.0,
+      "file": "baffle.npz",
+      "label": "Baffle",
+      "video": null
+    },
+    "bailiff": {
+      "frames": 466,
+      "fps": 25.0,
+      "file": "bailiff.npz",
+      "label": "Bailiff",
+      "video": null
+    },
+    "bails": {
+      "frames": 96,
+      "fps": 25.0,
+      "file": "bails.npz",
+      "label": "Bails",
+      "video": null
+    },
+    "bakery": {
+      "frames": 566,
+      "fps": 29.970029830932617,
+      "file": "bakery.npz",
+      "label": "Bakery",
+      "video": null
+    },
+    "balance_of_international_payments": {
+      "frames": 703,
+      "fps": 24.0,
+      "file": "balance_of_international_payments.npz",
+      "label": "Balance Of International Payments",
+      "video": null
+    },
+    "balance_of_trade": {
+      "frames": 864,
+      "fps": 24.0,
+      "file": "balance_of_trade.npz",
+      "label": "Balance Of Trade",
+      "video": null
+    },
+    "ball_and_socket_joint": {
+      "frames": 767,
+      "fps": 25.0,
+      "file": "ball_and_socket_joint.npz",
+      "label": "Ball And Socket Joint",
+      "video": null
+    },
+    "balloons": {
+      "frames": 1118,
+      "fps": 25.0,
+      "file": "balloons.npz",
+      "label": "Balloons",
+      "video": null
+    },
+    "ballot": {
+      "frames": 530,
+      "fps": 25.0,
+      "file": "ballot.npz",
+      "label": "Ballot",
+      "video": null
+    },
+    "bambusa": {
+      "frames": 479,
+      "fps": 24.0,
+      "file": "bambusa.npz",
+      "label": "Bambusa",
+      "video": null
+    },
+    "banding_of_ringing_method": {
+      "frames": 449,
+      "fps": 24.0,
+      "file": "banding_of_ringing_method.npz",
+      "label": "Banding Of Ringing Method",
+      "video": null
+    },
+    "bangle": {
+      "frames": 108,
+      "fps": 25.0,
+      "file": "bangle.npz",
+      "label": "Bangle",
+      "video": null
+    },
+    "bank_teller": {
+      "frames": 180,
+      "fps": 25.0,
+      "file": "bank_teller.npz",
+      "label": "Bank Teller",
+      "video": null
+    },
+    "bankruptcy": {
+      "frames": 1527,
+      "fps": 30.0,
+      "file": "bankruptcy.npz",
+      "label": "Bankruptcy",
+      "video": null
+    },
+    "bankruptcy_order": {
+      "frames": 786,
+      "fps": 25.0,
+      "file": "bankruptcy_order.npz",
+      "label": "Bankruptcy Order",
+      "video": null
+    },
+    "bar_examination": {
+      "frames": 683,
+      "fps": 25.0,
+      "file": "bar_examination.npz",
+      "label": "Bar Examination",
+      "video": null
+    },
+    "bar_tack": {
+      "frames": 545,
+      "fps": 25.0,
+      "file": "bar_tack.npz",
+      "label": "Bar Tack",
+      "video": null
+    },
+    "bark_bow_wow_woof": {
+      "frames": 104,
+      "fps": 24.0,
+      "file": "bark_bow_wow_woof.npz",
+      "label": "Bark Bow-Wow Woof",
+      "video": null
+    },
+    "barking_up_the_wrong_tree": {
+      "frames": 1056,
+      "fps": 25.0,
+      "file": "barking_up_the_wrong_tree.npz",
+      "label": "Barking Up The Wrong Tree",
+      "video": null
+    },
+    "barricade_barrier": {
+      "frames": 729,
+      "fps": 25.0,
+      "file": "barricade_barrier.npz",
+      "label": "Barricade Barrier",
+      "video": null
+    },
+    "barricade_tape_or_caution_tape_or_warning_tape_or_danger_tape_or_police_tape_or_hazard_tape": {
+      "frames": 725,
+      "fps": 25.0,
+      "file": "barricade_tape_or_caution_tape_or_warning_tape_or_danger_tape_or_police_tape_or_hazard_tape.npz",
+      "label": "Barricade Tape Or Caution Tape Or Warning Tape Or Danger Tape Or Police Tape Or Hazard Tape",
+      "video": null
+    },
+    "barter": {
+      "frames": 822,
+      "fps": 25.0,
+      "file": "barter.npz",
+      "label": "Barter",
+      "video": null
+    },
+    "baseload": {
+      "frames": 1301,
+      "fps": 24.000019073486328,
+      "file": "baseload.npz",
+      "label": "Baseload",
+      "video": null
+    },
+    "batsman": {
+      "frames": 114,
+      "fps": 25.0,
+      "file": "batsman.npz",
+      "label": "Batsman (Cricket)",
+      "video": null
+    },
+    "be_on_someone_s_back": {
+      "frames": 780,
+      "fps": 24.0,
+      "file": "be_on_someone_s_back.npz",
+      "label": "Be On Someone S Back",
+      "video": null
+    },
+    "bearer_beneficiary": {
+      "frames": 780,
+      "fps": 25.0,
+      "file": "bearer_beneficiary.npz",
+      "label": "Bearer Beneficiary",
+      "video": null
+    },
+    "bearing": {
+      "frames": 1616,
+      "fps": 25.0,
+      "file": "bearing.npz",
+      "label": "Bearing",
+      "video": null
+    },
+    "bearing_puller": {
+      "frames": 696,
+      "fps": 25.0,
+      "file": "bearing_puller.npz",
+      "label": "Bearing Puller",
+      "video": null
+    },
+    "bedouins": {
+      "frames": 1108,
+      "fps": 25.0,
+      "file": "bedouins.npz",
+      "label": "Bedouins",
+      "video": null
+    },
+    "bedrock": {
+      "frames": 923,
+      "fps": 25.0,
+      "file": "bedrock.npz",
+      "label": "Bedrock",
+      "video": null
+    },
+    "before_hand": {
+      "frames": 947,
+      "fps": 25.0,
+      "file": "before_hand.npz",
+      "label": "Before Hand",
+      "video": null
+    },
+    "behind_someone_s_back": {
+      "frames": 1663,
+      "fps": 24.000028610229492,
+      "file": "behind_someone_s_back.npz",
+      "label": "Behind Someone S Back",
+      "video": null
+    },
+    "bellows_pocket": {
+      "frames": 412,
+      "fps": 25.0,
+      "file": "bellows_pocket.npz",
+      "label": "Bellows Pocket",
+      "video": null
+    },
+    "benefit_principle": {
+      "frames": 910,
+      "fps": 24.0,
+      "file": "benefit_principle.npz",
+      "label": "Benefit Principle",
+      "video": null
+    },
+    "bermuda_shorts": {
+      "frames": 294,
+      "fps": 25.0,
+      "file": "bermuda_shorts.npz",
+      "label": "Bermuda Shorts",
+      "video": null
+    },
+    "bestiality_or_boophilia_or_sodomy": {
+      "frames": 205,
+      "fps": 25.0,
+      "file": "bestiality_or_boophilia_or_sodomy.npz",
+      "label": "Bestiality Or Boophilia Or Sodomy",
+      "video": null
+    },
+    "better_late_than_never": {
+      "frames": 1172,
+      "fps": 25.0,
+      "file": "better_late_than_never.npz",
+      "label": "Better Late Than Never",
+      "video": null
+    },
+    "beware": {
+      "frames": 899,
+      "fps": 24.0,
+      "file": "beware.npz",
+      "label": "Beware",
+      "video": null
+    },
+    "bhaga": {
+      "frames": 1203,
+      "fps": 25.0,
+      "file": "bhaga.npz",
+      "label": "Bhaga (History)",
+      "video": null
+    },
+    "bicultural_bilingualism": {
+      "frames": 1054,
+      "fps": 24.000022888183594,
+      "file": "bicultural_bilingualism.npz",
+      "label": "Bicultural Bilingualism",
+      "video": null
+    },
+    "billboard": {
+      "frames": 438,
+      "fps": 24.0,
+      "file": "billboard.npz",
+      "label": "Billboard",
+      "video": null
+    },
+    "binnial_plants": {
+      "frames": 2174,
+      "fps": 25.0,
+      "file": "binnial_plants.npz",
+      "label": "Binnial Plants",
+      "video": null
+    },
+    "binocular_microscope": {
+      "frames": 124,
+      "fps": 25.0,
+      "file": "binocular_microscope.npz",
+      "label": "Binocular Microscope",
+      "video": null
+    },
+    "biocapacity": {
+      "frames": 818,
+      "fps": 24.0,
+      "file": "biocapacity.npz",
+      "label": "Biocapacity",
+      "video": null
+    },
+    "biodegradable": {
+      "frames": 611,
+      "fps": 24.0,
+      "file": "biodegradable.npz",
+      "label": "Biodegradable",
+      "video": null
+    },
+    "bioenergy": {
+      "frames": 1013,
+      "fps": 24.000022888183594,
+      "file": "bioenergy.npz",
+      "label": "Bioenergy",
+      "video": null
+    },
+    "biofuel": {
+      "frames": 669,
+      "fps": 24.0,
+      "file": "biofuel.npz",
+      "label": "Biofuel",
+      "video": null
+    },
+    "biological_oxygen_demand": {
+      "frames": 519,
+      "fps": 24.0,
+      "file": "biological_oxygen_demand.npz",
+      "label": "Biological Oxygen Demand",
+      "video": null
+    },
+    "biological_weathering": {
+      "frames": 450,
+      "fps": 25.0,
+      "file": "biological_weathering.npz",
+      "label": "Biological Weathering",
+      "video": null
+    },
+    "biome": {
+      "frames": 633,
+      "fps": 24.0,
+      "file": "biome.npz",
+      "label": "Biome",
+      "video": null
+    },
+    "biomedical": {
+      "frames": 69,
+      "fps": 25.0,
+      "file": "biomedical.npz",
+      "label": "Biomedical",
+      "video": null
+    },
+    "bioregion": {
+      "frames": 864,
+      "fps": 24.0,
+      "file": "bioregion.npz",
+      "label": "Bioregion",
+      "video": null
+    },
+    "birds_of_a_feather_flock_together": {
+      "frames": 757,
+      "fps": 25.0,
+      "file": "birds_of_a_feather_flock_together.npz",
+      "label": "Birds Of A Feather Flock Together",
+      "video": null
+    },
+    "bisector": {
+      "frames": 261,
+      "fps": 24.0,
+      "file": "bisector.npz",
+      "label": "Bisector",
+      "video": null
+    },
+    "biweekly_fortnightly": {
+      "frames": 754,
+      "fps": 25.0,
+      "file": "biweekly_fortnightly.npz",
+      "label": "Biweekly Fortnightly",
+      "video": null
+    },
+    "blackwater": {
+      "frames": 277,
+      "fps": 24.0,
+      "file": "blackwater.npz",
+      "label": "Blackwater",
+      "video": null
+    },
+    "blight": {
+      "frames": 338,
+      "fps": 25.0,
+      "file": "blight.npz",
+      "label": "Blight",
+      "video": null
+    },
+    "blinds_shade": {
+      "frames": 167,
+      "fps": 25.0,
+      "file": "blinds_shade.npz",
+      "label": "Blinds Shade",
+      "video": null
+    },
+    "blink": {
+      "frames": 147,
+      "fps": 25.0,
+      "file": "blink.npz",
+      "label": "Blink",
+      "video": null
+    },
+    "block_education_officer": {
+      "frames": 420,
+      "fps": 24.0,
+      "file": "block_education_officer.npz",
+      "label": "Block Education Officer (Beo)",
+      "video": null
+    },
+    "blocks": {
+      "frames": 126,
+      "fps": 25.0,
+      "file": "blocks.npz",
+      "label": "Blocks",
+      "video": null
+    },
+    "blood_pressure_cuff": {
+      "frames": 204,
+      "fps": 25.0,
+      "file": "blood_pressure_cuff.npz",
+      "label": "Blood Pressure Cuff",
+      "video": null
+    },
+    "blood_transfusion": {
+      "frames": 312,
+      "fps": 25.0,
+      "file": "blood_transfusion.npz",
+      "label": "Blood Transfusion",
+      "video": null
+    },
+    "blotter": {
+      "frames": 701,
+      "fps": 30.0,
+      "file": "blotter.npz",
+      "label": "Blotter",
+      "video": null
+    },
+    "blower_sprayer": {
+      "frames": 397,
+      "fps": 24.0,
+      "file": "blower_sprayer.npz",
+      "label": "Blower Sprayer",
+      "video": null
+    },
+    "bodhisattva": {
+      "frames": 1024,
+      "fps": 25.0,
+      "file": "bodhisattva.npz",
+      "label": "Bodhisattva (Academic)",
+      "video": null
+    },
+    "body_armour": {
+      "frames": 505,
+      "fps": 25.0,
+      "file": "body_armour.npz",
+      "label": "Body Armour",
+      "video": null
+    },
+    "body_lotion_body_moisturizer": {
+      "frames": 144,
+      "fps": 24.0,
+      "file": "body_lotion_body_moisturizer.npz",
+      "label": "Body Lotion Body Moisturizer",
+      "video": null
+    },
+    "bombarded": {
+      "frames": 201,
+      "fps": 24.0,
+      "file": "bombarded.npz",
+      "label": "Bombarded",
+      "video": null
+    },
+    "bond_paper": {
+      "frames": 663,
+      "fps": 25.0,
+      "file": "bond_paper.npz",
+      "label": "Bond Paper",
+      "video": null
+    },
+    "bonds": {
+      "frames": 738,
+      "fps": 30.0,
+      "file": "bonds.npz",
+      "label": "Bonds",
+      "video": null
+    },
+    "bonsai_or_miniculture_or_mini_garden": {
+      "frames": 747,
+      "fps": 25.0,
+      "file": "bonsai_or_miniculture_or_mini_garden.npz",
+      "label": "Bonsai Or Miniculture Or Mini Garden",
+      "video": null
+    },
+    "book_mark": {
+      "frames": 1367,
+      "fps": 24.000017166137695,
+      "file": "book_mark.npz",
+      "label": "Book Mark",
+      "video": null
+    },
+    "booking": {
+      "frames": 612,
+      "fps": 25.0,
+      "file": "booking.npz",
+      "label": "Booking",
+      "video": null
+    },
+    "bottled_water": {
+      "frames": 64,
+      "fps": 25.0,
+      "file": "bottled_water.npz",
+      "label": "Bottled Water",
+      "video": null
+    },
+    "boundary_of_curve": {
+      "frames": 1558,
+      "fps": 25.0,
+      "file": "boundary_of_curve.npz",
+      "label": "Boundary Of Curve (Math)",
+      "video": null
+    },
+    "bowel": {
+      "frames": 360,
+      "fps": 25.0,
+      "file": "bowel.npz",
+      "label": "Bowel",
+      "video": null
+    },
+    "brahmin_kshatriya_vaishya_and_shudra": {
+      "frames": 1177,
+      "fps": 25.0,
+      "file": "brahmin_kshatriya_vaishya_and_shudra.npz",
+      "label": "Brahmin Kshatriya Vaishya And Shudra",
+      "video": null
+    },
+    "braid_plait": {
+      "frames": 111,
+      "fps": 24.0,
+      "file": "braid_plait.npz",
+      "label": "Braid Plait (Hair Style)",
+      "video": null
+    },
+    "brake_lights": {
+      "frames": 120,
+      "fps": 24.0,
+      "file": "brake_lights.npz",
+      "label": "Brake Lights",
+      "video": null
+    },
+    "brand_leader": {
+      "frames": 713,
+      "fps": 24.0,
+      "file": "brand_leader.npz",
+      "label": "Brand Leader",
+      "video": null
+    },
+    "brand_stretching": {
+      "frames": 954,
+      "fps": 24.000024795532227,
+      "file": "brand_stretching.npz",
+      "label": "Brand Stretching",
+      "video": null
+    },
+    "branding": {
+      "frames": 922,
+      "fps": 24.0,
+      "file": "branding.npz",
+      "label": "Branding",
+      "video": null
+    },
+    "breastfeed": {
+      "frames": 96,
+      "fps": 24.0,
+      "file": "breastfeed.npz",
+      "label": "Breastfeed",
+      "video": null
+    },
+    "breathalyzer": {
+      "frames": 506,
+      "fps": 25.0,
+      "file": "breathalyzer.npz",
+      "label": "Breathalyzer",
+      "video": null
+    },
+    "bridge_grafting": {
+      "frames": 832,
+      "fps": 25.0,
+      "file": "bridge_grafting.npz",
+      "label": "Bridge Grafting",
+      "video": null
+    },
+    "broiler": {
+      "frames": 391,
+      "fps": 24.0,
+      "file": "broiler.npz",
+      "label": "Broiler",
+      "video": null
+    },
+    "bronchoscopy": {
+      "frames": 744,
+      "fps": 25.0,
+      "file": "bronchoscopy.npz",
+      "label": "Bronchoscopy",
+      "video": null
+    },
+    "brooding_of_chicks": {
+      "frames": 852,
+      "fps": 24.0,
+      "file": "brooding_of_chicks.npz",
+      "label": "Brooding Of Chicks",
+      "video": null
+    },
+    "brownfield": {
+      "frames": 679,
+      "fps": 24.0,
+      "file": "brownfield.npz",
+      "label": "Brownfield",
+      "video": null
+    },
+    "browse_look_through": {
+      "frames": 237,
+      "fps": 24.0,
+      "file": "browse_look_through.npz",
+      "label": "Browse Look Through (Shopping)",
+      "video": null
+    },
+    "bubble_chart": {
+      "frames": 690,
+      "fps": 25.0,
+      "file": "bubble_chart.npz",
+      "label": "Bubble Chart",
+      "video": null
+    },
+    "buddha_statue": {
+      "frames": 136,
+      "fps": 25.0,
+      "file": "buddha_statue.npz",
+      "label": "Buddha Statue (Hyderabad)",
+      "video": null
+    },
+    "budget_balance": {
+      "frames": 484,
+      "fps": 24.0,
+      "file": "budget_balance.npz",
+      "label": "Budget Balance",
+      "video": null
+    },
+    "budget_surplus": {
+      "frames": 691,
+      "fps": 24.0,
+      "file": "budget_surplus.npz",
+      "label": "Budget Surplus",
+      "video": null
+    },
+    "budget_travelers": {
+      "frames": 334,
+      "fps": 24.0,
+      "file": "budget_travelers.npz",
+      "label": "Budget Travelers",
+      "video": null
+    },
+    "building_automation_system": {
+      "frames": 960,
+      "fps": 25.0,
+      "file": "building_automation_system.npz",
+      "label": "Building Automation System",
+      "video": null
+    },
+    "bullet": {
+      "frames": 542,
+      "fps": 24.0,
+      "file": "bullet.npz",
+      "label": "Bullet",
+      "video": null
+    },
+    "bund": {
+      "frames": 721,
+      "fps": 25.0,
+      "file": "bund.npz",
+      "label": "Bund",
+      "video": null
+    },
+    "bureaucracy": {
+      "frames": 1875,
+      "fps": 25.0,
+      "file": "bureaucracy.npz",
+      "label": "Bureaucracy",
+      "video": null
+    },
+    "burn_the_midnight_oil": {
+      "frames": 152,
+      "fps": 24.0,
+      "file": "burn_the_midnight_oil.npz",
+      "label": "Burn The Midnight Oil",
+      "video": null
+    },
+    "burner": {
+      "frames": 285,
+      "fps": 24.0,
+      "file": "burner.npz",
+      "label": "Burner",
+      "video": null
+    },
+    "business_email_enterprise_email": {
+      "frames": 909,
+      "fps": 24.0,
+      "file": "business_email_enterprise_email.npz",
+      "label": "Business Email Enterprise Email",
+      "video": null
+    },
+    "bust_statue_memorial": {
+      "frames": 947,
+      "fps": 24.0,
+      "file": "bust_statue_memorial.npz",
+      "label": "Bust Statue Memorial",
+      "video": null
+    },
+    "button": {
+      "frames": 168,
+      "fps": 25.0,
+      "file": "button.npz",
+      "label": "Button",
+      "video": null
+    },
+    "buzz_whine": {
+      "frames": 396,
+      "fps": 25.0,
+      "file": "buzz_whine.npz",
+      "label": "Buzz Whine (Bees Flies Etc)",
+      "video": null
+    },
+    "byelaws": {
+      "frames": 1056,
+      "fps": 25.0,
+      "file": "byelaws.npz",
+      "label": "Byelaws",
+      "video": null
+    },
+    "baby_cot": {
+      "frames": 130,
+      "fps": 25.0,
+      "file": "baby_cot.npz",
+      "label": "Baby Cot (Sign 2)",
+      "video": null
+    },
+    "back_behind": {
+      "frames": 67,
+      "fps": 25.0,
+      "file": "back_behind.npz",
+      "label": "Back Behind",
+      "video": null
+    },
+    "back_go_back_reverse": {
+      "frames": 70,
+      "fps": 25.0,
+      "file": "back_go_back_reverse.npz",
+      "label": "Back Go Back Reverse",
+      "video": null
+    },
+    "ball_bonding": {
+      "frames": 951,
+      "fps": 25.0,
+      "file": "ball_bonding.npz",
+      "label": "Ball Bonding",
+      "video": null
+    },
+    "bar_code_reader": {
+      "frames": 735,
+      "fps": 25.0,
+      "file": "bar_code_reader.npz",
+      "label": "Bar Code Reader",
+      "video": null
+    },
+    "bargain_sale": {
+      "frames": 653,
+      "fps": 25.0,
+      "file": "bargain_sale.npz",
+      "label": "Bargain & Sale",
+      "video": null
+    },
+    "barrier": {
+      "frames": 88,
+      "fps": 25.0,
+      "file": "barrier.npz",
+      "label": "Barrier",
+      "video": null
+    },
+    "basics": {
+      "frames": 168,
+      "fps": 25.0,
+      "file": "basics.npz",
+      "label": "Basics",
+      "video": null
+    },
+    "bedpan": {
+      "frames": 137,
+      "fps": 25.0,
+      "file": "bedpan.npz",
+      "label": "Bedpan",
+      "video": null
+    },
+    "behaviour": {
+      "frames": 1177,
+      "fps": 25.0,
+      "file": "behaviour.npz",
+      "label": "Behaviour",
+      "video": null
+    },
+    "behaviour_conduct_manner": {
+      "frames": 114,
+      "fps": 25.0,
+      "file": "behaviour_conduct_manner.npz",
+      "label": "Behaviour Conduct Manner",
+      "video": null
+    },
+    "belly_button": {
+      "frames": 180,
+      "fps": 25.0,
+      "file": "belly_button.npz",
+      "label": "Belly Button",
+      "video": null
+    },
+    "benami_transaction": {
+      "frames": 1516,
+      "fps": 25.0,
+      "file": "benami_transaction.npz",
+      "label": "Benami Transaction",
+      "video": null
+    },
+    "bench_press": {
+      "frames": 195,
+      "fps": 25.0,
+      "file": "bench_press.npz",
+      "label": "Bench Press",
+      "video": null
+    },
+    "bench_vice": {
+      "frames": 990,
+      "fps": 25.0,
+      "file": "bench_vice.npz",
+      "label": "Bench Vice",
+      "video": null
+    },
+    "benefit_profit_gain": {
+      "frames": 113,
+      "fps": 25.0,
+      "file": "benefit_profit_gain.npz",
+      "label": "Benefit Profit Gain",
+      "video": null
+    },
+    "bestow": {
+      "frames": 1000,
+      "fps": 25.0,
+      "file": "bestow.npz",
+      "label": "Bestow",
+      "video": null
+    },
+    "between_in_the_middle": {
+      "frames": 123,
+      "fps": 25.0,
+      "file": "between_in_the_middle.npz",
+      "label": "Between In The Middle",
+      "video": null
+    },
+    "between_middle": {
+      "frames": 109,
+      "fps": 25.0,
+      "file": "between_middle.npz",
+      "label": "Between Middle",
+      "video": null
+    },
+    "bevel_gear": {
+      "frames": 545,
+      "fps": 25.0,
+      "file": "bevel_gear.npz",
+      "label": "Bevel Gear",
+      "video": null
+    },
+    "bid_auction": {
+      "frames": 1173,
+      "fps": 25.0,
+      "file": "bid_auction.npz",
+      "label": "Bid Auction",
+      "video": null
+    },
+    "big_toe": {
+      "frames": 172,
+      "fps": 25.0,
+      "file": "big_toe.npz",
+      "label": "Big Toe",
+      "video": null
+    },
+    "bigotry": {
+      "frames": 1240,
+      "fps": 25.0,
+      "file": "bigotry.npz",
+      "label": "Bigotry",
+      "video": null
+    },
+    "binge_eating": {
+      "frames": 228,
+      "fps": 25.0,
+      "file": "binge_eating.npz",
+      "label": "Binge Eating",
+      "video": null
+    },
+    "biography": {
+      "frames": 1111,
+      "fps": 25.0,
+      "file": "biography.npz",
+      "label": "Biography",
+      "video": null
+    },
+    "blackmail": {
+      "frames": 652,
+      "fps": 25.0,
+      "file": "blackmail.npz",
+      "label": "Blackmail",
+      "video": null
+    },
+    "blood_bank_refrigerator": {
+      "frames": 124,
+      "fps": 25.0,
+      "file": "blood_bank_refrigerator.npz",
+      "label": "Blood Bank Refrigerator",
+      "video": null
+    },
+    "blood_cells": {
+      "frames": 143,
+      "fps": 25.0,
+      "file": "blood_cells.npz",
+      "label": "Blood Cells",
+      "video": null
+    },
+    "blood_infusion_set": {
+      "frames": 291,
+      "fps": 25.0,
+      "file": "blood_infusion_set.npz",
+      "label": "Blood Infusion Set",
+      "video": null
+    },
+    "bonded_goods": {
+      "frames": 655,
+      "fps": 25.0,
+      "file": "bonded_goods.npz",
+      "label": "Bonded Goods",
+      "video": null
+    },
+    "bone_cells": {
+      "frames": 149,
+      "fps": 25.0,
+      "file": "bone_cells.npz",
+      "label": "Bone Cells (Osteocytes)",
+      "video": null
+    },
+    "bookcase_bookshelf": {
+      "frames": 134,
+      "fps": 25.0,
+      "file": "bookcase_bookshelf.npz",
+      "label": "Bookcase Bookshelf",
+      "video": null
+    },
+    "boot": {
+      "frames": 855,
+      "fps": 25.0,
+      "file": "boot.npz",
+      "label": "Boot",
+      "video": null
+    },
+    "bored_uninterested": {
+      "frames": 109,
+      "fps": 25.0,
+      "file": "bored_uninterested.npz",
+      "label": "Bored Uninterested",
+      "video": null
+    },
+    "both_couple_pair": {
+      "frames": 96,
+      "fps": 25.0,
+      "file": "both_couple_pair.npz",
+      "label": "Both Couple Pair",
+      "video": null
+    },
+    "boycott": {
+      "frames": 974,
+      "fps": 25.0,
+      "file": "boycott.npz",
+      "label": "Boycott",
+      "video": null
+    },
+    "bp_machine": {
+      "frames": 163,
+      "fps": 25.0,
+      "file": "bp_machine.npz",
+      "label": "Bp Machine",
+      "video": null
+    },
+    "brain_and_spinal_cord_tumors": {
+      "frames": 116,
+      "fps": 25.0,
+      "file": "brain_and_spinal_cord_tumors.npz",
+      "label": "Brain And Spinal Cord Tumors",
+      "video": null
+    },
+    "brain_tumor": {
+      "frames": 138,
+      "fps": 25.0,
+      "file": "brain_tumor.npz",
+      "label": "Brain Tumor (Outside)",
+      "video": null
+    },
+    "branches_of_medical": {
+      "frames": 134,
+      "fps": 25.0,
+      "file": "branches_of_medical.npz",
+      "label": "Branches Of Medical",
+      "video": null
+    },
+    "breach_of_code": {
+      "frames": 719,
+      "fps": 25.0,
+      "file": "breach_of_code.npz",
+      "label": "Breach Of Code",
+      "video": null
+    },
+    "bread_boards": {
+      "frames": 1119,
+      "fps": 25.0,
+      "file": "bread_boards.npz",
+      "label": "Bread Boards",
+      "video": null
+    },
+    "break_pause_time_out": {
+      "frames": 108,
+      "fps": 25.0,
+      "file": "break_pause_time_out.npz",
+      "label": "Break Pause Time Out",
+      "video": null
+    },
+    "break_sever_split": {
+      "frames": 105,
+      "fps": 25.0,
+      "file": "break_sever_split.npz",
+      "label": "Break Sever Split",
+      "video": null
+    },
+    "breast": {
+      "frames": 72,
+      "fps": 25.0,
+      "file": "breast.npz",
+      "label": "Breast",
+      "video": null
+    },
+    "breastbone_sternum": {
+      "frames": 166,
+      "fps": 25.0,
+      "file": "breastbone_sternum.npz",
+      "label": "Breastbone Sternum",
+      "video": null
+    },
+    "bribe_graft": {
+      "frames": 105,
+      "fps": 25.0,
+      "file": "bribe_graft.npz",
+      "label": "Bribe Graft",
+      "video": null
+    },
+    "broadband": {
+      "frames": 1035,
+      "fps": 25.0,
+      "file": "broadband.npz",
+      "label": "Broadband",
+      "video": null
+    },
+    "bronze_age": {
+      "frames": 1164,
+      "fps": 25.0,
+      "file": "bronze_age.npz",
+      "label": "Bronze Age",
+      "video": null
+    },
+    "budget_funds": {
+      "frames": 127,
+      "fps": 25.0,
+      "file": "budget_funds.npz",
+      "label": "Budget Funds",
+      "video": null
+    },
+    "buttocks_backside": {
+      "frames": 145,
+      "fps": 25.0,
+      "file": "buttocks_backside.npz",
+      "label": "Buttocks Backside",
+      "video": null
+    },
+    "bye_goodbye": {
+      "frames": 108,
+      "fps": 25.0,
+      "file": "bye_goodbye.npz",
+      "label": "Bye Goodbye",
+      "video": null
+    },
+    "byte": {
+      "frames": 765,
+      "fps": 25.0,
+      "file": "byte.npz",
+      "label": "Byte",
+      "video": null
+    }
+  }
+}

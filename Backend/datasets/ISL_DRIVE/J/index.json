@@ -1,0 +1,342 @@
+{
+  "dataset": "Group J - New Words",
+  "count": 48,
+  "words": {
+    "j_cut": {
+      "frames": 1044,
+      "fps": 24.000022888183594,
+      "file": "j_cut.npz",
+      "label": "J Cut",
+      "video": null
+    },
+    "jack": {
+      "frames": 695,
+      "fps": 25.0,
+      "file": "jack.npz",
+      "label": "Jack",
+      "video": null
+    },
+    "jackpot": {
+      "frames": 332,
+      "fps": 29.970029830932617,
+      "file": "jackpot.npz",
+      "label": "Jackpot",
+      "video": null
+    },
+    "jail_prison_prisoner_jailor": {
+      "frames": 1246,
+      "fps": 25.0,
+      "file": "jail_prison_prisoner_jailor.npz",
+      "label": "Jail Prison Prisoner Jailor",
+      "video": null
+    },
+    "jainism_jain": {
+      "frames": 74,
+      "fps": 25.0,
+      "file": "jainism_jain.npz",
+      "label": "Jainism Jain",
+      "video": null
+    },
+    "jammed_stuck": {
+      "frames": 1345,
+      "fps": 29.970073699951172,
+      "file": "jammed_stuck.npz",
+      "label": "Jammed Stuck",
+      "video": null
+    },
+    "jammu_and_kashmir_peoples_democratic_party": {
+      "frames": 116,
+      "fps": 24.0,
+      "file": "jammu_and_kashmir_peoples_democratic_party.npz",
+      "label": "Jammu And Kashmir Peoples Democratic Party (Jkpdp)",
+      "video": null
+    },
+    "jana": {
+      "frames": 1337,
+      "fps": 25.0,
+      "file": "jana.npz",
+      "label": "Jana (History)",
+      "video": null
+    },
+    "janta_dal_united": {
+      "frames": 95,
+      "fps": 25.0,
+      "file": "janta_dal_united.npz",
+      "label": "Janta Dal United (Jdu)",
+      "video": null
+    },
+    "japan": {
+      "frames": 70,
+      "fps": 25.0,
+      "file": "japan.npz",
+      "label": "Japan",
+      "video": null
+    },
+    "japany_garden": {
+      "frames": 814,
+      "fps": 25.0,
+      "file": "japany_garden.npz",
+      "label": "Japany Garden",
+      "video": null
+    },
+    "jataka_katha_and_panchtantra": {
+      "frames": 1104,
+      "fps": 25.0,
+      "file": "jataka_katha_and_panchtantra.npz",
+      "label": "Jataka Katha And Panchtantra",
+      "video": null
+    },
+    "jataka_stories": {
+      "frames": 1653,
+      "fps": 25.0,
+      "file": "jataka_stories.npz",
+      "label": "Jataka Stories (Academic)",
+      "video": null
+    },
+    "jaw": {
+      "frames": 162,
+      "fps": 25.0,
+      "file": "jaw.npz",
+      "label": "Jaw",
+      "video": null
+    },
+    "jesus_christ": {
+      "frames": 91,
+      "fps": 25.0,
+      "file": "jesus_christ.npz",
+      "label": "Jesus Christ",
+      "video": null
+    },
+    "jewelery": {
+      "frames": 126,
+      "fps": 25.0,
+      "file": "jewelery.npz",
+      "label": "Jewelery",
+      "video": null
+    },
+    "jeweller": {
+      "frames": 161,
+      "fps": 25.0,
+      "file": "jeweller.npz",
+      "label": "Jeweller",
+      "video": null
+    },
+    "jewellery_laser_engraving_machine": {
+      "frames": 535,
+      "fps": 24.0,
+      "file": "jewellery_laser_engraving_machine.npz",
+      "label": "Jewellery Laser Engraving Machine",
+      "video": null
+    },
+    "jigsaw_puzzle": {
+      "frames": 112,
+      "fps": 24.0,
+      "file": "jigsaw_puzzle.npz",
+      "label": "Jigsaw Puzzle",
+      "video": null
+    },
+    "jio": {
+      "frames": 108,
+      "fps": 25.0,
+      "file": "jio.npz",
+      "label": "Jio",
+      "video": null
+    },
+    "jizya": {
+      "frames": 651,
+      "fps": 25.0,
+      "file": "jizya.npz",
+      "label": "Jizya",
+      "video": null
+    },
+    "jk_bank": {
+      "frames": 117,
+      "fps": 24.0,
+      "file": "jk_bank.npz",
+      "label": "J&K Bank",
+      "video": null
+    },
+    "jobless_unemployed": {
+      "frames": 86,
+      "fps": 25.0,
+      "file": "jobless_unemployed.npz",
+      "label": "Jobless Unemployed",
+      "video": null
+    },
+    "jobless_unemployed_out_of_work": {
+      "frames": 98,
+      "fps": 25.0,
+      "file": "jobless_unemployed_out_of_work.npz",
+      "label": "Jobless Unemployed Out Of Work",
+      "video": null
+    },
+    "jockey": {
+      "frames": 144,
+      "fps": 29.970029830932617,
+      "file": "jockey.npz",
+      "label": "Jockey (Horse)",
+      "video": null
+    },
+    "joey": {
+      "frames": 103,
+      "fps": 24.0,
+      "file": "joey.npz",
+      "label": "Joey",
+      "video": null
+    },
+    "john_abraham": {
+      "frames": 94,
+      "fps": 25.0,
+      "file": "john_abraham.npz",
+      "label": "John Abraham",
+      "video": null
+    },
+    "joining_report": {
+      "frames": 1029,
+      "fps": 24.000022888183594,
+      "file": "joining_report.npz",
+      "label": "Joining Report",
+      "video": null
+    },
+    "joint": {
+      "frames": 302,
+      "fps": 25.0,
+      "file": "joint.npz",
+      "label": "Joint",
+      "video": null
+    },
+    "joint_custody": {
+      "frames": 459,
+      "fps": 25.0,
+      "file": "joint_custody.npz",
+      "label": "Joint Custody",
+      "video": null
+    },
+    "joint_family": {
+      "frames": 552,
+      "fps": 25.0,
+      "file": "joint_family.npz",
+      "label": "Joint Family",
+      "video": null
+    },
+    "joint_family_sign": {
+      "frames": 69,
+      "fps": 25.0,
+      "file": "joint_family_sign.npz",
+      "label": "Joint Family Sign",
+      "video": null
+    },
+    "joint_venture": {
+      "frames": 392,
+      "fps": 24.0,
+      "file": "joint_venture.npz",
+      "label": "Joint Venture",
+      "video": null
+    },
+    "joints": {
+      "frames": 524,
+      "fps": 25.0,
+      "file": "joints.npz",
+      "label": "Joints",
+      "video": null
+    },
+    "joke_funny_tease": {
+      "frames": 150,
+      "fps": 25.0,
+      "file": "joke_funny_tease.npz",
+      "label": "Joke Funny Tease",
+      "video": null
+    },
+    "journalist_reporter": {
+      "frames": 174,
+      "fps": 25.0,
+      "file": "journalist_reporter.npz",
+      "label": "Journalist Reporter",
+      "video": null
+    },
+    "joystick": {
+      "frames": 390,
+      "fps": 25.0,
+      "file": "joystick.npz",
+      "label": "Joystick",
+      "video": null
+    },
+    "jpeg": {
+      "frames": 511,
+      "fps": 25.0,
+      "file": "jpeg.npz",
+      "label": "Jpeg",
+      "video": null
+    },
+    "judicial_evidence_non_judicial_evidence": {
+      "frames": 921,
+      "fps": 24.0,
+      "file": "judicial_evidence_non_judicial_evidence.npz",
+      "label": "Judicial Evidence Non-Judicial Evidence",
+      "video": null
+    },
+    "judicial_service_centre": {
+      "frames": 715,
+      "fps": 25.0,
+      "file": "judicial_service_centre.npz",
+      "label": "Judicial Service Centre",
+      "video": null
+    },
+    "judiciary": {
+      "frames": 1755,
+      "fps": 25.0,
+      "file": "judiciary.npz",
+      "label": "Judiciary (Academic)",
+      "video": null
+    },
+    "julienne": {
+      "frames": 320,
+      "fps": 25.0,
+      "file": "julienne.npz",
+      "label": "Julienne",
+      "video": null
+    },
+    "jump_cut": {
+      "frames": 959,
+      "fps": 24.000024795532227,
+      "file": "jump_cut.npz",
+      "label": "Jump Cut",
+      "video": null
+    },
+    "junction_box": {
+      "frames": 393,
+      "fps": 25.0,
+      "file": "junction_box.npz",
+      "label": "Junction Box",
+      "video": null
+    },
+    "justice_injustice": {
+      "frames": 984,
+      "fps": 25.0,
+      "file": "justice_injustice.npz",
+      "label": "Justice Injustice",
+      "video": null
+    },
+    "justify": {
+      "frames": 629,
+      "fps": 25.0,
+      "file": "justify.npz",
+      "label": "Justify",
+      "video": null
+    },
+    "jutti_mojri": {
+      "frames": 108,
+      "fps": 24.0,
+      "file": "jutti_mojri.npz",
+      "label": "Jutti Mojri",
+      "video": null
+    },
+    "juvenile": {
+      "frames": 362,
+      "fps": 25.0,
+      "file": "juvenile.npz",
+      "label": "Juvenile (Sign 2)",
+      "video": null
+    }
+  }
+}

@@ -1,0 +1,2267 @@
+{
+  "dataset": "Group D - New Words",
+  "count": 323,
+  "words": {
+    "diameter": {
+      "frames": 1361,
+      "fps": 25.0,
+      "file": "diameter.npz",
+      "label": "Diameter",
+      "video": null
+    },
+    "division_math": {
+      "frames": 1788,
+      "fps": 25.0,
+      "file": "division_math.npz",
+      "label": "Division Math",
+      "video": null
+    },
+    "dna_and_genes": {
+      "frames": 763,
+      "fps": 25.0,
+      "file": "dna_and_genes.npz",
+      "label": "Dna And Genes (Explanation 2)",
+      "video": null
+    },
+    "daily_everyday": {
+      "frames": 98,
+      "fps": 25.0,
+      "file": "daily_everyday.npz",
+      "label": "Daily Everyday",
+      "video": null
+    },
+    "dak": {
+      "frames": 596,
+      "fps": 25.0,
+      "file": "dak.npz",
+      "label": "Dak",
+      "video": null
+    },
+    "damping_off": {
+      "frames": 982,
+      "fps": 24.000024795532227,
+      "file": "damping_off.npz",
+      "label": "Damping Off",
+      "video": null
+    },
+    "dandruff": {
+      "frames": 73,
+      "fps": 25.0,
+      "file": "dandruff.npz",
+      "label": "Dandruff (Sign 3)",
+      "video": null
+    },
+    "danger_hazard_peril": {
+      "frames": 89,
+      "fps": 25.0,
+      "file": "danger_hazard_peril.npz",
+      "label": "Danger Hazard Peril",
+      "video": null
+    },
+    "dare_challenge_provoke": {
+      "frames": 115,
+      "fps": 24.0,
+      "file": "dare_challenge_provoke.npz",
+      "label": "Dare Challenge Provoke",
+      "video": null
+    },
+    "data": {
+      "frames": 1137,
+      "fps": 25.0,
+      "file": "data.npz",
+      "label": "Data (Math)",
+      "video": null
+    },
+    "data_archival": {
+      "frames": 849,
+      "fps": 24.0,
+      "file": "data_archival.npz",
+      "label": "Data Archival",
+      "video": null
+    },
+    "data_book_log_book": {
+      "frames": 836,
+      "fps": 24.0,
+      "file": "data_book_log_book.npz",
+      "label": "Data Book Log Book",
+      "video": null
+    },
+    "data_handeling": {
+      "frames": 837,
+      "fps": 24.0,
+      "file": "data_handeling.npz",
+      "label": "Data Handeling",
+      "video": null
+    },
+    "date_of_maturity": {
+      "frames": 755,
+      "fps": 24.0,
+      "file": "date_of_maturity.npz",
+      "label": "Date Of Maturity",
+      "video": null
+    },
+    "deadbody_or_corpse_carcass": {
+      "frames": 672,
+      "fps": 25.0,
+      "file": "deadbody_or_corpse_carcass.npz",
+      "label": "Deadbody Or Corpse Carcass",
+      "video": null
+    },
+    "deadline_time_limit": {
+      "frames": 79,
+      "fps": 25.0,
+      "file": "deadline_time_limit.npz",
+      "label": "Deadline Time Limit",
+      "video": null
+    },
+    "deaf_suppression": {
+      "frames": 75,
+      "fps": 24.0,
+      "file": "deaf_suppression.npz",
+      "label": "Deaf Suppression",
+      "video": null
+    },
+    "deal_handle_manage_cope_with": {
+      "frames": 387,
+      "fps": 24.0,
+      "file": "deal_handle_manage_cope_with.npz",
+      "label": "Deal Handle Manage Cope With",
+      "video": null
+    },
+    "dealers": {
+      "frames": 793,
+      "fps": 30.0,
+      "file": "dealers.npz",
+      "label": "Dealers",
+      "video": null
+    },
+    "decapitate": {
+      "frames": 353,
+      "fps": 24.0,
+      "file": "decapitate.npz",
+      "label": "Decapitate",
+      "video": null
+    },
+    "decibel": {
+      "frames": 517,
+      "fps": 25.0,
+      "file": "decibel.npz",
+      "label": "Decibel",
+      "video": null
+    },
+    "deck_pack": {
+      "frames": 167,
+      "fps": 24.0,
+      "file": "deck_pack.npz",
+      "label": "Deck Pack",
+      "video": null
+    },
+    "decline_and_dies_back": {
+      "frames": 686,
+      "fps": 25.0,
+      "file": "decline_and_dies_back.npz",
+      "label": "Decline And Dies Back",
+      "video": null
+    },
+    "decrease_lessen_reduce": {
+      "frames": 125,
+      "fps": 25.0,
+      "file": "decrease_lessen_reduce.npz",
+      "label": "Decrease Lessen Reduce (Sign 2)",
+      "video": null
+    },
+    "decree": {
+      "frames": 451,
+      "fps": 25.0,
+      "file": "decree.npz",
+      "label": "Decree",
+      "video": null
+    },
+    "decriminalize": {
+      "frames": 585,
+      "fps": 24.0,
+      "file": "decriminalize.npz",
+      "label": "Decriminalize",
+      "video": null
+    },
+    "defalcation": {
+      "frames": 457,
+      "fps": 25.0,
+      "file": "defalcation.npz",
+      "label": "Defalcation",
+      "video": null
+    },
+    "defamation_libel_slander": {
+      "frames": 1350,
+      "fps": 25.0,
+      "file": "defamation_libel_slander.npz",
+      "label": "Defamation Libel Slander",
+      "video": null
+    },
+    "defence": {
+      "frames": 796,
+      "fps": 25.0,
+      "file": "defence.npz",
+      "label": "Defence",
+      "video": null
+    },
+    "defence_mechanism": {
+      "frames": 1303,
+      "fps": 24.000019073486328,
+      "file": "defence_mechanism.npz",
+      "label": "Defence Mechanism",
+      "video": null
+    },
+    "deflationary_gap": {
+      "frames": 853,
+      "fps": 24.0,
+      "file": "deflationary_gap.npz",
+      "label": "Deflationary Gap",
+      "video": null
+    },
+    "dehorning_of_animals": {
+      "frames": 368,
+      "fps": 24.0,
+      "file": "dehorning_of_animals.npz",
+      "label": "Dehorning Of Animals",
+      "video": null
+    },
+    "demand_management": {
+      "frames": 774,
+      "fps": 24.0,
+      "file": "demand_management.npz",
+      "label": "Demand Management",
+      "video": null
+    },
+    "demand_pull_inflation": {
+      "frames": 923,
+      "fps": 24.0,
+      "file": "demand_pull_inflation.npz",
+      "label": "Demand Pull Inflation",
+      "video": null
+    },
+    "demarcation": {
+      "frames": 236,
+      "fps": 24.0,
+      "file": "demarcation.npz",
+      "label": "Demarcation (West Bengal)",
+      "video": null
+    },
+    "demise_expiry_passing_away": {
+      "frames": 94,
+      "fps": 24.0,
+      "file": "demise_expiry_passing_away.npz",
+      "label": "Demise Expiry Passing Away",
+      "video": null
+    },
+    "demobilisation": {
+      "frames": 603,
+      "fps": 24.0,
+      "file": "demobilisation.npz",
+      "label": "Demobilisation",
+      "video": null
+    },
+    "demote_downgrade": {
+      "frames": 418,
+      "fps": 24.0,
+      "file": "demote_downgrade.npz",
+      "label": "Demote Downgrade",
+      "video": null
+    },
+    "den_lair": {
+      "frames": 159,
+      "fps": 24.0,
+      "file": "den_lair.npz",
+      "label": "Den Lair",
+      "video": null
+    },
+    "denitrification": {
+      "frames": 588,
+      "fps": 24.0,
+      "file": "denitrification.npz",
+      "label": "Denitrification",
+      "video": null
+    },
+    "dental_compressor": {
+      "frames": 177,
+      "fps": 25.0,
+      "file": "dental_compressor.npz",
+      "label": "Dental Compressor",
+      "video": null
+    },
+    "dental_lab": {
+      "frames": 233,
+      "fps": 25.0,
+      "file": "dental_lab.npz",
+      "label": "Dental Lab",
+      "video": null
+    },
+    "dental_x_ray": {
+      "frames": 95,
+      "fps": 25.0,
+      "file": "dental_x_ray.npz",
+      "label": "Dental X-Ray",
+      "video": null
+    },
+    "dentist": {
+      "frames": 180,
+      "fps": 25.0,
+      "file": "dentist.npz",
+      "label": "Dentist",
+      "video": null
+    },
+    "deny_refuse": {
+      "frames": 107,
+      "fps": 25.0,
+      "file": "deny_refuse.npz",
+      "label": "Deny Refuse",
+      "video": null
+    },
+    "department_of_empowerment_of_persons_with_disabilities": {
+      "frames": 1757,
+      "fps": 24.00002670288086,
+      "file": "department_of_empowerment_of_persons_with_disabilities.npz",
+      "label": "Department Of Empowerment Of Persons With Disabilities (Depwd)",
+      "video": null
+    },
+    "depression": {
+      "frames": 1528,
+      "fps": 25.0,
+      "file": "depression.npz",
+      "label": "Depression (Psychology)",
+      "video": null
+    },
+    "dermatology": {
+      "frames": 124,
+      "fps": 25.0,
+      "file": "dermatology.npz",
+      "label": "Dermatology",
+      "video": null
+    },
+    "desalination": {
+      "frames": 495,
+      "fps": 24.0,
+      "file": "desalination.npz",
+      "label": "Desalination",
+      "video": null
+    },
+    "descender": {
+      "frames": 413,
+      "fps": 24.0,
+      "file": "descender.npz",
+      "label": "Descender",
+      "video": null
+    },
+    "descending_order": {
+      "frames": 1126,
+      "fps": 25.0,
+      "file": "descending_order.npz",
+      "label": "Descending Order (Maths)",
+      "video": null
+    },
+    "designation": {
+      "frames": 131,
+      "fps": 24.0,
+      "file": "designation.npz",
+      "label": "Designation",
+      "video": null
+    },
+    "desk_officer": {
+      "frames": 658,
+      "fps": 24.0,
+      "file": "desk_officer.npz",
+      "label": "Desk Officer (Administrator)",
+      "video": null
+    },
+    "desktop_background": {
+      "frames": 262,
+      "fps": 25.0,
+      "file": "desktop_background.npz",
+      "label": "Desktop Background",
+      "video": null
+    },
+    "destination": {
+      "frames": 507,
+      "fps": 24.0,
+      "file": "destination.npz",
+      "label": "Destination",
+      "video": null
+    },
+    "detached_house": {
+      "frames": 542,
+      "fps": 24.0,
+      "file": "detached_house.npz",
+      "label": "Detached House",
+      "video": null
+    },
+    "detoxification": {
+      "frames": 371,
+      "fps": 25.0,
+      "file": "detoxification.npz",
+      "label": "Detoxification",
+      "video": null
+    },
+    "devdasi": {
+      "frames": 1174,
+      "fps": 25.0,
+      "file": "devdasi.npz",
+      "label": "Devdasi",
+      "video": null
+    },
+    "developed_countries": {
+      "frames": 1291,
+      "fps": 24.000019073486328,
+      "file": "developed_countries.npz",
+      "label": "Developed Countries",
+      "video": null
+    },
+    "dhirubhai_ambani": {
+      "frames": 78,
+      "fps": 25.0,
+      "file": "dhirubhai_ambani.npz",
+      "label": "Dhirubhai Ambani",
+      "video": null
+    },
+    "dholak": {
+      "frames": 115,
+      "fps": 25.0,
+      "file": "dholak.npz",
+      "label": "Dholak",
+      "video": null
+    },
+    "dhoti_pants": {
+      "frames": 112,
+      "fps": 25.0,
+      "file": "dhoti_pants.npz",
+      "label": "Dhoti  Pants",
+      "video": null
+    },
+    "dialysis": {
+      "frames": 1124,
+      "fps": 25.0,
+      "file": "dialysis.npz",
+      "label": "Dialysis (Academic)",
+      "video": null
+    },
+    "dictatorship": {
+      "frames": 862,
+      "fps": 25.0,
+      "file": "dictatorship.npz",
+      "label": "Dictatorship",
+      "video": null
+    },
+    "dietician": {
+      "frames": 149,
+      "fps": 25.0,
+      "file": "dietician.npz",
+      "label": "Dietician",
+      "video": null
+    },
+    "digestion": {
+      "frames": 622,
+      "fps": 25.0,
+      "file": "digestion.npz",
+      "label": "Digestion",
+      "video": null
+    },
+    "digestive_system": {
+      "frames": 1421,
+      "fps": 29.970029830932617,
+      "file": "digestive_system.npz",
+      "label": "Digestive System (Academic)",
+      "video": null
+    },
+    "digital_india": {
+      "frames": 815,
+      "fps": 24.0,
+      "file": "digital_india.npz",
+      "label": "Digital India",
+      "video": null
+    },
+    "digital_marketing": {
+      "frames": 1021,
+      "fps": 24.000022888183594,
+      "file": "digital_marketing.npz",
+      "label": "Digital Marketing",
+      "video": null
+    },
+    "digital_signal": {
+      "frames": 1622,
+      "fps": 25.0,
+      "file": "digital_signal.npz",
+      "label": "Digital Signal",
+      "video": null
+    },
+    "direct_observation": {
+      "frames": 2076,
+      "fps": 24.000022888183594,
+      "file": "direct_observation.npz",
+      "label": "Direct Observation",
+      "video": null
+    },
+    "directory": {
+      "frames": 1079,
+      "fps": 25.0,
+      "file": "directory.npz",
+      "label": "Directory",
+      "video": null
+    },
+    "disability_studies": {
+      "frames": 723,
+      "fps": 25.0,
+      "file": "disability_studies.npz",
+      "label": "Disability Studies",
+      "video": null
+    },
+    "disappear_with_the_arrival_of_someone": {
+      "frames": 77,
+      "fps": 25.0,
+      "file": "disappear_with_the_arrival_of_someone.npz",
+      "label": "Disappear With The Arrival Of Someone",
+      "video": null
+    },
+    "disaster": {
+      "frames": 687,
+      "fps": 25.0,
+      "file": "disaster.npz",
+      "label": "Disaster",
+      "video": null
+    },
+    "disclosure": {
+      "frames": 731,
+      "fps": 25.0,
+      "file": "disclosure.npz",
+      "label": "Disclosure",
+      "video": null
+    },
+    "discount_rate": {
+      "frames": 633,
+      "fps": 24.0,
+      "file": "discount_rate.npz",
+      "label": "Discount Rate",
+      "video": null
+    },
+    "discretionary_economic_policy": {
+      "frames": 703,
+      "fps": 24.0,
+      "file": "discretionary_economic_policy.npz",
+      "label": "Discretionary Economic Policy",
+      "video": null
+    },
+    "discrimination": {
+      "frames": 926,
+      "fps": 24.0,
+      "file": "discrimination.npz",
+      "label": "Discrimination (Sign 2)",
+      "video": null
+    },
+    "discrimination_against_divyangjans": {
+      "frames": 85,
+      "fps": 24.0,
+      "file": "discrimination_against_divyangjans.npz",
+      "label": "Discrimination Against Divyangjans",
+      "video": null
+    },
+    "disease_resistant": {
+      "frames": 387,
+      "fps": 25.0,
+      "file": "disease_resistant.npz",
+      "label": "Disease Resistant",
+      "video": null
+    },
+    "disguised_unemployment": {
+      "frames": 1084,
+      "fps": 25.0,
+      "file": "disguised_unemployment.npz",
+      "label": "Disguised Unemployment",
+      "video": null
+    },
+    "disinfection_of_water": {
+      "frames": 772,
+      "fps": 24.0,
+      "file": "disinfection_of_water.npz",
+      "label": "Disinfection Of Water",
+      "video": null
+    },
+    "dissipation": {
+      "frames": 732,
+      "fps": 25.0,
+      "file": "dissipation.npz",
+      "label": "Dissipation",
+      "video": null
+    },
+    "distinguish": {
+      "frames": 46,
+      "fps": 25.0,
+      "file": "distinguish.npz",
+      "label": "Distinguish",
+      "video": null
+    },
+    "distribute_allocate": {
+      "frames": 93,
+      "fps": 25.0,
+      "file": "distribute_allocate.npz",
+      "label": "Distribute Allocate",
+      "video": null
+    },
+    "distributed_water": {
+      "frames": 756,
+      "fps": 25.0,
+      "file": "distributed_water.npz",
+      "label": "Distributed Water",
+      "video": null
+    },
+    "ditylenchus": {
+      "frames": 564,
+      "fps": 25.0,
+      "file": "ditylenchus.npz",
+      "label": "Ditylenchus",
+      "video": null
+    },
+    "diversity_in_sign_language": {
+      "frames": 1045,
+      "fps": 24.000022888183594,
+      "file": "diversity_in_sign_language.npz",
+      "label": "Diversity In Sign Language",
+      "video": null
+    },
+    "divide_cup_up": {
+      "frames": 101,
+      "fps": 25.0,
+      "file": "divide_cup_up.npz",
+      "label": "Divide Cup Up",
+      "video": null
+    },
+    "divider": {
+      "frames": 420,
+      "fps": 25.0,
+      "file": "divider.npz",
+      "label": "Divider",
+      "video": null
+    },
+    "divisible": {
+      "frames": 1483,
+      "fps": 25.0,
+      "file": "divisible.npz",
+      "label": "Divisible (Maths)",
+      "video": null
+    },
+    "divorcee": {
+      "frames": 642,
+      "fps": 24.0,
+      "file": "divorcee.npz",
+      "label": "Divorcee",
+      "video": null
+    },
+    "dna": {
+      "frames": 108,
+      "fps": 25.0,
+      "file": "dna.npz",
+      "label": "Dna (Sign)",
+      "video": null
+    },
+    "domain_name_registration": {
+      "frames": 1435,
+      "fps": 24.000017166137695,
+      "file": "domain_name_registration.npz",
+      "label": "Domain Name Registration",
+      "video": null
+    },
+    "domestic_worker": {
+      "frames": 828,
+      "fps": 25.0,
+      "file": "domestic_worker.npz",
+      "label": "Domestic Worker",
+      "video": null
+    },
+    "domestication_domesticate": {
+      "frames": 980,
+      "fps": 25.0,
+      "file": "domestication_domesticate.npz",
+      "label": "Domestication - Domesticate",
+      "video": null
+    },
+    "donation_organ": {
+      "frames": 527,
+      "fps": 25.0,
+      "file": "donation_organ.npz",
+      "label": "Donation Organ",
+      "video": null
+    },
+    "doner": {
+      "frames": 228,
+      "fps": 25.0,
+      "file": "doner.npz",
+      "label": "Doner(1)",
+      "video": null
+    },
+    "dormancy": {
+      "frames": 771,
+      "fps": 24.0,
+      "file": "dormancy.npz",
+      "label": "Dormancy",
+      "video": null
+    },
+    "dot": {
+      "frames": 103,
+      "fps": 25.0,
+      "file": "dot.npz",
+      "label": "Dot",
+      "video": null
+    },
+    "double_burden": {
+      "frames": 588,
+      "fps": 25.0,
+      "file": "double_burden.npz",
+      "label": "Double Burden",
+      "video": null
+    },
+    "downmarket": {
+      "frames": 974,
+      "fps": 24.000024795532227,
+      "file": "downmarket.npz",
+      "label": "Downmarket",
+      "video": null
+    },
+    "draft_drawer_drawee_payee": {
+      "frames": 983,
+      "fps": 24.000024795532227,
+      "file": "draft_drawer_drawee_payee.npz",
+      "label": "Draft Drawer Drawee Payee",
+      "video": null
+    },
+    "draft_for_approval": {
+      "frames": 515,
+      "fps": 25.0,
+      "file": "draft_for_approval.npz",
+      "label": "Draft For Approval (Dfa)",
+      "video": null
+    },
+    "drafting": {
+      "frames": 605,
+      "fps": 24.0,
+      "file": "drafting.npz",
+      "label": "Drafting",
+      "video": null
+    },
+    "draw_string": {
+      "frames": 240,
+      "fps": 25.0,
+      "file": "draw_string.npz",
+      "label": "Draw  String",
+      "video": null
+    },
+    "dredge_crops": {
+      "frames": 1030,
+      "fps": 25.0,
+      "file": "dredge_crops.npz",
+      "label": "Dredge Crops",
+      "video": null
+    },
+    "dress_form": {
+      "frames": 494,
+      "fps": 25.0,
+      "file": "dress_form.npz",
+      "label": "Dress  Form",
+      "video": null
+    },
+    "drift_net": {
+      "frames": 708,
+      "fps": 25.0,
+      "file": "drift_net.npz",
+      "label": "Drift Net",
+      "video": null
+    },
+    "drill_drift": {
+      "frames": 707,
+      "fps": 25.0,
+      "file": "drill_drift.npz",
+      "label": "Drill Drift",
+      "video": null
+    },
+    "drug_court": {
+      "frames": 516,
+      "fps": 25.0,
+      "file": "drug_court.npz",
+      "label": "Drug Court",
+      "video": null
+    },
+    "dry_areas_weeds": {
+      "frames": 442,
+      "fps": 25.0,
+      "file": "dry_areas_weeds.npz",
+      "label": "Dry Areas Weeds",
+      "video": null
+    },
+    "dry_farming_dryland_farming": {
+      "frames": 924,
+      "fps": 24.0,
+      "file": "dry_farming_dryland_farming.npz",
+      "label": "Dry Farming Dryland Farming",
+      "video": null
+    },
+    "dual_nationality": {
+      "frames": 755,
+      "fps": 25.0,
+      "file": "dual_nationality.npz",
+      "label": "Dual Nationality",
+      "video": null
+    },
+    "ductility": {
+      "frames": 981,
+      "fps": 25.0,
+      "file": "ductility.npz",
+      "label": "Ductility",
+      "video": null
+    },
+    "due_procees_of_law": {
+      "frames": 1212,
+      "fps": 25.0,
+      "file": "due_procees_of_law.npz",
+      "label": "Due Procees Of Law",
+      "video": null
+    },
+    "dull_unintelligent_dim_stupid": {
+      "frames": 102,
+      "fps": 25.0,
+      "file": "dull_unintelligent_dim_stupid.npz",
+      "label": "Dull Unintelligent Dim Stupid",
+      "video": null
+    },
+    "dumbell": {
+      "frames": 139,
+      "fps": 25.0,
+      "file": "dumbell.npz",
+      "label": "Dumbell",
+      "video": null
+    },
+    "dvp": {
+      "frames": 774,
+      "fps": 30.0,
+      "file": "dvp.npz",
+      "label": "Dvp",
+      "video": null
+    },
+    "dying_declaration": {
+      "frames": 1476,
+      "fps": 25.0,
+      "file": "dying_declaration.npz",
+      "label": "Dying Declaration",
+      "video": null
+    },
+    "dyspnea": {
+      "frames": 528,
+      "fps": 25.0,
+      "file": "dyspnea.npz",
+      "label": "Dyspnea",
+      "video": null
+    },
+    "dairy_products": {
+      "frames": 645,
+      "fps": 25.0,
+      "file": "dairy_products.npz",
+      "label": "Dairy Products",
+      "video": null
+    },
+    "damp": {
+      "frames": 387,
+      "fps": 24.0,
+      "file": "damp.npz",
+      "label": "Damp",
+      "video": null
+    },
+    "dare_challenge": {
+      "frames": 61,
+      "fps": 24.0,
+      "file": "dare_challenge.npz",
+      "label": "Dare Challenge",
+      "video": null
+    },
+    "dartboard": {
+      "frames": 160,
+      "fps": 29.970029830932617,
+      "file": "dartboard.npz",
+      "label": "Dartboard",
+      "video": null
+    },
+    "data_information_statistics": {
+      "frames": 108,
+      "fps": 25.0,
+      "file": "data_information_statistics.npz",
+      "label": "Data Information Statistics",
+      "video": null
+    },
+    "data_layer": {
+      "frames": 1268,
+      "fps": 24.000019073486328,
+      "file": "data_layer.npz",
+      "label": "Data Layer",
+      "video": null
+    },
+    "date_of_birth": {
+      "frames": 500,
+      "fps": 24.0,
+      "file": "date_of_birth.npz",
+      "label": "Date Of Birth (D O B)",
+      "video": null
+    },
+    "datum": {
+      "frames": 377,
+      "fps": 24.0,
+      "file": "datum.npz",
+      "label": "Datum",
+      "video": null
+    },
+    "day_after_tomorrow": {
+      "frames": 202,
+      "fps": 25.0,
+      "file": "day_after_tomorrow.npz",
+      "label": "Day(S) After Tomorrow",
+      "video": null
+    },
+    "daydream": {
+      "frames": 250,
+      "fps": 24.0,
+      "file": "daydream.npz",
+      "label": "Daydream",
+      "video": null
+    },
+    "de_facto_de_jure": {
+      "frames": 1092,
+      "fps": 25.0,
+      "file": "de_facto_de_jure.npz",
+      "label": "De Facto De Jure",
+      "video": null
+    },
+    "de_value": {
+      "frames": 126,
+      "fps": 25.0,
+      "file": "de_value.npz",
+      "label": "De Value",
+      "video": null
+    },
+    "dead_load": {
+      "frames": 714,
+      "fps": 24.0,
+      "file": "dead_load.npz",
+      "label": "Dead Load",
+      "video": null
+    },
+    "deaf_culture": {
+      "frames": 1334,
+      "fps": 25.0,
+      "file": "deaf_culture.npz",
+      "label": "Deaf Culture",
+      "video": null
+    },
+    "deaf_identity": {
+      "frames": 757,
+      "fps": 24.0,
+      "file": "deaf_identity.npz",
+      "label": "Deaf Identity",
+      "video": null
+    },
+    "deaflympics": {
+      "frames": 76,
+      "fps": 24.0,
+      "file": "deaflympics.npz",
+      "label": "Deaflympics",
+      "video": null
+    },
+    "dearness_allowance": {
+      "frames": 530,
+      "fps": 24.0,
+      "file": "dearness_allowance.npz",
+      "label": "Dearness Allowance (Da)",
+      "video": null
+    },
+    "debit_debtor_credit_creditor": {
+      "frames": 888,
+      "fps": 25.0,
+      "file": "debit_debtor_credit_creditor.npz",
+      "label": "Debit Debtor Credit  Creditor",
+      "video": null
+    },
+    "deciduous_forest": {
+      "frames": 654,
+      "fps": 24.0,
+      "file": "deciduous_forest.npz",
+      "label": "Deciduous Forest",
+      "video": null
+    },
+    "decision_date": {
+      "frames": 495,
+      "fps": 25.0,
+      "file": "decision_date.npz",
+      "label": "Decision Date",
+      "video": null
+    },
+    "decommission": {
+      "frames": 682,
+      "fps": 24.0,
+      "file": "decommission.npz",
+      "label": "Decommission",
+      "video": null
+    },
+    "deface_mar_spoil": {
+      "frames": 543,
+      "fps": 24.0,
+      "file": "deface_mar_spoil.npz",
+      "label": "Deface Mar Spoil",
+      "video": null
+    },
+    "defend_protect": {
+      "frames": 101,
+      "fps": 25.0,
+      "file": "defend_protect.npz",
+      "label": "Defend Protect (Sign 2)",
+      "video": null
+    },
+    "deficient_insufficient_inadequate_lacking": {
+      "frames": 492,
+      "fps": 24.0,
+      "file": "deficient_insufficient_inadequate_lacking.npz",
+      "label": "Deficient Insufficient Inadequate Lacking",
+      "video": null
+    },
+    "deforestation": {
+      "frames": 461,
+      "fps": 24.0,
+      "file": "deforestation.npz",
+      "label": "Deforestation(1)",
+      "video": null
+    },
+    "dejected_despondent_dispirited": {
+      "frames": 98,
+      "fps": 24.0,
+      "file": "dejected_despondent_dispirited.npz",
+      "label": "Dejected Despondent Dispirited",
+      "video": null
+    },
+    "delighted_glad_joyful_pleased": {
+      "frames": 83,
+      "fps": 24.0,
+      "file": "delighted_glad_joyful_pleased.npz",
+      "label": "Delighted Glad Joyful Pleased",
+      "video": null
+    },
+    "delivery_bed": {
+      "frames": 228,
+      "fps": 25.0,
+      "file": "delivery_bed.npz",
+      "label": "Delivery Bed",
+      "video": null
+    },
+    "delta": {
+      "frames": 835,
+      "fps": 25.0,
+      "file": "delta.npz",
+      "label": "Delta",
+      "video": null
+    },
+    "demand_and_supply": {
+      "frames": 1248,
+      "fps": 25.0,
+      "file": "demand_and_supply.npz",
+      "label": "Demand And Supply",
+      "video": null
+    },
+    "dementia": {
+      "frames": 572,
+      "fps": 25.0,
+      "file": "dementia.npz",
+      "label": "Dementia",
+      "video": null
+    },
+    "demi_official_letter": {
+      "frames": 1078,
+      "fps": 25.0,
+      "file": "demi_official_letter.npz",
+      "label": "Demi Official Letter",
+      "video": null
+    },
+    "denominator": {
+      "frames": 931,
+      "fps": 25.0,
+      "file": "denominator.npz",
+      "label": "Denominator (Math)",
+      "video": null
+    },
+    "dental_chair": {
+      "frames": 435,
+      "fps": 25.0,
+      "file": "dental_chair.npz",
+      "label": "Dental Chair",
+      "video": null
+    },
+    "dental_examination_mirror": {
+      "frames": 280,
+      "fps": 25.0,
+      "file": "dental_examination_mirror.npz",
+      "label": "Dental Examination Mirror",
+      "video": null
+    },
+    "department_of_empowerment_of_person_with_disabilities": {
+      "frames": 87,
+      "fps": 25.0,
+      "file": "department_of_empowerment_of_person_with_disabilities.npz",
+      "label": "Department Of Empowerment Of Person With Disabilities (Depwd) (Sign 2)",
+      "video": null
+    },
+    "dependency_ratio": {
+      "frames": 856,
+      "fps": 25.0,
+      "file": "dependency_ratio.npz",
+      "label": "Dependency Ratio",
+      "video": null
+    },
+    "deposories": {
+      "frames": 647,
+      "fps": 30.0,
+      "file": "deposories.npz",
+      "label": "Deposories",
+      "video": null
+    },
+    "dermatologist": {
+      "frames": 198,
+      "fps": 25.0,
+      "file": "dermatologist.npz",
+      "label": "Dermatologist",
+      "video": null
+    },
+    "descendant_sign_word": {
+      "frames": 79,
+      "fps": 25.0,
+      "file": "descendant_sign_word.npz",
+      "label": "Descendant-Sign Word",
+      "video": null
+    },
+    "detail_feature": {
+      "frames": 132,
+      "fps": 25.0,
+      "file": "detail_feature.npz",
+      "label": "Detail Feature",
+      "video": null
+    },
+    "detain_detainer_wrongful_confinement": {
+      "frames": 1329,
+      "fps": 25.0,
+      "file": "detain_detainer_wrongful_confinement.npz",
+      "label": "Detain Detainer Wrongful Confinement",
+      "video": null
+    },
+    "dettached_grafting": {
+      "frames": 689,
+      "fps": 25.0,
+      "file": "dettached_grafting.npz",
+      "label": "Dettached Grafting",
+      "video": null
+    },
+    "devaluation": {
+      "frames": 627,
+      "fps": 24.0,
+      "file": "devaluation.npz",
+      "label": "Devaluation",
+      "video": null
+    },
+    "develop_advance_flourish_progress": {
+      "frames": 100,
+      "fps": 25.0,
+      "file": "develop_advance_flourish_progress.npz",
+      "label": "Develop Advance Flourish Progress",
+      "video": null
+    },
+    "dhoti": {
+      "frames": 108,
+      "fps": 25.0,
+      "file": "dhoti.npz",
+      "label": "Dhoti",
+      "video": null
+    },
+    "diagram_flowchart": {
+      "frames": 185,
+      "fps": 25.0,
+      "file": "diagram_flowchart.npz",
+      "label": "Diagram Flowchart",
+      "video": null
+    },
+    "dial_test_indicator": {
+      "frames": 828,
+      "fps": 25.0,
+      "file": "dial_test_indicator.npz",
+      "label": "Dial Test Indicator",
+      "video": null
+    },
+    "diaper_nappy": {
+      "frames": 138,
+      "fps": 25.0,
+      "file": "diaper_nappy.npz",
+      "label": "Diaper Nappy",
+      "video": null
+    },
+    "diary_number_diarist": {
+      "frames": 916,
+      "fps": 24.0,
+      "file": "diary_number_diarist.npz",
+      "label": "Diary Number  Diarist",
+      "video": null
+    },
+    "dicot_weeds": {
+      "frames": 386,
+      "fps": 24.0,
+      "file": "dicot_weeds.npz",
+      "label": "Dicot Weeds",
+      "video": null
+    },
+    "die_back": {
+      "frames": 544,
+      "fps": 25.0,
+      "file": "die_back.npz",
+      "label": "Die-Back",
+      "video": null
+    },
+    "die_death": {
+      "frames": 81,
+      "fps": 25.0,
+      "file": "die_death.npz",
+      "label": "Die Death",
+      "video": null
+    },
+    "dieback": {
+      "frames": 432,
+      "fps": 25.0,
+      "file": "dieback.npz",
+      "label": "Dieback",
+      "video": null
+    },
+    "different_style_of_water_garden": {
+      "frames": 379,
+      "fps": 25.0,
+      "file": "different_style_of_water_garden.npz",
+      "label": "Different Style Of Water Garden",
+      "video": null
+    },
+    "digital_infrastructure_for_knowledge_sharing": {
+      "frames": 661,
+      "fps": 24.0,
+      "file": "digital_infrastructure_for_knowledge_sharing.npz",
+      "label": "Digital Infrastructure For Knowledge Sharing (Diksha)",
+      "video": null
+    },
+    "digital_police": {
+      "frames": 416,
+      "fps": 24.0,
+      "file": "digital_police.npz",
+      "label": "Digital Police",
+      "video": null
+    },
+    "diplopia": {
+      "frames": 471,
+      "fps": 25.0,
+      "file": "diplopia.npz",
+      "label": "Diplopia",
+      "video": null
+    },
+    "direct_tax_and_indirect_tax": {
+      "frames": 974,
+      "fps": 25.0,
+      "file": "direct_tax_and_indirect_tax.npz",
+      "label": "Direct Tax And Indirect Tax",
+      "video": null
+    },
+    "direction_route": {
+      "frames": 129,
+      "fps": 25.0,
+      "file": "direction_route.npz",
+      "label": "Direction Route",
+      "video": null
+    },
+    "directorate_of_school_education": {
+      "frames": 576,
+      "fps": 24.0,
+      "file": "directorate_of_school_education.npz",
+      "label": "Directorate Of School Education(Dse)",
+      "video": null
+    },
+    "directors": {
+      "frames": 993,
+      "fps": 30.0,
+      "file": "directors.npz",
+      "label": "Directors",
+      "video": null
+    },
+    "discharge_summary": {
+      "frames": 567,
+      "fps": 25.0,
+      "file": "discharge_summary.npz",
+      "label": "Discharge Summary",
+      "video": null
+    },
+    "discrimination_against_animals": {
+      "frames": 73,
+      "fps": 24.0,
+      "file": "discrimination_against_animals.npz",
+      "label": "Discrimination Against Animals",
+      "video": null
+    },
+    "disease_cycle_of_plant": {
+      "frames": 1228,
+      "fps": 25.0,
+      "file": "disease_cycle_of_plant.npz",
+      "label": "Disease Cycle Of Plant",
+      "video": null
+    },
+    "diseases_of_annuals_flower_plants": {
+      "frames": 451,
+      "fps": 25.0,
+      "file": "diseases_of_annuals_flower_plants.npz",
+      "label": "Diseases Of Annuals Flower Plants",
+      "video": null
+    },
+    "dish_container_gardening": {
+      "frames": 538,
+      "fps": 25.0,
+      "file": "dish_container_gardening.npz",
+      "label": "Dish   Container Gardening",
+      "video": null
+    },
+    "dislocation": {
+      "frames": 381,
+      "fps": 25.0,
+      "file": "dislocation.npz",
+      "label": "Dislocation",
+      "video": null
+    },
+    "displaced": {
+      "frames": 1571,
+      "fps": 25.0,
+      "file": "displaced.npz",
+      "label": "Displaced (Social Science)",
+      "video": null
+    },
+    "disposable_cup": {
+      "frames": 96,
+      "fps": 24.0,
+      "file": "disposable_cup.npz",
+      "label": "Disposable Cup",
+      "video": null
+    },
+    "distance_of_market": {
+      "frames": 826,
+      "fps": 24.0,
+      "file": "distance_of_market.npz",
+      "label": "Distance Of Market",
+      "video": null
+    },
+    "distilled_water": {
+      "frames": 82,
+      "fps": 25.0,
+      "file": "distilled_water.npz",
+      "label": "Distilled Water",
+      "video": null
+    },
+    "distracted": {
+      "frames": 851,
+      "fps": 25.0,
+      "file": "distracted.npz",
+      "label": "Distracted",
+      "video": null
+    },
+    "distributive_property": {
+      "frames": 1515,
+      "fps": 25.0,
+      "file": "distributive_property.npz",
+      "label": "Distributive Property (Maths)",
+      "video": null
+    },
+    "district_institute_of_education_and_training": {
+      "frames": 276,
+      "fps": 24.0,
+      "file": "district_institute_of_education_and_training.npz",
+      "label": "District Institute Of Education And Training (Diet)",
+      "video": null
+    },
+    "divide_and_rule": {
+      "frames": 744,
+      "fps": 25.0,
+      "file": "divide_and_rule.npz",
+      "label": "Divide And Rule",
+      "video": null
+    },
+    "divide_separate": {
+      "frames": 93,
+      "fps": 25.0,
+      "file": "divide_separate.npz",
+      "label": "Divide Separate",
+      "video": null
+    },
+    "dockyard": {
+      "frames": 987,
+      "fps": 25.0,
+      "file": "dockyard.npz",
+      "label": "Dockyard",
+      "video": null
+    },
+    "document": {
+      "frames": 407,
+      "fps": 25.0,
+      "file": "document.npz",
+      "label": "Document (Sign 2)",
+      "video": null
+    },
+    "documentary_evidence_section_3_of_indian_evidence_act": {
+      "frames": 758,
+      "fps": 25.0,
+      "file": "documentary_evidence_section_3_of_indian_evidence_act.npz",
+      "label": "Documentary Evidence Section 3 Of Indian Evidence Act",
+      "video": null
+    },
+    "don_t": {
+      "frames": 108,
+      "fps": 25.0,
+      "file": "don_t.npz",
+      "label": "Don T",
+      "video": null
+    },
+    "don_t_give_up_your_day_job": {
+      "frames": 792,
+      "fps": 25.0,
+      "file": "don_t_give_up_your_day_job.npz",
+      "label": "Don T Give Up Your Day Job.",
+      "video": null
+    },
+    "doodle": {
+      "frames": 720,
+      "fps": 24.0,
+      "file": "doodle.npz",
+      "label": "Doodle",
+      "video": null
+    },
+    "dos": {
+      "frames": 480,
+      "fps": 25.0,
+      "file": "dos.npz",
+      "label": "Dos",
+      "video": null
+    },
+    "dot_punch": {
+      "frames": 641,
+      "fps": 25.0,
+      "file": "dot_punch.npz",
+      "label": "Dot Punch",
+      "video": null
+    },
+    "dotmatrix_printer": {
+      "frames": 690,
+      "fps": 25.0,
+      "file": "dotmatrix_printer.npz",
+      "label": "Dotmatrix Printer",
+      "video": null
+    },
+    "double_cropping": {
+      "frames": 500,
+      "fps": 24.0,
+      "file": "double_cropping.npz",
+      "label": "Double Cropping",
+      "video": null
+    },
+    "double_taxation": {
+      "frames": 453,
+      "fps": 24.0,
+      "file": "double_taxation.npz",
+      "label": "Double Taxation",
+      "video": null
+    },
+    "down_payment_emi": {
+      "frames": 923,
+      "fps": 25.0,
+      "file": "down_payment_emi.npz",
+      "label": "Down Payment Emi",
+      "video": null
+    },
+    "downstream": {
+      "frames": 732,
+      "fps": 25.0,
+      "file": "downstream.npz",
+      "label": "Downstream",
+      "video": null
+    },
+    "dowry_present": {
+      "frames": 1327,
+      "fps": 25.0,
+      "file": "dowry_present.npz",
+      "label": "Dowry Present",
+      "video": null
+    },
+    "draft_rough": {
+      "frames": 89,
+      "fps": 25.0,
+      "file": "draft_rough.npz",
+      "label": "Draft Rough",
+      "video": null
+    },
+    "drainage_pipe": {
+      "frames": 565,
+      "fps": 25.0,
+      "file": "drainage_pipe.npz",
+      "label": "Drainage Pipe",
+      "video": null
+    },
+    "drainge": {
+      "frames": 350,
+      "fps": 25.0,
+      "file": "drainge.npz",
+      "label": "Drainge",
+      "video": null
+    },
+    "dress_maker_pins": {
+      "frames": 381,
+      "fps": 25.0,
+      "file": "dress_maker_pins.npz",
+      "label": "Dress Maker  Pins",
+      "video": null
+    },
+    "dressing": {
+      "frames": 196,
+      "fps": 25.0,
+      "file": "dressing.npz",
+      "label": "Dressing",
+      "video": null
+    },
+    "drinking_water": {
+      "frames": 876,
+      "fps": 25.0,
+      "file": "drinking_water.npz",
+      "label": "Drinking Water",
+      "video": null
+    },
+    "driving_devices": {
+      "frames": 420,
+      "fps": 25.0,
+      "file": "driving_devices.npz",
+      "label": "Driving Devices",
+      "video": null
+    },
+    "drought": {
+      "frames": 678,
+      "fps": 25.0,
+      "file": "drought.npz",
+      "label": "Drought (Sign 2)",
+      "video": null
+    },
+    "droupadi_murmu": {
+      "frames": 106,
+      "fps": 25.0,
+      "file": "droupadi_murmu.npz",
+      "label": "Droupadi Murmu (President)",
+      "video": null
+    },
+    "drug_abuse": {
+      "frames": 599,
+      "fps": 25.0,
+      "file": "drug_abuse.npz",
+      "label": "Drug Abuse",
+      "video": null
+    },
+    "dry_climate": {
+      "frames": 992,
+      "fps": 25.0,
+      "file": "dry_climate.npz",
+      "label": "Dry Climate (Academic)",
+      "video": null
+    },
+    "dry_days": {
+      "frames": 555,
+      "fps": 25.0,
+      "file": "dry_days.npz",
+      "label": "Dry Days",
+      "video": null
+    },
+    "dtp": {
+      "frames": 196,
+      "fps": 25.0,
+      "file": "dtp.npz",
+      "label": "Dtp",
+      "video": null
+    },
+    "dumping": {
+      "frames": 1026,
+      "fps": 24.000022888183594,
+      "file": "dumping.npz",
+      "label": "Dumping",
+      "video": null
+    },
+    "dynasty": {
+      "frames": 1871,
+      "fps": 25.0,
+      "file": "dynasty.npz",
+      "label": "Dynasty (Academic)",
+      "video": null
+    },
+    "dysphagia": {
+      "frames": 528,
+      "fps": 25.0,
+      "file": "dysphagia.npz",
+      "label": "Dysphagia",
+      "video": null
+    },
+    "daily_allowance": {
+      "frames": 1588,
+      "fps": 25.0,
+      "file": "daily_allowance.npz",
+      "label": "Daily Allowance",
+      "video": null
+    },
+    "dal_lake": {
+      "frames": 137,
+      "fps": 25.0,
+      "file": "dal_lake.npz",
+      "label": "Dal Lake",
+      "video": null
+    },
+    "dalit": {
+      "frames": 1705,
+      "fps": 25.0,
+      "file": "dalit.npz",
+      "label": "Dalit (Social Science)",
+      "video": null
+    },
+    "dammer_bee": {
+      "frames": 528,
+      "fps": 24.0,
+      "file": "dammer_bee.npz",
+      "label": "Dammer Bee (Melipona Sp)",
+      "video": null
+    },
+    "dare_be_brave_enough_have_courage": {
+      "frames": 116,
+      "fps": 24.0,
+      "file": "dare_be_brave_enough_have_courage.npz",
+      "label": "Dare Be Brave Enough Have Courage",
+      "video": null
+    },
+    "dare_brave": {
+      "frames": 79,
+      "fps": 25.0,
+      "file": "dare_brave.npz",
+      "label": "Dare Brave",
+      "video": null
+    },
+    "dart": {
+      "frames": 69,
+      "fps": 25.0,
+      "file": "dart.npz",
+      "label": "Dart",
+      "video": null
+    },
+    "darts_munger_bihar": {
+      "frames": 142,
+      "fps": 25.0,
+      "file": "darts_munger_bihar.npz",
+      "label": "Darts Munger  Bihar",
+      "video": null
+    },
+    "data_analysis": {
+      "frames": 1002,
+      "fps": 24.000024795532227,
+      "file": "data_analysis.npz",
+      "label": "Data Analysis",
+      "video": null
+    },
+    "data_mining": {
+      "frames": 710,
+      "fps": 25.0,
+      "file": "data_mining.npz",
+      "label": "Data Mining",
+      "video": null
+    },
+    "database": {
+      "frames": 1106,
+      "fps": 25.0,
+      "file": "database.npz",
+      "label": "Database",
+      "video": null
+    },
+    "date_of_institution": {
+      "frames": 459,
+      "fps": 25.0,
+      "file": "date_of_institution.npz",
+      "label": "Date Of Institution",
+      "video": null
+    },
+    "de_minimis_or_frivolous": {
+      "frames": 708,
+      "fps": 25.0,
+      "file": "de_minimis_or_frivolous.npz",
+      "label": "De Minimis Or Frivolous",
+      "video": null
+    },
+    "dead_sea": {
+      "frames": 784,
+      "fps": 24.0,
+      "file": "dead_sea.npz",
+      "label": "Dead Sea",
+      "video": null
+    },
+    "deaf_role_model": {
+      "frames": 754,
+      "fps": 24.0,
+      "file": "deaf_role_model.npz",
+      "label": "Deaf Role Model",
+      "video": null
+    },
+    "deafhood": {
+      "frames": 923,
+      "fps": 24.0,
+      "file": "deafhood.npz",
+      "label": "Deafhood",
+      "video": null
+    },
+    "death_deceased": {
+      "frames": 1200,
+      "fps": 25.0,
+      "file": "death_deceased.npz",
+      "label": "Death Deceased",
+      "video": null
+    },
+    "debeaking": {
+      "frames": 760,
+      "fps": 24.0,
+      "file": "debeaking.npz",
+      "label": "Debeaking",
+      "video": null
+    },
+    "debit_debt": {
+      "frames": 1202,
+      "fps": 25.0,
+      "file": "debit_debt.npz",
+      "label": "Debit Debt",
+      "video": null
+    },
+    "debridement": {
+      "frames": 425,
+      "fps": 25.0,
+      "file": "debridement.npz",
+      "label": "Debridement",
+      "video": null
+    },
+    "debut_launch_first_performance_first_appearance": {
+      "frames": 957,
+      "fps": 24.000024795532227,
+      "file": "debut_launch_first_performance_first_appearance.npz",
+      "label": "Debut Launch First Performance First Appearance",
+      "video": null
+    },
+    "deccan": {
+      "frames": 1296,
+      "fps": 25.0,
+      "file": "deccan.npz",
+      "label": "Deccan (Academic)",
+      "video": null
+    },
+    "decompose": {
+      "frames": 1518,
+      "fps": 23.976024627685547,
+      "file": "decompose.npz",
+      "label": "Decompose",
+      "video": null
+    },
+    "decryption": {
+      "frames": 938,
+      "fps": 25.0,
+      "file": "decryption.npz",
+      "label": "Decryption",
+      "video": null
+    },
+    "deep_sea_fish": {
+      "frames": 495,
+      "fps": 24.0,
+      "file": "deep_sea_fish.npz",
+      "label": "Deep Sea Fish",
+      "video": null
+    },
+    "defect": {
+      "frames": 635,
+      "fps": 24.0,
+      "file": "defect.npz",
+      "label": "Defect",
+      "video": null
+    },
+    "degree_celsius": {
+      "frames": 454,
+      "fps": 24.0,
+      "file": "degree_celsius.npz",
+      "label": "Degree Celsius (°C)",
+      "video": null
+    },
+    "dehydration": {
+      "frames": 516,
+      "fps": 25.0,
+      "file": "dehydration.npz",
+      "label": "Dehydration",
+      "video": null
+    },
+    "deity": {
+      "frames": 1020,
+      "fps": 25.0,
+      "file": "deity.npz",
+      "label": "Deity (History)",
+      "video": null
+    },
+    "demand_side_effects": {
+      "frames": 1228,
+      "fps": 24.000019073486328,
+      "file": "demand_side_effects.npz",
+      "label": "Demand Side Effects",
+      "video": null
+    },
+    "democracy": {
+      "frames": 1468,
+      "fps": 25.0,
+      "file": "democracy.npz",
+      "label": "Democracy (Academic)",
+      "video": null
+    },
+    "demonstration_farm": {
+      "frames": 761,
+      "fps": 24.0,
+      "file": "demonstration_farm.npz",
+      "label": "Demonstration Farm",
+      "video": null
+    },
+    "demurrer": {
+      "frames": 1660,
+      "fps": 25.0,
+      "file": "demurrer.npz",
+      "label": "Demurrer",
+      "video": null
+    },
+    "denture": {
+      "frames": 168,
+      "fps": 25.0,
+      "file": "denture.npz",
+      "label": "Denture",
+      "video": null
+    },
+    "department_of_science_and_technology": {
+      "frames": 645,
+      "fps": 24.0,
+      "file": "department_of_science_and_technology.npz",
+      "label": "Department Of Science And Technology (Dst)",
+      "video": null
+    },
+    "depository_participants": {
+      "frames": 1037,
+      "fps": 30.0,
+      "file": "depository_participants.npz",
+      "label": "Depository Participants",
+      "video": null
+    },
+    "depth_of_roots": {
+      "frames": 262,
+      "fps": 24.0,
+      "file": "depth_of_roots.npz",
+      "label": "Depth Of Roots",
+      "video": null
+    },
+    "derail_go_off_the_rails": {
+      "frames": 186,
+      "fps": 24.0,
+      "file": "derail_go_off_the_rails.npz",
+      "label": "Derail Go Off The Rails",
+      "video": null
+    },
+    "deregulation": {
+      "frames": 876,
+      "fps": 24.0,
+      "file": "deregulation.npz",
+      "label": "Deregulation",
+      "video": null
+    },
+    "derivatives": {
+      "frames": 802,
+      "fps": 30.0,
+      "file": "derivatives.npz",
+      "label": "Derivatives",
+      "video": null
+    },
+    "desert_plant": {
+      "frames": 1032,
+      "fps": 24.000022888183594,
+      "file": "desert_plant.npz",
+      "label": "Desert Plant",
+      "video": null
+    },
+    "deteriorated_wells": {
+      "frames": 426,
+      "fps": 24.0,
+      "file": "deteriorated_wells.npz",
+      "label": "Deteriorated Wells",
+      "video": null
+    },
+    "developmental_psychology_physical_growth_psycho_social_development": {
+      "frames": 920,
+      "fps": 24.0,
+      "file": "developmental_psychology_physical_growth_psycho_social_development.npz",
+      "label": "Developmental Psychology Physical Growth Psycho-Social Development",
+      "video": null
+    },
+    "devernilization": {
+      "frames": 1106,
+      "fps": 24.00002098083496,
+      "file": "devernilization.npz",
+      "label": "Devernilization",
+      "video": null
+    },
+    "dial": {
+      "frames": 137,
+      "fps": 25.0,
+      "file": "dial.npz",
+      "label": "Dial",
+      "video": null
+    },
+    "diameter_and_radius": {
+      "frames": 631,
+      "fps": 25.0,
+      "file": "diameter_and_radius.npz",
+      "label": "Diameter And Radius",
+      "video": null
+    },
+    "diamond_heart_club_spade": {
+      "frames": 399,
+      "fps": 25.0,
+      "file": "diamond_heart_club_spade.npz",
+      "label": "Diamond Heart Club Spade (Playing Cards)",
+      "video": null
+    },
+    "dietary_fibres": {
+      "frames": 836,
+      "fps": 24.0,
+      "file": "dietary_fibres.npz",
+      "label": "Dietary Fibres (Roughage)",
+      "video": null
+    },
+    "diffusion": {
+      "frames": 369,
+      "fps": 24.0,
+      "file": "diffusion.npz",
+      "label": "Diffusion",
+      "video": null
+    },
+    "digestible": {
+      "frames": 580,
+      "fps": 25.0,
+      "file": "digestible.npz",
+      "label": "Digestible",
+      "video": null
+    },
+    "digestion_academic_term": {
+      "frames": 1689,
+      "fps": 25.0,
+      "file": "digestion_academic_term.npz",
+      "label": "Digestion Academic Term",
+      "video": null
+    },
+    "digit": {
+      "frames": 1101,
+      "fps": 25.0,
+      "file": "digit.npz",
+      "label": "Digit (Maths)",
+      "video": null
+    },
+    "digital_file": {
+      "frames": 1020,
+      "fps": 24.000022888183594,
+      "file": "digital_file.npz",
+      "label": "Digital File",
+      "video": null
+    },
+    "digital_signature": {
+      "frames": 688,
+      "fps": 24.0,
+      "file": "digital_signature.npz",
+      "label": "Digital Signature",
+      "video": null
+    },
+    "dilution": {
+      "frames": 186,
+      "fps": 24.0,
+      "file": "dilution.npz",
+      "label": "Dilution",
+      "video": null
+    },
+    "dimmer": {
+      "frames": 419,
+      "fps": 25.0,
+      "file": "dimmer.npz",
+      "label": "Dimmer",
+      "video": null
+    },
+    "din_noise_racket": {
+      "frames": 334,
+      "fps": 24.0,
+      "file": "din_noise_racket.npz",
+      "label": "Din Noise Racket",
+      "video": null
+    },
+    "dinkus": {
+      "frames": 285,
+      "fps": 24.0,
+      "file": "dinkus.npz",
+      "label": "Dinkus",
+      "video": null
+    },
+    "direct_assessment_methods": {
+      "frames": 748,
+      "fps": 24.0,
+      "file": "direct_assessment_methods.npz",
+      "label": "Direct Assessment Methods",
+      "video": null
+    },
+    "direct_government_purchase": {
+      "frames": 333,
+      "fps": 24.0,
+      "file": "direct_government_purchase.npz",
+      "label": "Direct Government Purchase",
+      "video": null
+    },
+    "disagree_dissent": {
+      "frames": 103,
+      "fps": 25.0,
+      "file": "disagree_dissent.npz",
+      "label": "Disagree Dissent",
+      "video": null
+    },
+    "disappear_vanish": {
+      "frames": 108,
+      "fps": 25.0,
+      "file": "disappear_vanish.npz",
+      "label": "Disappear Vanish",
+      "video": null
+    },
+    "disclaim": {
+      "frames": 575,
+      "fps": 25.0,
+      "file": "disclaim.npz",
+      "label": "Disclaim",
+      "video": null
+    },
+    "discolouration_of_foliage": {
+      "frames": 779,
+      "fps": 25.0,
+      "file": "discolouration_of_foliage.npz",
+      "label": "Discolouration Of Foliage",
+      "video": null
+    },
+    "discrete_circuit": {
+      "frames": 864,
+      "fps": 25.0,
+      "file": "discrete_circuit.npz",
+      "label": "Discrete Circuit",
+      "video": null
+    },
+    "discus_throw": {
+      "frames": 71,
+      "fps": 25.0,
+      "file": "discus_throw.npz",
+      "label": "Discus Throw",
+      "video": null
+    },
+    "discuss_confer": {
+      "frames": 103,
+      "fps": 25.0,
+      "file": "discuss_confer.npz",
+      "label": "Discuss Confer",
+      "video": null
+    },
+    "diseconomics_of_scale": {
+      "frames": 737,
+      "fps": 24.0,
+      "file": "diseconomics_of_scale.npz",
+      "label": "Diseconomics Of Scale",
+      "video": null
+    },
+    "disinfection": {
+      "frames": 460,
+      "fps": 25.0,
+      "file": "disinfection.npz",
+      "label": "Disinfection",
+      "video": null
+    },
+    "disorder": {
+      "frames": 887,
+      "fps": 24.0,
+      "file": "disorder.npz",
+      "label": "Disorder",
+      "video": null
+    },
+    "disparity": {
+      "frames": 509,
+      "fps": 24.0,
+      "file": "disparity.npz",
+      "label": "Disparity (Sign 3)",
+      "video": null
+    },
+    "dissolve": {
+      "frames": 758,
+      "fps": 25.0,
+      "file": "dissolve.npz",
+      "label": "Dissolve",
+      "video": null
+    },
+    "distinct_point": {
+      "frames": 434,
+      "fps": 24.0,
+      "file": "distinct_point.npz",
+      "label": "Distinct Point",
+      "video": null
+    },
+    "district_education_officer": {
+      "frames": 175,
+      "fps": 24.0,
+      "file": "district_education_officer.npz",
+      "label": "District Education Officer (Deo)",
+      "video": null
+    },
+    "divide_split_segregate": {
+      "frames": 96,
+      "fps": 25.0,
+      "file": "divide_split_segregate.npz",
+      "label": "Divide Split Segregate",
+      "video": null
+    },
+    "divisor": {
+      "frames": 1229,
+      "fps": 25.0,
+      "file": "divisor.npz",
+      "label": "Divisor (Maths)",
+      "video": null
+    },
+    "doctor_of_philosophy": {
+      "frames": 415,
+      "fps": 24.0,
+      "file": "doctor_of_philosophy.npz",
+      "label": "Doctor Of Philosophy (Ph D)",
+      "video": null
+    },
+    "doctrine_of_lapse": {
+      "frames": 915,
+      "fps": 25.0,
+      "file": "doctrine_of_lapse.npz",
+      "label": "Doctrine Of Lapse",
+      "video": null
+    },
+    "domestic_violence": {
+      "frames": 1262,
+      "fps": 25.0,
+      "file": "domestic_violence.npz",
+      "label": "Domestic Violence",
+      "video": null
+    },
+    "double_bar_graph": {
+      "frames": 523,
+      "fps": 24.0,
+      "file": "double_bar_graph.npz",
+      "label": "Double Bar Graph",
+      "video": null
+    },
+    "double_jeopardy": {
+      "frames": 1162,
+      "fps": 25.0,
+      "file": "double_jeopardy.npz",
+      "label": "Double Jeopardy",
+      "video": null
+    },
+    "doughnut_chart": {
+      "frames": 1646,
+      "fps": 25.0,
+      "file": "doughnut_chart.npz",
+      "label": "Doughnut Chart",
+      "video": null
+    },
+    "drag": {
+      "frames": 768,
+      "fps": 25.0,
+      "file": "drag.npz",
+      "label": "Drag",
+      "video": null
+    },
+    "draught_proofing": {
+      "frames": 968,
+      "fps": 24.000024795532227,
+      "file": "draught_proofing.npz",
+      "label": "Draught Proofing",
+      "video": null
+    },
+    "drawing_board": {
+      "frames": 495,
+      "fps": 25.0,
+      "file": "drawing_board.npz",
+      "label": "Drawing Board",
+      "video": null
+    },
+    "drip_system": {
+      "frames": 900,
+      "fps": 25.0,
+      "file": "drip_system.npz",
+      "label": "Drip System",
+      "video": null
+    },
+    "drop_droplet": {
+      "frames": 139,
+      "fps": 25.0,
+      "file": "drop_droplet.npz",
+      "label": "Drop Droplet",
+      "video": null
+    },
+    "drop_let_go_put": {
+      "frames": 93,
+      "fps": 25.0,
+      "file": "drop_let_go_put.npz",
+      "label": "Drop Let Go Put",
+      "video": null
+    },
+    "duckling": {
+      "frames": 120,
+      "fps": 24.0,
+      "file": "duckling.npz",
+      "label": "Duckling",
+      "video": null
+    },
+    "durable": {
+      "frames": 798,
+      "fps": 24.0,
+      "file": "durable.npz",
+      "label": "Durable",
+      "video": null
+    },
+    "dyselxia": {
+      "frames": 431,
+      "fps": 25.0,
+      "file": "dyselxia.npz",
+      "label": "Dyselxia",
+      "video": null
+    },
+    "damage_damages_and_aggravated_damages": {
+      "frames": 1280,
+      "fps": 25.0,
+      "file": "damage_damages_and_aggravated_damages.npz",
+      "label": "Damage Damages And Aggravated Damages",
+      "video": null
+    },
+    "deaf_studies": {
+      "frames": 409,
+      "fps": 25.0,
+      "file": "deaf_studies.npz",
+      "label": "Deaf Studies",
+      "video": null
+    },
+    "desktop": {
+      "frames": 750,
+      "fps": 25.0,
+      "file": "desktop.npz",
+      "label": "Desktop",
+      "video": null
+    }
+  }
+}

@@ -1,0 +1,1497 @@
+{
+  "dataset": "Group G - New Words",
+  "count": 213,
+  "words": {
+    "gala_celebration": {
+      "frames": 189,
+      "fps": 24.0,
+      "file": "gala_celebration.npz",
+      "label": "Gala Celebration",
+      "video": null
+    },
+    "galaxy_and_milkyway": {
+      "frames": 786,
+      "fps": 25.0,
+      "file": "galaxy_and_milkyway.npz",
+      "label": "Galaxy And Milkyway",
+      "video": null
+    },
+    "gall_bladder": {
+      "frames": 1121,
+      "fps": 25.0,
+      "file": "gall_bladder.npz",
+      "label": "Gall Bladder (Academic)",
+      "video": null
+    },
+    "galvanization": {
+      "frames": 610,
+      "fps": 25.0,
+      "file": "galvanization.npz",
+      "label": "Galvanization",
+      "video": null
+    },
+    "game_plan_strategy_blueprint": {
+      "frames": 894,
+      "fps": 24.0,
+      "file": "game_plan_strategy_blueprint.npz",
+      "label": "Game Plan Strategy Blueprint",
+      "video": null
+    },
+    "ganapati": {
+      "frames": 99,
+      "fps": 25.0,
+      "file": "ganapati.npz",
+      "label": "Ganapati",
+      "video": null
+    },
+    "gang": {
+      "frames": 426,
+      "fps": 25.0,
+      "file": "gang.npz",
+      "label": "Gang",
+      "video": null
+    },
+    "gangster": {
+      "frames": 188,
+      "fps": 24.0,
+      "file": "gangster.npz",
+      "label": "Gangster",
+      "video": null
+    },
+    "gap_lack": {
+      "frames": 541,
+      "fps": 29.970029830932617,
+      "file": "gap_lack.npz",
+      "label": "Gap Lack",
+      "video": null
+    },
+    "gargle": {
+      "frames": 430,
+      "fps": 24.0,
+      "file": "gargle.npz",
+      "label": "Gargle",
+      "video": null
+    },
+    "garnish": {
+      "frames": 684,
+      "fps": 25.0,
+      "file": "garnish.npz",
+      "label": "Garnish",
+      "video": null
+    },
+    "gases": {
+      "frames": 147,
+      "fps": 25.0,
+      "file": "gases.npz",
+      "label": "Gases",
+      "video": null
+    },
+    "gastroenterology": {
+      "frames": 168,
+      "fps": 25.0,
+      "file": "gastroenterology.npz",
+      "label": "Gastroenterology",
+      "video": null
+    },
+    "gaucho_pants": {
+      "frames": 240,
+      "fps": 25.0,
+      "file": "gaucho_pants.npz",
+      "label": "Gaucho Pants",
+      "video": null
+    },
+    "gautam_buddha": {
+      "frames": 82,
+      "fps": 25.0,
+      "file": "gautam_buddha.npz",
+      "label": "Gautam Buddha",
+      "video": null
+    },
+    "gear_box": {
+      "frames": 1260,
+      "fps": 25.0,
+      "file": "gear_box.npz",
+      "label": "Gear Box",
+      "video": null
+    },
+    "gears": {
+      "frames": 285,
+      "fps": 25.0,
+      "file": "gears.npz",
+      "label": "Gears",
+      "video": null
+    },
+    "gem": {
+      "frames": 842,
+      "fps": 25.0,
+      "file": "gem.npz",
+      "label": "Gem (Government E-Market Place)",
+      "video": null
+    },
+    "gem_jewel_precious_stone": {
+      "frames": 227,
+      "fps": 24.0,
+      "file": "gem_jewel_precious_stone.npz",
+      "label": "Gem Jewel Precious Stone",
+      "video": null
+    },
+    "gender": {
+      "frames": 118,
+      "fps": 25.0,
+      "file": "gender.npz",
+      "label": "Gender",
+      "video": null
+    },
+    "genealogy": {
+      "frames": 1199,
+      "fps": 25.0,
+      "file": "genealogy.npz",
+      "label": "Genealogy (Academic)",
+      "video": null
+    },
+    "general_characteristics_of_fish": {
+      "frames": 899,
+      "fps": 24.0,
+      "file": "general_characteristics_of_fish.npz",
+      "label": "General Characteristics Of Fish",
+      "video": null
+    },
+    "general_financial_rule": {
+      "frames": 1209,
+      "fps": 24.000019073486328,
+      "file": "general_financial_rule.npz",
+      "label": "General Financial Rule (Gfr)",
+      "video": null
+    },
+    "genocide_and_holocaust": {
+      "frames": 1099,
+      "fps": 25.0,
+      "file": "genocide_and_holocaust.npz",
+      "label": "Genocide And Holocaust",
+      "video": null
+    },
+    "genome": {
+      "frames": 311,
+      "fps": 24.0,
+      "file": "genome.npz",
+      "label": "Genome",
+      "video": null
+    },
+    "geology": {
+      "frames": 812,
+      "fps": 25.0,
+      "file": "geology.npz",
+      "label": "Geology(1)",
+      "video": null
+    },
+    "geometreical": {
+      "frames": 150,
+      "fps": 24.0,
+      "file": "geometreical.npz",
+      "label": "Geometreical",
+      "video": null
+    },
+    "geomrtry": {
+      "frames": 2440,
+      "fps": 25.0,
+      "file": "geomrtry.npz",
+      "label": "Geomrtry (Math)",
+      "video": null
+    },
+    "geosyncline": {
+      "frames": 620,
+      "fps": 25.0,
+      "file": "geosyncline.npz",
+      "label": "Geosyncline",
+      "video": null
+    },
+    "german_measles": {
+      "frames": 113,
+      "fps": 25.0,
+      "file": "german_measles.npz",
+      "label": "German Measles (Rubella)",
+      "video": null
+    },
+    "get_out_of_hand": {
+      "frames": 1344,
+      "fps": 25.0,
+      "file": "get_out_of_hand.npz",
+      "label": "Get Out Of Hand",
+      "video": null
+    },
+    "get_up_wake_up": {
+      "frames": 91,
+      "fps": 25.0,
+      "file": "get_up_wake_up.npz",
+      "label": "Get Up Wake Up",
+      "video": null
+    },
+    "ghat": {
+      "frames": 267,
+      "fps": 25.0,
+      "file": "ghat.npz",
+      "label": "Ghat",
+      "video": null
+    },
+    "ghettoisation": {
+      "frames": 1700,
+      "fps": 25.0,
+      "file": "ghettoisation.npz",
+      "label": "Ghettoisation",
+      "video": null
+    },
+    "giant": {
+      "frames": 198,
+      "fps": 24.0,
+      "file": "giant.npz",
+      "label": "Giant",
+      "video": null
+    },
+    "gift_tax": {
+      "frames": 408,
+      "fps": 24.0,
+      "file": "gift_tax.npz",
+      "label": "Gift Tax",
+      "video": null
+    },
+    "giftwrap": {
+      "frames": 328,
+      "fps": 24.0,
+      "file": "giftwrap.npz",
+      "label": "Giftwrap",
+      "video": null
+    },
+    "ginning_mill": {
+      "frames": 723,
+      "fps": 25.0,
+      "file": "ginning_mill.npz",
+      "label": "Ginning Mill",
+      "video": null
+    },
+    "glacial_moraines": {
+      "frames": 930,
+      "fps": 25.0,
+      "file": "glacial_moraines.npz",
+      "label": "Glacial Moraines",
+      "video": null
+    },
+    "glacier": {
+      "frames": 568,
+      "fps": 25.0,
+      "file": "glacier.npz",
+      "label": "Glacier",
+      "video": null
+    },
+    "glass_prism": {
+      "frames": 181,
+      "fps": 24.0,
+      "file": "glass_prism.npz",
+      "label": "Glass Prism",
+      "video": null
+    },
+    "glimmer": {
+      "frames": 359,
+      "fps": 29.970029830932617,
+      "file": "glimmer.npz",
+      "label": "Glimmer",
+      "video": null
+    },
+    "glitter_sparkle_twinkle": {
+      "frames": 425,
+      "fps": 24.0,
+      "file": "glitter_sparkle_twinkle.npz",
+      "label": "Glitter  Sparkle Twinkle",
+      "video": null
+    },
+    "global_citizenship_education": {
+      "frames": 1248,
+      "fps": 24.000019073486328,
+      "file": "global_citizenship_education.npz",
+      "label": "Global Citizenship Education (Gced)",
+      "video": null
+    },
+    "globe_and_map": {
+      "frames": 1215,
+      "fps": 25.0,
+      "file": "globe_and_map.npz",
+      "label": "Globe And Map",
+      "video": null
+    },
+    "gloom": {
+      "frames": 535,
+      "fps": 29.970029830932617,
+      "file": "gloom.npz",
+      "label": "Gloom",
+      "video": null
+    },
+    "gloomy_somber": {
+      "frames": 192,
+      "fps": 25.0,
+      "file": "gloomy_somber.npz",
+      "label": "Gloomy Somber",
+      "video": null
+    },
+    "gloss_over_something": {
+      "frames": 847,
+      "fps": 29.97006607055664,
+      "file": "gloss_over_something.npz",
+      "label": "Gloss Over Something (Sign 2)",
+      "video": null
+    },
+    "glow": {
+      "frames": 380,
+      "fps": 24.0,
+      "file": "glow.npz",
+      "label": "Glow (Sign 2)",
+      "video": null
+    },
+    "go_back_to_the_drawing_board": {
+      "frames": 963,
+      "fps": 25.0,
+      "file": "go_back_to_the_drawing_board.npz",
+      "label": "Go Back To The Drawing Board",
+      "video": null
+    },
+    "go_ballistic": {
+      "frames": 427,
+      "fps": 24.0,
+      "file": "go_ballistic.npz",
+      "label": "Go Ballistic",
+      "video": null
+    },
+    "goat_farming": {
+      "frames": 979,
+      "fps": 24.000024795532227,
+      "file": "goat_farming.npz",
+      "label": "Goat Farming",
+      "video": null
+    },
+    "gol_gappe_pani_puri": {
+      "frames": 108,
+      "fps": 25.0,
+      "file": "gol_gappe_pani_puri.npz",
+      "label": "Gol Gappe Pani Puri",
+      "video": null
+    },
+    "golden_age": {
+      "frames": 2136,
+      "fps": 24.000022888183594,
+      "file": "golden_age.npz",
+      "label": "Golden Age",
+      "video": null
+    },
+    "gonorrhea": {
+      "frames": 636,
+      "fps": 25.0,
+      "file": "gonorrhea.npz",
+      "label": "Gonorrhea",
+      "video": null
+    },
+    "good_friday": {
+      "frames": 96,
+      "fps": 25.0,
+      "file": "good_friday.npz",
+      "label": "Good Friday",
+      "video": null
+    },
+    "goods_and_services_tax": {
+      "frames": 1889,
+      "fps": 25.0,
+      "file": "goods_and_services_tax.npz",
+      "label": "Goods And Services Tax(Gst)",
+      "video": null
+    },
+    "goods_produce_merchanise_stock": {
+      "frames": 86,
+      "fps": 25.0,
+      "file": "goods_produce_merchanise_stock.npz",
+      "label": "Goods Produce Merchanise Stock",
+      "video": null
+    },
+    "google_alerts": {
+      "frames": 739,
+      "fps": 24.0,
+      "file": "google_alerts.npz",
+      "label": "Google Alerts",
+      "video": null
+    },
+    "google_glass": {
+      "frames": 660,
+      "fps": 25.0,
+      "file": "google_glass.npz",
+      "label": "Google Glass",
+      "video": null
+    },
+    "google_store": {
+      "frames": 402,
+      "fps": 24.0,
+      "file": "google_store.npz",
+      "label": "Google Store",
+      "video": null
+    },
+    "google_voice_search": {
+      "frames": 1081,
+      "fps": 24.000022888183594,
+      "file": "google_voice_search.npz",
+      "label": "Google Voice Search",
+      "video": null
+    },
+    "goosebumps": {
+      "frames": 88,
+      "fps": 25.0,
+      "file": "goosebumps.npz",
+      "label": "Goosebumps",
+      "video": null
+    },
+    "gossip_whispers_idle_talk": {
+      "frames": 97,
+      "fps": 25.0,
+      "file": "gossip_whispers_idle_talk.npz",
+      "label": "Gossip Whispers Idle Talk",
+      "video": null
+    },
+    "gout": {
+      "frames": 852,
+      "fps": 25.0,
+      "file": "gout.npz",
+      "label": "Gout",
+      "video": null
+    },
+    "gov_in": {
+      "frames": 395,
+      "fps": 24.0,
+      "file": "gov_in.npz",
+      "label": "Gov In",
+      "video": null
+    },
+    "government_dept": {
+      "frames": 312,
+      "fps": 24.0,
+      "file": "government_dept.npz",
+      "label": "Government Dept",
+      "video": null
+    },
+    "government_expenditures": {
+      "frames": 634,
+      "fps": 24.0,
+      "file": "government_expenditures.npz",
+      "label": "Government Expenditures",
+      "video": null
+    },
+    "government_failure": {
+      "frames": 495,
+      "fps": 24.0,
+      "file": "government_failure.npz",
+      "label": "Government Failure",
+      "video": null
+    },
+    "grade_of_concrete": {
+      "frames": 536,
+      "fps": 24.0,
+      "file": "grade_of_concrete.npz",
+      "label": "Grade Of Concrete",
+      "video": null
+    },
+    "grading": {
+      "frames": 1446,
+      "fps": 24.000017166137695,
+      "file": "grading.npz",
+      "label": "Grading",
+      "video": null
+    },
+    "grading_up": {
+      "frames": 587,
+      "fps": 24.0,
+      "file": "grading_up.npz",
+      "label": "Grading Up",
+      "video": null
+    },
+    "gradual": {
+      "frames": 724,
+      "fps": 29.970029830932617,
+      "file": "gradual.npz",
+      "label": "Gradual",
+      "video": null
+    },
+    "grafting": {
+      "frames": 1157,
+      "fps": 25.0,
+      "file": "grafting.npz",
+      "label": "Grafting (Sign 2)",
+      "video": null
+    },
+    "gram_nyayalaya": {
+      "frames": 490,
+      "fps": 25.0,
+      "file": "gram_nyayalaya.npz",
+      "label": "Gram Nyayalaya",
+      "video": null
+    },
+    "gramophone": {
+      "frames": 236,
+      "fps": 24.0,
+      "file": "gramophone.npz",
+      "label": "Gramophone",
+      "video": null
+    },
+    "granary": {
+      "frames": 1483,
+      "fps": 25.0,
+      "file": "granary.npz",
+      "label": "Granary",
+      "video": null
+    },
+    "grant_in_aid": {
+      "frames": 472,
+      "fps": 25.0,
+      "file": "grant_in_aid.npz",
+      "label": "Grant-In-Aid",
+      "video": null
+    },
+    "graphics_tablet": {
+      "frames": 234,
+      "fps": 24.0,
+      "file": "graphics_tablet.npz",
+      "label": "Graphics Tablet",
+      "video": null
+    },
+    "grater_shredder": {
+      "frames": 115,
+      "fps": 24.0,
+      "file": "grater_shredder.npz",
+      "label": "Grater Shredder",
+      "video": null
+    },
+    "gratis_free_of_charge": {
+      "frames": 483,
+      "fps": 29.970029830932617,
+      "file": "gratis_free_of_charge.npz",
+      "label": "Gratis Free Of Charge",
+      "video": null
+    },
+    "gratitude": {
+      "frames": 216,
+      "fps": 29.970029830932617,
+      "file": "gratitude.npz",
+      "label": "Gratitude (Explanation 2)",
+      "video": null
+    },
+    "grave_misconduct": {
+      "frames": 1227,
+      "fps": 25.0,
+      "file": "grave_misconduct.npz",
+      "label": "Grave Misconduct",
+      "video": null
+    },
+    "gravitational": {
+      "frames": 242,
+      "fps": 24.0,
+      "file": "gravitational.npz",
+      "label": "Gravitational",
+      "video": null
+    },
+    "gravitational_water": {
+      "frames": 681,
+      "fps": 25.0,
+      "file": "gravitational_water.npz",
+      "label": "Gravitational Water",
+      "video": null
+    },
+    "grease_lubricant": {
+      "frames": 533,
+      "fps": 24.0,
+      "file": "grease_lubricant.npz",
+      "label": "Grease Lubricant",
+      "video": null
+    },
+    "great_grandmother": {
+      "frames": 352,
+      "fps": 24.0,
+      "file": "great_grandmother.npz",
+      "label": "Great-Grandmother",
+      "video": null
+    },
+    "green_manure_crops": {
+      "frames": 843,
+      "fps": 25.0,
+      "file": "green_manure_crops.npz",
+      "label": "Green Manure Crops",
+      "video": null
+    },
+    "green_revolution": {
+      "frames": 897,
+      "fps": 25.0,
+      "file": "green_revolution.npz",
+      "label": "Green Revolution",
+      "video": null
+    },
+    "green_room": {
+      "frames": 547,
+      "fps": 29.970029830932617,
+      "file": "green_room.npz",
+      "label": "Green Room",
+      "video": null
+    },
+    "green_shoe_option": {
+      "frames": 1977,
+      "fps": 30.0,
+      "file": "green_shoe_option.npz",
+      "label": "Green Shoe Option",
+      "video": null
+    },
+    "green_vegetable_juice": {
+      "frames": 124,
+      "fps": 24.0,
+      "file": "green_vegetable_juice.npz",
+      "label": "Green Vegetable Juice",
+      "video": null
+    },
+    "green_with_envy": {
+      "frames": 292,
+      "fps": 29.970029830932617,
+      "file": "green_with_envy.npz",
+      "label": "Green With Envy",
+      "video": null
+    },
+    "grey_scale": {
+      "frames": 368,
+      "fps": 24.0,
+      "file": "grey_scale.npz",
+      "label": "Grey Scale",
+      "video": null
+    },
+    "grill_grille_grillwork": {
+      "frames": 412,
+      "fps": 24.0,
+      "file": "grill_grille_grillwork.npz",
+      "label": "Grill Grille Grillwork",
+      "video": null
+    },
+    "grill_grilling_barbeque": {
+      "frames": 292,
+      "fps": 24.0,
+      "file": "grill_grilling_barbeque.npz",
+      "label": "Grill Grilling Barbeque",
+      "video": null
+    },
+    "groom_abduction_or_groom_kidnapping": {
+      "frames": 831,
+      "fps": 25.0,
+      "file": "groom_abduction_or_groom_kidnapping.npz",
+      "label": "Groom Abduction Or Groom Kidnapping",
+      "video": null
+    },
+    "grope_fondle_molest": {
+      "frames": 827,
+      "fps": 24.0,
+      "file": "grope_fondle_molest.npz",
+      "label": "Grope Fondle Molest",
+      "video": null
+    },
+    "gross_income": {
+      "frames": 714,
+      "fps": 24.0,
+      "file": "gross_income.npz",
+      "label": "Gross Income",
+      "video": null
+    },
+    "grouping_of_rooms": {
+      "frames": 673,
+      "fps": 24.0,
+      "file": "grouping_of_rooms.npz",
+      "label": "Grouping Of Rooms",
+      "video": null
+    },
+    "grower_house": {
+      "frames": 369,
+      "fps": 24.0,
+      "file": "grower_house.npz",
+      "label": "Grower House",
+      "video": null
+    },
+    "grower_s_management": {
+      "frames": 553,
+      "fps": 24.0,
+      "file": "grower_s_management.npz",
+      "label": "Grower S Management",
+      "video": null
+    },
+    "gst": {
+      "frames": 276,
+      "fps": 25.0,
+      "file": "gst.npz",
+      "label": "Gst",
+      "video": null
+    },
+    "guard_border_crops": {
+      "frames": 1468,
+      "fps": 25.0,
+      "file": "guard_border_crops.npz",
+      "label": "Guard Border Crops",
+      "video": null
+    },
+    "guard_of_honour": {
+      "frames": 994,
+      "fps": 24.000024795532227,
+      "file": "guard_of_honour.npz",
+      "label": "Guard Of Honour",
+      "video": null
+    },
+    "guest_of_honour": {
+      "frames": 477,
+      "fps": 24.0,
+      "file": "guest_of_honour.npz",
+      "label": "Guest Of Honour",
+      "video": null
+    },
+    "guinea_pig": {
+      "frames": 624,
+      "fps": 25.0,
+      "file": "guinea_pig.npz",
+      "label": "Guinea Pig",
+      "video": null
+    },
+    "gun_metal": {
+      "frames": 696,
+      "fps": 25.0,
+      "file": "gun_metal.npz",
+      "label": "Gun Metal",
+      "video": null
+    },
+    "guru_nanak_jayanti": {
+      "frames": 144,
+      "fps": 25.0,
+      "file": "guru_nanak_jayanti.npz",
+      "label": "Guru Nanak Jayanti",
+      "video": null
+    },
+    "gutter": {
+      "frames": 608,
+      "fps": 24.0,
+      "file": "gutter.npz",
+      "label": "Gutter",
+      "video": null
+    },
+    "gutter_ditch_culvert_drain": {
+      "frames": 298,
+      "fps": 24.0,
+      "file": "gutter_ditch_culvert_drain.npz",
+      "label": "Gutter Ditch Culvert Drain",
+      "video": null
+    },
+    "gynaecologists": {
+      "frames": 220,
+      "fps": 25.0,
+      "file": "gynaecologists.npz",
+      "label": "Gynaecologists",
+      "video": null
+    },
+    "gynecomastia": {
+      "frames": 528,
+      "fps": 25.0,
+      "file": "gynecomastia.npz",
+      "label": "Gynecomastia",
+      "video": null
+    },
+    "g_boards": {
+      "frames": 697,
+      "fps": 24.0,
+      "file": "g_boards.npz",
+      "label": "G Boards",
+      "video": null
+    },
+    "gaffe": {
+      "frames": 806,
+      "fps": 29.970067977905273,
+      "file": "gaffe.npz",
+      "label": "Gaffe",
+      "video": null
+    },
+    "gag_muzzle": {
+      "frames": 356,
+      "fps": 24.0,
+      "file": "gag_muzzle.npz",
+      "label": "Gag Muzzle",
+      "video": null
+    },
+    "gain": {
+      "frames": 958,
+      "fps": 25.0,
+      "file": "gain.npz",
+      "label": "Gain",
+      "video": null
+    },
+    "gale_windstorm": {
+      "frames": 172,
+      "fps": 24.0,
+      "file": "gale_windstorm.npz",
+      "label": "Gale Windstorm",
+      "video": null
+    },
+    "gallantry_award": {
+      "frames": 830,
+      "fps": 24.0,
+      "file": "gallantry_award.npz",
+      "label": "Gallantry Award",
+      "video": null
+    },
+    "gallows": {
+      "frames": 263,
+      "fps": 24.0,
+      "file": "gallows.npz",
+      "label": "Gallows",
+      "video": null
+    },
+    "gallstone": {
+      "frames": 408,
+      "fps": 25.0,
+      "file": "gallstone.npz",
+      "label": "Gallstone",
+      "video": null
+    },
+    "gana": {
+      "frames": 1373,
+      "fps": 25.0,
+      "file": "gana.npz",
+      "label": "Gana (History)",
+      "video": null
+    },
+    "gandhi_jayanti": {
+      "frames": 105,
+      "fps": 25.0,
+      "file": "gandhi_jayanti.npz",
+      "label": "Gandhi Jayanti",
+      "video": null
+    },
+    "gang_rape_rapist": {
+      "frames": 492,
+      "fps": 25.0,
+      "file": "gang_rape_rapist.npz",
+      "label": "Gang Rape Rapist",
+      "video": null
+    },
+    "gap_disparity": {
+      "frames": 528,
+      "fps": 29.970029830932617,
+      "file": "gap_disparity.npz",
+      "label": "Gap Disparity",
+      "video": null
+    },
+    "gap_space": {
+      "frames": 446,
+      "fps": 29.970029830932617,
+      "file": "gap_space.npz",
+      "label": "Gap Space",
+      "video": null
+    },
+    "garbage": {
+      "frames": 98,
+      "fps": 25.0,
+      "file": "garbage.npz",
+      "label": "Garbage",
+      "video": null
+    },
+    "garland": {
+      "frames": 249,
+      "fps": 24.0,
+      "file": "garland.npz",
+      "label": "Garland",
+      "video": null
+    },
+    "gas_welding": {
+      "frames": 444,
+      "fps": 25.0,
+      "file": "gas_welding.npz",
+      "label": "Gas Welding",
+      "video": null
+    },
+    "gatecrash": {
+      "frames": 104,
+      "fps": 24.0,
+      "file": "gatecrash.npz",
+      "label": "Gatecrash",
+      "video": null
+    },
+    "gather": {
+      "frames": 522,
+      "fps": 29.970029830932617,
+      "file": "gather.npz",
+      "label": "Gather",
+      "video": null
+    },
+    "gauges": {
+      "frames": 390,
+      "fps": 25.0,
+      "file": "gauges.npz",
+      "label": "Gauges",
+      "video": null
+    },
+    "gazzeted_holiday": {
+      "frames": 923,
+      "fps": 24.0,
+      "file": "gazzeted_holiday.npz",
+      "label": "Gazzeted Holiday",
+      "video": null
+    },
+    "geld_neuter": {
+      "frames": 226,
+      "fps": 24.0,
+      "file": "geld_neuter.npz",
+      "label": "Geld Neuter",
+      "video": null
+    },
+    "gender_bias": {
+      "frames": 696,
+      "fps": 25.0,
+      "file": "gender_bias.npz",
+      "label": "Gender Bias",
+      "video": null
+    },
+    "gender_discrimination_women_s_oppression_sexism": {
+      "frames": 81,
+      "fps": 24.0,
+      "file": "gender_discrimination_women_s_oppression_sexism.npz",
+      "label": "Gender Discrimination Women S Oppression Sexism",
+      "video": null
+    },
+    "general_damages": {
+      "frames": 538,
+      "fps": 25.0,
+      "file": "general_damages.npz",
+      "label": "General Damages",
+      "video": null
+    },
+    "general_education_council": {
+      "frames": 965,
+      "fps": 24.000024795532227,
+      "file": "general_education_council.npz",
+      "label": "General Education Council (Gec)",
+      "video": null
+    },
+    "general_store_kirana_store": {
+      "frames": 236,
+      "fps": 24.0,
+      "file": "general_store_kirana_store.npz",
+      "label": "General Store Kirana Store",
+      "video": null
+    },
+    "general_x_ray_unit": {
+      "frames": 123,
+      "fps": 25.0,
+      "file": "general_x_ray_unit.npz",
+      "label": "General X-Ray Unit",
+      "video": null
+    },
+    "genes": {
+      "frames": 663,
+      "fps": 25.0,
+      "file": "genes.npz",
+      "label": "Genes (Example)",
+      "video": null
+    },
+    "genie": {
+      "frames": 86,
+      "fps": 25.0,
+      "file": "genie.npz",
+      "label": "Genie",
+      "video": null
+    },
+    "genre": {
+      "frames": 463,
+      "fps": 29.970029830932617,
+      "file": "genre.npz",
+      "label": "Genre",
+      "video": null
+    },
+    "geographical_facts": {
+      "frames": 414,
+      "fps": 24.0,
+      "file": "geographical_facts.npz",
+      "label": "Geographical Facts",
+      "video": null
+    },
+    "germs": {
+      "frames": 74,
+      "fps": 25.0,
+      "file": "germs.npz",
+      "label": "Germs",
+      "video": null
+    },
+    "gerontology": {
+      "frames": 142,
+      "fps": 25.0,
+      "file": "gerontology.npz",
+      "label": "Gerontology",
+      "video": null
+    },
+    "gesture": {
+      "frames": 768,
+      "fps": 25.0,
+      "file": "gesture.npz",
+      "label": "Gesture",
+      "video": null
+    },
+    "get_bent_out_of_shape": {
+      "frames": 278,
+      "fps": 25.0,
+      "file": "get_bent_out_of_shape.npz",
+      "label": "Get Bent Out Of Shape",
+      "video": null
+    },
+    "gif": {
+      "frames": 1164,
+      "fps": 25.0,
+      "file": "gif.npz",
+      "label": "Gif",
+      "video": null
+    },
+    "gifted_children": {
+      "frames": 808,
+      "fps": 24.0,
+      "file": "gifted_children.npz",
+      "label": "Gifted Children",
+      "video": null
+    },
+    "gills": {
+      "frames": 900,
+      "fps": 25.0,
+      "file": "gills.npz",
+      "label": "Gills (Academic)",
+      "video": null
+    },
+    "give_someone_the_benefit_of_the_doubt": {
+      "frames": 899,
+      "fps": 25.0,
+      "file": "give_someone_the_benefit_of_the_doubt.npz",
+      "label": "Give Someone The Benefit Of The Doubt",
+      "video": null
+    },
+    "give_someone_the_cold_shoulder": {
+      "frames": 406,
+      "fps": 25.0,
+      "file": "give_someone_the_cold_shoulder.npz",
+      "label": "Give Someone The Cold Shoulder",
+      "video": null
+    },
+    "glare": {
+      "frames": 86,
+      "fps": 24.0,
+      "file": "glare.npz",
+      "label": "Glare",
+      "video": null
+    },
+    "glare_glower_scowl": {
+      "frames": 345,
+      "fps": 29.970029830932617,
+      "file": "glare_glower_scowl.npz",
+      "label": "Glare Glower Scowl",
+      "video": null
+    },
+    "glint": {
+      "frames": 947,
+      "fps": 29.970062255859375,
+      "file": "glint.npz",
+      "label": "Glint",
+      "video": null
+    },
+    "global_economy": {
+      "frames": 768,
+      "fps": 24.0,
+      "file": "global_economy.npz",
+      "label": "Global Economy",
+      "video": null
+    },
+    "globalisation": {
+      "frames": 1261,
+      "fps": 25.0,
+      "file": "globalisation.npz",
+      "label": "Globalisation",
+      "video": null
+    },
+    "glossy_exterior": {
+      "frames": 403,
+      "fps": 24.0,
+      "file": "glossy_exterior.npz",
+      "label": "Glossy Exterior",
+      "video": null
+    },
+    "glove": {
+      "frames": 204,
+      "fps": 25.0,
+      "file": "glove.npz",
+      "label": "Glove",
+      "video": null
+    },
+    "glutton": {
+      "frames": 151,
+      "fps": 29.970029830932617,
+      "file": "glutton.npz",
+      "label": "Glutton",
+      "video": null
+    },
+    "gmail": {
+      "frames": 83,
+      "fps": 25.0,
+      "file": "gmail.npz",
+      "label": "Gmail",
+      "video": null
+    },
+    "gnp": {
+      "frames": 307,
+      "fps": 24.0,
+      "file": "gnp.npz",
+      "label": "Gnp",
+      "video": null
+    },
+    "go_out_of_business": {
+      "frames": 646,
+      "fps": 25.0,
+      "file": "go_out_of_business.npz",
+      "label": "Go Out Of Business",
+      "video": null
+    },
+    "goals": {
+      "frames": 306,
+      "fps": 24.0,
+      "file": "goals.npz",
+      "label": "Goals",
+      "video": null
+    },
+    "good_faith": {
+      "frames": 1334,
+      "fps": 25.0,
+      "file": "good_faith.npz",
+      "label": "Good Faith",
+      "video": null
+    },
+    "goods_and_services_tax_gst": {
+      "frames": 1007,
+      "fps": 30.0,
+      "file": "goods_and_services_tax_gst.npz",
+      "label": "Goods And Services Tax Gst",
+      "video": null
+    },
+    "google": {
+      "frames": 67,
+      "fps": 25.0,
+      "file": "google.npz",
+      "label": "Google",
+      "video": null
+    },
+    "google_ads": {
+      "frames": 558,
+      "fps": 24.0,
+      "file": "google_ads.npz",
+      "label": "Google Ads",
+      "video": null
+    },
+    "google_assistant": {
+      "frames": 894,
+      "fps": 24.0,
+      "file": "google_assistant.npz",
+      "label": "Google Assistant",
+      "video": null
+    },
+    "google_cast": {
+      "frames": 486,
+      "fps": 24.0,
+      "file": "google_cast.npz",
+      "label": "Google Cast",
+      "video": null
+    },
+    "google_class_room": {
+      "frames": 546,
+      "fps": 24.0,
+      "file": "google_class_room.npz",
+      "label": "Google Class Room",
+      "video": null
+    },
+    "google_drive": {
+      "frames": 378,
+      "fps": 25.0,
+      "file": "google_drive.npz",
+      "label": "Google Drive",
+      "video": null
+    },
+    "gootee_or_air_layering": {
+      "frames": 1003,
+      "fps": 25.0,
+      "file": "gootee_or_air_layering.npz",
+      "label": "Gootee Or Air Layering",
+      "video": null
+    },
+    "gotras": {
+      "frames": 1086,
+      "fps": 25.0,
+      "file": "gotras.npz",
+      "label": "Gotras",
+      "video": null
+    },
+    "government_bond": {
+      "frames": 682,
+      "fps": 30.0,
+      "file": "government_bond.npz",
+      "label": "Government Bond",
+      "video": null
+    },
+    "government_transfer_payments": {
+      "frames": 392,
+      "fps": 24.0,
+      "file": "government_transfer_payments.npz",
+      "label": "Government Transfer Payments",
+      "video": null
+    },
+    "gram_sabha": {
+      "frames": 1245,
+      "fps": 25.0,
+      "file": "gram_sabha.npz",
+      "label": "Gram Sabha (Social Science)",
+      "video": null
+    },
+    "granulation": {
+      "frames": 468,
+      "fps": 25.0,
+      "file": "granulation.npz",
+      "label": "Granulation",
+      "video": null
+    },
+    "grasslands": {
+      "frames": 427,
+      "fps": 25.0,
+      "file": "grasslands.npz",
+      "label": "Grasslands",
+      "video": null
+    },
+    "grate": {
+      "frames": 96,
+      "fps": 24.0,
+      "file": "grate.npz",
+      "label": "Grate",
+      "video": null
+    },
+    "gratuity": {
+      "frames": 1275,
+      "fps": 25.0,
+      "file": "gratuity.npz",
+      "label": "Gratuity",
+      "video": null
+    },
+    "grave_burial_place": {
+      "frames": 345,
+      "fps": 29.970029830932617,
+      "file": "grave_burial_place.npz",
+      "label": "Grave Burial Place",
+      "video": null
+    },
+    "grave_serious": {
+      "frames": 399,
+      "fps": 29.970029830932617,
+      "file": "grave_serious.npz",
+      "label": "Grave Serious",
+      "video": null
+    },
+    "great_grandaughter": {
+      "frames": 290,
+      "fps": 24.0,
+      "file": "great_grandaughter.npz",
+      "label": "Great-Grandaughter",
+      "video": null
+    },
+    "great_grandfather": {
+      "frames": 352,
+      "fps": 24.0,
+      "file": "great_grandfather.npz",
+      "label": "Great-Grandfather",
+      "video": null
+    },
+    "great_grandson": {
+      "frames": 307,
+      "fps": 24.0,
+      "file": "great_grandson.npz",
+      "label": "Great-Grandson",
+      "video": null
+    },
+    "greater_than": {
+      "frames": 1348,
+      "fps": 25.0,
+      "file": "greater_than.npz",
+      "label": "Greater Than (Maths)",
+      "video": null
+    },
+    "greatest": {
+      "frames": 1375,
+      "fps": 25.0,
+      "file": "greatest.npz",
+      "label": "Greatest (Maths)",
+      "video": null
+    },
+    "greatest_common_factor": {
+      "frames": 1093,
+      "fps": 25.0,
+      "file": "greatest_common_factor.npz",
+      "label": "Greatest Common Factor",
+      "video": null
+    },
+    "greek_alphabets": {
+      "frames": 982,
+      "fps": 25.0,
+      "file": "greek_alphabets.npz",
+      "label": "Greek Alphabets",
+      "video": null
+    },
+    "greek_civilization": {
+      "frames": 1230,
+      "fps": 24.000019073486328,
+      "file": "greek_civilization.npz",
+      "label": "Greek Civilization",
+      "video": null
+    },
+    "green_ear_disease": {
+      "frames": 561,
+      "fps": 25.0,
+      "file": "green_ear_disease.npz",
+      "label": "Green Ear Disease",
+      "video": null
+    },
+    "greenhouse": {
+      "frames": 99,
+      "fps": 25.0,
+      "file": "greenhouse.npz",
+      "label": "Greenhouse",
+      "video": null
+    },
+    "greenhouse_effect": {
+      "frames": 1088,
+      "fps": 25.0,
+      "file": "greenhouse_effect.npz",
+      "label": "Greenhouse Effect",
+      "video": null
+    },
+    "greylist": {
+      "frames": 739,
+      "fps": 25.0,
+      "file": "greylist.npz",
+      "label": "Greylist",
+      "video": null
+    },
+    "greywater": {
+      "frames": 720,
+      "fps": 25.0,
+      "file": "greywater.npz",
+      "label": "Greywater",
+      "video": null
+    },
+    "grid": {
+      "frames": 1346,
+      "fps": 24.000017166137695,
+      "file": "grid.npz",
+      "label": "Grid",
+      "video": null
+    },
+    "grief_sorrow_sadness": {
+      "frames": 385,
+      "fps": 24.0,
+      "file": "grief_sorrow_sadness.npz",
+      "label": "Grief Sorrow Sadness",
+      "video": null
+    },
+    "grievance_redressal_cell": {
+      "frames": 648,
+      "fps": 24.0,
+      "file": "grievance_redressal_cell.npz",
+      "label": "Grievance Redressal Cell",
+      "video": null
+    },
+    "grievous_hurt_grievous_injury": {
+      "frames": 1128,
+      "fps": 25.0,
+      "file": "grievous_hurt_grievous_injury.npz",
+      "label": "Grievous Hurt Grievous Injury",
+      "video": null
+    },
+    "grinding_machine": {
+      "frames": 516,
+      "fps": 25.0,
+      "file": "grinding_machine.npz",
+      "label": "Grinding Machine",
+      "video": null
+    },
+    "grope_root_around_fumble_cast_about_scrabble": {
+      "frames": 612,
+      "fps": 24.0,
+      "file": "grope_root_around_fumble_cast_about_scrabble.npz",
+      "label": "Grope Root Around Fumble Cast About Scrabble",
+      "video": null
+    },
+    "gross_domestic_product": {
+      "frames": 1057,
+      "fps": 24.000022888183594,
+      "file": "gross_domestic_product.npz",
+      "label": "Gross Domestic Product (Gdp)",
+      "video": null
+    },
+    "ground_fault_circuit_interrupter": {
+      "frames": 470,
+      "fps": 25.0,
+      "file": "ground_fault_circuit_interrupter.npz",
+      "label": "Ground Fault Circuit Interrupter",
+      "video": null
+    },
+    "groundwater": {
+      "frames": 384,
+      "fps": 25.0,
+      "file": "groundwater.npz",
+      "label": "Groundwater",
+      "video": null
+    },
+    "guarantor": {
+      "frames": 677,
+      "fps": 25.0,
+      "file": "guarantor.npz",
+      "label": "Guarantor",
+      "video": null
+    },
+    "guess": {
+      "frames": 118,
+      "fps": 25.0,
+      "file": "guess.npz",
+      "label": "Guess",
+      "video": null
+    },
+    "gupta_rulers": {
+      "frames": 1468,
+      "fps": 25.0,
+      "file": "gupta_rulers.npz",
+      "label": "Gupta Rulers (Academic)",
+      "video": null
+    },
+    "gusset_plate": {
+      "frames": 473,
+      "fps": 24.0,
+      "file": "gusset_plate.npz",
+      "label": "Gusset Plate",
+      "video": null
+    },
+    "guttation": {
+      "frames": 379,
+      "fps": 24.0,
+      "file": "guttation.npz",
+      "label": "Guttation",
+      "video": null
+    },
+    "gymnastics": {
+      "frames": 552,
+      "fps": 25.0,
+      "file": "gymnastics.npz",
+      "label": "Gymnastics (Ring Uneven Bars Balance Beam)",
+      "video": null
+    },
+    "gynaecology": {
+      "frames": 250,
+      "fps": 25.0,
+      "file": "gynaecology.npz",
+      "label": "Gynaecology",
+      "video": null
+    }
+  }
+}

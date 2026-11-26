@@ -137,9 +137,10 @@ class SignAvatarClient:
         page: Optional[int] = None,
         page_size: int = 50,
         search: Optional[str] = None,
-        hand_filter: Optional[str] = None
+        hand_filter: Optional[str] = None,
+        dataset: Optional[str] = None
     ) -> Dict[str, Any]:
-        """Fetch available animations and metadata from SignAvatars with pagination and search."""
+        """Fetch available animations and metadata from SignAvatars with pagination, search, hand, and dataset filter."""
         params: Dict[str, Any] = {}
         if page is not None:
             params["page"] = page
@@ -149,6 +150,8 @@ class SignAvatarClient:
             params["search"] = search
         if hand_filter:
             params["hand_filter"] = hand_filter
+        if dataset:
+            params["dataset"] = dataset
 
         url = f"{self.base_url}/motions"
         try:

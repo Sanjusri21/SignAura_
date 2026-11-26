@@ -1,0 +1,13 @@
+{
+  "dataset": "Group F - Uncertain Signs",
+  "count": 1,
+  "words": {
+    "form": {
+      "frames": 1041,
+      "fps": 25.0,
+      "file": "form.npz",
+      "label": "Form 16",
+      "video": null
+    }
+  }
+}

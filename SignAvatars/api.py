@@ -245,18 +245,20 @@ def list_motions(
     page: Optional[int] = None,
     page_size: int = 50,
     search: Optional[str] = None,
-    hand_filter: Optional[str] = None
+    hand_filter: Optional[str] = None,
+    dataset: Optional[str] = None,
 ):
     """
     Return available ISL animations and metadata.
     Supports pagination and search across the entire indexed BridgeConn dictionary.
     """
-    if page is not None or search or hand_filter:
+    if page is not None or search or hand_filter or dataset:
         res = get_signs_paginated(
             page=page or 1,
             page_size=page_size,
             search=search or "",
-            hand_filter=hand_filter or ""
+            hand_filter=hand_filter or "",
+            dataset=dataset or ""
         )
         for s in res.get("signs", []):
             s.setdefault("canonical_gloss", s.get("normalized_gloss"))
@@ -640,6 +642,43 @@ def resolve_sentence(request: SentenceRequest):
     tokens = resolve_text(request.sentence)
     available = sum(1 for t in tokens if t["status"] != "missing")
     return {"tokens": tokens, "available": available, "total": len(tokens)}
+
+
+@app.post("/precache")
+def precache_sentence(request: SentenceRequest):
+    """
+    Pre-caches (converts if needed) SMPL-X motion clips for all words in the sentence.
+    Returns lists of cached words and missing words for zero-latency instant playback.
+    """
+    sentence = request.sentence.strip()
+    if not sentence:
+        return {"status": "success", "cached_count": 0, "total_count": 0, "cached_words": [], "missing_words": []}
+
+    tokens = resolve_text(sentence)
+    cached_words = []
+    missing_words = []
+
+    for item in tokens:
+        if item["status"] == "missing":
+            missing_words.append(item["input"])
+            continue
+        try:
+            res = get_or_convert_smplx(item["key"])
+            if res.get("status") in ("cached", "converted"):
+                cached_words.append(item["input"])
+            else:
+                missing_words.append(item["input"])
+        except Exception as e:
+            logger.warning(f"Precache failed for '{item['input']}': {e}")
+            missing_words.append(item["input"])
+
+    return {
+        "status": "success",
+        "cached_count": len(cached_words),
+        "total_count": len(tokens),
+        "cached_words": cached_words,
+        "missing_words": missing_words
+    }
 
 
 def read_clip_fps(json_path: Optional[str]) -> float:

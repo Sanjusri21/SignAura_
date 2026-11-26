@@ -1,0 +1,342 @@
+{
+  "dataset": "Group K - New Words",
+  "count": 48,
+  "words": {
+    "kabaddi": {
+      "frames": 243,
+      "fps": 25.0,
+      "file": "kabaddi.npz",
+      "label": "Kabaddi",
+      "video": null
+    },
+    "kaleidoscope": {
+      "frames": 548,
+      "fps": 25.0,
+      "file": "kaleidoscope.npz",
+      "label": "Kaleidoscope",
+      "video": null
+    },
+    "kalidasa": {
+      "frames": 2522,
+      "fps": 25.0,
+      "file": "kalidasa.npz",
+      "label": "Kalidasa (Academic)",
+      "video": null
+    },
+    "kanishka": {
+      "frames": 1440,
+      "fps": 25.0,
+      "file": "kanishka.npz",
+      "label": "Kanishka (Academic)",
+      "video": null
+    },
+    "kareena_kapoor_khan": {
+      "frames": 86,
+      "fps": 25.0,
+      "file": "kareena_kapoor_khan.npz",
+      "label": "Kareena Kapoor Khan",
+      "video": null
+    },
+    "karma": {
+      "frames": 1387,
+      "fps": 25.0,
+      "file": "karma.npz",
+      "label": "Karma (Academic)",
+      "video": null
+    },
+    "karnal": {
+      "frames": 208,
+      "fps": 24.0,
+      "file": "karnal.npz",
+      "label": "Karnal",
+      "video": null
+    },
+    "kayak": {
+      "frames": 299,
+      "fps": 25.0,
+      "file": "kayak.npz",
+      "label": "Kayak",
+      "video": null
+    },
+    "keep_hold_retain_store": {
+      "frames": 84,
+      "fps": 25.0,
+      "file": "keep_hold_retain_store.npz",
+      "label": "Keep Hold Retain Store",
+      "video": null
+    },
+    "keep_somebody_at_arm_s_length": {
+      "frames": 945,
+      "fps": 25.0,
+      "file": "keep_somebody_at_arm_s_length.npz",
+      "label": "Keep Somebody At Arm S Length",
+      "video": null
+    },
+    "kennel": {
+      "frames": 163,
+      "fps": 24.0,
+      "file": "kennel.npz",
+      "label": "Kennel",
+      "video": null
+    },
+    "kerb_crawling_kerb_crawler": {
+      "frames": 652,
+      "fps": 25.0,
+      "file": "kerb_crawling_kerb_crawler.npz",
+      "label": "Kerb Crawling Kerb Crawler",
+      "video": null
+    },
+    "ketchup_sauce": {
+      "frames": 90,
+      "fps": 25.0,
+      "file": "ketchup_sauce.npz",
+      "label": "Ketchup Sauce",
+      "video": null
+    },
+    "key_card": {
+      "frames": 623,
+      "fps": 25.0,
+      "file": "key_card.npz",
+      "label": "Key Card",
+      "video": null
+    },
+    "key_ring_key_chain": {
+      "frames": 248,
+      "fps": 25.0,
+      "file": "key_ring_key_chain.npz",
+      "label": "Key Ring Key Chain",
+      "video": null
+    },
+    "key_word": {
+      "frames": 864,
+      "fps": 25.0,
+      "file": "key_word.npz",
+      "label": "Key Word",
+      "video": null
+    },
+    "keyword_stuffing": {
+      "frames": 1851,
+      "fps": 24.00002670288086,
+      "file": "keyword_stuffing.npz",
+      "label": "Keyword Stuffing",
+      "video": null
+    },
+    "kharif_and_rabi_crops": {
+      "frames": 984,
+      "fps": 25.0,
+      "file": "kharif_and_rabi_crops.npz",
+      "label": "Kharif And Rabi Crops",
+      "video": null
+    },
+    "kharif_crops": {
+      "frames": 846,
+      "fps": 25.0,
+      "file": "kharif_crops.npz",
+      "label": "Kharif Crops",
+      "video": null
+    },
+    "khoa_or_mawa": {
+      "frames": 369,
+      "fps": 24.0,
+      "file": "khoa_or_mawa.npz",
+      "label": "Khoa Or Mawa",
+      "video": null
+    },
+    "kick_eject_fire_from_job": {
+      "frames": 104,
+      "fps": 25.0,
+      "file": "kick_eject_fire_from_job.npz",
+      "label": "Kick Eject Fire From Job",
+      "video": null
+    },
+    "kick_out_eject": {
+      "frames": 94,
+      "fps": 25.0,
+      "file": "kick_out_eject.npz",
+      "label": "Kick Out Eject",
+      "video": null
+    },
+    "kidney": {
+      "frames": 175,
+      "fps": 25.0,
+      "file": "kidney.npz",
+      "label": "Kidney",
+      "video": null
+    },
+    "kidney_cancer": {
+      "frames": 94,
+      "fps": 25.0,
+      "file": "kidney_cancer.npz",
+      "label": "Kidney Cancer (Renal Cell)",
+      "video": null
+    },
+    "kill_murder": {
+      "frames": 68,
+      "fps": 25.0,
+      "file": "kill_murder.npz",
+      "label": "Kill Murder (Sign 2)",
+      "video": null
+    },
+    "kilobyte": {
+      "frames": 564,
+      "fps": 25.0,
+      "file": "kilobyte.npz",
+      "label": "Kilobyte (Kb)",
+      "video": null
+    },
+    "kilometer_per_hour": {
+      "frames": 1628,
+      "fps": 23.976024627685547,
+      "file": "kilometer_per_hour.npz",
+      "label": "Kilometer Per Hour",
+      "video": null
+    },
+    "kin": {
+      "frames": 380,
+      "fps": 25.0,
+      "file": "kin.npz",
+      "label": "Kin",
+      "video": null
+    },
+    "kind_kindhearted": {
+      "frames": 134,
+      "fps": 25.0,
+      "file": "kind_kindhearted.npz",
+      "label": "Kind Kindhearted",
+      "video": null
+    },
+    "king_post": {
+      "frames": 507,
+      "fps": 24.0,
+      "file": "king_post.npz",
+      "label": "King Post",
+      "video": null
+    },
+    "kingdom": {
+      "frames": 1072,
+      "fps": 25.0,
+      "file": "kingdom.npz",
+      "label": "Kingdom (Academic)",
+      "video": null
+    },
+    "kingdom_of_animals": {
+      "frames": 417,
+      "fps": 24.0,
+      "file": "kingdom_of_animals.npz",
+      "label": "Kingdom Of Animals",
+      "video": null
+    },
+    "kit_gear": {
+      "frames": 1171,
+      "fps": 29.970054626464844,
+      "file": "kit_gear.npz",
+      "label": "Kit Gear",
+      "video": null
+    },
+    "kitchen_gardening": {
+      "frames": 455,
+      "fps": 25.0,
+      "file": "kitchen_gardening.npz",
+      "label": "Kitchen Gardening",
+      "video": null
+    },
+    "kitosis": {
+      "frames": 380,
+      "fps": 24.0,
+      "file": "kitosis.npz",
+      "label": "Kitosis",
+      "video": null
+    },
+    "kitten": {
+      "frames": 109,
+      "fps": 24.0,
+      "file": "kitten.npz",
+      "label": "Kitten",
+      "video": null
+    },
+    "knead": {
+      "frames": 291,
+      "fps": 25.0,
+      "file": "knead.npz",
+      "label": "Knead",
+      "video": null
+    },
+    "kneel": {
+      "frames": 606,
+      "fps": 25.0,
+      "file": "kneel.npz",
+      "label": "Kneel",
+      "video": null
+    },
+    "knife_edge_file": {
+      "frames": 939,
+      "fps": 25.0,
+      "file": "knife_edge_file.npz",
+      "label": "Knife Edge File",
+      "video": null
+    },
+    "know_your_client": {
+      "frames": 1182,
+      "fps": 30.0,
+      "file": "know_your_client.npz",
+      "label": "Know Your Client",
+      "video": null
+    },
+    "know_your_customer": {
+      "frames": 184,
+      "fps": 24.0,
+      "file": "know_your_customer.npz",
+      "label": "Know Your Customer (Kyc)",
+      "video": null
+    },
+    "knowledge_base": {
+      "frames": 1012,
+      "fps": 25.0,
+      "file": "knowledge_base.npz",
+      "label": "Knowledge Base",
+      "video": null
+    },
+    "knowledge_expertise": {
+      "frames": 80,
+      "fps": 25.0,
+      "file": "knowledge_expertise.npz",
+      "label": "Knowledge Expertise",
+      "video": null
+    },
+    "knowledge_management_system": {
+      "frames": 1508,
+      "fps": 24.000015258789062,
+      "file": "knowledge_management_system.npz",
+      "label": "Knowledge Management System",
+      "video": null
+    },
+    "kolkata": {
+      "frames": 107,
+      "fps": 25.0,
+      "file": "kolkata.npz",
+      "label": "Kolkata (Calcutta )",
+      "video": null
+    },
+    "kornish_sajda_and_chahar_taslim": {
+      "frames": 1707,
+      "fps": 25.0,
+      "file": "kornish_sajda_and_chahar_taslim.npz",
+      "label": "Kornish Sajda And Chahar Taslim",
+      "video": null
+    },
+    "kshatriya": {
+      "frames": 942,
+      "fps": 25.0,
+      "file": "kshatriya.npz",
+      "label": "Kshatriya (History)",
+      "video": null
+    },
+    "kyc": {
+      "frames": 849,
+      "fps": 30.0,
+      "file": "kyc.npz",
+      "label": "Kyc",
+      "video": null
+    }
+  }
+}

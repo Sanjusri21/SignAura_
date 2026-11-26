@@ -349,6 +349,9 @@ def track_video(path: str) -> Tuple[np.ndarray, np.ndarray, float, int, int, Tup
     cap = cv2.VideoCapture(path)
     fps = float(cap.get(cv2.CAP_PROP_FPS) or 25.0)
     every = max(1, int(cap.get(cv2.CAP_PROP_FRAME_COUNT)) // 6)  # ~6 frames are enough to find the bars
+    global _holistic
+    if _holistic is None:
+        _init_worker()
     _holistic.reset()  # no tracking state carried over from the previous video
     data, conf, w, h, brightest = [], [], 0, 0, None
     while True:

@@ -67,6 +67,34 @@ ISL_ARCHIVE5_DIR = os.environ.get("ISL_ARCHIVE5_DIR", os.path.join(REPO_ROOT, "B
 ISL_ARCHIVE5_SOURCE = "Archive 5 (ISL_archive5)"
 CISLR_DIR = os.environ.get("CISLR_DIR", os.path.join(REPO_ROOT, "Backend", "datasets", "CISLR"))
 CISLR_SOURCE = "CISLR (CISLR_v1.5-a)"  # <gloss>/<uid>.npz clips, listed by Backend/scripts/index_cislr.py
+ISL_DRIVE_A_DIR = os.environ.get("ISL_DRIVE_A_DIR", os.path.join(REPO_ROOT, "Backend", "datasets", "ISL_DRIVE", "A"))
+ISL_DRIVE_A_SOURCE = "Drive Group A (ISL_DRIVE_A)"
+ISL_DRIVE_B_DIR = os.environ.get("ISL_DRIVE_B_DIR", os.path.join(REPO_ROOT, "Backend", "datasets", "ISL_DRIVE", "B"))
+ISL_DRIVE_B_SOURCE = "Drive Group B (ISL_DRIVE_B)"
+ISL_DRIVE_C_DIR = os.environ.get("ISL_DRIVE_C_DIR", os.path.join(REPO_ROOT, "Backend", "datasets", "ISL_DRIVE", "C"))
+ISL_DRIVE_C_SOURCE = "Drive Group C (ISL_DRIVE_C)"
+ISL_DRIVE_D_DIR = os.environ.get("ISL_DRIVE_D_DIR", os.path.join(REPO_ROOT, "Backend", "datasets", "ISL_DRIVE", "D"))
+ISL_DRIVE_D_SOURCE = "Drive Group D (ISL_DRIVE_D)"
+ISL_DRIVE_E_DIR = os.environ.get("ISL_DRIVE_E_DIR", os.path.join(REPO_ROOT, "Backend", "datasets", "ISL_DRIVE", "E"))
+ISL_DRIVE_E_SOURCE = "Drive Group E (ISL_DRIVE_E)"
+ISL_DRIVE_F_DIR = os.environ.get("ISL_DRIVE_F_DIR", os.path.join(REPO_ROOT, "Backend", "datasets", "ISL_DRIVE", "F"))
+ISL_DRIVE_F_SOURCE = "Drive Group F (ISL_DRIVE_F)"
+ISL_DRIVE_G_DIR = os.environ.get("ISL_DRIVE_G_DIR", os.path.join(REPO_ROOT, "Backend", "datasets", "ISL_DRIVE", "G"))
+ISL_DRIVE_G_SOURCE = "Drive Group G (ISL_DRIVE_G)"
+ISL_DRIVE_H_DIR = os.environ.get("ISL_DRIVE_H_DIR", os.path.join(REPO_ROOT, "Backend", "datasets", "ISL_DRIVE", "H"))
+ISL_DRIVE_H_SOURCE = "Drive Group H (ISL_DRIVE_H)"
+ISL_DRIVE_I_DIR = os.environ.get("ISL_DRIVE_I_DIR", os.path.join(REPO_ROOT, "Backend", "datasets", "ISL_DRIVE", "I"))
+ISL_DRIVE_I_SOURCE = "Drive Group I (ISL_DRIVE_I)"
+ISL_DRIVE_J_DIR = os.environ.get("ISL_DRIVE_J_DIR", os.path.join(REPO_ROOT, "Backend", "datasets", "ISL_DRIVE", "J"))
+ISL_DRIVE_J_SOURCE = "Drive Group J (ISL_DRIVE_J)"
+ISL_DRIVE_K_DIR = os.environ.get("ISL_DRIVE_K_DIR", os.path.join(REPO_ROOT, "Backend", "datasets", "ISL_DRIVE", "K"))
+ISL_DRIVE_K_SOURCE = "Drive Group K (ISL_DRIVE_K)"
+ISL_DRIVE_L_DIR = os.environ.get("ISL_DRIVE_L_DIR", os.path.join(REPO_ROOT, "Backend", "datasets", "ISL_DRIVE", "L"))
+ISL_DRIVE_L_SOURCE = "Drive Group L (ISL_DRIVE_L)"
+ISL_DRIVE_M_DIR = os.environ.get("ISL_DRIVE_M_DIR", os.path.join(REPO_ROOT, "Backend", "datasets", "ISL_DRIVE", "M"))
+ISL_DRIVE_M_SOURCE = "Drive Group M (ISL_DRIVE_M)"
+ISL_DRIVE_N_DIR = os.environ.get("ISL_DRIVE_N_DIR", os.path.join(REPO_ROOT, "Backend", "datasets", "ISL_DRIVE", "N"))
+ISL_DRIVE_N_SOURCE = "Drive Group N (ISL_DRIVE_N)"
 SYNONYMS_PATH = os.path.join(BASE_DIR, "word_synonyms.json")
 # Words whose clip failed the quality check are not served at all from these folders (the older
 # ISL dictionary and INCLUDE folders still serve theirs, flagged, when asked for directly)
@@ -85,6 +113,20 @@ KEYPOINT_DICTIONARIES = [
     (ISL_50_DIR, ISL_50_SOURCE, os.path.join(ISL_50_DIR, "smplx_cache")),
     (ISL_ARCHIVE5_DIR, ISL_ARCHIVE5_SOURCE, os.path.join(ISL_ARCHIVE5_DIR, "smplx_cache")),
     (CISLR_DIR, CISLR_SOURCE, os.path.join(CISLR_DIR, "smplx_cache")),
+    (ISL_DRIVE_A_DIR, ISL_DRIVE_A_SOURCE, os.path.join(ISL_DRIVE_A_DIR, "smplx_cache")),
+    (ISL_DRIVE_B_DIR, ISL_DRIVE_B_SOURCE, os.path.join(ISL_DRIVE_B_DIR, "smplx_cache")),
+    (ISL_DRIVE_C_DIR, ISL_DRIVE_C_SOURCE, os.path.join(ISL_DRIVE_C_DIR, "smplx_cache")),
+    (ISL_DRIVE_D_DIR, ISL_DRIVE_D_SOURCE, os.path.join(ISL_DRIVE_D_DIR, "smplx_cache")),
+    (ISL_DRIVE_E_DIR, ISL_DRIVE_E_SOURCE, os.path.join(ISL_DRIVE_E_DIR, "smplx_cache")),
+    (ISL_DRIVE_F_DIR, ISL_DRIVE_F_SOURCE, os.path.join(ISL_DRIVE_F_DIR, "smplx_cache")),
+    (ISL_DRIVE_G_DIR, ISL_DRIVE_G_SOURCE, os.path.join(ISL_DRIVE_G_DIR, "smplx_cache")),
+    (ISL_DRIVE_H_DIR, ISL_DRIVE_H_SOURCE, os.path.join(ISL_DRIVE_H_DIR, "smplx_cache")),
+    (ISL_DRIVE_I_DIR, ISL_DRIVE_I_SOURCE, os.path.join(ISL_DRIVE_I_DIR, "smplx_cache")),
+    (ISL_DRIVE_J_DIR, ISL_DRIVE_J_SOURCE, os.path.join(ISL_DRIVE_J_DIR, "smplx_cache")),
+    (ISL_DRIVE_K_DIR, ISL_DRIVE_K_SOURCE, os.path.join(ISL_DRIVE_K_DIR, "smplx_cache")),
+    (ISL_DRIVE_L_DIR, ISL_DRIVE_L_SOURCE, os.path.join(ISL_DRIVE_L_DIR, "smplx_cache")),
+    (ISL_DRIVE_M_DIR, ISL_DRIVE_M_SOURCE, os.path.join(ISL_DRIVE_M_DIR, "smplx_cache")),
+    (ISL_DRIVE_N_DIR, ISL_DRIVE_N_SOURCE, os.path.join(ISL_DRIVE_N_DIR, "smplx_cache")),
 ]
 
 try:
@@ -166,15 +208,21 @@ def get_signs_paginated(
     page: int = 1,
     page_size: int = 50,
     search: str = "",
-    hand_filter: str = ""
+    hand_filter: str = "",
+    dataset: str = ""
 ) -> Dict[str, Any]:
     """Returns paginated dictionary of signs with filtering."""
     conn = get_db_connection()
     if not conn:
-        return {"total": 0, "page": page, "page_size": page_size, "signs": []}
+        return {"total": 0, "page": page, "page_size": page_size, "signs": [], "by_shard": {}}
 
     try:
         cur = conn.cursor()
+
+        # Overall counts per shard/dataset
+        cur.execute("SELECT shard, COUNT(*) FROM bridgeconn_signs GROUP BY shard")
+        by_shard = {row[0]: row[1] for row in cur.fetchall()}
+
         conditions = []
         params: List[Any] = []
 
@@ -186,6 +234,10 @@ def get_signs_paginated(
         if hand_filter and hand_filter in ("both", "left_only", "right_only", "none"):
             conditions.append("hand_category = ?")
             params.append(hand_filter)
+
+        if dataset and dataset != "all":
+            conditions.append("shard LIKE ?")
+            params.append(f"%{dataset}%")
 
         where_clause = " WHERE " + " AND ".join(conditions) if conditions else ""
 
@@ -211,7 +263,8 @@ def get_signs_paginated(
             "page": page,
             "page_size": page_size,
             "total_pages": (total + page_size - 1) // page_size if page_size > 0 else 1,
-            "signs": signs
+            "signs": signs,
+            "by_shard": by_shard
         }
     except Exception as e:
         logger.error(f"Pagination error: {e}")

@@ -1,0 +1,4955 @@
+{
+  "dataset": "Group C - New Words",
+  "count": 707,
+  "words": {
+    "c_language": {
+      "frames": 1320,
+      "fps": 25.0,
+      "file": "c_language.npz",
+      "label": "C Language",
+      "video": null
+    },
+    "caliper": {
+      "frames": 510,
+      "fps": 25.0,
+      "file": "caliper.npz",
+      "label": "Caliper",
+      "video": null
+    },
+    "calipers": {
+      "frames": 371,
+      "fps": 25.0,
+      "file": "calipers.npz",
+      "label": "Calipers",
+      "video": null
+    },
+    "capias": {
+      "frames": 545,
+      "fps": 25.0,
+      "file": "capias.npz",
+      "label": "Capias",
+      "video": null
+    },
+    "cardiologists": {
+      "frames": 145,
+      "fps": 25.0,
+      "file": "cardiologists.npz",
+      "label": "Cardiologists",
+      "video": null
+    },
+    "cardiology": {
+      "frames": 144,
+      "fps": 25.0,
+      "file": "cardiology.npz",
+      "label": "Cardiology",
+      "video": null
+    },
+    "cardiovascular_medicine": {
+      "frames": 156,
+      "fps": 25.0,
+      "file": "cardiovascular_medicine.npz",
+      "label": "Cardiovascular Medicine",
+      "video": null
+    },
+    "carnivores": {
+      "frames": 726,
+      "fps": 25.0,
+      "file": "carnivores.npz",
+      "label": "Carnivores",
+      "video": null
+    },
+    "category_classification_group_section": {
+      "frames": 156,
+      "fps": 25.0,
+      "file": "category_classification_group_section.npz",
+      "label": "Category Classification Group Section",
+      "video": null
+    },
+    "cd_writer": {
+      "frames": 705,
+      "fps": 25.0,
+      "file": "cd_writer.npz",
+      "label": "Cd Writer",
+      "video": null
+    },
+    "challenge_dare": {
+      "frames": 120,
+      "fps": 25.0,
+      "file": "challenge_dare.npz",
+      "label": "Challenge Dare",
+      "video": null
+    },
+    "change_clothes": {
+      "frames": 71,
+      "fps": 25.0,
+      "file": "change_clothes.npz",
+      "label": "Change Clothes",
+      "video": null
+    },
+    "chest_expander": {
+      "frames": 108,
+      "fps": 25.0,
+      "file": "chest_expander.npz",
+      "label": "Chest Expander",
+      "video": null
+    },
+    "chin": {
+      "frames": 65,
+      "fps": 25.0,
+      "file": "chin.npz",
+      "label": "Chin",
+      "video": null
+    },
+    "chiropractor": {
+      "frames": 190,
+      "fps": 25.0,
+      "file": "chiropractor.npz",
+      "label": "Chiropractor",
+      "video": null
+    },
+    "clean_tidy": {
+      "frames": 120,
+      "fps": 25.0,
+      "file": "clean_tidy.npz",
+      "label": "Clean Tidy",
+      "video": null
+    },
+    "cloudy": {
+      "frames": 159,
+      "fps": 25.0,
+      "file": "cloudy.npz",
+      "label": "Cloudy",
+      "video": null
+    },
+    "cochlear_implant": {
+      "frames": 100,
+      "fps": 25.0,
+      "file": "cochlear_implant.npz",
+      "label": "Cochlear Implant",
+      "video": null
+    },
+    "colonialism": {
+      "frames": 1709,
+      "fps": 25.0,
+      "file": "colonialism.npz",
+      "label": "Colonialism (Sign 2)",
+      "video": null
+    },
+    "complete_finish": {
+      "frames": 95,
+      "fps": 25.0,
+      "file": "complete_finish.npz",
+      "label": "Complete Finish",
+      "video": null
+    },
+    "conclusion": {
+      "frames": 364,
+      "fps": 25.0,
+      "file": "conclusion.npz",
+      "label": "Conclusion (Sign 2)",
+      "video": null
+    },
+    "confiscation_order": {
+      "frames": 1191,
+      "fps": 25.0,
+      "file": "confiscation_order.npz",
+      "label": "Confiscation Order",
+      "video": null
+    },
+    "consecutive_sentence": {
+      "frames": 1424,
+      "fps": 25.0,
+      "file": "consecutive_sentence.npz",
+      "label": "Consecutive Sentence",
+      "video": null
+    },
+    "conspiracy": {
+      "frames": 386,
+      "fps": 25.0,
+      "file": "conspiracy.npz",
+      "label": "Conspiracy",
+      "video": null
+    },
+    "conveyor": {
+      "frames": 1406,
+      "fps": 25.0,
+      "file": "conveyor.npz",
+      "label": "Conveyor",
+      "video": null
+    },
+    "cool_box": {
+      "frames": 202,
+      "fps": 25.0,
+      "file": "cool_box.npz",
+      "label": "Cool Box",
+      "video": null
+    },
+    "counterfeit": {
+      "frames": 469,
+      "fps": 25.0,
+      "file": "counterfeit.npz",
+      "label": "Counterfeit",
+      "video": null
+    },
+    "court_of_appeal": {
+      "frames": 618,
+      "fps": 25.0,
+      "file": "court_of_appeal.npz",
+      "label": "Court Of Appeal",
+      "video": null
+    },
+    "cousins": {
+      "frames": 120,
+      "fps": 25.0,
+      "file": "cousins.npz",
+      "label": "Cousins",
+      "video": null
+    },
+    "crutches": {
+      "frames": 148,
+      "fps": 25.0,
+      "file": "crutches.npz",
+      "label": "Crutches",
+      "video": null
+    },
+    "curriculum": {
+      "frames": 1156,
+      "fps": 25.0,
+      "file": "curriculum.npz",
+      "label": "Curriculum",
+      "video": null
+    },
+    "cut_trim_snip_clip": {
+      "frames": 105,
+      "fps": 25.0,
+      "file": "cut_trim_snip_clip.npz",
+      "label": "Cut Trim Snip Clip",
+      "video": null
+    },
+    "cable_harness": {
+      "frames": 423,
+      "fps": 25.0,
+      "file": "cable_harness.npz",
+      "label": "Cable Harness",
+      "video": null
+    },
+    "caesaerian_section_set": {
+      "frames": 445,
+      "fps": 25.0,
+      "file": "caesaerian_section_set.npz",
+      "label": "Caesaerian Section Set",
+      "video": null
+    },
+    "calamity_catastrophe_disaster_tragedy": {
+      "frames": 748,
+      "fps": 24.0,
+      "file": "calamity_catastrophe_disaster_tragedy.npz",
+      "label": "Calamity Catastrophe Disaster Tragedy",
+      "video": null
+    },
+    "call_option": {
+      "frames": 1424,
+      "fps": 30.0,
+      "file": "call_option.npz",
+      "label": "Call Option",
+      "video": null
+    },
+    "campus": {
+      "frames": 840,
+      "fps": 24.0,
+      "file": "campus.npz",
+      "label": "Campus",
+      "video": null
+    },
+    "capital_goods": {
+      "frames": 1013,
+      "fps": 24.000022888183594,
+      "file": "capital_goods.npz",
+      "label": "Capital Goods",
+      "video": null
+    },
+    "capital_output_ratio": {
+      "frames": 680,
+      "fps": 24.0,
+      "file": "capital_output_ratio.npz",
+      "label": "Capital Output Ratio",
+      "video": null
+    },
+    "capitalism": {
+      "frames": 563,
+      "fps": 25.0,
+      "file": "capitalism.npz",
+      "label": "Capitalism",
+      "video": null
+    },
+    "capitulate_give_in_surrender": {
+      "frames": 634,
+      "fps": 24.0,
+      "file": "capitulate_give_in_surrender.npz",
+      "label": "Capitulate Give In Surrender",
+      "video": null
+    },
+    "capri": {
+      "frames": 228,
+      "fps": 25.0,
+      "file": "capri.npz",
+      "label": "Capri",
+      "video": null
+    },
+    "capsize_overturn": {
+      "frames": 188,
+      "fps": 24.0,
+      "file": "capsize_overturn.npz",
+      "label": "Capsize Overturn",
+      "video": null
+    },
+    "car_pooling": {
+      "frames": 624,
+      "fps": 25.0,
+      "file": "car_pooling.npz",
+      "label": "Car Pooling",
+      "video": null
+    },
+    "cardinal": {
+      "frames": 425,
+      "fps": 24.0,
+      "file": "cardinal.npz",
+      "label": "Cardinal (Person)",
+      "video": null
+    },
+    "cargo_train_freight_train_goods_train": {
+      "frames": 130,
+      "fps": 24.0,
+      "file": "cargo_train_freight_train_goods_train.npz",
+      "label": "Cargo Train Freight Train Goods Train",
+      "video": null
+    },
+    "carissa_carandus": {
+      "frames": 463,
+      "fps": 25.0,
+      "file": "carissa_carandus.npz",
+      "label": "Carissa Carandus",
+      "video": null
+    },
+    "casarean_section": {
+      "frames": 492,
+      "fps": 25.0,
+      "file": "casarean_section.npz",
+      "label": "Casarean Section",
+      "video": null
+    },
+    "cash_crops": {
+      "frames": 879,
+      "fps": 25.0,
+      "file": "cash_crops.npz",
+      "label": "Cash Crops",
+      "video": null
+    },
+    "caste": {
+      "frames": 1092,
+      "fps": 25.0,
+      "file": "caste.npz",
+      "label": "Caste (Academic)",
+      "video": null
+    },
+    "cathode": {
+      "frames": 78,
+      "fps": 25.0,
+      "file": "cathode.npz",
+      "label": "Cathode",
+      "video": null
+    },
+    "celebrity_personality_star_big_name_celeb": {
+      "frames": 96,
+      "fps": 24.0,
+      "file": "celebrity_personality_star_big_name_celeb.npz",
+      "label": "Celebrity Personality Star Big Name Celeb",
+      "video": null
+    },
+    "celibate": {
+      "frames": 242,
+      "fps": 24.0,
+      "file": "celibate.npz",
+      "label": "Celibate",
+      "video": null
+    },
+    "cell_membrane": {
+      "frames": 357,
+      "fps": 24.0,
+      "file": "cell_membrane.npz",
+      "label": "Cell Membrane",
+      "video": null
+    },
+    "cells": {
+      "frames": 738,
+      "fps": 24.0,
+      "file": "cells.npz",
+      "label": "Cells",
+      "video": null
+    },
+    "central_institute_of_educational_technology": {
+      "frames": 520,
+      "fps": 24.0,
+      "file": "central_institute_of_educational_technology.npz",
+      "label": "Central Institute Of Educational Technology (Ciet)",
+      "video": null
+    },
+    "central_nervous_system": {
+      "frames": 497,
+      "fps": 25.0,
+      "file": "central_nervous_system.npz",
+      "label": "Central Nervous System",
+      "video": null
+    },
+    "cereal_crops": {
+      "frames": 542,
+      "fps": 25.0,
+      "file": "cereal_crops.npz",
+      "label": "Cereal Crops",
+      "video": null
+    },
+    "cervix": {
+      "frames": 360,
+      "fps": 25.0,
+      "file": "cervix.npz",
+      "label": "Cervix",
+      "video": null
+    },
+    "chain": {
+      "frames": 236,
+      "fps": 25.0,
+      "file": "chain.npz",
+      "label": "Chain",
+      "video": null
+    },
+    "chain_sequence_string": {
+      "frames": 600,
+      "fps": 24.0,
+      "file": "chain_sequence_string.npz",
+      "label": "Chain Sequence String",
+      "video": null
+    },
+    "challenge": {
+      "frames": 474,
+      "fps": 24.0,
+      "file": "challenge.npz",
+      "label": "Challenge (Sign And Explanation)",
+      "video": null
+    },
+    "chandragupta": {
+      "frames": 1769,
+      "fps": 25.0,
+      "file": "chandragupta.npz",
+      "label": "Chandragupta (Academic)",
+      "video": null
+    },
+    "character_map": {
+      "frames": 596,
+      "fps": 24.0,
+      "file": "character_map.npz",
+      "label": "Character Map (Sign 2)",
+      "video": null
+    },
+    "charger": {
+      "frames": 105,
+      "fps": 25.0,
+      "file": "charger.npz",
+      "label": "Charger (Phone) (Sign 2)",
+      "video": null
+    },
+    "chemical_change_chemical_reaction": {
+      "frames": 1136,
+      "fps": 23.976024627685547,
+      "file": "chemical_change_chemical_reaction.npz",
+      "label": "Chemical Change Chemical Reaction",
+      "video": null
+    },
+    "cheras": {
+      "frames": 1012,
+      "fps": 25.0,
+      "file": "cheras.npz",
+      "label": "Cheras (Academic)",
+      "video": null
+    },
+    "child_abduction": {
+      "frames": 1596,
+      "fps": 25.0,
+      "file": "child_abduction.npz",
+      "label": "Child Abduction",
+      "video": null
+    },
+    "child_of_deaf_adults": {
+      "frames": 678,
+      "fps": 24.0,
+      "file": "child_of_deaf_adults.npz",
+      "label": "Child Of Deaf Adults (Coda)",
+      "video": null
+    },
+    "chimta_tongs": {
+      "frames": 136,
+      "fps": 25.0,
+      "file": "chimta_tongs.npz",
+      "label": "Chimta Tongs (For Hot Vessels)",
+      "video": null
+    },
+    "chip": {
+      "frames": 577,
+      "fps": 25.0,
+      "file": "chip.npz",
+      "label": "Chip",
+      "video": null
+    },
+    "choice_based_credit_system": {
+      "frames": 844,
+      "fps": 24.0,
+      "file": "choice_based_credit_system.npz",
+      "label": "Choice Based Credit System (Cbcs )",
+      "video": null
+    },
+    "cinema_hall_theatre": {
+      "frames": 97,
+      "fps": 25.0,
+      "file": "cinema_hall_theatre.npz",
+      "label": "Cinema Hall Theatre (Sign 3)",
+      "video": null
+    },
+    "circulating_capital": {
+      "frames": 714,
+      "fps": 24.0,
+      "file": "circulating_capital.npz",
+      "label": "Circulating Capital",
+      "video": null
+    },
+    "cirrhosis": {
+      "frames": 480,
+      "fps": 25.0,
+      "file": "cirrhosis.npz",
+      "label": "Cirrhosis",
+      "video": null
+    },
+    "citadel": {
+      "frames": 2725,
+      "fps": 25.0,
+      "file": "citadel.npz",
+      "label": "Citadel (Academic)",
+      "video": null
+    },
+    "citizenship": {
+      "frames": 1216,
+      "fps": 25.0,
+      "file": "citizenship.npz",
+      "label": "Citizenship",
+      "video": null
+    },
+    "civil_law_criminal_law": {
+      "frames": 1608,
+      "fps": 25.0,
+      "file": "civil_law_criminal_law.npz",
+      "label": "Civil Law Criminal Law",
+      "video": null
+    },
+    "claim_of_title": {
+      "frames": 815,
+      "fps": 25.0,
+      "file": "claim_of_title.npz",
+      "label": "Claim Of Title",
+      "video": null
+    },
+    "classical_economics": {
+      "frames": 1175,
+      "fps": 24.00002098083496,
+      "file": "classical_economics.npz",
+      "label": "Classical Economics",
+      "video": null
+    },
+    "clauses": {
+      "frames": 347,
+      "fps": 25.0,
+      "file": "clauses.npz",
+      "label": "Clauses",
+      "video": null
+    },
+    "clearance_certificate": {
+      "frames": 858,
+      "fps": 24.0,
+      "file": "clearance_certificate.npz",
+      "label": "Clearance Certificate",
+      "video": null
+    },
+    "climbers": {
+      "frames": 533,
+      "fps": 25.0,
+      "file": "climbers.npz",
+      "label": "Climbers (Plants)",
+      "video": null
+    },
+    "clinical_thermometer": {
+      "frames": 207,
+      "fps": 24.0,
+      "file": "clinical_thermometer.npz",
+      "label": "Clinical Thermometer",
+      "video": null
+    },
+    "clip_art": {
+      "frames": 888,
+      "fps": 25.0,
+      "file": "clip_art.npz",
+      "label": "Clip Art",
+      "video": null
+    },
+    "clockwise_anti_clockwise": {
+      "frames": 792,
+      "fps": 25.0,
+      "file": "clockwise_anti_clockwise.npz",
+      "label": "Clockwise Anti-Clockwise",
+      "video": null
+    },
+    "cloud_recording": {
+      "frames": 512,
+      "fps": 25.0,
+      "file": "cloud_recording.npz",
+      "label": "Cloud Recording",
+      "video": null
+    },
+    "coal_tar": {
+      "frames": 912,
+      "fps": 25.0,
+      "file": "coal_tar.npz",
+      "label": "Coal Tar",
+      "video": null
+    },
+    "coalition_government": {
+      "frames": 1623,
+      "fps": 25.0,
+      "file": "coalition_government.npz",
+      "label": "Coalition Government",
+      "video": null
+    },
+    "coda": {
+      "frames": 287,
+      "fps": 25.0,
+      "file": "coda.npz",
+      "label": "Coda",
+      "video": null
+    },
+    "coercion": {
+      "frames": 969,
+      "fps": 25.0,
+      "file": "coercion.npz",
+      "label": "Coercion",
+      "video": null
+    },
+    "colic": {
+      "frames": 516,
+      "fps": 25.0,
+      "file": "colic.npz",
+      "label": "Colic",
+      "video": null
+    },
+    "collaboration_and_messaging_services": {
+      "frames": 847,
+      "fps": 24.0,
+      "file": "collaboration_and_messaging_services.npz",
+      "label": "Collaboration And Messaging Services (Cams)",
+      "video": null
+    },
+    "collateral_management": {
+      "frames": 1100,
+      "fps": 30.0,
+      "file": "collateral_management.npz",
+      "label": "Collateral Management",
+      "video": null
+    },
+    "colony_of_ants": {
+      "frames": 226,
+      "fps": 24.0,
+      "file": "colony_of_ants.npz",
+      "label": "Colony Of Ants (Explanation 2)",
+      "video": null
+    },
+    "combination_set": {
+      "frames": 864,
+      "fps": 25.0,
+      "file": "combination_set.npz",
+      "label": "Combination Set",
+      "video": null
+    },
+    "combustible": {
+      "frames": 1486,
+      "fps": 25.0,
+      "file": "combustible.npz",
+      "label": "Combustible",
+      "video": null
+    },
+    "come_back_case": {
+      "frames": 560,
+      "fps": 24.0,
+      "file": "come_back_case.npz",
+      "label": "Come Back Case",
+      "video": null
+    },
+    "commas": {
+      "frames": 109,
+      "fps": 24.0,
+      "file": "commas.npz",
+      "label": "Commas",
+      "video": null
+    },
+    "commemoration": {
+      "frames": 922,
+      "fps": 25.0,
+      "file": "commemoration.npz",
+      "label": "Commemoration",
+      "video": null
+    },
+    "common_factor": {
+      "frames": 1591,
+      "fps": 25.0,
+      "file": "common_factor.npz",
+      "label": "Common Factor (Maths)",
+      "video": null
+    },
+    "communication_challenges": {
+      "frames": 895,
+      "fps": 24.0,
+      "file": "communication_challenges.npz",
+      "label": "Communication Challenges",
+      "video": null
+    },
+    "compound": {
+      "frames": 169,
+      "fps": 25.0,
+      "file": "compound.npz",
+      "label": "Compound (Language) (Sign 2)",
+      "video": null
+    },
+    "compress": {
+      "frames": 201,
+      "fps": 25.0,
+      "file": "compress.npz",
+      "label": "Compress",
+      "video": null
+    },
+    "concussion": {
+      "frames": 624,
+      "fps": 25.0,
+      "file": "concussion.npz",
+      "label": "Concussion",
+      "video": null
+    },
+    "confession": {
+      "frames": 542,
+      "fps": 25.0,
+      "file": "confession.npz",
+      "label": "Confession",
+      "video": null
+    },
+    "conjunctiva": {
+      "frames": 900,
+      "fps": 25.0,
+      "file": "conjunctiva.npz",
+      "label": "Conjunctiva",
+      "video": null
+    },
+    "consortium_or_consortia": {
+      "frames": 1029,
+      "fps": 24.000022888183594,
+      "file": "consortium_or_consortia.npz",
+      "label": "Consortium Or Consortia",
+      "video": null
+    },
+    "constant": {
+      "frames": 641,
+      "fps": 24.0,
+      "file": "constant.npz",
+      "label": "Constant (Sign 2)",
+      "video": null
+    },
+    "constant_returns_to_scale": {
+      "frames": 772,
+      "fps": 24.0,
+      "file": "constant_returns_to_scale.npz",
+      "label": "Constant Returns To Scale",
+      "video": null
+    },
+    "consumption_function": {
+      "frames": 679,
+      "fps": 24.0,
+      "file": "consumption_function.npz",
+      "label": "Consumption Function",
+      "video": null
+    },
+    "contamination": {
+      "frames": 576,
+      "fps": 25.0,
+      "file": "contamination.npz",
+      "label": "Contamination",
+      "video": null
+    },
+    "content_words_function_words": {
+      "frames": 1255,
+      "fps": 24.000019073486328,
+      "file": "content_words_function_words.npz",
+      "label": "Content Words Function Words",
+      "video": null
+    },
+    "contour_strip_cropping": {
+      "frames": 1107,
+      "fps": 25.0,
+      "file": "contour_strip_cropping.npz",
+      "label": "Contour Strip Cropping",
+      "video": null
+    },
+    "coopertive_selling": {
+      "frames": 477,
+      "fps": 25.0,
+      "file": "coopertive_selling.npz",
+      "label": "Coopertive Selling",
+      "video": null
+    },
+    "copy_imitate": {
+      "frames": 93,
+      "fps": 25.0,
+      "file": "copy_imitate.npz",
+      "label": "Copy Imitate",
+      "video": null
+    },
+    "coronary_artery_bypass_surgery": {
+      "frames": 648,
+      "fps": 25.0,
+      "file": "coronary_artery_bypass_surgery.npz",
+      "label": "Coronary Artery Bypass Surgery",
+      "video": null
+    },
+    "coroner": {
+      "frames": 695,
+      "fps": 25.0,
+      "file": "coroner.npz",
+      "label": "Coroner",
+      "video": null
+    },
+    "corporates_corporations": {
+      "frames": 853,
+      "fps": 30.0,
+      "file": "corporates_corporations.npz",
+      "label": "Corporates Corporations",
+      "video": null
+    },
+    "corpse": {
+      "frames": 105,
+      "fps": 25.0,
+      "file": "corpse.npz",
+      "label": "Corpse (Sign 2)",
+      "video": null
+    },
+    "couching": {
+      "frames": 984,
+      "fps": 25.0,
+      "file": "couching.npz",
+      "label": "Couching",
+      "video": null
+    },
+    "coupling": {
+      "frames": 1455,
+      "fps": 25.0,
+      "file": "coupling.npz",
+      "label": "Coupling",
+      "video": null
+    },
+    "coupon_rate": {
+      "frames": 752,
+      "fps": 30.0,
+      "file": "coupon_rate.npz",
+      "label": "Coupon Rate",
+      "video": null
+    },
+    "covenants": {
+      "frames": 945,
+      "fps": 24.0,
+      "file": "covenants.npz",
+      "label": "Covenants",
+      "video": null
+    },
+    "cowboy": {
+      "frames": 702,
+      "fps": 25.0,
+      "file": "cowboy.npz",
+      "label": "Cowboy",
+      "video": null
+    },
+    "cowl": {
+      "frames": 772,
+      "fps": 24.0,
+      "file": "cowl.npz",
+      "label": "Cowl (Sign 2)",
+      "video": null
+    },
+    "criminal_record": {
+      "frames": 1013,
+      "fps": 24.000022888183594,
+      "file": "criminal_record.npz",
+      "label": "Criminal Record ",
+      "video": null
+    },
+    "crop_geography": {
+      "frames": 598,
+      "fps": 25.0,
+      "file": "crop_geography.npz",
+      "label": "Crop Geography",
+      "video": null
+    },
+    "cross_cultural_psychology": {
+      "frames": 1134,
+      "fps": 25.0,
+      "file": "cross_cultural_psychology.npz",
+      "label": "Cross-Cultural Psychology",
+      "video": null
+    },
+    "cross_pein_hammer": {
+      "frames": 167,
+      "fps": 25.0,
+      "file": "cross_pein_hammer.npz",
+      "label": "Cross Pein Hammer",
+      "video": null
+    },
+    "crowding_out_effect": {
+      "frames": 1593,
+      "fps": 24.000030517578125,
+      "file": "crowding_out_effect.npz",
+      "label": "Crowding Out Effect",
+      "video": null
+    },
+    "cruel_brutal_inhuman_ruthless_cold_hearted": {
+      "frames": 105,
+      "fps": 25.0,
+      "file": "cruel_brutal_inhuman_ruthless_cold_hearted.npz",
+      "label": "Cruel Brutal Inhuman Ruthless Cold-Hearted",
+      "video": null
+    },
+    "cry_weep": {
+      "frames": 95,
+      "fps": 25.0,
+      "file": "cry_weep.npz",
+      "label": "Cry Weep (Sign 2)",
+      "video": null
+    },
+    "crystalline_lens": {
+      "frames": 363,
+      "fps": 24.0,
+      "file": "crystalline_lens.npz",
+      "label": "Crystalline Lens (Human Eye)",
+      "video": null
+    },
+    "cultivation": {
+      "frames": 2224,
+      "fps": 25.0,
+      "file": "cultivation.npz",
+      "label": "Cultivation",
+      "video": null
+    },
+    "cultural_agronomical_methods": {
+      "frames": 2158,
+      "fps": 25.0,
+      "file": "cultural_agronomical_methods.npz",
+      "label": "Cultural Agronomical Methods",
+      "video": null
+    },
+    "cultural_and_educational_right": {
+      "frames": 1302,
+      "fps": 25.0,
+      "file": "cultural_and_educational_right.npz",
+      "label": "Cultural And Educational Right",
+      "video": null
+    },
+    "culvert": {
+      "frames": 438,
+      "fps": 24.0,
+      "file": "culvert.npz",
+      "label": "Culvert",
+      "video": null
+    },
+    "cum_bonus": {
+      "frames": 848,
+      "fps": 30.0,
+      "file": "cum_bonus.npz",
+      "label": "Cum Bonus",
+      "video": null
+    },
+    "cure_heal": {
+      "frames": 341,
+      "fps": 25.0,
+      "file": "cure_heal.npz",
+      "label": "Cure Heal (Explanation)",
+      "video": null
+    },
+    "curfew": {
+      "frames": 1344,
+      "fps": 25.0,
+      "file": "curfew.npz",
+      "label": "Curfew",
+      "video": null
+    },
+    "cushion_pillow": {
+      "frames": 326,
+      "fps": 24.0,
+      "file": "cushion_pillow.npz",
+      "label": "Cushion Pillow",
+      "video": null
+    },
+    "custodial_death": {
+      "frames": 696,
+      "fps": 25.0,
+      "file": "custodial_death.npz",
+      "label": "Custodial Death",
+      "video": null
+    },
+    "customer_client": {
+      "frames": 405,
+      "fps": 30.0,
+      "file": "customer_client.npz",
+      "label": "Customer Client",
+      "video": null
+    },
+    "customizing_desktop": {
+      "frames": 361,
+      "fps": 24.0,
+      "file": "customizing_desktop.npz",
+      "label": "Customizing Desktop",
+      "video": null
+    },
+    "cyber_crime": {
+      "frames": 855,
+      "fps": 25.0,
+      "file": "cyber_crime.npz",
+      "label": "Cyber Crime",
+      "video": null
+    },
+    "c_clamp": {
+      "frames": 441,
+      "fps": 25.0,
+      "file": "c_clamp.npz",
+      "label": "C Clamp",
+      "video": null
+    },
+    "c_horizon": {
+      "frames": 920,
+      "fps": 25.0,
+      "file": "c_horizon.npz",
+      "label": "C Horizon",
+      "video": null
+    },
+    "caa_citizenship_amendment_act": {
+      "frames": 1543,
+      "fps": 24.000015258789062,
+      "file": "caa_citizenship_amendment_act.npz",
+      "label": "Caa - Citizenship Amendment Act",
+      "video": null
+    },
+    "cadon": {
+      "frames": 73,
+      "fps": 25.0,
+      "file": "cadon.npz",
+      "label": "Cadon",
+      "video": null
+    },
+    "call_it_a_day": {
+      "frames": 796,
+      "fps": 25.0,
+      "file": "call_it_a_day.npz",
+      "label": "Call It A Day",
+      "video": null
+    },
+    "callus": {
+      "frames": 552,
+      "fps": 25.0,
+      "file": "callus.npz",
+      "label": "Callus",
+      "video": null
+    },
+    "cambium": {
+      "frames": 73,
+      "fps": 25.0,
+      "file": "cambium.npz",
+      "label": "Cambium",
+      "video": null
+    },
+    "candidate": {
+      "frames": 924,
+      "fps": 25.0,
+      "file": "candidate.npz",
+      "label": "Candidate (Academic)",
+      "video": null
+    },
+    "capillary": {
+      "frames": 1163,
+      "fps": 23.976024627685547,
+      "file": "capillary.npz",
+      "label": "Capillary",
+      "video": null
+    },
+    "capillary_water": {
+      "frames": 569,
+      "fps": 25.0,
+      "file": "capillary_water.npz",
+      "label": "Capillary Water",
+      "video": null
+    },
+    "carbohydrates": {
+      "frames": 670,
+      "fps": 25.0,
+      "file": "carbohydrates.npz",
+      "label": "Carbohydrates",
+      "video": null
+    },
+    "carbon": {
+      "frames": 507,
+      "fps": 24.0,
+      "file": "carbon.npz",
+      "label": "Carbon",
+      "video": null
+    },
+    "cardinal_and_ordinal_number": {
+      "frames": 1034,
+      "fps": 25.0,
+      "file": "cardinal_and_ordinal_number.npz",
+      "label": "Cardinal And Ordinal Number",
+      "video": null
+    },
+    "cardioc_arrest": {
+      "frames": 468,
+      "fps": 25.0,
+      "file": "cardioc_arrest.npz",
+      "label": "Cardioc Arrest",
+      "video": null
+    },
+    "carpet_area_built_up_area_super_built_up_area": {
+      "frames": 1637,
+      "fps": 24.000028610229492,
+      "file": "carpet_area_built_up_area_super_built_up_area.npz",
+      "label": "Carpet Area Built Up Area Super Built Up Area",
+      "video": null
+    },
+    "cartilage_cells": {
+      "frames": 210,
+      "fps": 25.0,
+      "file": "cartilage_cells.npz",
+      "label": "Cartilage Cells (Chondrocytes)",
+      "video": null
+    },
+    "case": {
+      "frames": 656,
+      "fps": 24.0,
+      "file": "case.npz",
+      "label": "Case (Admin)",
+      "video": null
+    },
+    "cash_flow": {
+      "frames": 1009,
+      "fps": 24.000022888183594,
+      "file": "cash_flow.npz",
+      "label": "Cash Flow",
+      "video": null
+    },
+    "casual_leave": {
+      "frames": 626,
+      "fps": 24.0,
+      "file": "casual_leave.npz",
+      "label": "Casual Leave (Cl)",
+      "video": null
+    },
+    "catheter_foley": {
+      "frames": 210,
+      "fps": 25.0,
+      "file": "catheter_foley.npz",
+      "label": "Catheter Foley",
+      "video": null
+    },
+    "cause_list_or_calender_call": {
+      "frames": 780,
+      "fps": 25.0,
+      "file": "cause_list_or_calender_call.npz",
+      "label": "Cause List Or Calender Call",
+      "video": null
+    },
+    "caw": {
+      "frames": 228,
+      "fps": 25.0,
+      "file": "caw.npz",
+      "label": "Caw (Crow)",
+      "video": null
+    },
+    "cease_discontinue_halt_stop": {
+      "frames": 103,
+      "fps": 24.0,
+      "file": "cease_discontinue_halt_stop.npz",
+      "label": "Cease Discontinue Halt Stop",
+      "video": null
+    },
+    "cencorship": {
+      "frames": 1387,
+      "fps": 25.0,
+      "file": "cencorship.npz",
+      "label": "Cencorship (Academic)",
+      "video": null
+    },
+    "centre": {
+      "frames": 1292,
+      "fps": 25.0,
+      "file": "centre.npz",
+      "label": "Centre (Math)",
+      "video": null
+    },
+    "certificate_of_inspection": {
+      "frames": 953,
+      "fps": 24.000024795532227,
+      "file": "certificate_of_inspection.npz",
+      "label": "Certificate Of Inspection",
+      "video": null
+    },
+    "chana": {
+      "frames": 438,
+      "fps": 24.0,
+      "file": "chana.npz",
+      "label": "Chana",
+      "video": null
+    },
+    "chance": {
+      "frames": 633,
+      "fps": 24.0,
+      "file": "chance.npz",
+      "label": "Chance",
+      "video": null
+    },
+    "chapati_roti": {
+      "frames": 105,
+      "fps": 25.0,
+      "file": "chapati_roti.npz",
+      "label": "Chapati Roti",
+      "video": null
+    },
+    "chappal_slippers": {
+      "frames": 120,
+      "fps": 25.0,
+      "file": "chappal_slippers.npz",
+      "label": "Chappal Slippers",
+      "video": null
+    },
+    "char_minar": {
+      "frames": 110,
+      "fps": 25.0,
+      "file": "char_minar.npz",
+      "label": "Char Minar",
+      "video": null
+    },
+    "characteristics_of_weeds": {
+      "frames": 2058,
+      "fps": 25.0,
+      "file": "characteristics_of_weeds.npz",
+      "label": "Characteristics Of Weeds",
+      "video": null
+    },
+    "check_in": {
+      "frames": 1023,
+      "fps": 25.0,
+      "file": "check_in.npz",
+      "label": "Check In",
+      "video": null
+    },
+    "check_look_at_scrutinize": {
+      "frames": 113,
+      "fps": 25.0,
+      "file": "check_look_at_scrutinize.npz",
+      "label": "Check Look At Scrutinize",
+      "video": null
+    },
+    "check_out": {
+      "frames": 851,
+      "fps": 25.0,
+      "file": "check_out.npz",
+      "label": "Check Out",
+      "video": null
+    },
+    "cheerful": {
+      "frames": 95,
+      "fps": 25.0,
+      "file": "cheerful.npz",
+      "label": "Cheerful",
+      "video": null
+    },
+    "chiaroscuro": {
+      "frames": 720,
+      "fps": 25.0,
+      "file": "chiaroscuro.npz",
+      "label": "Chiaroscuro",
+      "video": null
+    },
+    "chikoo": {
+      "frames": 92,
+      "fps": 25.0,
+      "file": "chikoo.npz",
+      "label": "Chikoo",
+      "video": null
+    },
+    "child_care_leave": {
+      "frames": 424,
+      "fps": 24.0,
+      "file": "child_care_leave.npz",
+      "label": "Child Care Leave (Ccl) (Sign 2)",
+      "video": null
+    },
+    "child_marriage": {
+      "frames": 463,
+      "fps": 25.0,
+      "file": "child_marriage.npz",
+      "label": "Child Marriage",
+      "video": null
+    },
+    "child_support": {
+      "frames": 498,
+      "fps": 25.0,
+      "file": "child_support.npz",
+      "label": "Child Support",
+      "video": null
+    },
+    "chop": {
+      "frames": 216,
+      "fps": 24.0,
+      "file": "chop.npz",
+      "label": "Chop",
+      "video": null
+    },
+    "chronic_kidney": {
+      "frames": 792,
+      "fps": 25.0,
+      "file": "chronic_kidney.npz",
+      "label": "Chronic Kidney",
+      "video": null
+    },
+    "churning": {
+      "frames": 618,
+      "fps": 25.0,
+      "file": "churning.npz",
+      "label": "Churning (Separation Technique)",
+      "video": null
+    },
+    "citizen_s_arrest": {
+      "frames": 869,
+      "fps": 25.0,
+      "file": "citizen_s_arrest.npz",
+      "label": "Citizen S Arrest",
+      "video": null
+    },
+    "civil_court": {
+      "frames": 557,
+      "fps": 25.0,
+      "file": "civil_court.npz",
+      "label": "Civil Court",
+      "video": null
+    },
+    "civil_disobedience_movement": {
+      "frames": 552,
+      "fps": 25.0,
+      "file": "civil_disobedience_movement.npz",
+      "label": "Civil Disobedience Movement",
+      "video": null
+    },
+    "civil_rights_movement": {
+      "frames": 1860,
+      "fps": 25.0,
+      "file": "civil_rights_movement.npz",
+      "label": "Civil Rights Movement",
+      "video": null
+    },
+    "classification_based_on_life_cycle": {
+      "frames": 414,
+      "fps": 25.0,
+      "file": "classification_based_on_life_cycle.npz",
+      "label": "Classification Based On Life Cycle",
+      "video": null
+    },
+    "cleft_grafting": {
+      "frames": 1865,
+      "fps": 25.0,
+      "file": "cleft_grafting.npz",
+      "label": "Cleft Grafting",
+      "video": null
+    },
+    "closed_file": {
+      "frames": 496,
+      "fps": 24.0,
+      "file": "closed_file.npz",
+      "label": "Closed File",
+      "video": null
+    },
+    "closure_property": {
+      "frames": 1395,
+      "fps": 25.0,
+      "file": "closure_property.npz",
+      "label": "Closure Property (Maths)",
+      "video": null
+    },
+    "cluck_crow": {
+      "frames": 169,
+      "fps": 24.0,
+      "file": "cluck_crow.npz",
+      "label": "Cluck (Hen) Crow (Cock Rooster)",
+      "video": null
+    },
+    "co_curriculum": {
+      "frames": 519,
+      "fps": 25.0,
+      "file": "co_curriculum.npz",
+      "label": "Co-Curriculum",
+      "video": null
+    },
+    "cobweb": {
+      "frames": 224,
+      "fps": 24.0,
+      "file": "cobweb.npz",
+      "label": "Cobweb",
+      "video": null
+    },
+    "cock_a_doodle_doo": {
+      "frames": 121,
+      "fps": 24.0,
+      "file": "cock_a_doodle_doo.npz",
+      "label": "Cock-A-Doodle-Doo",
+      "video": null
+    },
+    "cold_formed_steel_section": {
+      "frames": 576,
+      "fps": 24.0,
+      "file": "cold_formed_steel_section.npz",
+      "label": "Cold Formed Steel Section",
+      "video": null
+    },
+    "cold_room": {
+      "frames": 84,
+      "fps": 25.0,
+      "file": "cold_room.npz",
+      "label": "Cold Room",
+      "video": null
+    },
+    "collegium": {
+      "frames": 1297,
+      "fps": 25.0,
+      "file": "collegium.npz",
+      "label": "Collegium",
+      "video": null
+    },
+    "collude": {
+      "frames": 395,
+      "fps": 25.0,
+      "file": "collude.npz",
+      "label": "Collude (Example)",
+      "video": null
+    },
+    "colony_of_honey_bee": {
+      "frames": 461,
+      "fps": 24.0,
+      "file": "colony_of_honey_bee.npz",
+      "label": "Colony Of Honey Bee",
+      "video": null
+    },
+    "colostrum": {
+      "frames": 507,
+      "fps": 24.0,
+      "file": "colostrum.npz",
+      "label": "Colostrum",
+      "video": null
+    },
+    "colours": {
+      "frames": 510,
+      "fps": 25.0,
+      "file": "colours.npz",
+      "label": "Colours (Mumbai Maharashtra)",
+      "video": null
+    },
+    "combination_drill": {
+      "frames": 732,
+      "fps": 25.0,
+      "file": "combination_drill.npz",
+      "label": "Combination Drill",
+      "video": null
+    },
+    "commercial_farm": {
+      "frames": 818,
+      "fps": 24.0,
+      "file": "commercial_farm.npz",
+      "label": "Commercial Farm",
+      "video": null
+    },
+    "commission_agent": {
+      "frames": 726,
+      "fps": 24.0,
+      "file": "commission_agent.npz",
+      "label": "Commission Agent",
+      "video": null
+    },
+    "common_minerals": {
+      "frames": 1616,
+      "fps": 24.000030517578125,
+      "file": "common_minerals.npz",
+      "label": "Common Minerals",
+      "video": null
+    },
+    "common_noun_proper_noun": {
+      "frames": 1998,
+      "fps": 24.000024795532227,
+      "file": "common_noun_proper_noun.npz",
+      "label": "Common Noun Proper Noun",
+      "video": null
+    },
+    "communication_options": {
+      "frames": 869,
+      "fps": 24.0,
+      "file": "communication_options.npz",
+      "label": "Communication Options",
+      "video": null
+    },
+    "companion_subsidiary_crops": {
+      "frames": 1105,
+      "fps": 25.0,
+      "file": "companion_subsidiary_crops.npz",
+      "label": "Companion Subsidiary Crops",
+      "video": null
+    },
+    "compensation": {
+      "frames": 1716,
+      "fps": 25.0,
+      "file": "compensation.npz",
+      "label": "Compensation (Academic)",
+      "video": null
+    },
+    "compensatory_damages_punitive_damages": {
+      "frames": 1524,
+      "fps": 25.0,
+      "file": "compensatory_damages_punitive_damages.npz",
+      "label": "Compensatory Damages Punitive Damages",
+      "video": null
+    },
+    "competence": {
+      "frames": 887,
+      "fps": 24.0,
+      "file": "competence.npz",
+      "label": "Competence",
+      "video": null
+    },
+    "complementary_demand": {
+      "frames": 841,
+      "fps": 24.0,
+      "file": "complementary_demand.npz",
+      "label": "Complementary Demand",
+      "video": null
+    },
+    "conclusions": {
+      "frames": 367,
+      "fps": 24.0,
+      "file": "conclusions.npz",
+      "label": "Conclusions",
+      "video": null
+    },
+    "condiments_spices_crops": {
+      "frames": 731,
+      "fps": 25.0,
+      "file": "condiments_spices_crops.npz",
+      "label": "Condiments  Spices Crops",
+      "video": null
+    },
+    "condone": {
+      "frames": 854,
+      "fps": 25.0,
+      "file": "condone.npz",
+      "label": "Condone",
+      "video": null
+    },
+    "constant_continuous": {
+      "frames": 143,
+      "fps": 25.0,
+      "file": "constant_continuous.npz",
+      "label": "Constant Continuous",
+      "video": null
+    },
+    "constitutional_bodies": {
+      "frames": 1003,
+      "fps": 24.000024795532227,
+      "file": "constitutional_bodies.npz",
+      "label": "Constitutional Bodies",
+      "video": null
+    },
+    "constructivism": {
+      "frames": 2448,
+      "fps": 25.0,
+      "file": "constructivism.npz",
+      "label": "Constructivism",
+      "video": null
+    },
+    "consumer_price_index": {
+      "frames": 518,
+      "fps": 24.0,
+      "file": "consumer_price_index.npz",
+      "label": "Consumer Price Index",
+      "video": null
+    },
+    "contour_cropping": {
+      "frames": 461,
+      "fps": 25.0,
+      "file": "contour_cropping.npz",
+      "label": "Contour Cropping",
+      "video": null
+    },
+    "convertible_bond": {
+      "frames": 1503,
+      "fps": 30.0,
+      "file": "convertible_bond.npz",
+      "label": "Convertible Bond",
+      "video": null
+    },
+    "cookies": {
+      "frames": 1631,
+      "fps": 24.000028610229492,
+      "file": "cookies.npz",
+      "label": "Cookies",
+      "video": null
+    },
+    "cordial": {
+      "frames": 1322,
+      "fps": 25.0,
+      "file": "cordial.npz",
+      "label": "Cordial",
+      "video": null
+    },
+    "corruption_graft": {
+      "frames": 105,
+      "fps": 25.0,
+      "file": "corruption_graft.npz",
+      "label": "Corruption Graft",
+      "video": null
+    },
+    "costly": {
+      "frames": 649,
+      "fps": 24.0,
+      "file": "costly.npz",
+      "label": "Costly",
+      "video": null
+    },
+    "cottage_cheese_paneer": {
+      "frames": 94,
+      "fps": 25.0,
+      "file": "cottage_cheese_paneer.npz",
+      "label": "Cottage Cheese Paneer",
+      "video": null
+    },
+    "counter_attack": {
+      "frames": 891,
+      "fps": 24.0,
+      "file": "counter_attack.npz",
+      "label": "Counter Attack (Sign 2)",
+      "video": null
+    },
+    "couturiere": {
+      "frames": 564,
+      "fps": 25.0,
+      "file": "couturiere.npz",
+      "label": "Couturiere",
+      "video": null
+    },
+    "crane": {
+      "frames": 468,
+      "fps": 25.0,
+      "file": "crane.npz",
+      "label": "Crane",
+      "video": null
+    },
+    "crash_cart": {
+      "frames": 540,
+      "fps": 25.0,
+      "file": "crash_cart.npz",
+      "label": "Crash Cart",
+      "video": null
+    },
+    "crayon": {
+      "frames": 118,
+      "fps": 25.0,
+      "file": "crayon.npz",
+      "label": "Crayon",
+      "video": null
+    },
+    "credit_card": {
+      "frames": 87,
+      "fps": 25.0,
+      "file": "credit_card.npz",
+      "label": "Credit Card",
+      "video": null
+    },
+    "crib_cot": {
+      "frames": 142,
+      "fps": 25.0,
+      "file": "crib_cot.npz",
+      "label": "Crib Cot",
+      "video": null
+    },
+    "cricket_grasshopper": {
+      "frames": 135,
+      "fps": 25.0,
+      "file": "cricket_grasshopper.npz",
+      "label": "Cricket Grasshopper",
+      "video": null
+    },
+    "cricket_pitch": {
+      "frames": 103,
+      "fps": 25.0,
+      "file": "cricket_pitch.npz",
+      "label": "Cricket Pitch",
+      "video": null
+    },
+    "crisis": {
+      "frames": 1253,
+      "fps": 24.000019073486328,
+      "file": "crisis.npz",
+      "label": "Crisis",
+      "video": null
+    },
+    "criterion_referenced_assessment": {
+      "frames": 996,
+      "fps": 24.000024795532227,
+      "file": "criterion_referenced_assessment.npz",
+      "label": "Criterion-Referenced Assessment",
+      "video": null
+    },
+    "croak_ribbit": {
+      "frames": 166,
+      "fps": 25.0,
+      "file": "croak_ribbit.npz",
+      "label": "Croak Ribbit (Frog)",
+      "video": null
+    },
+    "crop_factor": {
+      "frames": 503,
+      "fps": 24.0,
+      "file": "crop_factor.npz",
+      "label": "Crop Factor",
+      "video": null
+    },
+    "crop_rotation": {
+      "frames": 817,
+      "fps": 25.0,
+      "file": "crop_rotation.npz",
+      "label": "Crop Rotation (Sign 2)",
+      "video": null
+    },
+    "cropping_scheme": {
+      "frames": 616,
+      "fps": 25.0,
+      "file": "cropping_scheme.npz",
+      "label": "Cropping Scheme",
+      "video": null
+    },
+    "cross_breeds": {
+      "frames": 749,
+      "fps": 24.0,
+      "file": "cross_breeds.npz",
+      "label": "Cross Breeds",
+      "video": null
+    },
+    "cross_examine_or_cross_examination": {
+      "frames": 888,
+      "fps": 25.0,
+      "file": "cross_examine_or_cross_examination.npz",
+      "label": "Cross Examine Or Cross Examination",
+      "video": null
+    },
+    "cruel_callous_harsh_ruthless": {
+      "frames": 103,
+      "fps": 25.0,
+      "file": "cruel_callous_harsh_ruthless.npz",
+      "label": "Cruel Callous Harsh Ruthless (Sign 2)",
+      "video": null
+    },
+    "crush_smash_squash": {
+      "frames": 412,
+      "fps": 24.0,
+      "file": "crush_smash_squash.npz",
+      "label": "Crush Smash Squash",
+      "video": null
+    },
+    "ctr_click_through_rate": {
+      "frames": 849,
+      "fps": 24.0,
+      "file": "ctr_click_through_rate.npz",
+      "label": "Ctr - Click Through Rate",
+      "video": null
+    },
+    "cuba": {
+      "frames": 71,
+      "fps": 25.0,
+      "file": "cuba.npz",
+      "label": "Cuba",
+      "video": null
+    },
+    "cullet": {
+      "frames": 368,
+      "fps": 24.0,
+      "file": "cullet.npz",
+      "label": "Cullet",
+      "video": null
+    },
+    "culpable_homicide": {
+      "frames": 500,
+      "fps": 25.0,
+      "file": "culpable_homicide.npz",
+      "label": "Culpable Homicide",
+      "video": null
+    },
+    "cum_dividend": {
+      "frames": 911,
+      "fps": 30.0,
+      "file": "cum_dividend.npz",
+      "label": "Cum Dividend",
+      "video": null
+    },
+    "cytoplasm": {
+      "frames": 441,
+      "fps": 24.0,
+      "file": "cytoplasm.npz",
+      "label": "Cytoplasm (Sign 2)",
+      "video": null
+    },
+    "cabinet": {
+      "frames": 552,
+      "fps": 25.0,
+      "file": "cabinet.npz",
+      "label": "Cabinet",
+      "video": null
+    },
+    "cable_cord_wire": {
+      "frames": 521,
+      "fps": 24.0,
+      "file": "cable_cord_wire.npz",
+      "label": "Cable Cord Wire",
+      "video": null
+    },
+    "calcium_fluoride": {
+      "frames": 58,
+      "fps": 25.0,
+      "file": "calcium_fluoride.npz",
+      "label": "Calcium Fluoride",
+      "video": null
+    },
+    "callable_bond": {
+      "frames": 2234,
+      "fps": 30.0,
+      "file": "callable_bond.npz",
+      "label": "Callable Bond",
+      "video": null
+    },
+    "candidiasis": {
+      "frames": 1116,
+      "fps": 25.0,
+      "file": "candidiasis.npz",
+      "label": "Candidiasis",
+      "video": null
+    },
+    "canopy": {
+      "frames": 590,
+      "fps": 24.0,
+      "file": "canopy.npz",
+      "label": "Canopy",
+      "video": null
+    },
+    "capital_appreciation": {
+      "frames": 940,
+      "fps": 30.0,
+      "file": "capital_appreciation.npz",
+      "label": "Capital Appreciation",
+      "video": null
+    },
+    "capitalization": {
+      "frames": 696,
+      "fps": 25.0,
+      "file": "capitalization.npz",
+      "label": "Capitalization",
+      "video": null
+    },
+    "caption_subtitle": {
+      "frames": 139,
+      "fps": 25.0,
+      "file": "caption_subtitle.npz",
+      "label": "Caption Subtitle",
+      "video": null
+    },
+    "career_management_and_progression": {
+      "frames": 1276,
+      "fps": 24.000019073486328,
+      "file": "career_management_and_progression.npz",
+      "label": "Career Management And Progression (Cmp)",
+      "video": null
+    },
+    "carnage_slaughter": {
+      "frames": 377,
+      "fps": 24.0,
+      "file": "carnage_slaughter.npz",
+      "label": "Carnage Slaughter",
+      "video": null
+    },
+    "carpool_carpooling_motor_pool_ride_share": {
+      "frames": 491,
+      "fps": 24.0,
+      "file": "carpool_carpooling_motor_pool_ride_share.npz",
+      "label": "Carpool Carpooling Motor Pool Ride Share",
+      "video": null
+    },
+    "cash_dividend": {
+      "frames": 1772,
+      "fps": 30.0,
+      "file": "cash_dividend.npz",
+      "label": "Cash Dividend",
+      "video": null
+    },
+    "cash_in_advance": {
+      "frames": 482,
+      "fps": 24.0,
+      "file": "cash_in_advance.npz",
+      "label": "Cash In Advance (Cia)",
+      "video": null
+    },
+    "cat_fish": {
+      "frames": 427,
+      "fps": 24.0,
+      "file": "cat_fish.npz",
+      "label": "Cat Fish",
+      "video": null
+    },
+    "caution": {
+      "frames": 115,
+      "fps": 24.0,
+      "file": "caution.npz",
+      "label": "Caution",
+      "video": null
+    },
+    "cease_fire": {
+      "frames": 528,
+      "fps": 25.0,
+      "file": "cease_fire.npz",
+      "label": "Cease Fire",
+      "video": null
+    },
+    "cello_tape": {
+      "frames": 133,
+      "fps": 25.0,
+      "file": "cello_tape.npz",
+      "label": "Cello Tape",
+      "video": null
+    },
+    "census": {
+      "frames": 495,
+      "fps": 25.0,
+      "file": "census.npz",
+      "label": "Census (Sign 2)",
+      "video": null
+    },
+    "centering": {
+      "frames": 377,
+      "fps": 25.0,
+      "file": "centering.npz",
+      "label": "Centering",
+      "video": null
+    },
+    "central_bank_and_commercial_bank": {
+      "frames": 1196,
+      "fps": 25.0,
+      "file": "central_bank_and_commercial_bank.npz",
+      "label": "Central Bank And Commercial Bank",
+      "video": null
+    },
+    "central_bank_of_india": {
+      "frames": 112,
+      "fps": 24.0,
+      "file": "central_bank_of_india.npz",
+      "label": "Central Bank Of India",
+      "video": null
+    },
+    "central_jail": {
+      "frames": 761,
+      "fps": 25.0,
+      "file": "central_jail.npz",
+      "label": "Central Jail",
+      "video": null
+    },
+    "ceremony": {
+      "frames": 481,
+      "fps": 24.0,
+      "file": "ceremony.npz",
+      "label": "Ceremony",
+      "video": null
+    },
+    "cervical_traction": {
+      "frames": 251,
+      "fps": 25.0,
+      "file": "cervical_traction.npz",
+      "label": "Cervical Traction",
+      "video": null
+    },
+    "chain_of_custody": {
+      "frames": 1559,
+      "fps": 25.0,
+      "file": "chain_of_custody.npz",
+      "label": "Chain Of Custody",
+      "video": null
+    },
+    "challan_chargesheet": {
+      "frames": 1197,
+      "fps": 25.0,
+      "file": "challan_chargesheet.npz",
+      "label": "Challan Chargesheet",
+      "video": null
+    },
+    "chandragupta_maurya": {
+      "frames": 941,
+      "fps": 25.0,
+      "file": "chandragupta_maurya.npz",
+      "label": "Chandragupta Maurya (Academic)",
+      "video": null
+    },
+    "charges_first_charge": {
+      "frames": 1896,
+      "fps": 25.0,
+      "file": "charges_first_charge.npz",
+      "label": "Charges First Charge",
+      "video": null
+    },
+    "chemical_composition": {
+      "frames": 1785,
+      "fps": 24.00002670288086,
+      "file": "chemical_composition.npz",
+      "label": "Chemical Composition",
+      "video": null
+    },
+    "chirp_chirrup_tweet": {
+      "frames": 143,
+      "fps": 24.0,
+      "file": "chirp_chirrup_tweet.npz",
+      "label": "Chirp Chirrup Tweet",
+      "video": null
+    },
+    "circlip": {
+      "frames": 620,
+      "fps": 25.0,
+      "file": "circlip.npz",
+      "label": "Circlip",
+      "video": null
+    },
+    "cladding_panel": {
+      "frames": 437,
+      "fps": 24.0,
+      "file": "cladding_panel.npz",
+      "label": "Cladding Panel",
+      "video": null
+    },
+    "classification_of_insecticides": {
+      "frames": 1062,
+      "fps": 25.0,
+      "file": "classification_of_insecticides.npz",
+      "label": "Classification Of Insecticides",
+      "video": null
+    },
+    "cleaning_robot": {
+      "frames": 507,
+      "fps": 24.0,
+      "file": "cleaning_robot.npz",
+      "label": "Cleaning Robot",
+      "video": null
+    },
+    "climbing_weeds": {
+      "frames": 653,
+      "fps": 24.0,
+      "file": "climbing_weeds.npz",
+      "label": "Climbing Weeds",
+      "video": null
+    },
+    "closed_curve": {
+      "frames": 992,
+      "fps": 25.0,
+      "file": "closed_curve.npz",
+      "label": "Closed Curve (Maths)",
+      "video": null
+    },
+    "cloud_print": {
+      "frames": 570,
+      "fps": 24.0,
+      "file": "cloud_print.npz",
+      "label": "Cloud Print",
+      "video": null
+    },
+    "cloud_storage": {
+      "frames": 513,
+      "fps": 25.0,
+      "file": "cloud_storage.npz",
+      "label": "Cloud Storage",
+      "video": null
+    },
+    "co_authoring": {
+      "frames": 981,
+      "fps": 24.000024795532227,
+      "file": "co_authoring.npz",
+      "label": "Co Authoring",
+      "video": null
+    },
+    "coal_mines": {
+      "frames": 529,
+      "fps": 24.0,
+      "file": "coal_mines.npz",
+      "label": "Coal Mines",
+      "video": null
+    },
+    "codebook": {
+      "frames": 2244,
+      "fps": 24.000032424926758,
+      "file": "codebook.npz",
+      "label": "Codebook",
+      "video": null
+    },
+    "codicil": {
+      "frames": 619,
+      "fps": 25.0,
+      "file": "codicil.npz",
+      "label": "Codicil",
+      "video": null
+    },
+    "cognitive_psychology": {
+      "frames": 136,
+      "fps": 25.0,
+      "file": "cognitive_psychology.npz",
+      "label": "Cognitive Psychology",
+      "video": null
+    },
+    "cognizable_offence_non_cognizable_offence": {
+      "frames": 665,
+      "fps": 25.0,
+      "file": "cognizable_offence_non_cognizable_offence.npz",
+      "label": "Cognizable Offence Non Cognizable Offence",
+      "video": null
+    },
+    "cold_storage": {
+      "frames": 831,
+      "fps": 25.0,
+      "file": "cold_storage.npz",
+      "label": "Cold Storage",
+      "video": null
+    },
+    "comets": {
+      "frames": 2661,
+      "fps": 24.00002670288086,
+      "file": "comets.npz",
+      "label": "Comets",
+      "video": null
+    },
+    "command_box": {
+      "frames": 598,
+      "fps": 25.0,
+      "file": "command_box.npz",
+      "label": "Command Box",
+      "video": null
+    },
+    "commission": {
+      "frames": 621,
+      "fps": 24.0,
+      "file": "commission.npz",
+      "label": "Commission",
+      "video": null
+    },
+    "community_based_rehabilitation": {
+      "frames": 911,
+      "fps": 25.0,
+      "file": "community_based_rehabilitation.npz",
+      "label": "Community Based Rehabilitation",
+      "video": null
+    },
+    "composite_drawing": {
+      "frames": 711,
+      "fps": 25.0,
+      "file": "composite_drawing.npz",
+      "label": "Composite Drawing",
+      "video": null
+    },
+    "compound_sentence": {
+      "frames": 569,
+      "fps": 25.0,
+      "file": "compound_sentence.npz",
+      "label": "Compound Sentence",
+      "video": null
+    },
+    "comprehension": {
+      "frames": 1475,
+      "fps": 24.000017166137695,
+      "file": "comprehension.npz",
+      "label": "Comprehension",
+      "video": null
+    },
+    "concrete_slab": {
+      "frames": 694,
+      "fps": 25.0,
+      "file": "concrete_slab.npz",
+      "label": "Concrete Slab",
+      "video": null
+    },
+    "condensation": {
+      "frames": 476,
+      "fps": 24.0,
+      "file": "condensation.npz",
+      "label": "Condensation (Sign 2)",
+      "video": null
+    },
+    "congruent": {
+      "frames": 1188,
+      "fps": 25.0,
+      "file": "congruent.npz",
+      "label": "Congruent",
+      "video": null
+    },
+    "conservation_farming": {
+      "frames": 1482,
+      "fps": 25.0,
+      "file": "conservation_farming.npz",
+      "label": "Conservation Farming",
+      "video": null
+    },
+    "constipation": {
+      "frames": 864,
+      "fps": 25.0,
+      "file": "constipation.npz",
+      "label": "Constipation",
+      "video": null
+    },
+    "constitution": {
+      "frames": 685,
+      "fps": 24.0,
+      "file": "constitution.npz",
+      "label": "Constitution (Sign 2)",
+      "video": null
+    },
+    "construction_plan": {
+      "frames": 430,
+      "fps": 25.0,
+      "file": "construction_plan.npz",
+      "label": "Construction Plan",
+      "video": null
+    },
+    "construction_tower_crane": {
+      "frames": 449,
+      "fps": 24.0,
+      "file": "construction_tower_crane.npz",
+      "label": "Construction Tower Crane",
+      "video": null
+    },
+    "consumer_electronics": {
+      "frames": 395,
+      "fps": 25.0,
+      "file": "consumer_electronics.npz",
+      "label": "Consumer Electronics",
+      "video": null
+    },
+    "consumer_protection_act_1986": {
+      "frames": 1560,
+      "fps": 25.0,
+      "file": "consumer_protection_act_1986.npz",
+      "label": "Consumer Protection Act 1986",
+      "video": null
+    },
+    "contact_insecticide": {
+      "frames": 508,
+      "fps": 25.0,
+      "file": "contact_insecticide.npz",
+      "label": "Contact Insecticide",
+      "video": null
+    },
+    "contact_lenses": {
+      "frames": 608,
+      "fps": 24.0,
+      "file": "contact_lenses.npz",
+      "label": "Contact Lenses",
+      "video": null
+    },
+    "contagions_disease": {
+      "frames": 588,
+      "fps": 25.0,
+      "file": "contagions_disease.npz",
+      "label": "Contagions Disease",
+      "video": null
+    },
+    "continents": {
+      "frames": 735,
+      "fps": 25.0,
+      "file": "continents.npz",
+      "label": "Continents",
+      "video": null
+    },
+    "continuous_assessment": {
+      "frames": 968,
+      "fps": 24.000024795532227,
+      "file": "continuous_assessment.npz",
+      "label": "Continuous Assessment",
+      "video": null
+    },
+    "contour_bund": {
+      "frames": 379,
+      "fps": 24.0,
+      "file": "contour_bund.npz",
+      "label": "Contour Bund",
+      "video": null
+    },
+    "contraception": {
+      "frames": 516,
+      "fps": 25.0,
+      "file": "contraception.npz",
+      "label": "Contraception",
+      "video": null
+    },
+    "contract": {
+      "frames": 380,
+      "fps": 24.0,
+      "file": "contract.npz",
+      "label": "Contract",
+      "video": null
+    },
+    "contract_killing": {
+      "frames": 578,
+      "fps": 25.0,
+      "file": "contract_killing.npz",
+      "label": "Contract Killing",
+      "video": null
+    },
+    "control_panel": {
+      "frames": 393,
+      "fps": 24.0,
+      "file": "control_panel.npz",
+      "label": "Control Panel",
+      "video": null
+    },
+    "convict_and_conviction": {
+      "frames": 721,
+      "fps": 25.0,
+      "file": "convict_and_conviction.npz",
+      "label": "Convict And Conviction",
+      "video": null
+    },
+    "coop_pen": {
+      "frames": 273,
+      "fps": 25.0,
+      "file": "coop_pen.npz",
+      "label": "Coop Pen",
+      "video": null
+    },
+    "copyright": {
+      "frames": 720,
+      "fps": 25.0,
+      "file": "copyright.npz",
+      "label": "Copyright",
+      "video": null
+    },
+    "corpus": {
+      "frames": 1403,
+      "fps": 30.0,
+      "file": "corpus.npz",
+      "label": "Corpus (Aum)",
+      "video": null
+    },
+    "council_of_architecture": {
+      "frames": 2775,
+      "fps": 24.00002670288086,
+      "file": "council_of_architecture.npz",
+      "label": "Council Of Architecture (Coa)",
+      "video": null
+    },
+    "countable_noun_uncountable_noun": {
+      "frames": 1012,
+      "fps": 24.000022888183594,
+      "file": "countable_noun_uncountable_noun.npz",
+      "label": "Countable Noun Uncountable Noun",
+      "video": null
+    },
+    "counter_desk_booth_window": {
+      "frames": 120,
+      "fps": 25.0,
+      "file": "counter_desk_booth_window.npz",
+      "label": "Counter Desk Booth Window",
+      "video": null
+    },
+    "court_marriage": {
+      "frames": 970,
+      "fps": 24.000024795532227,
+      "file": "court_marriage.npz",
+      "label": "Court Marriage",
+      "video": null
+    },
+    "cover_crops": {
+      "frames": 737,
+      "fps": 25.0,
+      "file": "cover_crops.npz",
+      "label": "Cover Crops",
+      "video": null
+    },
+    "coverage": {
+      "frames": 873,
+      "fps": 30.0,
+      "file": "coverage.npz",
+      "label": "Coverage (Financial Term)",
+      "video": null
+    },
+    "creche": {
+      "frames": 748,
+      "fps": 25.0,
+      "file": "creche.npz",
+      "label": "Creche (Academic)",
+      "video": null
+    },
+    "credit_default_swap": {
+      "frames": 852,
+      "fps": 30.0,
+      "file": "credit_default_swap.npz",
+      "label": "Credit Default Swap",
+      "video": null
+    },
+    "criminology": {
+      "frames": 397,
+      "fps": 25.0,
+      "file": "criminology.npz",
+      "label": "Criminology",
+      "video": null
+    },
+    "criteria_standards": {
+      "frames": 1233,
+      "fps": 24.000019073486328,
+      "file": "criteria_standards.npz",
+      "label": "Criteria (Exam) Standards",
+      "video": null
+    },
+    "cross_examine": {
+      "frames": 960,
+      "fps": 25.0,
+      "file": "cross_examine.npz",
+      "label": "Cross - Examine",
+      "video": null
+    },
+    "cross_product": {
+      "frames": 1936,
+      "fps": 25.0,
+      "file": "cross_product.npz",
+      "label": "Cross Product (Maths)",
+      "video": null
+    },
+    "crown_grafting": {
+      "frames": 1365,
+      "fps": 25.0,
+      "file": "crown_grafting.npz",
+      "label": "Crown Grafting",
+      "video": null
+    },
+    "crumb": {
+      "frames": 340,
+      "fps": 24.0,
+      "file": "crumb.npz",
+      "label": "Crumb",
+      "video": null
+    },
+    "cubicle": {
+      "frames": 121,
+      "fps": 25.0,
+      "file": "cubicle.npz",
+      "label": "Cubicle",
+      "video": null
+    },
+    "cultural_model_of_disability": {
+      "frames": 1354,
+      "fps": 25.0,
+      "file": "cultural_model_of_disability.npz",
+      "label": "Cultural Model Of Disability",
+      "video": null
+    },
+    "culture_deaf_culture": {
+      "frames": 1089,
+      "fps": 24.000022888183594,
+      "file": "culture_deaf_culture.npz",
+      "label": "Culture Deaf Culture",
+      "video": null
+    },
+    "cumulative_interest": {
+      "frames": 797,
+      "fps": 30.0,
+      "file": "cumulative_interest.npz",
+      "label": "Cumulative Interest",
+      "video": null
+    },
+    "curious": {
+      "frames": 203,
+      "fps": 25.0,
+      "file": "curious.npz",
+      "label": "Curious",
+      "video": null
+    },
+    "current_and_ampere": {
+      "frames": 1205,
+      "fps": 25.0,
+      "file": "current_and_ampere.npz",
+      "label": "Current And Ampere",
+      "video": null
+    },
+    "current_file": {
+      "frames": 489,
+      "fps": 24.0,
+      "file": "current_file.npz",
+      "label": "Current File",
+      "video": null
+    },
+    "current_liabilities": {
+      "frames": 1267,
+      "fps": 24.000019073486328,
+      "file": "current_liabilities.npz",
+      "label": "Current Liabilities",
+      "video": null
+    },
+    "curve": {
+      "frames": 1191,
+      "fps": 25.0,
+      "file": "curve.npz",
+      "label": "Curve (Math)",
+      "video": null
+    },
+    "customer": {
+      "frames": 434,
+      "fps": 25.0,
+      "file": "customer.npz",
+      "label": "Customer",
+      "video": null
+    },
+    "cutting": {
+      "frames": 1547,
+      "fps": 25.0,
+      "file": "cutting.npz",
+      "label": "Cutting",
+      "video": null
+    },
+    "cutting_mat": {
+      "frames": 421,
+      "fps": 25.0,
+      "file": "cutting_mat.npz",
+      "label": "Cutting Mat",
+      "video": null
+    },
+    "cystitis": {
+      "frames": 581,
+      "fps": 25.0,
+      "file": "cystitis.npz",
+      "label": "Cystitis",
+      "video": null
+    },
+    "cytology": {
+      "frames": 171,
+      "fps": 25.0,
+      "file": "cytology.npz",
+      "label": "Cytology",
+      "video": null
+    },
+    "c_o_b_test": {
+      "frames": 380,
+      "fps": 24.0,
+      "file": "c_o_b_test.npz",
+      "label": "C O B Test",
+      "video": null
+    },
+    "cage_system": {
+      "frames": 1083,
+      "fps": 24.000022888183594,
+      "file": "cage_system.npz",
+      "label": "Cage System",
+      "video": null
+    },
+    "calamine": {
+      "frames": 588,
+      "fps": 25.0,
+      "file": "calamine.npz",
+      "label": "Calamine",
+      "video": null
+    },
+    "call_for_quotation": {
+      "frames": 464,
+      "fps": 24.0,
+      "file": "call_for_quotation.npz",
+      "label": "Call For Quotation",
+      "video": null
+    },
+    "cam_shaft": {
+      "frames": 432,
+      "fps": 25.0,
+      "file": "cam_shaft.npz",
+      "label": "Cam Shaft",
+      "video": null
+    },
+    "cantilaver": {
+      "frames": 587,
+      "fps": 24.0,
+      "file": "cantilaver.npz",
+      "label": "Cantilaver",
+      "video": null
+    },
+    "cardinal_directions_and_intermediate_directions": {
+      "frames": 676,
+      "fps": 25.0,
+      "file": "cardinal_directions_and_intermediate_directions.npz",
+      "label": "Cardinal Directions And Intermediate Directions",
+      "video": null
+    },
+    "care_giver": {
+      "frames": 115,
+      "fps": 25.0,
+      "file": "care_giver.npz",
+      "label": "Care Giver",
+      "video": null
+    },
+    "care_giving_and_care_giver": {
+      "frames": 1578,
+      "fps": 25.0,
+      "file": "care_giving_and_care_giver.npz",
+      "label": "Care Giving And Care Giver",
+      "video": null
+    },
+    "care_of_lawn": {
+      "frames": 1002,
+      "fps": 25.0,
+      "file": "care_of_lawn.npz",
+      "label": "Care Of Lawn",
+      "video": null
+    },
+    "careless_negligent": {
+      "frames": 94,
+      "fps": 25.0,
+      "file": "careless_negligent.npz",
+      "label": "Careless Negligent",
+      "video": null
+    },
+    "caricature": {
+      "frames": 295,
+      "fps": 24.0,
+      "file": "caricature.npz",
+      "label": "Caricature",
+      "video": null
+    },
+    "carnetic_wars": {
+      "frames": 945,
+      "fps": 25.0,
+      "file": "carnetic_wars.npz",
+      "label": "Carnetic Wars",
+      "video": null
+    },
+    "carved_pillars": {
+      "frames": 552,
+      "fps": 24.0,
+      "file": "carved_pillars.npz",
+      "label": "Carved Pillars",
+      "video": null
+    },
+    "cascading_windows": {
+      "frames": 831,
+      "fps": 25.0,
+      "file": "cascading_windows.npz",
+      "label": "Cascading Windows",
+      "video": null
+    },
+    "castrate": {
+      "frames": 518,
+      "fps": 25.0,
+      "file": "castrate.npz",
+      "label": "Castrate",
+      "video": null
+    },
+    "catch_crops": {
+      "frames": 958,
+      "fps": 24.000024795532227,
+      "file": "catch_crops.npz",
+      "label": "Catch Crops",
+      "video": null
+    },
+    "cation": {
+      "frames": 79,
+      "fps": 25.0,
+      "file": "cation.npz",
+      "label": "Cation",
+      "video": null
+    },
+    "cave_paintings": {
+      "frames": 534,
+      "fps": 25.0,
+      "file": "cave_paintings.npz",
+      "label": "Cave Paintings",
+      "video": null
+    },
+    "cell_mobile": {
+      "frames": 87,
+      "fps": 25.0,
+      "file": "cell_mobile.npz",
+      "label": "Cell Mobile (Sign 3)",
+      "video": null
+    },
+    "central_bank": {
+      "frames": 1173,
+      "fps": 30.0,
+      "file": "central_bank.npz",
+      "label": "Central Bank",
+      "video": null
+    },
+    "certificate_of_manufacture": {
+      "frames": 652,
+      "fps": 24.0,
+      "file": "certificate_of_manufacture.npz",
+      "label": "Certificate Of Manufacture",
+      "video": null
+    },
+    "chana_chickpea_gram": {
+      "frames": 145,
+      "fps": 24.0,
+      "file": "chana_chickpea_gram.npz",
+      "label": "Chana Chickpea Gram",
+      "video": null
+    },
+    "chanakya_or_kautilya": {
+      "frames": 1290,
+      "fps": 25.0,
+      "file": "chanakya_or_kautilya.npz",
+      "label": "Chanakya Or Kautilya",
+      "video": null
+    },
+    "chandragupta_ii_vikramaditya": {
+      "frames": 2005,
+      "fps": 25.0,
+      "file": "chandragupta_ii_vikramaditya.npz",
+      "label": "Chandragupta Ii  Vikramaditya",
+      "video": null
+    },
+    "chaos_disorder_disarray_mayhem": {
+      "frames": 526,
+      "fps": 24.0,
+      "file": "chaos_disorder_disarray_mayhem.npz",
+      "label": "Chaos Disorder Disarray Mayhem",
+      "video": null
+    },
+    "chargesheet": {
+      "frames": 1011,
+      "fps": 25.0,
+      "file": "chargesheet.npz",
+      "label": "Chargesheet (Academic)",
+      "video": null
+    },
+    "chauffeur": {
+      "frames": 195,
+      "fps": 24.0,
+      "file": "chauffeur.npz",
+      "label": "Chauffeur",
+      "video": null
+    },
+    "chewing_and_lapping_type": {
+      "frames": 549,
+      "fps": 25.0,
+      "file": "chewing_and_lapping_type.npz",
+      "label": "Chewing And Lapping Type",
+      "video": null
+    },
+    "chhatrapati_shivaji_terminus": {
+      "frames": 132,
+      "fps": 25.0,
+      "file": "chhatrapati_shivaji_terminus.npz",
+      "label": "Chhatrapati Shivaji Terminus (Formerly Victoria Terminus)",
+      "video": null
+    },
+    "chief_executive_officer": {
+      "frames": 1152,
+      "fps": 24.00002098083496,
+      "file": "chief_executive_officer.npz",
+      "label": "Chief Executive Officer (Ceo)",
+      "video": null
+    },
+    "children_education_allowance": {
+      "frames": 1003,
+      "fps": 24.000024795532227,
+      "file": "children_education_allowance.npz",
+      "label": "Children Education Allowance(Cea)",
+      "video": null
+    },
+    "chilli": {
+      "frames": 92,
+      "fps": 25.0,
+      "file": "chilli.npz",
+      "label": "Chilli (Sign 2)",
+      "video": null
+    },
+    "chips": {
+      "frames": 416,
+      "fps": 25.0,
+      "file": "chips.npz",
+      "label": "Chips",
+      "video": null
+    },
+    "chlorophyll": {
+      "frames": 1361,
+      "fps": 25.0,
+      "file": "chlorophyll.npz",
+      "label": "Chlorophyll (Academic)",
+      "video": null
+    },
+    "cholas": {
+      "frames": 936,
+      "fps": 25.0,
+      "file": "cholas.npz",
+      "label": "Cholas (Academic)",
+      "video": null
+    },
+    "choose_pick_select": {
+      "frames": 99,
+      "fps": 25.0,
+      "file": "choose_pick_select.npz",
+      "label": "Choose Pick Select",
+      "video": null
+    },
+    "christianity_christian": {
+      "frames": 90,
+      "fps": 25.0,
+      "file": "christianity_christian.npz",
+      "label": "Christianity Christian",
+      "video": null
+    },
+    "chrome": {
+      "frames": 839,
+      "fps": 25.0,
+      "file": "chrome.npz",
+      "label": "Chrome",
+      "video": null
+    },
+    "chrome_book": {
+      "frames": 931,
+      "fps": 24.0,
+      "file": "chrome_book.npz",
+      "label": "Chrome Book",
+      "video": null
+    },
+    "circular_saw": {
+      "frames": 384,
+      "fps": 25.0,
+      "file": "circular_saw.npz",
+      "label": "Circular Saw",
+      "video": null
+    },
+    "circulatory_system": {
+      "frames": 1457,
+      "fps": 23.976024627685547,
+      "file": "circulatory_system.npz",
+      "label": "Circulatory System",
+      "video": null
+    },
+    "class_participation": {
+      "frames": 392,
+      "fps": 24.0,
+      "file": "class_participation.npz",
+      "label": "Class Participation",
+      "video": null
+    },
+    "classification_of_plant_disseases": {
+      "frames": 524,
+      "fps": 25.0,
+      "file": "classification_of_plant_disseases.npz",
+      "label": "Classification Of Plant Disseases",
+      "video": null
+    },
+    "classification_of_water_areas": {
+      "frames": 461,
+      "fps": 24.0,
+      "file": "classification_of_water_areas.npz",
+      "label": "Classification Of Water Areas",
+      "video": null
+    },
+    "clearing_and_matching": {
+      "frames": 759,
+      "fps": 30.0,
+      "file": "clearing_and_matching.npz",
+      "label": "Clearing And Matching",
+      "video": null
+    },
+    "click": {
+      "frames": 233,
+      "fps": 25.0,
+      "file": "click.npz",
+      "label": "Click (Dolphin)",
+      "video": null
+    },
+    "closed_circuit": {
+      "frames": 428,
+      "fps": 25.0,
+      "file": "closed_circuit.npz",
+      "label": "Closed Circuit",
+      "video": null
+    },
+    "co2_and_o2": {
+      "frames": 803,
+      "fps": 25.0,
+      "file": "co2_and_o2.npz",
+      "label": "Co2 And O2",
+      "video": null
+    },
+    "co_prime_number": {
+      "frames": 1463,
+      "fps": 25.0,
+      "file": "co_prime_number.npz",
+      "label": "Co-Prime Number (Maths)",
+      "video": null
+    },
+    "coal_gas": {
+      "frames": 487,
+      "fps": 25.0,
+      "file": "coal_gas.npz",
+      "label": "Coal Gas",
+      "video": null
+    },
+    "code_switching": {
+      "frames": 1349,
+      "fps": 24.000017166137695,
+      "file": "code_switching.npz",
+      "label": "Code-Switching",
+      "video": null
+    },
+    "cognition": {
+      "frames": 76,
+      "fps": 25.0,
+      "file": "cognition.npz",
+      "label": "Cognition",
+      "video": null
+    },
+    "cohort": {
+      "frames": 1646,
+      "fps": 24.000028610229492,
+      "file": "cohort.npz",
+      "label": "Cohort",
+      "video": null
+    },
+    "cold_desert": {
+      "frames": 1035,
+      "fps": 25.0,
+      "file": "cold_desert.npz",
+      "label": "Cold Desert",
+      "video": null
+    },
+    "cold_war": {
+      "frames": 2886,
+      "fps": 25.0,
+      "file": "cold_war.npz",
+      "label": "Cold War",
+      "video": null
+    },
+    "collapse": {
+      "frames": 464,
+      "fps": 24.0,
+      "file": "collapse.npz",
+      "label": "Collapse",
+      "video": null
+    },
+    "collect_data": {
+      "frames": 397,
+      "fps": 24.0,
+      "file": "collect_data.npz",
+      "label": "Collect Data",
+      "video": null
+    },
+    "colon": {
+      "frames": 88,
+      "fps": 24.0,
+      "file": "colon.npz",
+      "label": "Colon",
+      "video": null
+    },
+    "color_temperature": {
+      "frames": 1540,
+      "fps": 24.000015258789062,
+      "file": "color_temperature.npz",
+      "label": "Color Temperature",
+      "video": null
+    },
+    "colorable_legislation": {
+      "frames": 1029,
+      "fps": 25.0,
+      "file": "colorable_legislation.npz",
+      "label": "Colorable Legislation",
+      "video": null
+    },
+    "coloured_hair": {
+      "frames": 107,
+      "fps": 24.0,
+      "file": "coloured_hair.npz",
+      "label": "Coloured Hair",
+      "video": null
+    },
+    "combine_connect": {
+      "frames": 127,
+      "fps": 25.0,
+      "file": "combine_connect.npz",
+      "label": "Combine Connect (Words)",
+      "video": null
+    },
+    "combine_merge": {
+      "frames": 127,
+      "fps": 25.0,
+      "file": "combine_merge.npz",
+      "label": "Combine Merge",
+      "video": null
+    },
+    "come_back_return": {
+      "frames": 87,
+      "fps": 25.0,
+      "file": "come_back_return.npz",
+      "label": "Come Back Return",
+      "video": null
+    },
+    "command_economy": {
+      "frames": 634,
+      "fps": 24.0,
+      "file": "command_economy.npz",
+      "label": "Command Economy",
+      "video": null
+    },
+    "commercial": {
+      "frames": 116,
+      "fps": 24.0,
+      "file": "commercial.npz",
+      "label": "Commercial",
+      "video": null
+    },
+    "common_salt": {
+      "frames": 329,
+      "fps": 24.0,
+      "file": "common_salt.npz",
+      "label": "Common Salt",
+      "video": null
+    },
+    "commutative_property": {
+      "frames": 6724,
+      "fps": 25.0,
+      "file": "commutative_property.npz",
+      "label": "Commutative Property (Maths)",
+      "video": null
+    },
+    "complete_angle": {
+      "frames": 1108,
+      "fps": 25.0,
+      "file": "complete_angle.npz",
+      "label": "Complete Angle (Math)",
+      "video": null
+    },
+    "complete_of_total_farm_budgeting": {
+      "frames": 1152,
+      "fps": 24.00002098083496,
+      "file": "complete_of_total_farm_budgeting.npz",
+      "label": "Complete Of Total Farm Budgeting",
+      "video": null
+    },
+    "condemnation_condemnation_suit_inverse_condemnation": {
+      "frames": 1500,
+      "fps": 25.0,
+      "file": "condemnation_condemnation_suit_inverse_condemnation.npz",
+      "label": "Condemnation Condemnation Suit Inverse Condemnation",
+      "video": null
+    },
+    "conduction": {
+      "frames": 1691,
+      "fps": 25.0,
+      "file": "conduction.npz",
+      "label": "Conduction (Academic)",
+      "video": null
+    },
+    "conductors_and_insulators": {
+      "frames": 1353,
+      "fps": 25.0,
+      "file": "conductors_and_insulators.npz",
+      "label": "Conductors And Insulators",
+      "video": null
+    },
+    "confidence_tricks_confidence_man_or_con_man": {
+      "frames": 2328,
+      "fps": 25.0,
+      "file": "confidence_tricks_confidence_man_or_con_man.npz",
+      "label": "Confidence Tricks Confidence Man Or Con Man",
+      "video": null
+    },
+    "consensus": {
+      "frames": 760,
+      "fps": 25.0,
+      "file": "consensus.npz",
+      "label": "Consensus",
+      "video": null
+    },
+    "constructive_desertion": {
+      "frames": 732,
+      "fps": 25.0,
+      "file": "constructive_desertion.npz",
+      "label": "Constructive Desertion",
+      "video": null
+    },
+    "consumer_and_product": {
+      "frames": 620,
+      "fps": 25.0,
+      "file": "consumer_and_product.npz",
+      "label": "Consumer And Product",
+      "video": null
+    },
+    "consumer_expenditure": {
+      "frames": 323,
+      "fps": 24.0,
+      "file": "consumer_expenditure.npz",
+      "label": "Consumer Expenditure",
+      "video": null
+    },
+    "container_ships": {
+      "frames": 512,
+      "fps": 25.0,
+      "file": "container_ships.npz",
+      "label": "Container Ships",
+      "video": null
+    },
+    "contempt": {
+      "frames": 382,
+      "fps": 25.0,
+      "file": "contempt.npz",
+      "label": "Contempt",
+      "video": null
+    },
+    "contour_method": {
+      "frames": 920,
+      "fps": 25.0,
+      "file": "contour_method.npz",
+      "label": "Contour Method",
+      "video": null
+    },
+    "contract_agreement_deal_pact": {
+      "frames": 121,
+      "fps": 25.0,
+      "file": "contract_agreement_deal_pact.npz",
+      "label": "Contract Agreement Deal Pact",
+      "video": null
+    },
+    "contract_contractual": {
+      "frames": 130,
+      "fps": 25.0,
+      "file": "contract_contractual.npz",
+      "label": "Contract Contractual (Job)",
+      "video": null
+    },
+    "contractor": {
+      "frames": 940,
+      "fps": 25.0,
+      "file": "contractor.npz",
+      "label": "Contractor",
+      "video": null
+    },
+    "contracts": {
+      "frames": 691,
+      "fps": 30.0,
+      "file": "contracts.npz",
+      "label": "Contracts",
+      "video": null
+    },
+    "convection": {
+      "frames": 1449,
+      "fps": 24.000017166137695,
+      "file": "convection.npz",
+      "label": "Convection (Sign 2)",
+      "video": null
+    },
+    "coronary_artery_disease": {
+      "frames": 360,
+      "fps": 25.0,
+      "file": "coronary_artery_disease.npz",
+      "label": "Coronary Artery Disease",
+      "video": null
+    },
+    "correlation": {
+      "frames": 1393,
+      "fps": 24.000017166137695,
+      "file": "correlation.npz",
+      "label": "Correlation",
+      "video": null
+    },
+    "corrosion_resistance": {
+      "frames": 622,
+      "fps": 24.0,
+      "file": "corrosion_resistance.npz",
+      "label": "Corrosion Resistance",
+      "video": null
+    },
+    "cotton_pin": {
+      "frames": 474,
+      "fps": 24.0,
+      "file": "cotton_pin.npz",
+      "label": "Cotton Pin",
+      "video": null
+    },
+    "councillors_and_ward_councillors": {
+      "frames": 1580,
+      "fps": 25.0,
+      "file": "councillors_and_ward_councillors.npz",
+      "label": "Councillors And Ward Councillors",
+      "video": null
+    },
+    "credit_and_debit": {
+      "frames": 1832,
+      "fps": 25.0,
+      "file": "credit_and_debit.npz",
+      "label": "Credit And Debit",
+      "video": null
+    },
+    "creeping_weeds": {
+      "frames": 490,
+      "fps": 24.0,
+      "file": "creeping_weeds.npz",
+      "label": "Creeping Weeds",
+      "video": null
+    },
+    "crewel_needles": {
+      "frames": 732,
+      "fps": 25.0,
+      "file": "crewel_needles.npz",
+      "label": "Crewel Needles",
+      "video": null
+    },
+    "criminal": {
+      "frames": 302,
+      "fps": 25.0,
+      "file": "criminal.npz",
+      "label": "Criminal",
+      "video": null
+    },
+    "critical_period": {
+      "frames": 1812,
+      "fps": 25.0,
+      "file": "critical_period.npz",
+      "label": "Critical Period",
+      "video": null
+    },
+    "cross_breeding": {
+      "frames": 830,
+      "fps": 24.0,
+      "file": "cross_breeding.npz",
+      "label": "Cross Breeding",
+      "video": null
+    },
+    "cry_bawl_scream": {
+      "frames": 122,
+      "fps": 25.0,
+      "file": "cry_bawl_scream.npz",
+      "label": "Cry Bawl Scream",
+      "video": null
+    },
+    "cry_therapy": {
+      "frames": 230,
+      "fps": 25.0,
+      "file": "cry_therapy.npz",
+      "label": "Cry Therapy",
+      "video": null
+    },
+    "cryptosporidium": {
+      "frames": 426,
+      "fps": 24.0,
+      "file": "cryptosporidium.npz",
+      "label": "Cryptosporidium",
+      "video": null
+    },
+    "cud": {
+      "frames": 1368,
+      "fps": 25.0,
+      "file": "cud.npz",
+      "label": "Cud (Academic)",
+      "video": null
+    },
+    "cultivated_land_weeds": {
+      "frames": 643,
+      "fps": 25.0,
+      "file": "cultivated_land_weeds.npz",
+      "label": "Cultivated Land Weeds",
+      "video": null
+    },
+    "cultural_factors": {
+      "frames": 1953,
+      "fps": 25.0,
+      "file": "cultural_factors.npz",
+      "label": "Cultural Factors (Productivity)",
+      "video": null
+    },
+    "custodian": {
+      "frames": 909,
+      "fps": 30.0,
+      "file": "custodian.npz",
+      "label": "Custodian",
+      "video": null
+    },
+    "cutting_on_action": {
+      "frames": 792,
+      "fps": 24.0,
+      "file": "cutting_on_action.npz",
+      "label": "Cutting On Action",
+      "video": null
+    },
+    "cyclone": {
+      "frames": 671,
+      "fps": 24.0,
+      "file": "cyclone.npz",
+      "label": "Cyclone",
+      "video": null
+    },
+    "cacophony": {
+      "frames": 786,
+      "fps": 24.0,
+      "file": "cacophony.npz",
+      "label": "Cacophony",
+      "video": null
+    },
+    "calcium": {
+      "frames": 992,
+      "fps": 25.0,
+      "file": "calcium.npz",
+      "label": "Calcium",
+      "video": null
+    },
+    "camel_farming": {
+      "frames": 484,
+      "fps": 24.0,
+      "file": "camel_farming.npz",
+      "label": "Camel Farming",
+      "video": null
+    },
+    "cannibal": {
+      "frames": 361,
+      "fps": 25.0,
+      "file": "cannibal.npz",
+      "label": "Cannibal",
+      "video": null
+    },
+    "cap_sleeve": {
+      "frames": 204,
+      "fps": 25.0,
+      "file": "cap_sleeve.npz",
+      "label": "Cap Sleeve",
+      "video": null
+    },
+    "capital_crime_or_capital_offence": {
+      "frames": 624,
+      "fps": 25.0,
+      "file": "capital_crime_or_capital_offence.npz",
+      "label": "Capital Crime Or Capital Offence",
+      "video": null
+    },
+    "capital_depreciation": {
+      "frames": 1529,
+      "fps": 30.0,
+      "file": "capital_depreciation.npz",
+      "label": "Capital Depreciation",
+      "video": null
+    },
+    "capital_expenditure": {
+      "frames": 599,
+      "fps": 24.0,
+      "file": "capital_expenditure.npz",
+      "label": "Capital Expenditure",
+      "video": null
+    },
+    "capital_structure": {
+      "frames": 1482,
+      "fps": 30.0,
+      "file": "capital_structure.npz",
+      "label": "Capital Structure",
+      "video": null
+    },
+    "caponisation": {
+      "frames": 795,
+      "fps": 24.0,
+      "file": "caponisation.npz",
+      "label": "Caponisation",
+      "video": null
+    },
+    "captive": {
+      "frames": 638,
+      "fps": 25.0,
+      "file": "captive.npz",
+      "label": "Captive",
+      "video": null
+    },
+    "car_air_matress": {
+      "frames": 449,
+      "fps": 24.0,
+      "file": "car_air_matress.npz",
+      "label": "Car Air Matress",
+      "video": null
+    },
+    "carbon_dioxide": {
+      "frames": 1118,
+      "fps": 25.0,
+      "file": "carbon_dioxide.npz",
+      "label": "Carbon Dioxide",
+      "video": null
+    },
+    "cardinal_key_fundamental": {
+      "frames": 337,
+      "fps": 24.0,
+      "file": "cardinal_key_fundamental.npz",
+      "label": "Cardinal Key Fundamental",
+      "video": null
+    },
+    "cardiographers": {
+      "frames": 210,
+      "fps": 25.0,
+      "file": "cardiographers.npz",
+      "label": "Cardiographers",
+      "video": null
+    },
+    "cargo": {
+      "frames": 497,
+      "fps": 25.0,
+      "file": "cargo.npz",
+      "label": "Cargo",
+      "video": null
+    },
+    "carving": {
+      "frames": 2934,
+      "fps": 25.0,
+      "file": "carving.npz",
+      "label": "Carving (Academic)",
+      "video": null
+    },
+    "cash_generation": {
+      "frames": 1223,
+      "fps": 24.000019073486328,
+      "file": "cash_generation.npz",
+      "label": "Cash Generation",
+      "video": null
+    },
+    "cash_with_order": {
+      "frames": 802,
+      "fps": 24.0,
+      "file": "cash_with_order.npz",
+      "label": "Cash With Order (Cwo)",
+      "video": null
+    },
+    "cause_of_death": {
+      "frames": 600,
+      "fps": 25.0,
+      "file": "cause_of_death.npz",
+      "label": "Cause Of Death",
+      "video": null
+    },
+    "causing_agent": {
+      "frames": 216,
+      "fps": 25.0,
+      "file": "causing_agent.npz",
+      "label": "Causing Agent",
+      "video": null
+    },
+    "cavalcade_procession": {
+      "frames": 958,
+      "fps": 24.000024795532227,
+      "file": "cavalcade_procession.npz",
+      "label": "Cavalcade Procession",
+      "video": null
+    },
+    "ccucumber": {
+      "frames": 99,
+      "fps": 25.0,
+      "file": "ccucumber.npz",
+      "label": "Ccucumber",
+      "video": null
+    },
+    "cellulose_acetate_ca": {
+      "frames": 94,
+      "fps": 25.0,
+      "file": "cellulose_acetate_ca.npz",
+      "label": "Cellulose Acetate Ca",
+      "video": null
+    },
+    "censorship": {
+      "frames": 1144,
+      "fps": 25.0,
+      "file": "censorship.npz",
+      "label": "Censorship",
+      "video": null
+    },
+    "central_document_repository": {
+      "frames": 639,
+      "fps": 24.0,
+      "file": "central_document_repository.npz",
+      "label": "Central Document Repository",
+      "video": null
+    },
+    "centrifuge": {
+      "frames": 389,
+      "fps": 25.0,
+      "file": "centrifuge.npz",
+      "label": "Centrifuge",
+      "video": null
+    },
+    "ceramic_disc_capacitor": {
+      "frames": 953,
+      "fps": 25.0,
+      "file": "ceramic_disc_capacitor.npz",
+      "label": "Ceramic Disc Capacitor",
+      "video": null
+    },
+    "certificate_of_origin": {
+      "frames": 680,
+      "fps": 24.0,
+      "file": "certificate_of_origin.npz",
+      "label": "Certificate Of Origin",
+      "video": null
+    },
+    "certified_copy": {
+      "frames": 539,
+      "fps": 25.0,
+      "file": "certified_copy.npz",
+      "label": "Certified Copy",
+      "video": null
+    },
+    "chakla_rolling_plate_roti_board": {
+      "frames": 312,
+      "fps": 25.0,
+      "file": "chakla_rolling_plate_roti_board.npz",
+      "label": "Chakla Rolling Plate Roti Board",
+      "video": null
+    },
+    "chandelier": {
+      "frames": 158,
+      "fps": 24.0,
+      "file": "chandelier.npz",
+      "label": "Chandelier (Example)",
+      "video": null
+    },
+    "charge_bargain": {
+      "frames": 524,
+      "fps": 25.0,
+      "file": "charge_bargain.npz",
+      "label": "Charge Bargain",
+      "video": null
+    },
+    "charity": {
+      "frames": 127,
+      "fps": 25.0,
+      "file": "charity.npz",
+      "label": "Charity",
+      "video": null
+    },
+    "chatani": {
+      "frames": 941,
+      "fps": 24.0,
+      "file": "chatani.npz",
+      "label": "Chatani",
+      "video": null
+    },
+    "cheap_inexpensive": {
+      "frames": 73,
+      "fps": 25.0,
+      "file": "cheap_inexpensive.npz",
+      "label": "Cheap Inexpensive",
+      "video": null
+    },
+    "chemotherapy": {
+      "frames": 708,
+      "fps": 25.0,
+      "file": "chemotherapy.npz",
+      "label": "Chemotherapy",
+      "video": null
+    },
+    "chest_cavity": {
+      "frames": 970,
+      "fps": 23.976024627685547,
+      "file": "chest_cavity.npz",
+      "label": "Chest Cavity",
+      "video": null
+    },
+    "child_labour": {
+      "frames": 485,
+      "fps": 25.0,
+      "file": "child_labour.npz",
+      "label": "Child Labour",
+      "video": null
+    },
+    "chirp": {
+      "frames": 300,
+      "fps": 25.0,
+      "file": "chirp.npz",
+      "label": "Chirp (Grasshopper)",
+      "video": null
+    },
+    "chord": {
+      "frames": 1001,
+      "fps": 25.0,
+      "file": "chord.npz",
+      "label": "Chord",
+      "video": null
+    },
+    "chrome_cast": {
+      "frames": 625,
+      "fps": 24.0,
+      "file": "chrome_cast.npz",
+      "label": "Chrome Cast",
+      "video": null
+    },
+    "clarify": {
+      "frames": 731,
+      "fps": 25.0,
+      "file": "clarify.npz",
+      "label": "Clarify",
+      "video": null
+    },
+    "classification_based_on_parts_used_as_food": {
+      "frames": 999,
+      "fps": 24.000024795532227,
+      "file": "classification_based_on_parts_used_as_food.npz",
+      "label": "Classification Based On Parts Used As Food",
+      "video": null
+    },
+    "classification_of_annuals_flower_plant": {
+      "frames": 424,
+      "fps": 25.0,
+      "file": "classification_of_annuals_flower_plant.npz",
+      "label": "Classification Of Annuals Flower Plant",
+      "video": null
+    },
+    "clay_soil_weeds": {
+      "frames": 586,
+      "fps": 24.0,
+      "file": "clay_soil_weeds.npz",
+      "label": "Clay Soil Weeds",
+      "video": null
+    },
+    "climate": {
+      "frames": 1246,
+      "fps": 25.0,
+      "file": "climate.npz",
+      "label": "Climate (Academic)",
+      "video": null
+    },
+    "clock_in_or_clock_on_clock_off_or_clock_out": {
+      "frames": 473,
+      "fps": 24.0,
+      "file": "clock_in_or_clock_on_clock_off_or_clock_out.npz",
+      "label": "Clock In Or Clock On Clock Off Or Clock Out",
+      "video": null
+    },
+    "cloudiness": {
+      "frames": 267,
+      "fps": 24.0,
+      "file": "cloudiness.npz",
+      "label": "Cloudiness",
+      "video": null
+    },
+    "cnc_machine": {
+      "frames": 941,
+      "fps": 25.0,
+      "file": "cnc_machine.npz",
+      "label": "Cnc Machine",
+      "video": null
+    },
+    "coastal_areas": {
+      "frames": 306,
+      "fps": 24.0,
+      "file": "coastal_areas.npz",
+      "label": "Coastal Areas",
+      "video": null
+    },
+    "coastal_plain": {
+      "frames": 576,
+      "fps": 25.0,
+      "file": "coastal_plain.npz",
+      "label": "Coastal Plain",
+      "video": null
+    },
+    "cocoon": {
+      "frames": 477,
+      "fps": 24.0,
+      "file": "cocoon.npz",
+      "label": "Cocoon",
+      "video": null
+    },
+    "code_mixing": {
+      "frames": 1063,
+      "fps": 24.000022888183594,
+      "file": "code_mixing.npz",
+      "label": "Code-Mixing",
+      "video": null
+    },
+    "code_of_conduct": {
+      "frames": 608,
+      "fps": 25.0,
+      "file": "code_of_conduct.npz",
+      "label": "Code Of Conduct",
+      "video": null
+    },
+    "cogeneration": {
+      "frames": 1308,
+      "fps": 25.0,
+      "file": "cogeneration.npz",
+      "label": "Cogeneration",
+      "video": null
+    },
+    "cognizable": {
+      "frames": 1069,
+      "fps": 25.0,
+      "file": "cognizable.npz",
+      "label": "Cognizable (Academic)",
+      "video": null
+    },
+    "collaboration": {
+      "frames": 1876,
+      "fps": 24.000024795532227,
+      "file": "collaboration.npz",
+      "label": "Collaboration",
+      "video": null
+    },
+    "collabrate": {
+      "frames": 1338,
+      "fps": 24.000017166137695,
+      "file": "collabrate.npz",
+      "label": "Collabrate",
+      "video": null
+    },
+    "coma": {
+      "frames": 600,
+      "fps": 25.0,
+      "file": "coma.npz",
+      "label": "Coma",
+      "video": null
+    },
+    "combine": {
+      "frames": 795,
+      "fps": 24.0,
+      "file": "combine.npz",
+      "label": "Combine",
+      "video": null
+    },
+    "commercial_agent_or_sales_agent": {
+      "frames": 736,
+      "fps": 24.0,
+      "file": "commercial_agent_or_sales_agent.npz",
+      "label": "Commercial Agent Or Sales Agent",
+      "video": null
+    },
+    "commerical_complexes": {
+      "frames": 414,
+      "fps": 24.0,
+      "file": "commerical_complexes.npz",
+      "label": "Commerical Complexes",
+      "video": null
+    },
+    "compensatory_fiscal_policy": {
+      "frames": 449,
+      "fps": 24.0,
+      "file": "compensatory_fiscal_policy.npz",
+      "label": "Compensatory Fiscal Policy",
+      "video": null
+    },
+    "competition_contest": {
+      "frames": 116,
+      "fps": 25.0,
+      "file": "competition_contest.npz",
+      "label": "Competition Contest",
+      "video": null
+    },
+    "complementary_angles": {
+      "frames": 1114,
+      "fps": 25.0,
+      "file": "complementary_angles.npz",
+      "label": "Complementary Angles",
+      "video": null
+    },
+    "complex_sentence": {
+      "frames": 1114,
+      "fps": 25.0,
+      "file": "complex_sentence.npz",
+      "label": "Complex Sentence",
+      "video": null
+    },
+    "compost": {
+      "frames": 668,
+      "fps": 24.0,
+      "file": "compost.npz",
+      "label": "Compost",
+      "video": null
+    },
+    "concealment": {
+      "frames": 363,
+      "fps": 25.0,
+      "file": "concealment.npz",
+      "label": "Concealment",
+      "video": null
+    },
+    "concrete_breaker": {
+      "frames": 94,
+      "fps": 25.0,
+      "file": "concrete_breaker.npz",
+      "label": "Concrete Breaker",
+      "video": null
+    },
+    "condensed_type": {
+      "frames": 559,
+      "fps": 24.0,
+      "file": "condensed_type.npz",
+      "label": "Condensed Type",
+      "video": null
+    },
+    "confirming_sample": {
+      "frames": 1077,
+      "fps": 24.000022888183594,
+      "file": "confirming_sample.npz",
+      "label": "Confirming Sample",
+      "video": null
+    },
+    "consolidation": {
+      "frames": 1301,
+      "fps": 24.000019073486328,
+      "file": "consolidation.npz",
+      "label": "Consolidation",
+      "video": null
+    },
+    "constitute": {
+      "frames": 624,
+      "fps": 25.0,
+      "file": "constitute.npz",
+      "label": "Constitute",
+      "video": null
+    },
+    "constitutional_remedies": {
+      "frames": 804,
+      "fps": 25.0,
+      "file": "constitutional_remedies.npz",
+      "label": "Constitutional Remedies",
+      "video": null
+    },
+    "constitutive_definition": {
+      "frames": 908,
+      "fps": 24.0,
+      "file": "constitutive_definition.npz",
+      "label": "Constitutive Definition",
+      "video": null
+    },
+    "construct": {
+      "frames": 152,
+      "fps": 25.0,
+      "file": "construct.npz",
+      "label": "Construct",
+      "video": null
+    },
+    "consumer_forum_or_consumer_court": {
+      "frames": 622,
+      "fps": 25.0,
+      "file": "consumer_forum_or_consumer_court.npz",
+      "label": "Consumer Forum Or Consumer Court",
+      "video": null
+    },
+    "contour_line": {
+      "frames": 856,
+      "fps": 24.0,
+      "file": "contour_line.npz",
+      "label": "Contour Line",
+      "video": null
+    },
+    "contraceptive": {
+      "frames": 276,
+      "fps": 25.0,
+      "file": "contraceptive.npz",
+      "label": "Contraceptive",
+      "video": null
+    },
+    "contraceptives": {
+      "frames": 553,
+      "fps": 25.0,
+      "file": "contraceptives.npz",
+      "label": "Contraceptives",
+      "video": null
+    },
+    "contractual_appointment": {
+      "frames": 479,
+      "fps": 25.0,
+      "file": "contractual_appointment.npz",
+      "label": "Contractual Appointment",
+      "video": null
+    },
+    "control_of_weeds": {
+      "frames": 803,
+      "fps": 25.0,
+      "file": "control_of_weeds.npz",
+      "label": "Control Of Weeds",
+      "video": null
+    },
+    "contusion": {
+      "frames": 541,
+      "fps": 25.0,
+      "file": "contusion.npz",
+      "label": "Contusion",
+      "video": null
+    },
+    "convelsion": {
+      "frames": 588,
+      "fps": 25.0,
+      "file": "convelsion.npz",
+      "label": "Convelsion",
+      "video": null
+    },
+    "convert_change_transform": {
+      "frames": 102,
+      "fps": 25.0,
+      "file": "convert_change_transform.npz",
+      "label": "Convert Change Transform",
+      "video": null
+    },
+    "cool_colours": {
+      "frames": 628,
+      "fps": 24.0,
+      "file": "cool_colours.npz",
+      "label": "Cool Colours",
+      "video": null
+    },
+    "cornea": {
+      "frames": 144,
+      "fps": 25.0,
+      "file": "cornea.npz",
+      "label": "Cornea",
+      "video": null
+    },
+    "corner": {
+      "frames": 97,
+      "fps": 25.0,
+      "file": "corner.npz",
+      "label": "Corner",
+      "video": null
+    },
+    "corrigendum": {
+      "frames": 588,
+      "fps": 24.0,
+      "file": "corrigendum.npz",
+      "label": "Corrigendum",
+      "video": null
+    },
+    "cost_additional_cost": {
+      "frames": 1207,
+      "fps": 24.000019073486328,
+      "file": "cost_additional_cost.npz",
+      "label": "Cost Additional Cost",
+      "video": null
+    },
+    "cost_benefit_analysis": {
+      "frames": 810,
+      "fps": 24.0,
+      "file": "cost_benefit_analysis.npz",
+      "label": "Cost Benefit Analysis",
+      "video": null
+    },
+    "costs_an_arm_and_a_leg": {
+      "frames": 675,
+      "fps": 25.0,
+      "file": "costs_an_arm_and_a_leg.npz",
+      "label": "Costs An Arm And A Leg",
+      "video": null
+    },
+    "course_programme": {
+      "frames": 113,
+      "fps": 25.0,
+      "file": "course_programme.npz",
+      "label": "Course Programme",
+      "video": null
+    },
+    "court_reporter": {
+      "frames": 468,
+      "fps": 25.0,
+      "file": "court_reporter.npz",
+      "label": "Court Reporter",
+      "video": null
+    },
+    "covering_letter": {
+      "frames": 1183,
+      "fps": 25.0,
+      "file": "covering_letter.npz",
+      "label": "Covering Letter",
+      "video": null
+    },
+    "crafts_person": {
+      "frames": 1208,
+      "fps": 25.0,
+      "file": "crafts_person.npz",
+      "label": "Crafts Person (Miscellaneous)",
+      "video": null
+    },
+    "crawl": {
+      "frames": 297,
+      "fps": 25.0,
+      "file": "crawl.npz",
+      "label": "Crawl",
+      "video": null
+    },
+    "create_innovate": {
+      "frames": 76,
+      "fps": 25.0,
+      "file": "create_innovate.npz",
+      "label": "Create Innovate",
+      "video": null
+    },
+    "creepers": {
+      "frames": 431,
+      "fps": 25.0,
+      "file": "creepers.npz",
+      "label": "Creepers",
+      "video": null
+    },
+    "criminal_law": {
+      "frames": 980,
+      "fps": 25.0,
+      "file": "criminal_law.npz",
+      "label": "Criminal Law (Academic)",
+      "video": null
+    },
+    "criteria": {
+      "frames": 726,
+      "fps": 24.0,
+      "file": "criteria.npz",
+      "label": "Criteria",
+      "video": null
+    },
+    "critical_theory": {
+      "frames": 2000,
+      "fps": 24.000024795532227,
+      "file": "critical_theory.npz",
+      "label": "Critical Theory",
+      "video": null
+    },
+    "cropped": {
+      "frames": 192,
+      "fps": 25.0,
+      "file": "cropped.npz",
+      "label": "Cropped",
+      "video": null
+    },
+    "croquis_figure": {
+      "frames": 744,
+      "fps": 25.0,
+      "file": "croquis_figure.npz",
+      "label": "Croquis Figure",
+      "video": null
+    },
+    "crorepati": {
+      "frames": 160,
+      "fps": 25.0,
+      "file": "crorepati.npz",
+      "label": "Crorepati",
+      "video": null
+    },
+    "cry_sob": {
+      "frames": 95,
+      "fps": 25.0,
+      "file": "cry_sob.npz",
+      "label": "Cry Sob",
+      "video": null
+    },
+    "cub": {
+      "frames": 400,
+      "fps": 24.0,
+      "file": "cub.npz",
+      "label": "Cub",
+      "video": null
+    },
+    "cultural_tourism": {
+      "frames": 588,
+      "fps": 24.0,
+      "file": "cultural_tourism.npz",
+      "label": "Cultural Tourism",
+      "video": null
+    },
+    "current_account": {
+      "frames": 845,
+      "fps": 30.0,
+      "file": "current_account.npz",
+      "label": "Current Account (1)",
+      "video": null
+    },
+    "current_assets": {
+      "frames": 634,
+      "fps": 24.0,
+      "file": "current_assets.npz",
+      "label": "Current Assets",
+      "video": null
+    },
+    "custodial_rape": {
+      "frames": 720,
+      "fps": 25.0,
+      "file": "custodial_rape.npz",
+      "label": "Custodial Rape",
+      "video": null
+    },
+    "custom_animation": {
+      "frames": 837,
+      "fps": 25.0,
+      "file": "custom_animation.npz",
+      "label": "Custom Animation",
+      "video": null
+    },
+    "cut_and_fill": {
+      "frames": 426,
+      "fps": 24.0,
+      "file": "cut_and_fill.npz",
+      "label": "Cut And Fill",
+      "video": null
+    },
+    "cyanobacteria": {
+      "frames": 449,
+      "fps": 24.0,
+      "file": "cyanobacteria.npz",
+      "label": "Cyanobacteria",
+      "video": null
+    },
+    "cabin": {
+      "frames": 352,
+      "fps": 24.0,
+      "file": "cabin.npz",
+      "label": "Cabin",
+      "video": null
+    },
+    "cadaver": {
+      "frames": 444,
+      "fps": 25.0,
+      "file": "cadaver.npz",
+      "label": "Cadaver",
+      "video": null
+    },
+    "calcium_ca": {
+      "frames": 57,
+      "fps": 25.0,
+      "file": "calcium_ca.npz",
+      "label": "Calcium Ca",
+      "video": null
+    },
+    "callous_indifferent": {
+      "frames": 383,
+      "fps": 25.0,
+      "file": "callous_indifferent.npz",
+      "label": "Callous Indifferent",
+      "video": null
+    },
+    "calorific_value": {
+      "frames": 461,
+      "fps": 24.0,
+      "file": "calorific_value.npz",
+      "label": "Calorific Value",
+      "video": null
+    },
+    "camp_tent": {
+      "frames": 239,
+      "fps": 25.0,
+      "file": "camp_tent.npz",
+      "label": "Camp Tent",
+      "video": null
+    },
+    "campaigning": {
+      "frames": 1064,
+      "fps": 25.0,
+      "file": "campaigning.npz",
+      "label": "Campaigning",
+      "video": null
+    },
+    "cancel_call_off": {
+      "frames": 108,
+      "fps": 25.0,
+      "file": "cancel_call_off.npz",
+      "label": "Cancel Call Off",
+      "video": null
+    },
+    "candy": {
+      "frames": 826,
+      "fps": 25.0,
+      "file": "candy.npz",
+      "label": "Candy",
+      "video": null
+    },
+    "canine_teeth": {
+      "frames": 903,
+      "fps": 25.0,
+      "file": "canine_teeth.npz",
+      "label": "Canine Teeth",
+      "video": null
+    },
+    "cannula": {
+      "frames": 400,
+      "fps": 25.0,
+      "file": "cannula.npz",
+      "label": "Cannula",
+      "video": null
+    },
+    "capon": {
+      "frames": 449,
+      "fps": 24.0,
+      "file": "capon.npz",
+      "label": "Capon",
+      "video": null
+    },
+    "carciogen": {
+      "frames": 852,
+      "fps": 25.0,
+      "file": "carciogen.npz",
+      "label": "Carciogen",
+      "video": null
+    },
+    "caries": {
+      "frames": 756,
+      "fps": 25.0,
+      "file": "caries.npz",
+      "label": "Caries",
+      "video": null
+    },
+    "carpal_tunnel_syndrome": {
+      "frames": 600,
+      "fps": 25.0,
+      "file": "carpal_tunnel_syndrome.npz",
+      "label": "Carpal Tunnel Syndrome",
+      "video": null
+    },
+    "cartridges": {
+      "frames": 644,
+      "fps": 24.0,
+      "file": "cartridges.npz",
+      "label": "Cartridges",
+      "video": null
+    },
+    "cash_notes": {
+      "frames": 86,
+      "fps": 25.0,
+      "file": "cash_notes.npz",
+      "label": "Cash Notes",
+      "video": null
+    },
+    "cashew": {
+      "frames": 150,
+      "fps": 25.0,
+      "file": "cashew.npz",
+      "label": "Cashew",
+      "video": null
+    },
+    "casino": {
+      "frames": 487,
+      "fps": 25.0,
+      "file": "casino.npz",
+      "label": "Casino",
+      "video": null
+    },
+    "casserole": {
+      "frames": 298,
+      "fps": 25.0,
+      "file": "casserole.npz",
+      "label": "Casserole",
+      "video": null
+    },
+    "castigate": {
+      "frames": 127,
+      "fps": 24.0,
+      "file": "castigate.npz",
+      "label": "Castigate",
+      "video": null
+    },
+    "castration": {
+      "frames": 518,
+      "fps": 24.0,
+      "file": "castration.npz",
+      "label": "Castration",
+      "video": null
+    },
+    "cautery_machine": {
+      "frames": 266,
+      "fps": 25.0,
+      "file": "cautery_machine.npz",
+      "label": "Cautery Machine",
+      "video": null
+    },
+    "celebrate_enjoy": {
+      "frames": 126,
+      "fps": 25.0,
+      "file": "celebrate_enjoy.npz",
+      "label": "Celebrate Enjoy",
+      "video": null
+    },
+    "celibate_chaste": {
+      "frames": 473,
+      "fps": 24.0,
+      "file": "celibate_chaste.npz",
+      "label": "Celibate Chaste",
+      "video": null
+    },
+    "cell_wall": {
+      "frames": 740,
+      "fps": 24.0,
+      "file": "cell_wall.npz",
+      "label": "Cell Wall",
+      "video": null
+    },
+    "celsius_and_fahrenheit": {
+      "frames": 793,
+      "fps": 25.0,
+      "file": "celsius_and_fahrenheit.npz",
+      "label": "Celsius And Fahrenheit",
+      "video": null
+    },
+    "central_advisory_board_of_education": {
+      "frames": 1212,
+      "fps": 24.000019073486328,
+      "file": "central_advisory_board_of_education.npz",
+      "label": "Central Advisory Board Of Education (Cabe)",
+      "video": null
+    },
+    "certain_definite_sure_positive": {
+      "frames": 474,
+      "fps": 24.0,
+      "file": "certain_definite_sure_positive.npz",
+      "label": "Certain Definite Sure Positive",
+      "video": null
+    },
+    "certificate_of_insurance": {
+      "frames": 754,
+      "fps": 24.0,
+      "file": "certificate_of_insurance.npz",
+      "label": "Certificate Of Insurance",
+      "video": null
+    },
+    "certiorari": {
+      "frames": 1113,
+      "fps": 25.0,
+      "file": "certiorari.npz",
+      "label": "Certiorari",
+      "video": null
+    },
+    "cg_characters": {
+      "frames": 732,
+      "fps": 24.0,
+      "file": "cg_characters.npz",
+      "label": "Cg Characters",
+      "video": null
+    },
+    "chain_of_command": {
+      "frames": 425,
+      "fps": 25.0,
+      "file": "chain_of_command.npz",
+      "label": "Chain Of Command",
+      "video": null
+    },
+    "chain_of_markets": {
+      "frames": 1101,
+      "fps": 25.0,
+      "file": "chain_of_markets.npz",
+      "label": "Chain Of Markets",
+      "video": null
+    },
+    "chariot": {
+      "frames": 1237,
+      "fps": 25.0,
+      "file": "chariot.npz",
+      "label": "Chariot (Academic)",
+      "video": null
+    },
+    "chemical_properties": {
+      "frames": 646,
+      "fps": 24.0,
+      "file": "chemical_properties.npz",
+      "label": "Chemical Properties",
+      "video": null
+    },
+    "chicago_school_of_economics": {
+      "frames": 1267,
+      "fps": 24.000019073486328,
+      "file": "chicago_school_of_economics.npz",
+      "label": "Chicago School Of Economics",
+      "video": null
+    },
+    "chick_chicken": {
+      "frames": 113,
+      "fps": 24.0,
+      "file": "chick_chicken.npz",
+      "label": "Chick Chicken",
+      "video": null
+    },
+    "children_s_nurses": {
+      "frames": 240,
+      "fps": 25.0,
+      "file": "children_s_nurses.npz",
+      "label": "Children S Nurses",
+      "video": null
+    },
+    "chilling_of_milk": {
+      "frames": 437,
+      "fps": 24.0,
+      "file": "chilling_of_milk.npz",
+      "label": "Chilling Of Milk",
+      "video": null
+    },
+    "chiropodists": {
+      "frames": 179,
+      "fps": 25.0,
+      "file": "chiropodists.npz",
+      "label": "Chiropodists",
+      "video": null
+    },
+    "chisel": {
+      "frames": 1239,
+      "fps": 25.0,
+      "file": "chisel.npz",
+      "label": "Chisel",
+      "video": null
+    },
+    "cholesteral": {
+      "frames": 420,
+      "fps": 25.0,
+      "file": "cholesteral.npz",
+      "label": "Cholesteral",
+      "video": null
+    },
+    "ciliary_muscles": {
+      "frames": 216,
+      "fps": 24.0,
+      "file": "ciliary_muscles.npz",
+      "label": "Ciliary Muscles",
+      "video": null
+    },
+    "circumference": {
+      "frames": 921,
+      "fps": 25.0,
+      "file": "circumference.npz",
+      "label": "Circumference (Math)",
+      "video": null
+    },
+    "citizen": {
+      "frames": 1337,
+      "fps": 25.0,
+      "file": "citizen.npz",
+      "label": "Citizen (Academic)",
+      "video": null
+    },
+    "civics": {
+      "frames": 477,
+      "fps": 25.0,
+      "file": "civics.npz",
+      "label": "Civics",
+      "video": null
+    },
+    "civil_law": {
+      "frames": 1172,
+      "fps": 25.0,
+      "file": "civil_law.npz",
+      "label": "Civil Law (Academic)",
+      "video": null
+    },
+    "classification_of_crops": {
+      "frames": 1006,
+      "fps": 24.000024795532227,
+      "file": "classification_of_crops.npz",
+      "label": "Classification Of Crops",
+      "video": null
+    },
+    "climate_map": {
+      "frames": 473,
+      "fps": 25.0,
+      "file": "climate_map.npz",
+      "label": "Climate Map",
+      "video": null
+    },
+    "clinical_and_counselling_psychology": {
+      "frames": 1141,
+      "fps": 25.0,
+      "file": "clinical_and_counselling_psychology.npz",
+      "label": "Clinical And Counselling Psychology",
+      "video": null
+    },
+    "closed_question": {
+      "frames": 1109,
+      "fps": 24.00002098083496,
+      "file": "closed_question.npz",
+      "label": "Closed Question",
+      "video": null
+    },
+    "cluster_resource_centre": {
+      "frames": 616,
+      "fps": 24.0,
+      "file": "cluster_resource_centre.npz",
+      "label": "Cluster Resource Centre (Crc)",
+      "video": null
+    },
+    "codes": {
+      "frames": 698,
+      "fps": 24.0,
+      "file": "codes.npz",
+      "label": "Codes",
+      "video": null
+    },
+    "cognitive_development": {
+      "frames": 867,
+      "fps": 25.0,
+      "file": "cognitive_development.npz",
+      "label": "Cognitive Development",
+      "video": null
+    },
+    "cohabit": {
+      "frames": 606,
+      "fps": 25.0,
+      "file": "cohabit.npz",
+      "label": "Cohabit",
+      "video": null
+    },
+    "coir": {
+      "frames": 300,
+      "fps": 24.0,
+      "file": "coir.npz",
+      "label": "Coir",
+      "video": null
+    },
+    "colloidal_solution": {
+      "frames": 696,
+      "fps": 25.0,
+      "file": "colloidal_solution.npz",
+      "label": "Colloidal Solution",
+      "video": null
+    },
+    "color_blindness": {
+      "frames": 912,
+      "fps": 25.0,
+      "file": "color_blindness.npz",
+      "label": "Color Blindness",
+      "video": null
+    },
+    "colt_foal_filly": {
+      "frames": 89,
+      "fps": 24.0,
+      "file": "colt_foal_filly.npz",
+      "label": "Colt Foal Filly",
+      "video": null
+    },
+    "come_of_age": {
+      "frames": 1169,
+      "fps": 24.00002098083496,
+      "file": "come_of_age.npz",
+      "label": "Come Of Age",
+      "video": null
+    },
+    "common_multiple": {
+      "frames": 1513,
+      "fps": 25.0,
+      "file": "common_multiple.npz",
+      "label": "Common Multiple (Maths)",
+      "video": null
+    },
+    "communism": {
+      "frames": 796,
+      "fps": 25.0,
+      "file": "communism.npz",
+      "label": "Communism",
+      "video": null
+    },
+    "communist_party_of_india": {
+      "frames": 81,
+      "fps": 24.0,
+      "file": "communist_party_of_india.npz",
+      "label": "Communist Party Of India (Cpi)",
+      "video": null
+    },
+    "composite_number": {
+      "frames": 1755,
+      "fps": 25.0,
+      "file": "composite_number.npz",
+      "label": "Composite Number (Maths)",
+      "video": null
+    },
+    "computer_search_of_the_literature": {
+      "frames": 317,
+      "fps": 24.0,
+      "file": "computer_search_of_the_literature.npz",
+      "label": "Computer Search Of The Literature",
+      "video": null
+    },
+    "condensation_or_distillation": {
+      "frames": 1168,
+      "fps": 25.0,
+      "file": "condensation_or_distillation.npz",
+      "label": "Condensation Or Distillation (Separation Technique)",
+      "video": null
+    },
+    "conditional_formatting": {
+      "frames": 1754,
+      "fps": 25.0,
+      "file": "conditional_formatting.npz",
+      "label": "Conditional Formatting",
+      "video": null
+    },
+    "confidentiality": {
+      "frames": 144,
+      "fps": 24.0,
+      "file": "confidentiality.npz",
+      "label": "Confidentiality (Research)",
+      "video": null
+    },
+    "confluence": {
+      "frames": 513,
+      "fps": 25.0,
+      "file": "confluence.npz",
+      "label": "Confluence",
+      "video": null
+    },
+    "confounding_variable": {
+      "frames": 619,
+      "fps": 24.0,
+      "file": "confounding_variable.npz",
+      "label": "Confounding Variable",
+      "video": null
+    },
+    "congenital_deafness": {
+      "frames": 170,
+      "fps": 24.0,
+      "file": "congenital_deafness.npz",
+      "label": "Congenital Deafness",
+      "video": null
+    },
+    "congenital_disease": {
+      "frames": 647,
+      "fps": 25.0,
+      "file": "congenital_disease.npz",
+      "label": "Congenital Disease",
+      "video": null
+    },
+    "conical_flask": {
+      "frames": 80,
+      "fps": 25.0,
+      "file": "conical_flask.npz",
+      "label": "Conical Flask",
+      "video": null
+    },
+    "coniferous_forest": {
+      "frames": 911,
+      "fps": 25.0,
+      "file": "coniferous_forest.npz",
+      "label": "Coniferous Forest",
+      "video": null
+    },
+    "connect_link_relate": {
+      "frames": 82,
+      "fps": 25.0,
+      "file": "connect_link_relate.npz",
+      "label": "Connect Link Relate",
+      "video": null
+    },
+    "consent_order": {
+      "frames": 584,
+      "fps": 25.0,
+      "file": "consent_order.npz",
+      "label": "Consent Order",
+      "video": null
+    },
+    "conserve_preserve_save": {
+      "frames": 94,
+      "fps": 25.0,
+      "file": "conserve_preserve_save.npz",
+      "label": "Conserve Preserve Save",
+      "video": null
+    },
+    "constitutional_law": {
+      "frames": 721,
+      "fps": 25.0,
+      "file": "constitutional_law.npz",
+      "label": "Constitutional Law",
+      "video": null
+    },
+    "consumer": {
+      "frames": 283,
+      "fps": 25.0,
+      "file": "consumer.npz",
+      "label": "Consumer",
+      "video": null
+    },
+    "consumer_protection_council": {
+      "frames": 468,
+      "fps": 25.0,
+      "file": "consumer_protection_council.npz",
+      "label": "Consumer Protection Council",
+      "video": null
+    },
+    "contact_lens": {
+      "frames": 204,
+      "fps": 25.0,
+      "file": "contact_lens.npz",
+      "label": "Contact Lens",
+      "video": null
+    },
+    "continggency_cropping": {
+      "frames": 1410,
+      "fps": 25.0,
+      "file": "continggency_cropping.npz",
+      "label": "Continggency Cropping",
+      "video": null
+    },
+    "continue_carry_on": {
+      "frames": 101,
+      "fps": 25.0,
+      "file": "continue_carry_on.npz",
+      "label": "Continue Carry On",
+      "video": null
+    },
+    "continuous_professional_development": {
+      "frames": 1001,
+      "fps": 24.000024795532227,
+      "file": "continuous_professional_development.npz",
+      "label": "Continuous Professional Development (Cpd)",
+      "video": null
+    },
+    "contour_ploughing": {
+      "frames": 924,
+      "fps": 25.0,
+      "file": "contour_ploughing.npz",
+      "label": "Contour Ploughing",
+      "video": null
+    },
+    "contractionary_gap": {
+      "frames": 514,
+      "fps": 24.0,
+      "file": "contractionary_gap.npz",
+      "label": "Contractionary Gap",
+      "video": null
+    },
+    "contrast_cut": {
+      "frames": 756,
+      "fps": 24.0,
+      "file": "contrast_cut.npz",
+      "label": "Contrast Cut",
+      "video": null
+    },
+    "control_manage": {
+      "frames": 84,
+      "fps": 25.0,
+      "file": "control_manage.npz",
+      "label": "Control Manage",
+      "video": null
+    },
+    "controlling_interest": {
+      "frames": 761,
+      "fps": 24.0,
+      "file": "controlling_interest.npz",
+      "label": "Controlling Interest",
+      "video": null
+    },
+    "controlling_shareholder_or_majority_shareholder": {
+      "frames": 668,
+      "fps": 24.0,
+      "file": "controlling_shareholder_or_majority_shareholder.npz",
+      "label": "Controlling Shareholder Or Majority Shareholder",
+      "video": null
+    },
+    "convict": {
+      "frames": 818,
+      "fps": 25.0,
+      "file": "convict.npz",
+      "label": "Convict (Academic)",
+      "video": null
+    },
+    "corporate_bond": {
+      "frames": 882,
+      "fps": 30.0,
+      "file": "corporate_bond.npz",
+      "label": "Corporate Bond",
+      "video": null
+    },
+    "count_maths": {
+      "frames": 102,
+      "fps": 25.0,
+      "file": "count_maths.npz",
+      "label": "Count Maths",
+      "video": null
+    },
+    "coupled": {
+      "frames": 132,
+      "fps": 24.0,
+      "file": "coupled.npz",
+      "label": "Coupled",
+      "video": null
+    },
+    "cremation_cremation_ground_or_crematorium": {
+      "frames": 715,
+      "fps": 24.0,
+      "file": "cremation_cremation_ground_or_crematorium.npz",
+      "label": "Cremation Cremation Ground Or Crematorium",
+      "video": null
+    },
+    "cricket_stadium": {
+      "frames": 97,
+      "fps": 25.0,
+      "file": "cricket_stadium.npz",
+      "label": "Cricket Stadium",
+      "video": null
+    },
+    "cripps_mission": {
+      "frames": 867,
+      "fps": 25.0,
+      "file": "cripps_mission.npz",
+      "label": "Cripps Mission",
+      "video": null
+    },
+    "crop_rotation_in_vegetable_production": {
+      "frames": 1475,
+      "fps": 25.0,
+      "file": "crop_rotation_in_vegetable_production.npz",
+      "label": "Crop Rotation In Vegetable Production",
+      "video": null
+    },
+    "cross_grain": {
+      "frames": 612,
+      "fps": 25.0,
+      "file": "cross_grain.npz",
+      "label": "Cross Grain",
+      "video": null
+    },
+    "crossword": {
+      "frames": 570,
+      "fps": 25.0,
+      "file": "crossword.npz",
+      "label": "Crossword",
+      "video": null
+    },
+    "crowd_horde_mass_throng": {
+      "frames": 125,
+      "fps": 25.0,
+      "file": "crowd_horde_mass_throng.npz",
+      "label": "Crowd Horde Mass Throng",
+      "video": null
+    },
+    "cube_and_cube_root": {
+      "frames": 648,
+      "fps": 25.0,
+      "file": "cube_and_cube_root.npz",
+      "label": "Cube And Cube Root",
+      "video": null
+    },
+    "cuisine": {
+      "frames": 538,
+      "fps": 24.0,
+      "file": "cuisine.npz",
+      "label": "Cuisine",
+      "video": null
+    },
+    "cultural_heritage": {
+      "frames": 933,
+      "fps": 24.0,
+      "file": "cultural_heritage.npz",
+      "label": "Cultural Heritage",
+      "video": null
+    },
+    "cuneiform": {
+      "frames": 942,
+      "fps": 25.0,
+      "file": "cuneiform.npz",
+      "label": "Cuneiform",
+      "video": null
+    },
+    "current_price": {
+      "frames": 693,
+      "fps": 30.0,
+      "file": "current_price.npz",
+      "label": "Current Price",
+      "video": null
+    },
+    "cursor": {
+      "frames": 409,
+      "fps": 25.0,
+      "file": "cursor.npz",
+      "label": "Cursor",
+      "video": null
+    },
+    "cut_corners": {
+      "frames": 793,
+      "fps": 25.0,
+      "file": "cut_corners.npz",
+      "label": "Cut Corners",
+      "video": null
+    },
+    "cutting_plier": {
+      "frames": 405,
+      "fps": 25.0,
+      "file": "cutting_plier.npz",
+      "label": "Cutting Plier",
+      "video": null
+    },
+    "cylinder_stand": {
+      "frames": 229,
+      "fps": 25.0,
+      "file": "cylinder_stand.npz",
+      "label": "Cylinder Stand",
+      "video": null
+    },
+    "centrifuge_tube": {
+      "frames": 257,
+      "fps": 25.0,
+      "file": "centrifuge_tube.npz",
+      "label": "Centrifuge Tube (Conical)",
+      "video": null
+    },
+    "chikungunya_virus": {
+      "frames": 492,
+      "fps": 25.0,
+      "file": "chikungunya_virus.npz",
+      "label": "Chikungunya Virus",
+      "video": null
+    },
+    "class_grade_standard": {
+      "frames": 108,
+      "fps": 25.0,
+      "file": "class_grade_standard.npz",
+      "label": "Class Grade Standard",
+      "video": null
+    },
+    "clavicle": {
+      "frames": 204,
+      "fps": 25.0,
+      "file": "clavicle.npz",
+      "label": "Clavicle",
+      "video": null
+    },
+    "clipboard": {
+      "frames": 672,
+      "fps": 25.0,
+      "file": "clipboard.npz",
+      "label": "Clipboard",
+      "video": null
+    },
+    "commode_chair": {
+      "frames": 230,
+      "fps": 25.0,
+      "file": "commode_chair.npz",
+      "label": "Commode Chair",
+      "video": null
+    },
+    "compiler": {
+      "frames": 1080,
+      "fps": 25.0,
+      "file": "compiler.npz",
+      "label": "Compiler",
+      "video": null
+    },
+    "constituency": {
+      "frames": 583,
+      "fps": 25.0,
+      "file": "constituency.npz",
+      "label": "Constituency",
+      "video": null
+    },
+    "couturier": {
+      "frames": 492,
+      "fps": 25.0,
+      "file": "couturier.npz",
+      "label": "Couturier",
+      "video": null
+    },
+    "cradle": {
+      "frames": 131,
+      "fps": 25.0,
+      "file": "cradle.npz",
+      "label": "Cradle",
+      "video": null
+    }
+  }
+}

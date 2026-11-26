@@ -117,3 +117,4 @@ SignAvatars/visualizer/
 scratch/
 *.bak*
 Backend/datasets/CISLR/smplx_cache/
+**/smplx_cache/

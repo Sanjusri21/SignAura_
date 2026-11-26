@@ -29,6 +29,7 @@ import {
   processAndNormalizeMotion,
   blendMotionClips,
 } from '../../utils/motionDecoder';
+import { fetchPlayableWords } from '../../services/signAvatarWords';
 
 export {
   SMPLX_VERTEX_COUNT,
@@ -149,16 +150,40 @@ const AUTHENTIC_MOTION_KEYS = new Set([
 const playableWordKeys = new Set<string>();
 
 export const registerPlayableWords = (words: string[]) => {
-  words.forEach((w) => playableWordKeys.add(w.toLowerCase()));
+  words.forEach((w) => {
+    if (!w) return;
+    const low = w.toLowerCase().trim();
+    playableWordKeys.add(low);
+    playableWordKeys.add(low.replace(/[\s-]+/g, '_'));
+    playableWordKeys.add(low.replace(/\([^)]*\)/g, '').trim().replace(/[\s-]+/g, '_'));
+  });
 };
+
+// Eagerly populate all dictionary words on module load
+try {
+  fetchPlayableWords()
+    .then((res) => {
+      registerPlayableWords(res.words.map((w) => w.word));
+    })
+    .catch(() => {});
+} catch {
+  // SSR or test environment guard
+}
 
 /** True when a gloss resolves to a motion clip in the local inventory or the playable word list. */
 export const hasSignMotion = (gloss: string): boolean => {
-  const upper = (gloss || '').trim().toUpperCase();
+  if (!gloss) return false;
+  const upper = gloss.trim().toUpperCase();
+  const lower = gloss.trim().toLowerCase();
+  const slug = lower.replace(/[\s-]+/g, '_');
+  const clean = lower.replace(/\([^)]*\)/g, '').trim().replace(/[\s-]+/g, '_');
+
   return (
     upper in SIGN_TO_MOTION_MAP ||
-    AUTHENTIC_MOTION_KEYS.has(upper.toLowerCase()) ||
-    playableWordKeys.has(upper.toLowerCase().replace(/[\s-]+/g, '_'))
+    AUTHENTIC_MOTION_KEYS.has(lower) ||
+    playableWordKeys.has(lower) ||
+    playableWordKeys.has(slug) ||
+    (clean.length > 0 && playableWordKeys.has(clean))
   );
 };
 

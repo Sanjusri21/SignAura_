@@ -1,0 +1,1728 @@
+{
+  "dataset": "Group E - New Words",
+  "count": 246,
+  "words": {
+    "e_business": {
+      "frames": 855,
+      "fps": 25.0,
+      "file": "e_business.npz",
+      "label": "E Business",
+      "video": null
+    },
+    "e_courts": {
+      "frames": 633,
+      "fps": 25.0,
+      "file": "e_courts.npz",
+      "label": "E-Courts",
+      "video": null
+    },
+    "e_leave": {
+      "frames": 742,
+      "fps": 24.0,
+      "file": "e_leave.npz",
+      "label": "E Leave",
+      "video": null
+    },
+    "e_office": {
+      "frames": 1002,
+      "fps": 25.0,
+      "file": "e_office.npz",
+      "label": "E-Office",
+      "video": null
+    },
+    "e_tour": {
+      "frames": 767,
+      "fps": 24.0,
+      "file": "e_tour.npz",
+      "label": "E Tour",
+      "video": null
+    },
+    "e_waste": {
+      "frames": 313,
+      "fps": 25.0,
+      "file": "e_waste.npz",
+      "label": "E-Waste",
+      "video": null
+    },
+    "eagerness_willingness_promptness": {
+      "frames": 1001,
+      "fps": 25.0,
+      "file": "eagerness_willingness_promptness.npz",
+      "label": "Eagerness Willingness Promptness",
+      "video": null
+    },
+    "ear_canal": {
+      "frames": 192,
+      "fps": 25.0,
+      "file": "ear_canal.npz",
+      "label": "Ear Canal",
+      "video": null
+    },
+    "ear_witness": {
+      "frames": 463,
+      "fps": 25.0,
+      "file": "ear_witness.npz",
+      "label": "Ear Witness",
+      "video": null
+    },
+    "earbuds_earphones_headphones": {
+      "frames": 91,
+      "fps": 24.0,
+      "file": "earbuds_earphones_headphones.npz",
+      "label": "Earbuds Earphones Headphones",
+      "video": null
+    },
+    "earthen_water_pot_matka": {
+      "frames": 157,
+      "fps": 25.0,
+      "file": "earthen_water_pot_matka.npz",
+      "label": "Earthen Water Pot Matka (Sign 2)",
+      "video": null
+    },
+    "earthquake_load": {
+      "frames": 673,
+      "fps": 24.0,
+      "file": "earthquake_load.npz",
+      "label": "Earthquake Load",
+      "video": null
+    },
+    "ease_out": {
+      "frames": 497,
+      "fps": 24.0,
+      "file": "ease_out.npz",
+      "label": "Ease Out",
+      "video": null
+    },
+    "echocardiogram": {
+      "frames": 684,
+      "fps": 25.0,
+      "file": "echocardiogram.npz",
+      "label": "Echocardiogram",
+      "video": null
+    },
+    "eco_system": {
+      "frames": 922,
+      "fps": 24.0,
+      "file": "eco_system.npz",
+      "label": "Eco System",
+      "video": null
+    },
+    "ecolabel": {
+      "frames": 1272,
+      "fps": 25.0,
+      "file": "ecolabel.npz",
+      "label": "Ecolabel",
+      "video": null
+    },
+    "ecologist": {
+      "frames": 102,
+      "fps": 25.0,
+      "file": "ecologist.npz",
+      "label": "Ecologist",
+      "video": null
+    },
+    "ecology": {
+      "frames": 61,
+      "fps": 25.0,
+      "file": "ecology.npz",
+      "label": "Ecology",
+      "video": null
+    },
+    "econnect": {
+      "frames": 682,
+      "fps": 24.0,
+      "file": "econnect.npz",
+      "label": "Econnect",
+      "video": null
+    },
+    "economic_development": {
+      "frames": 427,
+      "fps": 24.0,
+      "file": "economic_development.npz",
+      "label": "Economic Development",
+      "video": null
+    },
+    "economic_growth": {
+      "frames": 1083,
+      "fps": 24.000022888183594,
+      "file": "economic_growth.npz",
+      "label": "Economic Growth",
+      "video": null
+    },
+    "economic_system": {
+      "frames": 933,
+      "fps": 24.0,
+      "file": "economic_system.npz",
+      "label": "Economic System",
+      "video": null
+    },
+    "economics": {
+      "frames": 90,
+      "fps": 25.0,
+      "file": "economics.npz",
+      "label": "Economics (Sign 2)",
+      "video": null
+    },
+    "ecotoursim": {
+      "frames": 530,
+      "fps": 24.0,
+      "file": "ecotoursim.npz",
+      "label": "Ecotoursim",
+      "video": null
+    },
+    "edema_oedema": {
+      "frames": 732,
+      "fps": 25.0,
+      "file": "edema_oedema.npz",
+      "label": "Edema Oedema",
+      "video": null
+    },
+    "educational_bilingualism": {
+      "frames": 1681,
+      "fps": 25.0,
+      "file": "educational_bilingualism.npz",
+      "label": "Educational Bilingualism",
+      "video": null
+    },
+    "effective_assessment": {
+      "frames": 1293,
+      "fps": 24.000019073486328,
+      "file": "effective_assessment.npz",
+      "label": "Effective Assessment",
+      "video": null
+    },
+    "efile_mis": {
+      "frames": 506,
+      "fps": 24.0,
+      "file": "efile_mis.npz",
+      "label": "Efile Mis (Management Information System)",
+      "video": null
+    },
+    "egestion": {
+      "frames": 1420,
+      "fps": 25.0,
+      "file": "egestion.npz",
+      "label": "Egestion (Academic)",
+      "video": null
+    },
+    "egg_shells": {
+      "frames": 237,
+      "fps": 24.0,
+      "file": "egg_shells.npz",
+      "label": "Egg-Shells",
+      "video": null
+    },
+    "egyptian_civilization": {
+      "frames": 1416,
+      "fps": 25.0,
+      "file": "egyptian_civilization.npz",
+      "label": "Egyptian Civilization",
+      "video": null
+    },
+    "ejectment": {
+      "frames": 630,
+      "fps": 25.0,
+      "file": "ejectment.npz",
+      "label": "Ejectment",
+      "video": null
+    },
+    "elasticity": {
+      "frames": 851,
+      "fps": 25.0,
+      "file": "elasticity.npz",
+      "label": "Elasticity",
+      "video": null
+    },
+    "elbow_conformer": {
+      "frames": 456,
+      "fps": 25.0,
+      "file": "elbow_conformer.npz",
+      "label": "Elbow Conformer",
+      "video": null
+    },
+    "electric_bicycle": {
+      "frames": 392,
+      "fps": 24.0,
+      "file": "electric_bicycle.npz",
+      "label": "Electric Bicycle",
+      "video": null
+    },
+    "electric_circuit": {
+      "frames": 943,
+      "fps": 25.0,
+      "file": "electric_circuit.npz",
+      "label": "Electric Circuit",
+      "video": null
+    },
+    "electric_current": {
+      "frames": 831,
+      "fps": 25.0,
+      "file": "electric_current.npz",
+      "label": "Electric Current",
+      "video": null
+    },
+    "electric_vehicle": {
+      "frames": 622,
+      "fps": 24.0,
+      "file": "electric_vehicle.npz",
+      "label": "Electric Vehicle",
+      "video": null
+    },
+    "electrical_appliances": {
+      "frames": 656,
+      "fps": 25.0,
+      "file": "electrical_appliances.npz",
+      "label": "Electrical Appliances",
+      "video": null
+    },
+    "electricity_outlet": {
+      "frames": 1218,
+      "fps": 25.0,
+      "file": "electricity_outlet.npz",
+      "label": "Electricity Outlet",
+      "video": null
+    },
+    "electrolysis": {
+      "frames": 852,
+      "fps": 25.0,
+      "file": "electrolysis.npz",
+      "label": "Electrolysis",
+      "video": null
+    },
+    "electrolytic_capacitor": {
+      "frames": 682,
+      "fps": 25.0,
+      "file": "electrolytic_capacitor.npz",
+      "label": "Electrolytic Capacitor",
+      "video": null
+    },
+    "electronic_notice_board": {
+      "frames": 854,
+      "fps": 24.0,
+      "file": "electronic_notice_board.npz",
+      "label": "Electronic Notice Board",
+      "video": null
+    },
+    "electroscope": {
+      "frames": 730,
+      "fps": 25.0,
+      "file": "electroscope.npz",
+      "label": "Electroscope",
+      "video": null
+    },
+    "email": {
+      "frames": 97,
+      "fps": 25.0,
+      "file": "email.npz",
+      "label": "Email",
+      "video": null
+    },
+    "emergency_medicine": {
+      "frames": 172,
+      "fps": 25.0,
+      "file": "emergency_medicine.npz",
+      "label": "Emergency Medicine",
+      "video": null
+    },
+    "emotion": {
+      "frames": 72,
+      "fps": 25.0,
+      "file": "emotion.npz",
+      "label": "Emotion",
+      "video": null
+    },
+    "employ": {
+      "frames": 936,
+      "fps": 24.0,
+      "file": "employ.npz",
+      "label": "Employ",
+      "video": null
+    },
+    "empyema": {
+      "frames": 792,
+      "fps": 25.0,
+      "file": "empyema.npz",
+      "label": "Empyema",
+      "video": null
+    },
+    "enamel": {
+      "frames": 408,
+      "fps": 25.0,
+      "file": "enamel.npz",
+      "label": "Enamel",
+      "video": null
+    },
+    "encapsulated_postscript": {
+      "frames": 377,
+      "fps": 24.0,
+      "file": "encapsulated_postscript.npz",
+      "label": "Encapsulated Postscript",
+      "video": null
+    },
+    "encephalitis": {
+      "frames": 972,
+      "fps": 25.0,
+      "file": "encephalitis.npz",
+      "label": "Encephalitis",
+      "video": null
+    },
+    "encounter": {
+      "frames": 835,
+      "fps": 24.0,
+      "file": "encounter.npz",
+      "label": "Encounter",
+      "video": null
+    },
+    "end_finish": {
+      "frames": 131,
+      "fps": 25.0,
+      "file": "end_finish.npz",
+      "label": "End Finish (Video Movie)",
+      "video": null
+    },
+    "endangered_species": {
+      "frames": 540,
+      "fps": 25.0,
+      "file": "endangered_species.npz",
+      "label": "Endangered Species",
+      "video": null
+    },
+    "endocrine_system": {
+      "frames": 2748,
+      "fps": 25.0,
+      "file": "endocrine_system.npz",
+      "label": "Endocrine System",
+      "video": null
+    },
+    "endocrinologist": {
+      "frames": 360,
+      "fps": 25.0,
+      "file": "endocrinologist.npz",
+      "label": "Endocrinologist",
+      "video": null
+    },
+    "endocrinology": {
+      "frames": 456,
+      "fps": 25.0,
+      "file": "endocrinology.npz",
+      "label": "Endocrinology",
+      "video": null
+    },
+    "endogenic_and_exogenic_force": {
+      "frames": 1452,
+      "fps": 25.0,
+      "file": "endogenic_and_exogenic_force.npz",
+      "label": "Endogenic And Exogenic Force",
+      "video": null
+    },
+    "endotracheal_tube": {
+      "frames": 1068,
+      "fps": 25.0,
+      "file": "endotracheal_tube.npz",
+      "label": "Endotracheal Tube",
+      "video": null
+    },
+    "english_bond": {
+      "frames": 519,
+      "fps": 24.0,
+      "file": "english_bond.npz",
+      "label": "English Bond",
+      "video": null
+    },
+    "english_mumbai": {
+      "frames": 89,
+      "fps": 24.0,
+      "file": "english_mumbai.npz",
+      "label": "English Mumbai",
+      "video": null
+    },
+    "enrichment_activity": {
+      "frames": 948,
+      "fps": 24.0,
+      "file": "enrichment_activity.npz",
+      "label": "Enrichment Activity",
+      "video": null
+    },
+    "enrolment": {
+      "frames": 872,
+      "fps": 24.0,
+      "file": "enrolment.npz",
+      "label": "Enrolment",
+      "video": null
+    },
+    "entrapment": {
+      "frames": 653,
+      "fps": 25.0,
+      "file": "entrapment.npz",
+      "label": "Entrapment",
+      "video": null
+    },
+    "entrepreneur_and_entrepreneurship": {
+      "frames": 452,
+      "fps": 25.0,
+      "file": "entrepreneur_and_entrepreneurship.npz",
+      "label": "Entrepreneur And Entrepreneurship",
+      "video": null
+    },
+    "entry": {
+      "frames": 402,
+      "fps": 25.0,
+      "file": "entry.npz",
+      "label": "Entry",
+      "video": null
+    },
+    "enzyme": {
+      "frames": 83,
+      "fps": 25.0,
+      "file": "enzyme.npz",
+      "label": "Enzyme",
+      "video": null
+    },
+    "eoffice_portal": {
+      "frames": 201,
+      "fps": 24.0,
+      "file": "eoffice_portal.npz",
+      "label": "Eoffice Portal",
+      "video": null
+    },
+    "epic": {
+      "frames": 1438,
+      "fps": 25.0,
+      "file": "epic.npz",
+      "label": "Epic (Academic)",
+      "video": null
+    },
+    "equilibrium_level_of_gnp": {
+      "frames": 689,
+      "fps": 24.0,
+      "file": "equilibrium_level_of_gnp.npz",
+      "label": "Equilibrium Level Of Gnp",
+      "video": null
+    },
+    "equinox": {
+      "frames": 1604,
+      "fps": 25.0,
+      "file": "equinox.npz",
+      "label": "Equinox",
+      "video": null
+    },
+    "equipment": {
+      "frames": 120,
+      "fps": 25.0,
+      "file": "equipment.npz",
+      "label": "Equipment",
+      "video": null
+    },
+    "equivalent_fractions": {
+      "frames": 1905,
+      "fps": 25.0,
+      "file": "equivalent_fractions.npz",
+      "label": "Equivalent Fractions (Maths)",
+      "video": null
+    },
+    "erosion": {
+      "frames": 840,
+      "fps": 25.0,
+      "file": "erosion.npz",
+      "label": "Erosion",
+      "video": null
+    },
+    "esophagus": {
+      "frames": 300,
+      "fps": 25.0,
+      "file": "esophagus.npz",
+      "label": "Esophagus",
+      "video": null
+    },
+    "essential_dietary_minerals": {
+      "frames": 123,
+      "fps": 25.0,
+      "file": "essential_dietary_minerals.npz",
+      "label": "Essential Dietary Minerals",
+      "video": null
+    },
+    "estate_tax": {
+      "frames": 495,
+      "fps": 24.0,
+      "file": "estate_tax.npz",
+      "label": "Estate Tax",
+      "video": null
+    },
+    "ethnic_groups": {
+      "frames": 738,
+      "fps": 25.0,
+      "file": "ethnic_groups.npz",
+      "label": "Ethnic Groups",
+      "video": null
+    },
+    "euphorbia_roylleana": {
+      "frames": 425,
+      "fps": 25.0,
+      "file": "euphorbia_roylleana.npz",
+      "label": "Euphorbia Roylleana",
+      "video": null
+    },
+    "european_honey_bee": {
+      "frames": 507,
+      "fps": 24.0,
+      "file": "european_honey_bee.npz",
+      "label": "European Honey Bee",
+      "video": null
+    },
+    "euthanasia": {
+      "frames": 1258,
+      "fps": 25.0,
+      "file": "euthanasia.npz",
+      "label": "Euthanasia (Sign 2)",
+      "video": null
+    },
+    "evacuee": {
+      "frames": 975,
+      "fps": 25.0,
+      "file": "evacuee.npz",
+      "label": "Evacuee",
+      "video": null
+    },
+    "evaluation": {
+      "frames": 512,
+      "fps": 24.0,
+      "file": "evaluation.npz",
+      "label": "Evaluation",
+      "video": null
+    },
+    "evapo_transpiration": {
+      "frames": 689,
+      "fps": 24.0,
+      "file": "evapo_transpiration.npz",
+      "label": "Evapo-Transpiration",
+      "video": null
+    },
+    "evapotranspiration": {
+      "frames": 468,
+      "fps": 25.0,
+      "file": "evapotranspiration.npz",
+      "label": "Evapotranspiration",
+      "video": null
+    },
+    "even_number": {
+      "frames": 1116,
+      "fps": 25.0,
+      "file": "even_number.npz",
+      "label": "Even Number (Maths)",
+      "video": null
+    },
+    "eviction": {
+      "frames": 810,
+      "fps": 25.0,
+      "file": "eviction.npz",
+      "label": "Eviction",
+      "video": null
+    },
+    "evolution": {
+      "frames": 811,
+      "fps": 25.0,
+      "file": "evolution.npz",
+      "label": "Evolution",
+      "video": null
+    },
+    "ex_dividend": {
+      "frames": 732,
+      "fps": 30.0,
+      "file": "ex_dividend.npz",
+      "label": "Ex Dividend",
+      "video": null
+    },
+    "ex_officio": {
+      "frames": 1909,
+      "fps": 24.000024795532227,
+      "file": "ex_officio.npz",
+      "label": "Ex Officio",
+      "video": null
+    },
+    "ex_parte_order": {
+      "frames": 689,
+      "fps": 25.0,
+      "file": "ex_parte_order.npz",
+      "label": "Ex- Parte Order",
+      "video": null
+    },
+    "examinatin_in_chief_cross_examination": {
+      "frames": 924,
+      "fps": 25.0,
+      "file": "examinatin_in_chief_cross_examination.npz",
+      "label": "Examinatin-In-Chief Cross Examination",
+      "video": null
+    },
+    "excrement_faeces_potty": {
+      "frames": 83,
+      "fps": 25.0,
+      "file": "excrement_faeces_potty.npz",
+      "label": "Excrement Faeces Potty",
+      "video": null
+    },
+    "excretion": {
+      "frames": 1323,
+      "fps": 25.0,
+      "file": "excretion.npz",
+      "label": "Excretion (Academic)",
+      "video": null
+    },
+    "executive": {
+      "frames": 1411,
+      "fps": 25.0,
+      "file": "executive.npz",
+      "label": "Executive (Different Class)",
+      "video": null
+    },
+    "exercise_mat": {
+      "frames": 96,
+      "fps": 25.0,
+      "file": "exercise_mat.npz",
+      "label": "Exercise Mat",
+      "video": null
+    },
+    "exhalation": {
+      "frames": 802,
+      "fps": 25.0,
+      "file": "exhalation.npz",
+      "label": "Exhalation (Academic)",
+      "video": null
+    },
+    "exhausted": {
+      "frames": 555,
+      "fps": 25.0,
+      "file": "exhausted.npz",
+      "label": "Exhausted",
+      "video": null
+    },
+    "exhaustive_expenditures": {
+      "frames": 991,
+      "fps": 24.000024795532227,
+      "file": "exhaustive_expenditures.npz",
+      "label": "Exhaustive Expenditures",
+      "video": null
+    },
+    "exit": {
+      "frames": 377,
+      "fps": 25.0,
+      "file": "exit.npz",
+      "label": "Exit",
+      "video": null
+    },
+    "exotic_goat": {
+      "frames": 415,
+      "fps": 24.0,
+      "file": "exotic_goat.npz",
+      "label": "Exotic Goat",
+      "video": null
+    },
+    "expand": {
+      "frames": 749,
+      "fps": 24.0,
+      "file": "expand.npz",
+      "label": "Expand",
+      "video": null
+    },
+    "expense": {
+      "frames": 63,
+      "fps": 24.0,
+      "file": "expense.npz",
+      "label": "Expense",
+      "video": null
+    },
+    "expert_specialist": {
+      "frames": 119,
+      "fps": 25.0,
+      "file": "expert_specialist.npz",
+      "label": "Expert Specialist",
+      "video": null
+    },
+    "expiration_date": {
+      "frames": 489,
+      "fps": 30.0,
+      "file": "expiration_date.npz",
+      "label": "Expiration Date",
+      "video": null
+    },
+    "exploitation": {
+      "frames": 101,
+      "fps": 24.0,
+      "file": "exploitation.npz",
+      "label": "Exploitation",
+      "video": null
+    },
+    "exploration": {
+      "frames": 1022,
+      "fps": 24.000022888183594,
+      "file": "exploration.npz",
+      "label": "Exploration",
+      "video": null
+    },
+    "export_licence": {
+      "frames": 598,
+      "fps": 24.0,
+      "file": "export_licence.npz",
+      "label": "Export Licence",
+      "video": null
+    },
+    "express_convey": {
+      "frames": 92,
+      "fps": 25.0,
+      "file": "express_convey.npz",
+      "label": "Express Convey",
+      "video": null
+    },
+    "exterior_angle": {
+      "frames": 573,
+      "fps": 24.0,
+      "file": "exterior_angle.npz",
+      "label": "Exterior Angle",
+      "video": null
+    },
+    "external_body_parts": {
+      "frames": 326,
+      "fps": 25.0,
+      "file": "external_body_parts.npz",
+      "label": "External Body Parts",
+      "video": null
+    },
+    "eye_bank": {
+      "frames": 456,
+      "fps": 25.0,
+      "file": "eye_bank.npz",
+      "label": "Eye Bank",
+      "video": null
+    },
+    "eye_chart_e_type": {
+      "frames": 227,
+      "fps": 25.0,
+      "file": "eye_chart_e_type.npz",
+      "label": "Eye Chart E-Type",
+      "video": null
+    },
+    "eye_hand_coordination": {
+      "frames": 1203,
+      "fps": 25.0,
+      "file": "eye_hand_coordination.npz",
+      "label": "Eye-Hand Coordination",
+      "video": null
+    },
+    "eyelash": {
+      "frames": 119,
+      "fps": 25.0,
+      "file": "eyelash.npz",
+      "label": "Eyelash",
+      "video": null
+    },
+    "e_apar": {
+      "frames": 768,
+      "fps": 24.0,
+      "file": "e_apar.npz",
+      "label": "E Apar",
+      "video": null
+    },
+    "e_beat_book": {
+      "frames": 1110,
+      "fps": 25.0,
+      "file": "e_beat_book.npz",
+      "label": "E-Beat Book",
+      "video": null
+    },
+    "e_beat_book_system": {
+      "frames": 451,
+      "fps": 25.0,
+      "file": "e_beat_book_system.npz",
+      "label": "E- Beat Book System",
+      "video": null
+    },
+    "e_cycling": {
+      "frames": 684,
+      "fps": 25.0,
+      "file": "e_cycling.npz",
+      "label": "E-Cycling",
+      "video": null
+    },
+    "e_government": {
+      "frames": 741,
+      "fps": 25.0,
+      "file": "e_government.npz",
+      "label": "E Government",
+      "video": null
+    },
+    "e_prisons": {
+      "frames": 657,
+      "fps": 25.0,
+      "file": "e_prisons.npz",
+      "label": "E-Prisons",
+      "video": null
+    },
+    "ear_cokle_disease_of_wheat": {
+      "frames": 771,
+      "fps": 25.0,
+      "file": "ear_cokle_disease_of_wheat.npz",
+      "label": "Ear Cokle Disease Of Wheat",
+      "video": null
+    },
+    "ear_drum": {
+      "frames": 534,
+      "fps": 25.0,
+      "file": "ear_drum.npz",
+      "label": "Ear Drum",
+      "video": null
+    },
+    "ear_plug": {
+      "frames": 312,
+      "fps": 25.0,
+      "file": "ear_plug.npz",
+      "label": "Ear Plug",
+      "video": null
+    },
+    "earache": {
+      "frames": 396,
+      "fps": 25.0,
+      "file": "earache.npz",
+      "label": "Earache",
+      "video": null
+    },
+    "eardrops": {
+      "frames": 204,
+      "fps": 25.0,
+      "file": "eardrops.npz",
+      "label": "Eardrops",
+      "video": null
+    },
+    "eardrum": {
+      "frames": 676,
+      "fps": 25.0,
+      "file": "eardrum.npz",
+      "label": "Eardrum",
+      "video": null
+    },
+    "earlobe": {
+      "frames": 396,
+      "fps": 25.0,
+      "file": "earlobe.npz",
+      "label": "Earlobe",
+      "video": null
+    },
+    "early_childhood_care_and_education": {
+      "frames": 1474,
+      "fps": 24.000017166137695,
+      "file": "early_childhood_care_and_education.npz",
+      "label": "Early Childhood Care And Education (Ecce)",
+      "video": null
+    },
+    "early_intervention": {
+      "frames": 1116,
+      "fps": 25.0,
+      "file": "early_intervention.npz",
+      "label": "Early Intervention",
+      "video": null
+    },
+    "earrings": {
+      "frames": 108,
+      "fps": 24.0,
+      "file": "earrings.npz",
+      "label": "Earrings",
+      "video": null
+    },
+    "ease_in": {
+      "frames": 554,
+      "fps": 24.0,
+      "file": "ease_in.npz",
+      "label": "Ease In",
+      "video": null
+    },
+    "easy_does_it": {
+      "frames": 483,
+      "fps": 25.0,
+      "file": "easy_does_it.npz",
+      "label": "Easy Does It",
+      "video": null
+    },
+    "easy_money_policy": {
+      "frames": 910,
+      "fps": 24.0,
+      "file": "easy_money_policy.npz",
+      "label": "Easy Money Policy",
+      "video": null
+    },
+    "ecg_monitor": {
+      "frames": 167,
+      "fps": 25.0,
+      "file": "ecg_monitor.npz",
+      "label": "Ecg Monitor",
+      "video": null
+    },
+    "eco": {
+      "frames": 444,
+      "fps": 25.0,
+      "file": "eco.npz",
+      "label": "Eco",
+      "video": null
+    },
+    "ecohouse": {
+      "frames": 1476,
+      "fps": 25.0,
+      "file": "ecohouse.npz",
+      "label": "Ecohouse",
+      "video": null
+    },
+    "economic_goods": {
+      "frames": 380,
+      "fps": 24.0,
+      "file": "economic_goods.npz",
+      "label": "Economic Goods",
+      "video": null
+    },
+    "economical_map": {
+      "frames": 660,
+      "fps": 25.0,
+      "file": "economical_map.npz",
+      "label": "Economical Map",
+      "video": null
+    },
+    "economies_of_sacle": {
+      "frames": 1083,
+      "fps": 24.000022888183594,
+      "file": "economies_of_sacle.npz",
+      "label": "Economies Of Sacle",
+      "video": null
+    },
+    "economy": {
+      "frames": 103,
+      "fps": 25.0,
+      "file": "economy.npz",
+      "label": "Economy",
+      "video": null
+    },
+    "ecosystem": {
+      "frames": 720,
+      "fps": 25.0,
+      "file": "ecosystem.npz",
+      "label": "Ecosystem",
+      "video": null
+    },
+    "edging": {
+      "frames": 758,
+      "fps": 25.0,
+      "file": "edging.npz",
+      "label": "Edging",
+      "video": null
+    },
+    "edible_inedible": {
+      "frames": 1581,
+      "fps": 24.000015258789062,
+      "file": "edible_inedible.npz",
+      "label": "Edible Inedible",
+      "video": null
+    },
+    "edit_menu": {
+      "frames": 475,
+      "fps": 25.0,
+      "file": "edit_menu.npz",
+      "label": "Edit Menu",
+      "video": null
+    },
+    "editor": {
+      "frames": 613,
+      "fps": 25.0,
+      "file": "editor.npz",
+      "label": "Editor",
+      "video": null
+    },
+    "efficiency": {
+      "frames": 834,
+      "fps": 24.0,
+      "file": "efficiency.npz",
+      "label": "Efficiency",
+      "video": null
+    },
+    "effluent": {
+      "frames": 553,
+      "fps": 24.0,
+      "file": "effluent.npz",
+      "label": "Effluent",
+      "video": null
+    },
+    "effort": {
+      "frames": 619,
+      "fps": 25.0,
+      "file": "effort.npz",
+      "label": "Effort",
+      "video": null
+    },
+    "electric_cell": {
+      "frames": 1032,
+      "fps": 25.0,
+      "file": "electric_cell.npz",
+      "label": "Electric Cell",
+      "video": null
+    },
+    "electrocution": {
+      "frames": 388,
+      "fps": 25.0,
+      "file": "electrocution.npz",
+      "label": "Electrocution",
+      "video": null
+    },
+    "electrode_holder": {
+      "frames": 216,
+      "fps": 25.0,
+      "file": "electrode_holder.npz",
+      "label": "Electrode Holder",
+      "video": null
+    },
+    "electroencephalography": {
+      "frames": 1008,
+      "fps": 25.0,
+      "file": "electroencephalography.npz",
+      "label": "Electroencephalography",
+      "video": null
+    },
+    "electronic_signature": {
+      "frames": 472,
+      "fps": 25.0,
+      "file": "electronic_signature.npz",
+      "label": "Electronic Signature",
+      "video": null
+    },
+    "electroplating": {
+      "frames": 690,
+      "fps": 25.0,
+      "file": "electroplating.npz",
+      "label": "Electroplating",
+      "video": null
+    },
+    "elephantiasis": {
+      "frames": 852,
+      "fps": 25.0,
+      "file": "elephantiasis.npz",
+      "label": "Elephantiasis",
+      "video": null
+    },
+    "eligible": {
+      "frames": 1277,
+      "fps": 25.0,
+      "file": "eligible.npz",
+      "label": "Eligible",
+      "video": null
+    },
+    "email_notification": {
+      "frames": 326,
+      "fps": 25.0,
+      "file": "email_notification.npz",
+      "label": "Email Notification",
+      "video": null
+    },
+    "embargoes": {
+      "frames": 1056,
+      "fps": 30.0,
+      "file": "embargoes.npz",
+      "label": "Embargoes",
+      "video": null
+    },
+    "embezzlement": {
+      "frames": 996,
+      "fps": 25.0,
+      "file": "embezzlement.npz",
+      "label": "Embezzlement",
+      "video": null
+    },
+    "embryo": {
+      "frames": 432,
+      "fps": 25.0,
+      "file": "embryo.npz",
+      "label": "Embryo",
+      "video": null
+    },
+    "emd_template": {
+      "frames": 563,
+      "fps": 24.0,
+      "file": "emd_template.npz",
+      "label": "Emd Template",
+      "video": null
+    },
+    "emigrants_immigrants": {
+      "frames": 996,
+      "fps": 25.0,
+      "file": "emigrants_immigrants.npz",
+      "label": "Emigrants Immigrants",
+      "video": null
+    },
+    "eminent_expert_committee": {
+      "frames": 720,
+      "fps": 24.0,
+      "file": "eminent_expert_committee.npz",
+      "label": "Eminent Expert Committee (Eec)",
+      "video": null
+    },
+    "empire": {
+      "frames": 1820,
+      "fps": 25.0,
+      "file": "empire.npz",
+      "label": "Empire (Academic)",
+      "video": null
+    },
+    "employee_worker": {
+      "frames": 99,
+      "fps": 25.0,
+      "file": "employee_worker.npz",
+      "label": "Employee Worker",
+      "video": null
+    },
+    "encryption": {
+      "frames": 744,
+      "fps": 25.0,
+      "file": "encryption.npz",
+      "label": "Encryption",
+      "video": null
+    },
+    "endogamy_and_exogamy": {
+      "frames": 528,
+      "fps": 25.0,
+      "file": "endogamy_and_exogamy.npz",
+      "label": "Endogamy And Exogamy",
+      "video": null
+    },
+    "endowment": {
+      "frames": 687,
+      "fps": 25.0,
+      "file": "endowment.npz",
+      "label": "Endowment",
+      "video": null
+    },
+    "endure_tolerate": {
+      "frames": 467,
+      "fps": 25.0,
+      "file": "endure_tolerate.npz",
+      "label": "Endure Tolerate (Meaning)",
+      "video": null
+    },
+    "energy_management": {
+      "frames": 609,
+      "fps": 24.0,
+      "file": "energy_management.npz",
+      "label": "Energy Management",
+      "video": null
+    },
+    "energy_meter": {
+      "frames": 210,
+      "fps": 25.0,
+      "file": "energy_meter.npz",
+      "label": "Energy Meter",
+      "video": null
+    },
+    "enrolment_activity": {
+      "frames": 873,
+      "fps": 24.0,
+      "file": "enrolment_activity.npz",
+      "label": "Enrolment Activity",
+      "video": null
+    },
+    "ent": {
+      "frames": 183,
+      "fps": 25.0,
+      "file": "ent.npz",
+      "label": "Ent (Ears Nose And Throat)",
+      "video": null
+    },
+    "entepot_trade": {
+      "frames": 703,
+      "fps": 24.0,
+      "file": "entepot_trade.npz",
+      "label": "Entepot Trade",
+      "video": null
+    },
+    "entitlement": {
+      "frames": 1091,
+      "fps": 25.0,
+      "file": "entitlement.npz",
+      "label": "Entitlement",
+      "video": null
+    },
+    "environmental_proctection_policies": {
+      "frames": 1011,
+      "fps": 24.000022888183594,
+      "file": "environmental_proctection_policies.npz",
+      "label": "Environmental Proctection Policies",
+      "video": null
+    },
+    "enzymes": {
+      "frames": 664,
+      "fps": 25.0,
+      "file": "enzymes.npz",
+      "label": "Enzymes",
+      "video": null
+    },
+    "epidemic": {
+      "frames": 516,
+      "fps": 25.0,
+      "file": "epidemic.npz",
+      "label": "Epidemic",
+      "video": null
+    },
+    "epidermal_hair": {
+      "frames": 101,
+      "fps": 25.0,
+      "file": "epidermal_hair.npz",
+      "label": "Epidermal Hair",
+      "video": null
+    },
+    "epileptology": {
+      "frames": 504,
+      "fps": 25.0,
+      "file": "epileptology.npz",
+      "label": "Epileptology",
+      "video": null
+    },
+    "equality": {
+      "frames": 493,
+      "fps": 25.0,
+      "file": "equality.npz",
+      "label": "Equality",
+      "video": null
+    },
+    "equilateral_triangle": {
+      "frames": 929,
+      "fps": 25.0,
+      "file": "equilateral_triangle.npz",
+      "label": "Equilateral Triangle (Math)",
+      "video": null
+    },
+    "equities": {
+      "frames": 1556,
+      "fps": 30.0,
+      "file": "equities.npz",
+      "label": "Equities",
+      "video": null
+    },
+    "equivalent_fraction": {
+      "frames": 798,
+      "fps": 24.0,
+      "file": "equivalent_fraction.npz",
+      "label": "Equivalent Fraction",
+      "video": null
+    },
+    "eradication_of_weeds": {
+      "frames": 754,
+      "fps": 25.0,
+      "file": "eradication_of_weeds.npz",
+      "label": "Eradication Of Weeds",
+      "video": null
+    },
+    "eraser_rubber": {
+      "frames": 108,
+      "fps": 25.0,
+      "file": "eraser_rubber.npz",
+      "label": "Eraser Rubber",
+      "video": null
+    },
+    "erect_weeds": {
+      "frames": 363,
+      "fps": 24.0,
+      "file": "erect_weeds.npz",
+      "label": "Erect Weeds",
+      "video": null
+    },
+    "erythrocyte": {
+      "frames": 216,
+      "fps": 25.0,
+      "file": "erythrocyte.npz",
+      "label": "Erythrocyte (Red Blood Cell)",
+      "video": null
+    },
+    "escalator": {
+      "frames": 183,
+      "fps": 25.0,
+      "file": "escalator.npz",
+      "label": "Escalator",
+      "video": null
+    },
+    "eskimos_or_inuit": {
+      "frames": 246,
+      "fps": 25.0,
+      "file": "eskimos_or_inuit.npz",
+      "label": "Eskimos Or Inuit",
+      "video": null
+    },
+    "estimated_delivery_date_or_due_date": {
+      "frames": 624,
+      "fps": 25.0,
+      "file": "estimated_delivery_date_or_due_date.npz",
+      "label": "Estimated Delivery Date Or Due Date",
+      "video": null
+    },
+    "estoppel": {
+      "frames": 736,
+      "fps": 25.0,
+      "file": "estoppel.npz",
+      "label": "Estoppel",
+      "video": null
+    },
+    "estuary": {
+      "frames": 432,
+      "fps": 25.0,
+      "file": "estuary.npz",
+      "label": "Estuary",
+      "video": null
+    },
+    "euro": {
+      "frames": 97,
+      "fps": 25.0,
+      "file": "euro.npz",
+      "label": "Euro",
+      "video": null
+    },
+    "european_option": {
+      "frames": 700,
+      "fps": 30.0,
+      "file": "european_option.npz",
+      "label": "European Option",
+      "video": null
+    },
+    "evaporate": {
+      "frames": 81,
+      "fps": 25.0,
+      "file": "evaporate.npz",
+      "label": "Evaporate",
+      "video": null
+    },
+    "evaporation": {
+      "frames": 930,
+      "fps": 25.0,
+      "file": "evaporation.npz",
+      "label": "Evaporation",
+      "video": null
+    },
+    "event": {
+      "frames": 102,
+      "fps": 25.0,
+      "file": "event.npz",
+      "label": "Event",
+      "video": null
+    },
+    "evidence_and_eyewitness": {
+      "frames": 849,
+      "fps": 25.0,
+      "file": "evidence_and_eyewitness.npz",
+      "label": "Evidence And Eyewitness",
+      "video": null
+    },
+    "ex_ante_distribution": {
+      "frames": 507,
+      "fps": 24.0,
+      "file": "ex_ante_distribution.npz",
+      "label": "Ex Ante Distribution",
+      "video": null
+    },
+    "ex_bonus": {
+      "frames": 828,
+      "fps": 30.0,
+      "file": "ex_bonus.npz",
+      "label": "Ex Bonus",
+      "video": null
+    },
+    "exchange_rate": {
+      "frames": 755,
+      "fps": 25.0,
+      "file": "exchange_rate.npz",
+      "label": "Exchange Rate",
+      "video": null
+    },
+    "exchange_swap_transaction": {
+      "frames": 72,
+      "fps": 25.0,
+      "file": "exchange_swap_transaction.npz",
+      "label": "Exchange Swap Transaction",
+      "video": null
+    },
+    "exchange_traded": {
+      "frames": 754,
+      "fps": 30.0,
+      "file": "exchange_traded.npz",
+      "label": "Exchange Traded",
+      "video": null
+    },
+    "excise_tax": {
+      "frames": 426,
+      "fps": 24.0,
+      "file": "excise_tax.npz",
+      "label": "Excise Tax",
+      "video": null
+    },
+    "exclamation_mark": {
+      "frames": 97,
+      "fps": 24.0,
+      "file": "exclamation_mark.npz",
+      "label": "Exclamation Mark",
+      "video": null
+    },
+    "excursioinist": {
+      "frames": 288,
+      "fps": 24.0,
+      "file": "excursioinist.npz",
+      "label": "Excursioinist",
+      "video": null
+    },
+    "exercise_of_option": {
+      "frames": 862,
+      "fps": 30.0,
+      "file": "exercise_of_option.npz",
+      "label": "Exercise Of Option",
+      "video": null
+    },
+    "exhibit": {
+      "frames": 828,
+      "fps": 25.0,
+      "file": "exhibit.npz",
+      "label": "Exhibit",
+      "video": null
+    },
+    "exotic_breeds_of_poultry": {
+      "frames": 657,
+      "fps": 24.0,
+      "file": "exotic_breeds_of_poultry.npz",
+      "label": "Exotic Breeds Of Poultry",
+      "video": null
+    },
+    "exotic_weeds": {
+      "frames": 811,
+      "fps": 24.0,
+      "file": "exotic_weeds.npz",
+      "label": "Exotic Weeds",
+      "video": null
+    },
+    "expansion_and_contraction": {
+      "frames": 1378,
+      "fps": 25.0,
+      "file": "expansion_and_contraction.npz",
+      "label": "Expansion And Contraction",
+      "video": null
+    },
+    "exploit": {
+      "frames": 986,
+      "fps": 24.000024795532227,
+      "file": "exploit.npz",
+      "label": "Exploit",
+      "video": null
+    },
+    "exponent_and_base": {
+      "frames": 858,
+      "fps": 25.0,
+      "file": "exponent_and_base.npz",
+      "label": "Exponent And Base",
+      "video": null
+    },
+    "extension": {
+      "frames": 1534,
+      "fps": 24.000015258789062,
+      "file": "extension.npz",
+      "label": "Extension",
+      "video": null
+    },
+    "extension_of_leave": {
+      "frames": 784,
+      "fps": 24.0,
+      "file": "extension_of_leave.npz",
+      "label": "Extension Of Leave",
+      "video": null
+    },
+    "exterior_of_curve": {
+      "frames": 1313,
+      "fps": 25.0,
+      "file": "exterior_of_curve.npz",
+      "label": "Exterior Of Curve (Math)",
+      "video": null
+    },
+    "external_appearance": {
+      "frames": 633,
+      "fps": 24.0,
+      "file": "external_appearance.npz",
+      "label": "External Appearance",
+      "video": null
+    },
+    "external_body_parts_sign": {
+      "frames": 74,
+      "fps": 25.0,
+      "file": "external_body_parts_sign.npz",
+      "label": "External Body Parts Sign",
+      "video": null
+    },
+    "external_costs": {
+      "frames": 633,
+      "fps": 24.0,
+      "file": "external_costs.npz",
+      "label": "External Costs",
+      "video": null
+    },
+    "externality": {
+      "frames": 692,
+      "fps": 24.0,
+      "file": "externality.npz",
+      "label": "Externality",
+      "video": null
+    },
+    "extinction": {
+      "frames": 660,
+      "fps": 25.0,
+      "file": "extinction.npz",
+      "label": "Extinction",
+      "video": null
+    },
+    "extinction_event": {
+      "frames": 810,
+      "fps": 24.0,
+      "file": "extinction_event.npz",
+      "label": "Extinction Event",
+      "video": null
+    },
+    "extrinsic_tourists": {
+      "frames": 599,
+      "fps": 24.0,
+      "file": "extrinsic_tourists.npz",
+      "label": "Extrinsic Tourists",
+      "video": null
+    },
+    "eye_donors": {
+      "frames": 316,
+      "fps": 24.0,
+      "file": "eye_donors.npz",
+      "label": "Eye Donors",
+      "video": null
+    },
+    "eye_lens": {
+      "frames": 264,
+      "fps": 24.0,
+      "file": "eye_lens.npz",
+      "label": "Eye Lens",
+      "video": null
+    },
+    "eyedrops": {
+      "frames": 168,
+      "fps": 25.0,
+      "file": "eyedrops.npz",
+      "label": "Eyedrops",
+      "video": null
+    },
+    "educational_psychology": {
+      "frames": 1841,
+      "fps": 25.0,
+      "file": "educational_psychology.npz",
+      "label": "Educational Psychology",
+      "video": null
+    },
+    "election_under_the_will": {
+      "frames": 974,
+      "fps": 25.0,
+      "file": "election_under_the_will.npz",
+      "label": "Election Under The Will",
+      "video": null
+    },
+    "electrical_conductors": {
+      "frames": 801,
+      "fps": 25.0,
+      "file": "electrical_conductors.npz",
+      "label": "Electrical Conductors",
+      "video": null
+    },
+    "electrical_horsepower": {
+      "frames": 1631,
+      "fps": 25.0,
+      "file": "electrical_horsepower.npz",
+      "label": "Electrical Horsepower",
+      "video": null
+    },
+    "electrical_load": {
+      "frames": 1102,
+      "fps": 25.0,
+      "file": "electrical_load.npz",
+      "label": "Electrical Load",
+      "video": null
+    },
+    "emigrant_and_immigrant": {
+      "frames": 527,
+      "fps": 25.0,
+      "file": "emigrant_and_immigrant.npz",
+      "label": "Emigrant And Immigrant",
+      "video": null
+    },
+    "endoscope": {
+      "frames": 236,
+      "fps": 25.0,
+      "file": "endoscope.npz",
+      "label": "Endoscope",
+      "video": null
+    },
+    "environmental_psychology": {
+      "frames": 1344,
+      "fps": 25.0,
+      "file": "environmental_psychology.npz",
+      "label": "Environmental Psychology",
+      "video": null
+    },
+    "evaporation_and_condensation": {
+      "frames": 243,
+      "fps": 25.0,
+      "file": "evaporation_and_condensation.npz",
+      "label": "Evaporation And Condensation",
+      "video": null
+    },
+    "evaporation_condensation_and_precipitation": {
+      "frames": 1415,
+      "fps": 25.0,
+      "file": "evaporation_condensation_and_precipitation.npz",
+      "label": "Evaporation Condensation And Precipitation",
+      "video": null
+    },
+    "exception_exemption": {
+      "frames": 2075,
+      "fps": 25.0,
+      "file": "exception_exemption.npz",
+      "label": "Exception Exemption",
+      "video": null
+    },
+    "exerciser_mirror": {
+      "frames": 132,
+      "fps": 25.0,
+      "file": "exerciser_mirror.npz",
+      "label": "Exerciser Mirror",
+      "video": null
+    },
+    "expedition": {
+      "frames": 903,
+      "fps": 25.0,
+      "file": "expedition.npz",
+      "label": "Expedition",
+      "video": null
+    },
+    "extortion": {
+      "frames": 579,
+      "fps": 25.0,
+      "file": "extortion.npz",
+      "label": "Extortion",
+      "video": null
+    },
+    "extradition": {
+      "frames": 1572,
+      "fps": 25.0,
+      "file": "extradition.npz",
+      "label": "Extradition",
+      "video": null
+    },
+    "extreme_term_math": {
+      "frames": 1258,
+      "fps": 25.0,
+      "file": "extreme_term_math.npz",
+      "label": "Extreme Term Math",
+      "video": null
+    },
+    "eye_chart": {
+      "frames": 170,
+      "fps": 25.0,
+      "file": "eye_chart.npz",
+      "label": "Eye Chart",
+      "video": null
+    }
+  }
+}

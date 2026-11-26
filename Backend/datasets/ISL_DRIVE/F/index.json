@@ -1,0 +1,1931 @@
+{
+  "dataset": "Group F - New Words",
+  "count": 275,
+  "words": {
+    "facewash": {
+      "frames": 107,
+      "fps": 24.0,
+      "file": "facewash.npz",
+      "label": "Facewash (Liquid Gel)",
+      "video": null
+    },
+    "factory_worker": {
+      "frames": 116,
+      "fps": 25.0,
+      "file": "factory_worker.npz",
+      "label": "Factory Worker",
+      "video": null
+    },
+    "facultative_perasiste": {
+      "frames": 898,
+      "fps": 25.0,
+      "file": "facultative_perasiste.npz",
+      "label": "Facultative Perasiste",
+      "video": null
+    },
+    "faint_pass_out_lose_consciousness": {
+      "frames": 106,
+      "fps": 24.0,
+      "file": "faint_pass_out_lose_consciousness.npz",
+      "label": "Faint Pass Out Lose Consciousness",
+      "video": null
+    },
+    "fair": {
+      "frames": 104,
+      "fps": 25.0,
+      "file": "fair.npz",
+      "label": "Fair",
+      "video": null
+    },
+    "family_planning": {
+      "frames": 2532,
+      "fps": 25.0,
+      "file": "family_planning.npz",
+      "label": "Family Planning",
+      "video": null
+    },
+    "fangs": {
+      "frames": 1132,
+      "fps": 24.00002098083496,
+      "file": "fangs.npz",
+      "label": "Fangs (Poisonous Teeth)",
+      "video": null
+    },
+    "farm_management": {
+      "frames": 1152,
+      "fps": 24.00002098083496,
+      "file": "farm_management.npz",
+      "label": "Farm Management",
+      "video": null
+    },
+    "farm_planning": {
+      "frames": 853,
+      "fps": 24.0,
+      "file": "farm_planning.npz",
+      "label": "Farm Planning",
+      "video": null
+    },
+    "farman": {
+      "frames": 1500,
+      "fps": 25.0,
+      "file": "farman.npz",
+      "label": "Farman",
+      "video": null
+    },
+    "fascism": {
+      "frames": 782,
+      "fps": 25.0,
+      "file": "fascism.npz",
+      "label": "Fascism",
+      "video": null
+    },
+    "fast_food": {
+      "frames": 678,
+      "fps": 25.0,
+      "file": "fast_food.npz",
+      "label": "Fast Food",
+      "video": null
+    },
+    "fatal": {
+      "frames": 1121,
+      "fps": 25.0,
+      "file": "fatal.npz",
+      "label": "Fatal",
+      "video": null
+    },
+    "fats": {
+      "frames": 1319,
+      "fps": 25.0,
+      "file": "fats.npz",
+      "label": "Fats",
+      "video": null
+    },
+    "feeder": {
+      "frames": 402,
+      "fps": 25.0,
+      "file": "feeder.npz",
+      "label": "Feeder",
+      "video": null
+    },
+    "felicitate_felicitation_ceremony": {
+      "frames": 1026,
+      "fps": 24.000022888183594,
+      "file": "felicitate_felicitation_ceremony.npz",
+      "label": "Felicitate Felicitation Ceremony",
+      "video": null
+    },
+    "femur": {
+      "frames": 310,
+      "fps": 25.0,
+      "file": "femur.npz",
+      "label": "Femur",
+      "video": null
+    },
+    "fence": {
+      "frames": 107,
+      "fps": 25.0,
+      "file": "fence.npz",
+      "label": "Fence",
+      "video": null
+    },
+    "fermentation": {
+      "frames": 1569,
+      "fps": 25.0,
+      "file": "fermentation.npz",
+      "label": "Fermentation",
+      "video": null
+    },
+    "ferrocement": {
+      "frames": 703,
+      "fps": 24.0,
+      "file": "ferrocement.npz",
+      "label": "Ferrocement",
+      "video": null
+    },
+    "fertilization": {
+      "frames": 547,
+      "fps": 25.0,
+      "file": "fertilization.npz",
+      "label": "Fertilization",
+      "video": null
+    },
+    "fetoscope": {
+      "frames": 235,
+      "fps": 25.0,
+      "file": "fetoscope.npz",
+      "label": "Fetoscope",
+      "video": null
+    },
+    "fetus": {
+      "frames": 444,
+      "fps": 25.0,
+      "file": "fetus.npz",
+      "label": "Fetus",
+      "video": null
+    },
+    "fiancee": {
+      "frames": 95,
+      "fps": 25.0,
+      "file": "fiancee.npz",
+      "label": "Fiancee (Sign 2)",
+      "video": null
+    },
+    "fibre_glass": {
+      "frames": 933,
+      "fps": 24.0,
+      "file": "fibre_glass.npz",
+      "label": "Fibre Glass",
+      "video": null
+    },
+    "fiction": {
+      "frames": 782,
+      "fps": 25.0,
+      "file": "fiction.npz",
+      "label": "Fiction",
+      "video": null
+    },
+    "field_work_field_visit": {
+      "frames": 1101,
+      "fps": 24.00002098083496,
+      "file": "field_work_field_visit.npz",
+      "label": "Field Work Field Visit",
+      "video": null
+    },
+    "fifty_half_century": {
+      "frames": 85,
+      "fps": 25.0,
+      "file": "fifty_half_century.npz",
+      "label": "Fifty Half-Century (Sign 2)",
+      "video": null
+    },
+    "file_flat": {
+      "frames": 519,
+      "fps": 25.0,
+      "file": "file_flat.npz",
+      "label": "File Flat",
+      "video": null
+    },
+    "filter": {
+      "frames": 1293,
+      "fps": 24.000019073486328,
+      "file": "filter.npz",
+      "label": "Filter",
+      "video": null
+    },
+    "financial_markets": {
+      "frames": 781,
+      "fps": 30.0,
+      "file": "financial_markets.npz",
+      "label": "Financial Markets",
+      "video": null
+    },
+    "fire_brigade": {
+      "frames": 776,
+      "fps": 24.0,
+      "file": "fire_brigade.npz",
+      "label": "Fire Brigade",
+      "video": null
+    },
+    "fire_resistant": {
+      "frames": 526,
+      "fps": 25.0,
+      "file": "fire_resistant.npz",
+      "label": "Fire Resistant",
+      "video": null
+    },
+    "firewall": {
+      "frames": 645,
+      "fps": 25.0,
+      "file": "firewall.npz",
+      "label": "Firewall",
+      "video": null
+    },
+    "first_aid": {
+      "frames": 948,
+      "fps": 25.0,
+      "file": "first_aid.npz",
+      "label": "First Aid",
+      "video": null
+    },
+    "first_half_second_half": {
+      "frames": 611,
+      "fps": 24.0,
+      "file": "first_half_second_half.npz",
+      "label": "First Half Second Half",
+      "video": null
+    },
+    "first_trimester_second_trimester_and_third_trimester": {
+      "frames": 709,
+      "fps": 25.0,
+      "file": "first_trimester_second_trimester_and_third_trimester.npz",
+      "label": "First Trimester Second Trimester And Third Trimester",
+      "video": null
+    },
+    "first_wife": {
+      "frames": 384,
+      "fps": 25.0,
+      "file": "first_wife.npz",
+      "label": "First Wife",
+      "video": null
+    },
+    "fiscal_federalism": {
+      "frames": 402,
+      "fps": 24.0,
+      "file": "fiscal_federalism.npz",
+      "label": "Fiscal Federalism",
+      "video": null
+    },
+    "fish_leather": {
+      "frames": 445,
+      "fps": 24.0,
+      "file": "fish_leather.npz",
+      "label": "Fish Leather",
+      "video": null
+    },
+    "fish_oil": {
+      "frames": 702,
+      "fps": 24.0,
+      "file": "fish_oil.npz",
+      "label": "Fish Oil",
+      "video": null
+    },
+    "fisherman": {
+      "frames": 204,
+      "fps": 25.0,
+      "file": "fisherman.npz",
+      "label": "Fisherman",
+      "video": null
+    },
+    "fishing_for_games_sports": {
+      "frames": 118,
+      "fps": 24.0,
+      "file": "fishing_for_games_sports.npz",
+      "label": "Fishing For Games Sports",
+      "video": null
+    },
+    "fission": {
+      "frames": 228,
+      "fps": 24.0,
+      "file": "fission.npz",
+      "label": "Fission",
+      "video": null
+    },
+    "fixed_joints": {
+      "frames": 637,
+      "fps": 25.0,
+      "file": "fixed_joints.npz",
+      "label": "Fixed Joints",
+      "video": null
+    },
+    "flash": {
+      "frames": 120,
+      "fps": 25.0,
+      "file": "flash.npz",
+      "label": "Flash (Camera)",
+      "video": null
+    },
+    "flask": {
+      "frames": 960,
+      "fps": 25.0,
+      "file": "flask.npz",
+      "label": "Flask (Academic)",
+      "video": null
+    },
+    "flat_wood_bit": {
+      "frames": 684,
+      "fps": 25.0,
+      "file": "flat_wood_bit.npz",
+      "label": "Flat Wood Bit",
+      "video": null
+    },
+    "flavoured_syrup": {
+      "frames": 884,
+      "fps": 25.0,
+      "file": "flavoured_syrup.npz",
+      "label": "Flavoured Syrup",
+      "video": null
+    },
+    "flexible_automation": {
+      "frames": 768,
+      "fps": 25.0,
+      "file": "flexible_automation.npz",
+      "label": "Flexible Automation",
+      "video": null
+    },
+    "flock_of_sheep_herd_of_sheep_mob_of_sheep": {
+      "frames": 161,
+      "fps": 25.0,
+      "file": "flock_of_sheep_herd_of_sheep_mob_of_sheep.npz",
+      "label": "Flock Of Sheep Herd Of Sheep Mob Of Sheep",
+      "video": null
+    },
+    "flour": {
+      "frames": 177,
+      "fps": 25.0,
+      "file": "flour.npz",
+      "label": "Flour",
+      "video": null
+    },
+    "flowers_for_religious_spiritual_importance": {
+      "frames": 457,
+      "fps": 24.0,
+      "file": "flowers_for_religious_spiritual_importance.npz",
+      "label": "Flowers For Religious Spiritual Importance",
+      "video": null
+    },
+    "fluctuate": {
+      "frames": 558,
+      "fps": 24.0,
+      "file": "fluctuate.npz",
+      "label": "Fluctuate",
+      "video": null
+    },
+    "fluid": {
+      "frames": 1283,
+      "fps": 25.0,
+      "file": "fluid.npz",
+      "label": "Fluid",
+      "video": null
+    },
+    "foley_catheter": {
+      "frames": 672,
+      "fps": 25.0,
+      "file": "foley_catheter.npz",
+      "label": "Foley Catheter",
+      "video": null
+    },
+    "food_intolerance": {
+      "frames": 128,
+      "fps": 25.0,
+      "file": "food_intolerance.npz",
+      "label": "Food Intolerance (Sign)",
+      "video": null
+    },
+    "foodpipe": {
+      "frames": 840,
+      "fps": 25.0,
+      "file": "foodpipe.npz",
+      "label": "Foodpipe (Academic)",
+      "video": null
+    },
+    "footnote_endnote": {
+      "frames": 934,
+      "fps": 24.0,
+      "file": "footnote_endnote.npz",
+      "label": "Footnote Endnote",
+      "video": null
+    },
+    "fop": {
+      "frames": 844,
+      "fps": 30.0,
+      "file": "fop.npz",
+      "label": "Fop",
+      "video": null
+    },
+    "for_sight_reading": {
+      "frames": 402,
+      "fps": 24.0,
+      "file": "for_sight_reading.npz",
+      "label": "For Sight Reading",
+      "video": null
+    },
+    "forage": {
+      "frames": 213,
+      "fps": 24.0,
+      "file": "forage.npz",
+      "label": "Forage",
+      "video": null
+    },
+    "forage_disease": {
+      "frames": 546,
+      "fps": 25.0,
+      "file": "forage_disease.npz",
+      "label": "Forage Disease",
+      "video": null
+    },
+    "forced_sale": {
+      "frames": 1429,
+      "fps": 24.000017166137695,
+      "file": "forced_sale.npz",
+      "label": "Forced Sale",
+      "video": null
+    },
+    "forecast": {
+      "frames": 1165,
+      "fps": 25.0,
+      "file": "forecast.npz",
+      "label": "Forecast (Weather)",
+      "video": null
+    },
+    "foreign_tourist": {
+      "frames": 519,
+      "fps": 24.0,
+      "file": "foreign_tourist.npz",
+      "label": "Foreign Tourist",
+      "video": null
+    },
+    "forest_weeds": {
+      "frames": 442,
+      "fps": 25.0,
+      "file": "forest_weeds.npz",
+      "label": "Forest Weeds",
+      "video": null
+    },
+    "forgive_or_pardon": {
+      "frames": 644,
+      "fps": 25.0,
+      "file": "forgive_or_pardon.npz",
+      "label": "Forgive Or Pardon",
+      "video": null
+    },
+    "format": {
+      "frames": 339,
+      "fps": 24.0,
+      "file": "format.npz",
+      "label": "Format (Sign 4)",
+      "video": null
+    },
+    "formation_of_lesions": {
+      "frames": 597,
+      "fps": 25.0,
+      "file": "formation_of_lesions.npz",
+      "label": "Formation Of Lesions",
+      "video": null
+    },
+    "formation_of_pustules": {
+      "frames": 431,
+      "fps": 25.0,
+      "file": "formation_of_pustules.npz",
+      "label": "Formation Of Pustules",
+      "video": null
+    },
+    "formative_assessment": {
+      "frames": 513,
+      "fps": 24.0,
+      "file": "formative_assessment.npz",
+      "label": "Formative Assessment",
+      "video": null
+    },
+    "fortnight": {
+      "frames": 651,
+      "fps": 25.0,
+      "file": "fortnight.npz",
+      "label": "Fortnight",
+      "video": null
+    },
+    "forums": {
+      "frames": 734,
+      "fps": 24.0,
+      "file": "forums.npz",
+      "label": "Forums",
+      "video": null
+    },
+    "fraction": {
+      "frames": 394,
+      "fps": 25.0,
+      "file": "fraction.npz",
+      "label": "Fraction (Explanation)",
+      "video": null
+    },
+    "franchise_franchisor_franchisee": {
+      "frames": 1558,
+      "fps": 24.000015258789062,
+      "file": "franchise_franchisor_franchisee.npz",
+      "label": "Franchise  Franchisor Franchisee",
+      "video": null
+    },
+    "free_hand_drawing": {
+      "frames": 486,
+      "fps": 25.0,
+      "file": "free_hand_drawing.npz",
+      "label": "Free-Hand Drawing",
+      "video": null
+    },
+    "freeze_panes": {
+      "frames": 990,
+      "fps": 24.000024795532227,
+      "file": "freeze_panes.npz",
+      "label": "Freeze Panes",
+      "video": null
+    },
+    "freezing_point": {
+      "frames": 118,
+      "fps": 25.0,
+      "file": "freezing_point.npz",
+      "label": "Freezing Point (Sign)",
+      "video": null
+    },
+    "french_curves": {
+      "frames": 696,
+      "fps": 25.0,
+      "file": "french_curves.npz",
+      "label": "French Curves",
+      "video": null
+    },
+    "french_fries": {
+      "frames": 125,
+      "fps": 24.0,
+      "file": "french_fries.npz",
+      "label": "French Fries",
+      "video": null
+    },
+    "frequency_and_hertz": {
+      "frames": 828,
+      "fps": 25.0,
+      "file": "frequency_and_hertz.npz",
+      "label": "Frequency And Hertz",
+      "video": null
+    },
+    "fresh_water_fisheries": {
+      "frames": 691,
+      "fps": 24.0,
+      "file": "fresh_water_fisheries.npz",
+      "label": "Fresh Water Fisheries",
+      "video": null
+    },
+    "freshwater": {
+      "frames": 1407,
+      "fps": 23.976024627685547,
+      "file": "freshwater.npz",
+      "label": "Freshwater",
+      "video": null
+    },
+    "frost": {
+      "frames": 631,
+      "fps": 25.0,
+      "file": "frost.npz",
+      "label": "Frost",
+      "video": null
+    },
+    "fruit_fork": {
+      "frames": 127,
+      "fps": 24.0,
+      "file": "fruit_fork.npz",
+      "label": "Fruit Fork",
+      "video": null
+    },
+    "fry_frying": {
+      "frames": 302,
+      "fps": 24.0,
+      "file": "fry_frying.npz",
+      "label": "Fry Frying",
+      "video": null
+    },
+    "fully_automation": {
+      "frames": 780,
+      "fps": 24.0,
+      "file": "fully_automation.npz",
+      "label": "Fully Automation",
+      "video": null
+    },
+    "fun_joke": {
+      "frames": 102,
+      "fps": 25.0,
+      "file": "fun_joke.npz",
+      "label": "Fun Joke",
+      "video": null
+    },
+    "function_library": {
+      "frames": 722,
+      "fps": 24.0,
+      "file": "function_library.npz",
+      "label": "Function Library",
+      "video": null
+    },
+    "fundamental_rights_rights": {
+      "frames": 1849,
+      "fps": 25.0,
+      "file": "fundamental_rights_rights.npz",
+      "label": "Fundamental Rights Rights",
+      "video": null
+    },
+    "fungi": {
+      "frames": 908,
+      "fps": 25.0,
+      "file": "fungi.npz",
+      "label": "Fungi",
+      "video": null
+    },
+    "fungus": {
+      "frames": 702,
+      "fps": 24.0,
+      "file": "fungus.npz",
+      "label": "Fungus",
+      "video": null
+    },
+    "fusion": {
+      "frames": 184,
+      "fps": 24.0,
+      "file": "fusion.npz",
+      "label": "Fusion",
+      "video": null
+    },
+    "futures": {
+      "frames": 1121,
+      "fps": 30.0,
+      "file": "futures.npz",
+      "label": "Futures",
+      "video": null
+    },
+    "fabricated_evidence": {
+      "frames": 1140,
+      "fps": 25.0,
+      "file": "fabricated_evidence.npz",
+      "label": "Fabricated Evidence",
+      "video": null
+    },
+    "facial_composite": {
+      "frames": 635,
+      "fps": 25.0,
+      "file": "facial_composite.npz",
+      "label": "Facial Composite",
+      "video": null
+    },
+    "factorize_factorization": {
+      "frames": 1561,
+      "fps": 25.0,
+      "file": "factorize_factorization.npz",
+      "label": "Factorize Factorization (Maths)",
+      "video": null
+    },
+    "factors_of_production": {
+      "frames": 484,
+      "fps": 24.0,
+      "file": "factors_of_production.npz",
+      "label": "Factors Of Production",
+      "video": null
+    },
+    "facultative_saprophyte": {
+      "frames": 1089,
+      "fps": 25.0,
+      "file": "facultative_saprophyte.npz",
+      "label": "Facultative Saprophyte",
+      "video": null
+    },
+    "faggoting": {
+      "frames": 636,
+      "fps": 25.0,
+      "file": "faggoting.npz",
+      "label": "Faggoting",
+      "video": null
+    },
+    "fair_carnival": {
+      "frames": 104,
+      "fps": 25.0,
+      "file": "fair_carnival.npz",
+      "label": "Fair Carnival",
+      "video": null
+    },
+    "far_end_camera_control": {
+      "frames": 1874,
+      "fps": 25.0,
+      "file": "far_end_camera_control.npz",
+      "label": "Far End Camera Control",
+      "video": null
+    },
+    "farewell_address": {
+      "frames": 438,
+      "fps": 25.0,
+      "file": "farewell_address.npz",
+      "label": "Farewell Address",
+      "video": null
+    },
+    "farm_mortgage_loan": {
+      "frames": 921,
+      "fps": 24.0,
+      "file": "farm_mortgage_loan.npz",
+      "label": "Farm Mortgage Loan",
+      "video": null
+    },
+    "farsightedness": {
+      "frames": 504,
+      "fps": 25.0,
+      "file": "farsightedness.npz",
+      "label": "Farsightedness",
+      "video": null
+    },
+    "fashion_style": {
+      "frames": 55,
+      "fps": 25.0,
+      "file": "fashion_style.npz",
+      "label": "Fashion Style",
+      "video": null
+    },
+    "fauna": {
+      "frames": 1275,
+      "fps": 25.0,
+      "file": "fauna.npz",
+      "label": "Fauna",
+      "video": null
+    },
+    "federalism": {
+      "frames": 1121,
+      "fps": 25.0,
+      "file": "federalism.npz",
+      "label": "Federalism",
+      "video": null
+    },
+    "feeler_gauge": {
+      "frames": 780,
+      "fps": 25.0,
+      "file": "feeler_gauge.npz",
+      "label": "Feeler Gauge",
+      "video": null
+    },
+    "feeling": {
+      "frames": 73,
+      "fps": 25.0,
+      "file": "feeling.npz",
+      "label": "Feeling",
+      "video": null
+    },
+    "ferrari": {
+      "frames": 108,
+      "fps": 25.0,
+      "file": "ferrari.npz",
+      "label": "Ferrari",
+      "video": null
+    },
+    "fertilizer": {
+      "frames": 1362,
+      "fps": 25.0,
+      "file": "fertilizer.npz",
+      "label": "Fertilizer (Academic)",
+      "video": null
+    },
+    "feticide": {
+      "frames": 495,
+      "fps": 25.0,
+      "file": "feticide.npz",
+      "label": "Feticide",
+      "video": null
+    },
+    "fiance": {
+      "frames": 77,
+      "fps": 25.0,
+      "file": "fiance.npz",
+      "label": "Fiance (Sign 2)",
+      "video": null
+    },
+    "fibre": {
+      "frames": 1110,
+      "fps": 25.0,
+      "file": "fibre.npz",
+      "label": "Fibre",
+      "video": null
+    },
+    "fibre_reinforced_concrete": {
+      "frames": 680,
+      "fps": 24.0,
+      "file": "fibre_reinforced_concrete.npz",
+      "label": "Fibre Reinforced Concrete",
+      "video": null
+    },
+    "field_capacity": {
+      "frames": 566,
+      "fps": 24.0,
+      "file": "field_capacity.npz",
+      "label": "Field Capacity",
+      "video": null
+    },
+    "fiji": {
+      "frames": 85,
+      "fps": 25.0,
+      "file": "fiji.npz",
+      "label": "Fiji",
+      "video": null
+    },
+    "fill_in_the_blanks": {
+      "frames": 1050,
+      "fps": 24.000022888183594,
+      "file": "fill_in_the_blanks.npz",
+      "label": "Fill In The Blanks",
+      "video": null
+    },
+    "filling": {
+      "frames": 603,
+      "fps": 25.0,
+      "file": "filling.npz",
+      "label": "Filling",
+      "video": null
+    },
+    "film_drier": {
+      "frames": 351,
+      "fps": 25.0,
+      "file": "film_drier.npz",
+      "label": "Film Drier",
+      "video": null
+    },
+    "film_hopper": {
+      "frames": 225,
+      "fps": 25.0,
+      "file": "film_hopper.npz",
+      "label": "Film Hopper",
+      "video": null
+    },
+    "filtration": {
+      "frames": 735,
+      "fps": 25.0,
+      "file": "filtration.npz",
+      "label": "Filtration (Separation Technique)",
+      "video": null
+    },
+    "fink": {
+      "frames": 414,
+      "fps": 24.0,
+      "file": "fink.npz",
+      "label": "Fink",
+      "video": null
+    },
+    "finland": {
+      "frames": 70,
+      "fps": 25.0,
+      "file": "finland.npz",
+      "label": "Finland",
+      "video": null
+    },
+    "firbox": {
+      "frames": 246,
+      "fps": 25.0,
+      "file": "firbox.npz",
+      "label": "Firbox",
+      "video": null
+    },
+    "fire_classification": {
+      "frames": 1083,
+      "fps": 24.000022888183594,
+      "file": "fire_classification.npz",
+      "label": "Fire Classification",
+      "video": null
+    },
+    "fire_proofing": {
+      "frames": 385,
+      "fps": 24.0,
+      "file": "fire_proofing.npz",
+      "label": "Fire Proofing",
+      "video": null
+    },
+    "fire_station": {
+      "frames": 145,
+      "fps": 25.0,
+      "file": "fire_station.npz",
+      "label": "Fire Station",
+      "video": null
+    },
+    "first_party_cookies": {
+      "frames": 733,
+      "fps": 24.0,
+      "file": "first_party_cookies.npz",
+      "label": "First Party Cookies",
+      "video": null
+    },
+    "fiscal_deficit": {
+      "frames": 835,
+      "fps": 25.0,
+      "file": "fiscal_deficit.npz",
+      "label": "Fiscal Deficit",
+      "video": null
+    },
+    "fiscal_policy": {
+      "frames": 388,
+      "fps": 24.0,
+      "file": "fiscal_policy.npz",
+      "label": "Fiscal Policy",
+      "video": null
+    },
+    "fish_farm_implements": {
+      "frames": 471,
+      "fps": 24.0,
+      "file": "fish_farm_implements.npz",
+      "label": "Fish Farm Implements",
+      "video": null
+    },
+    "fish_fin": {
+      "frames": 680,
+      "fps": 24.0,
+      "file": "fish_fin.npz",
+      "label": "Fish Fin",
+      "video": null
+    },
+    "fit": {
+      "frames": 105,
+      "fps": 25.0,
+      "file": "fit.npz",
+      "label": "Fit (Healthy)",
+      "video": null
+    },
+    "fixed_exchange_rate_system": {
+      "frames": 1060,
+      "fps": 24.000022888183594,
+      "file": "fixed_exchange_rate_system.npz",
+      "label": "Fixed Exchange Rate System",
+      "video": null
+    },
+    "flange": {
+      "frames": 493,
+      "fps": 25.0,
+      "file": "flange.npz",
+      "label": "Flange",
+      "video": null
+    },
+    "flash_flood": {
+      "frames": 392,
+      "fps": 25.0,
+      "file": "flash_flood.npz",
+      "label": "Flash Flood",
+      "video": null
+    },
+    "flemish_bond": {
+      "frames": 576,
+      "fps": 24.0,
+      "file": "flemish_bond.npz",
+      "label": "Flemish Bond",
+      "video": null
+    },
+    "floating_exchange_rate_system": {
+      "frames": 968,
+      "fps": 24.000024795532227,
+      "file": "floating_exchange_rate_system.npz",
+      "label": "Floating Exchange Rate System",
+      "video": null
+    },
+    "floating_graphics": {
+      "frames": 707,
+      "fps": 24.0,
+      "file": "floating_graphics.npz",
+      "label": "Floating Graphics",
+      "video": null
+    },
+    "flock_mating": {
+      "frames": 1060,
+      "fps": 24.000022888183594,
+      "file": "flock_mating.npz",
+      "label": "Flock Mating",
+      "video": null
+    },
+    "flock_of_birds": {
+      "frames": 156,
+      "fps": 24.0,
+      "file": "flock_of_birds.npz",
+      "label": "Flock Of Birds",
+      "video": null
+    },
+    "flower_for_bed_purpose": {
+      "frames": 719,
+      "fps": 24.0,
+      "file": "flower_for_bed_purpose.npz",
+      "label": "Flower For Bed Purpose",
+      "video": null
+    },
+    "flower_for_climbing": {
+      "frames": 456,
+      "fps": 24.0,
+      "file": "flower_for_climbing.npz",
+      "label": "Flower For Climbing",
+      "video": null
+    },
+    "flower_for_demarcation_of_areas": {
+      "frames": 673,
+      "fps": 24.0,
+      "file": "flower_for_demarcation_of_areas.npz",
+      "label": "Flower For Demarcation Of Areas",
+      "video": null
+    },
+    "flower_for_economic_importance": {
+      "frames": 496,
+      "fps": 24.0,
+      "file": "flower_for_economic_importance.npz",
+      "label": "Flower For Economic Importance",
+      "video": null
+    },
+    "flyover": {
+      "frames": 224,
+      "fps": 25.0,
+      "file": "flyover.npz",
+      "label": "Flyover (Road)",
+      "video": null
+    },
+    "flyway": {
+      "frames": 436,
+      "fps": 24.0,
+      "file": "flyway.npz",
+      "label": "Flyway",
+      "video": null
+    },
+    "focus": {
+      "frames": 115,
+      "fps": 25.0,
+      "file": "focus.npz",
+      "label": "Focus",
+      "video": null
+    },
+    "focus_and_epicentre": {
+      "frames": 547,
+      "fps": 25.0,
+      "file": "focus_and_epicentre.npz",
+      "label": "Focus And Epicentre",
+      "video": null
+    },
+    "follow_up": {
+      "frames": 772,
+      "fps": 24.0,
+      "file": "follow_up.npz",
+      "label": "Follow Up",
+      "video": null
+    },
+    "foment": {
+      "frames": 461,
+      "fps": 24.0,
+      "file": "foment.npz",
+      "label": "Foment",
+      "video": null
+    },
+    "food_adulterant": {
+      "frames": 528,
+      "fps": 25.0,
+      "file": "food_adulterant.npz",
+      "label": "Food Adulterant",
+      "video": null
+    },
+    "food_borne_disease": {
+      "frames": 540,
+      "fps": 25.0,
+      "file": "food_borne_disease.npz",
+      "label": "Food-Borne Disease",
+      "video": null
+    },
+    "food_chain": {
+      "frames": 720,
+      "fps": 24.0,
+      "file": "food_chain.npz",
+      "label": "Food Chain (Sign 2)",
+      "video": null
+    },
+    "food_security": {
+      "frames": 1500,
+      "fps": 25.0,
+      "file": "food_security.npz",
+      "label": "Food Security",
+      "video": null
+    },
+    "foot_overbridge_fob": {
+      "frames": 415,
+      "fps": 24.0,
+      "file": "foot_overbridge_fob.npz",
+      "label": "Foot Overbridge Fob",
+      "video": null
+    },
+    "foot_path": {
+      "frames": 129,
+      "fps": 25.0,
+      "file": "foot_path.npz",
+      "label": "Foot Path",
+      "video": null
+    },
+    "forceps": {
+      "frames": 540,
+      "fps": 25.0,
+      "file": "forceps.npz",
+      "label": "Forceps",
+      "video": null
+    },
+    "forensic_science_or_criminalistics": {
+      "frames": 1064,
+      "fps": 25.0,
+      "file": "forensic_science_or_criminalistics.npz",
+      "label": "Forensic Science Or Criminalistics",
+      "video": null
+    },
+    "forest_beat_officer": {
+      "frames": 719,
+      "fps": 25.0,
+      "file": "forest_beat_officer.npz",
+      "label": "Forest Beat Officer",
+      "video": null
+    },
+    "forgery_forger": {
+      "frames": 1426,
+      "fps": 25.0,
+      "file": "forgery_forger.npz",
+      "label": "Forgery Forger",
+      "video": null
+    },
+    "forkert_budding": {
+      "frames": 1177,
+      "fps": 25.0,
+      "file": "forkert_budding.npz",
+      "label": "Forkert Budding",
+      "video": null
+    },
+    "format_painter": {
+      "frames": 1025,
+      "fps": 24.000022888183594,
+      "file": "format_painter.npz",
+      "label": "Format Painter",
+      "video": null
+    },
+    "fort": {
+      "frames": 1257,
+      "fps": 25.0,
+      "file": "fort.npz",
+      "label": "Fort (History)",
+      "video": null
+    },
+    "fortify_fortification": {
+      "frames": 1128,
+      "fps": 25.0,
+      "file": "fortify_fortification.npz",
+      "label": "Fortify Fortification",
+      "video": null
+    },
+    "fossil_fuel": {
+      "frames": 1274,
+      "fps": 25.0,
+      "file": "fossil_fuel.npz",
+      "label": "Fossil Fuel",
+      "video": null
+    },
+    "fountain": {
+      "frames": 121,
+      "fps": 25.0,
+      "file": "fountain.npz",
+      "label": "Fountain (Example) (Cross-Jet)",
+      "video": null
+    },
+    "framing_of_issues": {
+      "frames": 1072,
+      "fps": 25.0,
+      "file": "framing_of_issues.npz",
+      "label": "Framing Of Issues",
+      "video": null
+    },
+    "free_on_board_fob": {
+      "frames": 528,
+      "fps": 25.0,
+      "file": "free_on_board_fob.npz",
+      "label": "Free On Board Fob",
+      "video": null
+    },
+    "free_range_system": {
+      "frames": 1060,
+      "fps": 24.000022888183594,
+      "file": "free_range_system.npz",
+      "label": "Free Range System",
+      "video": null
+    },
+    "friction": {
+      "frames": 143,
+      "fps": 24.0,
+      "file": "friction.npz",
+      "label": "Friction",
+      "video": null
+    },
+    "friction_disk": {
+      "frames": 576,
+      "fps": 25.0,
+      "file": "friction_disk.npz",
+      "label": "Friction Disk",
+      "video": null
+    },
+    "frizid_zone_polar_region": {
+      "frames": 1303,
+      "fps": 25.0,
+      "file": "frizid_zone_polar_region.npz",
+      "label": "Frizid Zone Polar Region",
+      "video": null
+    },
+    "front_office": {
+      "frames": 1217,
+      "fps": 30.0,
+      "file": "front_office.npz",
+      "label": "Front Office",
+      "video": null
+    },
+    "frostbite": {
+      "frames": 900,
+      "fps": 25.0,
+      "file": "frostbite.npz",
+      "label": "Frostbite",
+      "video": null
+    },
+    "fruits_crops": {
+      "frames": 761,
+      "fps": 25.0,
+      "file": "fruits_crops.npz",
+      "label": "Fruits Crops",
+      "video": null
+    },
+    "full_stop_full_point_period": {
+      "frames": 107,
+      "fps": 24.0,
+      "file": "full_stop_full_point_period.npz",
+      "label": "Full Stop Full Point  Period",
+      "video": null
+    },
+    "fund_manager": {
+      "frames": 839,
+      "fps": 30.0,
+      "file": "fund_manager.npz",
+      "label": "Fund Manager",
+      "video": null
+    },
+    "fundamental_duties": {
+      "frames": 1691,
+      "fps": 25.0,
+      "file": "fundamental_duties.npz",
+      "label": "Fundamental Duties",
+      "video": null
+    },
+    "fungal_diseases": {
+      "frames": 542,
+      "fps": 24.0,
+      "file": "fungal_diseases.npz",
+      "label": "Fungal Diseases",
+      "video": null
+    },
+    "fables": {
+      "frames": 1166,
+      "fps": 25.0,
+      "file": "fables.npz",
+      "label": "Fables",
+      "video": null
+    },
+    "fabric": {
+      "frames": 468,
+      "fps": 25.0,
+      "file": "fabric.npz",
+      "label": "Fabric",
+      "video": null
+    },
+    "fabricate": {
+      "frames": 757,
+      "fps": 25.0,
+      "file": "fabricate.npz",
+      "label": "Fabricate",
+      "video": null
+    },
+    "facebook": {
+      "frames": 94,
+      "fps": 25.0,
+      "file": "facebook.npz",
+      "label": "Facebook",
+      "video": null
+    },
+    "facsimile": {
+      "frames": 925,
+      "fps": 25.0,
+      "file": "facsimile.npz",
+      "label": "Facsimile",
+      "video": null
+    },
+    "factor": {
+      "frames": 2109,
+      "fps": 25.0,
+      "file": "factor.npz",
+      "label": "Factor (Maths)",
+      "video": null
+    },
+    "factors": {
+      "frames": 113,
+      "fps": 24.0,
+      "file": "factors.npz",
+      "label": "Factors",
+      "video": null
+    },
+    "factum_probanda": {
+      "frames": 703,
+      "fps": 25.0,
+      "file": "factum_probanda.npz",
+      "label": "Factum Probanda",
+      "video": null
+    },
+    "fail_unsuccessful": {
+      "frames": 94,
+      "fps": 25.0,
+      "file": "fail_unsuccessful.npz",
+      "label": "Fail Unsuccessful",
+      "video": null
+    },
+    "false_evidence_or_fabricated_evidence_or_tainted_evidence": {
+      "frames": 644,
+      "fps": 25.0,
+      "file": "false_evidence_or_fabricated_evidence_or_tainted_evidence.npz",
+      "label": "False Evidence Or Fabricated Evidence Or Tainted Evidence",
+      "video": null
+    },
+    "family_pension": {
+      "frames": 940,
+      "fps": 24.0,
+      "file": "family_pension.npz",
+      "label": "Family Pension",
+      "video": null
+    },
+    "family_practitioner": {
+      "frames": 111,
+      "fps": 25.0,
+      "file": "family_practitioner.npz",
+      "label": "Family Practitioner",
+      "video": null
+    },
+    "farads": {
+      "frames": 1009,
+      "fps": 25.0,
+      "file": "farads.npz",
+      "label": "Farads",
+      "video": null
+    },
+    "farm_budgeting": {
+      "frames": 564,
+      "fps": 24.0,
+      "file": "farm_budgeting.npz",
+      "label": "Farm Budgeting",
+      "video": null
+    },
+    "fart_pass_gas": {
+      "frames": 76,
+      "fps": 25.0,
+      "file": "fart_pass_gas.npz",
+      "label": "Fart Pass Gas",
+      "video": null
+    },
+    "fast_unto_death": {
+      "frames": 798,
+      "fps": 24.0,
+      "file": "fast_unto_death.npz",
+      "label": "Fast Unto Death",
+      "video": null
+    },
+    "fawn": {
+      "frames": 110,
+      "fps": 24.0,
+      "file": "fawn.npz",
+      "label": "Fawn",
+      "video": null
+    },
+    "feasibility": {
+      "frames": 875,
+      "fps": 25.0,
+      "file": "feasibility.npz",
+      "label": "Feasibility",
+      "video": null
+    },
+    "fed_rate": {
+      "frames": 1422,
+      "fps": 30.0,
+      "file": "fed_rate.npz",
+      "label": "Fed Rate",
+      "video": null
+    },
+    "fed_up": {
+      "frames": 74,
+      "fps": 25.0,
+      "file": "fed_up.npz",
+      "label": "Fed Up",
+      "video": null
+    },
+    "fennel": {
+      "frames": 107,
+      "fps": 25.0,
+      "file": "fennel.npz",
+      "label": "Fennel",
+      "video": null
+    },
+    "fiber_crops": {
+      "frames": 660,
+      "fps": 25.0,
+      "file": "fiber_crops.npz",
+      "label": "Fiber Crops",
+      "video": null
+    },
+    "fibrous_roots": {
+      "frames": 754,
+      "fps": 25.0,
+      "file": "fibrous_roots.npz",
+      "label": "Fibrous Roots",
+      "video": null
+    },
+    "fibula": {
+      "frames": 335,
+      "fps": 25.0,
+      "file": "fibula.npz",
+      "label": "Fibula",
+      "video": null
+    },
+    "fielder": {
+      "frames": 156,
+      "fps": 25.0,
+      "file": "fielder.npz",
+      "label": "Fielder",
+      "video": null
+    },
+    "file_movement_register": {
+      "frames": 1137,
+      "fps": 24.00002098083496,
+      "file": "file_movement_register.npz",
+      "label": "File Movement Register",
+      "video": null
+    },
+    "film_city": {
+      "frames": 101,
+      "fps": 25.0,
+      "file": "film_city.npz",
+      "label": "Film City",
+      "video": null
+    },
+    "financial_services": {
+      "frames": 546,
+      "fps": 30.0,
+      "file": "financial_services.npz",
+      "label": "Financial Services",
+      "video": null
+    },
+    "fir_fir_number": {
+      "frames": 1404,
+      "fps": 25.0,
+      "file": "fir_fir_number.npz",
+      "label": "Fir Fir Number",
+      "video": null
+    },
+    "fir_ncr": {
+      "frames": 2496,
+      "fps": 25.0,
+      "file": "fir_ncr.npz",
+      "label": "Fir Ncr",
+      "video": null
+    },
+    "fire_brick": {
+      "frames": 876,
+      "fps": 25.0,
+      "file": "fire_brick.npz",
+      "label": "Fire Brick",
+      "video": null
+    },
+    "fire_detection_alarm": {
+      "frames": 437,
+      "fps": 24.0,
+      "file": "fire_detection_alarm.npz",
+      "label": "Fire Detection Alarm",
+      "video": null
+    },
+    "fire_extinguisher": {
+      "frames": 135,
+      "fps": 25.0,
+      "file": "fire_extinguisher.npz",
+      "label": "Fire Extinguisher",
+      "video": null
+    },
+    "firing": {
+      "frames": 365,
+      "fps": 24.0,
+      "file": "firing.npz",
+      "label": "Firing",
+      "video": null
+    },
+    "firm": {
+      "frames": 587,
+      "fps": 24.0,
+      "file": "firm.npz",
+      "label": "Firm",
+      "video": null
+    },
+    "fish_glue_and_ising_lass": {
+      "frames": 806,
+      "fps": 24.0,
+      "file": "fish_glue_and_ising_lass.npz",
+      "label": "Fish Glue And Ising Lass",
+      "video": null
+    },
+    "fish_manure": {
+      "frames": 565,
+      "fps": 24.0,
+      "file": "fish_manure.npz",
+      "label": "Fish Manure",
+      "video": null
+    },
+    "fishing": {
+      "frames": 100,
+      "fps": 24.0,
+      "file": "fishing.npz",
+      "label": "Fishing",
+      "video": null
+    },
+    "fishing_for_decoration_purpose": {
+      "frames": 389,
+      "fps": 24.0,
+      "file": "fishing_for_decoration_purpose.npz",
+      "label": "Fishing For Decoration Purpose",
+      "video": null
+    },
+    "fitness_certificate": {
+      "frames": 910,
+      "fps": 24.0,
+      "file": "fitness_certificate.npz",
+      "label": "Fitness Certificate",
+      "video": null
+    },
+    "fitting_clothes": {
+      "frames": 528,
+      "fps": 25.0,
+      "file": "fitting_clothes.npz",
+      "label": "Fitting Clothes",
+      "video": null
+    },
+    "fixed_automation": {
+      "frames": 696,
+      "fps": 25.0,
+      "file": "fixed_automation.npz",
+      "label": "Fixed Automation",
+      "video": null
+    },
+    "fixed_interest": {
+      "frames": 593,
+      "fps": 30.0,
+      "file": "fixed_interest.npz",
+      "label": "Fixed Interest",
+      "video": null
+    },
+    "flash_cards": {
+      "frames": 1146,
+      "fps": 25.0,
+      "file": "flash_cards.npz",
+      "label": "Flash Cards",
+      "video": null
+    },
+    "flat_tax": {
+      "frames": 357,
+      "fps": 24.0,
+      "file": "flat_tax.npz",
+      "label": "Flat Tax",
+      "video": null
+    },
+    "flaying": {
+      "frames": 473,
+      "fps": 25.0,
+      "file": "flaying.npz",
+      "label": "Flaying",
+      "video": null
+    },
+    "fleece": {
+      "frames": 198,
+      "fps": 24.0,
+      "file": "fleece.npz",
+      "label": "Fleece",
+      "video": null
+    },
+    "flight_attendant": {
+      "frames": 144,
+      "fps": 25.0,
+      "file": "flight_attendant.npz",
+      "label": "Flight Attendant",
+      "video": null
+    },
+    "flipkart": {
+      "frames": 78,
+      "fps": 25.0,
+      "file": "flipkart.npz",
+      "label": "Flipkart",
+      "video": null
+    },
+    "flock_of_goats_herd_of_goats_trip_of_goats": {
+      "frames": 143,
+      "fps": 25.0,
+      "file": "flock_of_goats_herd_of_goats_trip_of_goats.npz",
+      "label": "Flock Of Goats Herd Of Goats Trip Of Goats",
+      "video": null
+    },
+    "flora": {
+      "frames": 904,
+      "fps": 25.0,
+      "file": "flora.npz",
+      "label": "Flora",
+      "video": null
+    },
+    "flower_for_hanging_baskets": {
+      "frames": 292,
+      "fps": 24.0,
+      "file": "flower_for_hanging_baskets.npz",
+      "label": "Flower For Hanging Baskets",
+      "video": null
+    },
+    "flower_for_ornamental": {
+      "frames": 710,
+      "fps": 24.0,
+      "file": "flower_for_ornamental.npz",
+      "label": "Flower For Ornamental",
+      "video": null
+    },
+    "flower_for_rock_gardens": {
+      "frames": 516,
+      "fps": 24.0,
+      "file": "flower_for_rock_gardens.npz",
+      "label": "Flower For Rock Gardens",
+      "video": null
+    },
+    "flowering_foliage_shrubs": {
+      "frames": 400,
+      "fps": 25.0,
+      "file": "flowering_foliage_shrubs.npz",
+      "label": "Flowering Foliage Shrubs",
+      "video": null
+    },
+    "fluid_friction": {
+      "frames": 1272,
+      "fps": 25.0,
+      "file": "fluid_friction.npz",
+      "label": "Fluid Friction",
+      "video": null
+    },
+    "folding_screens": {
+      "frames": 219,
+      "fps": 24.0,
+      "file": "folding_screens.npz",
+      "label": "Folding Screens",
+      "video": null
+    },
+    "foley": {
+      "frames": 1405,
+      "fps": 24.000017166137695,
+      "file": "foley.npz",
+      "label": "Foley",
+      "video": null
+    },
+    "font": {
+      "frames": 425,
+      "fps": 25.0,
+      "file": "font.npz",
+      "label": "Font",
+      "video": null
+    },
+    "food_intolerance_and_lactose_intolerance": {
+      "frames": 1196,
+      "fps": 25.0,
+      "file": "food_intolerance_and_lactose_intolerance.npz",
+      "label": "Food Intolerance And Lactose Intolerance",
+      "video": null
+    },
+    "food_poisoning": {
+      "frames": 976,
+      "fps": 25.0,
+      "file": "food_poisoning.npz",
+      "label": "Food Poisoning",
+      "video": null
+    },
+    "foot_mat_doormat": {
+      "frames": 172,
+      "fps": 25.0,
+      "file": "foot_mat_doormat.npz",
+      "label": "Foot Mat Doormat",
+      "video": null
+    },
+    "foot_prints": {
+      "frames": 577,
+      "fps": 25.0,
+      "file": "foot_prints.npz",
+      "label": "Foot Prints",
+      "video": null
+    },
+    "foreign_direct_investment": {
+      "frames": 996,
+      "fps": 25.0,
+      "file": "foreign_direct_investment.npz",
+      "label": "Foreign Direct Investment",
+      "video": null
+    },
+    "forensic_report": {
+      "frames": 592,
+      "fps": 25.0,
+      "file": "forensic_report.npz",
+      "label": "Forensic Report",
+      "video": null
+    },
+    "forest_floor": {
+      "frames": 493,
+      "fps": 24.0,
+      "file": "forest_floor.npz",
+      "label": "Forest Floor",
+      "video": null
+    },
+    "forklift": {
+      "frames": 630,
+      "fps": 25.0,
+      "file": "forklift.npz",
+      "label": "Forklift",
+      "video": null
+    },
+    "forward_price_future_price": {
+      "frames": 956,
+      "fps": 30.0,
+      "file": "forward_price_future_price.npz",
+      "label": "Forward Price Future Price",
+      "video": null
+    },
+    "fossil": {
+      "frames": 1081,
+      "fps": 25.0,
+      "file": "fossil.npz",
+      "label": "Fossil",
+      "video": null
+    },
+    "fowl_pox": {
+      "frames": 599,
+      "fps": 24.0,
+      "file": "fowl_pox.npz",
+      "label": "Fowl Pox",
+      "video": null
+    },
+    "frame_by_frame": {
+      "frames": 905,
+      "fps": 24.0,
+      "file": "frame_by_frame.npz",
+      "label": "Frame By Frame",
+      "video": null
+    },
+    "fraud_fraudster": {
+      "frames": 1536,
+      "fps": 25.0,
+      "file": "fraud_fraudster.npz",
+      "label": "Fraud Fraudster",
+      "video": null
+    },
+    "free_enterprise": {
+      "frames": 541,
+      "fps": 24.0,
+      "file": "free_enterprise.npz",
+      "label": "Free Enterprise",
+      "video": null
+    },
+    "freedom_to_interpret": {
+      "frames": 1480,
+      "fps": 25.0,
+      "file": "freedom_to_interpret.npz",
+      "label": "Freedom To Interpret",
+      "video": null
+    },
+    "freeport": {
+      "frames": 1488,
+      "fps": 24.000015258789062,
+      "file": "freeport.npz",
+      "label": "Freeport",
+      "video": null
+    },
+    "freight": {
+      "frames": 981,
+      "fps": 25.0,
+      "file": "freight.npz",
+      "label": "Freight",
+      "video": null
+    },
+    "frisking": {
+      "frames": 571,
+      "fps": 25.0,
+      "file": "frisking.npz",
+      "label": "Frisking",
+      "video": null
+    },
+    "from_rags_to_riches": {
+      "frames": 809,
+      "fps": 24.0,
+      "file": "from_rags_to_riches.npz",
+      "label": "From Rags To Riches",
+      "video": null
+    },
+    "fruit_jelly": {
+      "frames": 816,
+      "fps": 25.0,
+      "file": "fruit_jelly.npz",
+      "label": "Fruit Jelly",
+      "video": null
+    },
+    "fruit_preserve": {
+      "frames": 715,
+      "fps": 25.0,
+      "file": "fruit_preserve.npz",
+      "label": "Fruit Preserve",
+      "video": null
+    },
+    "fruit_syrup": {
+      "frames": 764,
+      "fps": 25.0,
+      "file": "fruit_syrup.npz",
+      "label": "Fruit Syrup",
+      "video": null
+    },
+    "full_time": {
+      "frames": 97,
+      "fps": 24.0,
+      "file": "full_time.npz",
+      "label": "Full Time (Sign 2)",
+      "video": null
+    },
+    "fumigation": {
+      "frames": 480,
+      "fps": 25.0,
+      "file": "fumigation.npz",
+      "label": "Fumigation",
+      "video": null
+    },
+    "function": {
+      "frames": 600,
+      "fps": 25.0,
+      "file": "function.npz",
+      "label": "Function",
+      "video": null
+    },
+    "function_key": {
+      "frames": 450,
+      "fps": 25.0,
+      "file": "function_key.npz",
+      "label": "Function Key",
+      "video": null
+    },
+    "function_overloading": {
+      "frames": 576,
+      "fps": 25.0,
+      "file": "function_overloading.npz",
+      "label": "Function Overloading",
+      "video": null
+    },
+    "functionalism": {
+      "frames": 427,
+      "fps": 25.0,
+      "file": "functionalism.npz",
+      "label": "Functionalism",
+      "video": null
+    },
+    "fundamental_right": {
+      "frames": 1371,
+      "fps": 25.0,
+      "file": "fundamental_right.npz",
+      "label": "Fundamental Right",
+      "video": null
+    },
+    "fungicide": {
+      "frames": 886,
+      "fps": 25.0,
+      "file": "fungicide.npz",
+      "label": "Fungicide (Science)",
+      "video": null
+    },
+    "furnace": {
+      "frames": 1056,
+      "fps": 25.0,
+      "file": "furnace.npz",
+      "label": "Furnace",
+      "video": null
+    },
+    "furtherance": {
+      "frames": 692,
+      "fps": 25.0,
+      "file": "furtherance.npz",
+      "label": "Furtherance",
+      "video": null
+    },
+    "fusible_interfacing": {
+      "frames": 456,
+      "fps": 25.0,
+      "file": "fusible_interfacing.npz",
+      "label": "Fusible Interfacing",
+      "video": null
+    }
+  }
+}

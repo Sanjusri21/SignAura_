@@ -45,14 +45,16 @@ async def list_available_motions(
     page: Optional[int] = None,
     page_size: int = 50,
     search: Optional[str] = None,
-    hand_filter: Optional[str] = None
+    hand_filter: Optional[str] = None,
+    dataset: Optional[str] = None
 ) -> Dict[str, Any]:
-    """List available BridgeConn ISL 3D animations with pagination, search, and hand filter."""
+    """List available BridgeConn ISL 3D animations with pagination, search, hand, and dataset filter."""
     result = await signavatar_client.get_available_motions(
         page=page,
         page_size=page_size,
         search=search,
-        hand_filter=hand_filter
+        hand_filter=hand_filter,
+        dataset=dataset
     )
     return result
 

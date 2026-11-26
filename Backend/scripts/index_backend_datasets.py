@@ -41,6 +41,20 @@ DATASET_CONFIGS = [
     ("ISL_50", "ISL 50 (ISL_50)"),
     ("ISL_archive5", "Archive 5 (ISL_archive5)"),
     ("CISLR", "CISLR (CISLR_v1.5-a)"),  # index.json from Backend/scripts/index_cislr.py
+    ("ISL_DRIVE/A", "Drive Group A (ISL_DRIVE_A)"),
+    ("ISL_DRIVE/B", "Drive Group B (ISL_DRIVE_B)"),
+    ("ISL_DRIVE/C", "Drive Group C (ISL_DRIVE_C)"),
+    ("ISL_DRIVE/D", "Drive Group D (ISL_DRIVE_D)"),
+    ("ISL_DRIVE/E", "Drive Group E (ISL_DRIVE_E)"),
+    ("ISL_DRIVE/F", "Drive Group F (ISL_DRIVE_F)"),
+    ("ISL_DRIVE/G", "Drive Group G (ISL_DRIVE_G)"),
+    ("ISL_DRIVE/H", "Drive Group H (ISL_DRIVE_H)"),
+    ("ISL_DRIVE/I", "Drive Group I (ISL_DRIVE_I)"),
+    ("ISL_DRIVE/J", "Drive Group J (ISL_DRIVE_J)"),
+    ("ISL_DRIVE/K", "Drive Group K (ISL_DRIVE_K)"),
+    ("ISL_DRIVE/L", "Drive Group L (ISL_DRIVE_L)"),
+    ("ISL_DRIVE/M", "Drive Group M (ISL_DRIVE_M)"),
+    ("ISL_DRIVE/N", "Drive Group N (ISL_DRIVE_N)"),
 ]
 
 def init_db(db_path: str):
