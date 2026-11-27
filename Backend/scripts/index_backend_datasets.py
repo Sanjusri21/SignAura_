@@ -55,6 +55,8 @@ DATASET_CONFIGS = [
     ("ISL_DRIVE/L", "Drive Group L (ISL_DRIVE_L)"),
     ("ISL_DRIVE/M", "Drive Group M (ISL_DRIVE_M)"),
     ("ISL_DRIVE/N", "Drive Group N (ISL_DRIVE_N)"),
+    ("ISL_DRIVE/MHSL", "Drive Group MHSL (Mental Health ISL)"),
+    ("ISL_DRIVE/NCERT", "Drive Group NCERT (Educational ISL)"),
 ]
 
 def init_db(db_path: str):

@@ -309,7 +309,10 @@ def process_entire_letter(letter: str, workers: int = 4):
     letter = letter.upper()
     print("=======================================================")
     print(f"STARTING FULL RUN FOR GROUP {letter} ARCHIVES")
-    letter_zips = sorted([f for f in os.listdir(SRC_DIR) if f.startswith(f"{letter}-") and f.endswith(".zip")])
+    letter_zips = sorted([
+        f for f in os.listdir(SRC_DIR)
+        if (f.startswith(f"{letter}-") or f.startswith(f"{letter} ") or f.startswith(f"{letter}_")) and f.endswith(".zip")
+    ])
     print(f"Archives found ({len(letter_zips)}): {letter_zips}")
     print("=======================================================\n")
 
