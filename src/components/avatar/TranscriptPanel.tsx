@@ -21,6 +21,7 @@ import { hasSignMotion } from './SignAvatar3D';
 interface TranscriptPanelProps {
   project: VideoProject;
   activeTokenId?: string;
+  currentSign?: string;
   isPlaying?: boolean;
   onTogglePlay?: () => void;
   onReplay?: () => void;
@@ -64,6 +65,7 @@ const mapTokensToWords = (parts: string[], tokens: GlossToken[]): Map<string, nu
 export const TranscriptPanel: React.FC<TranscriptPanelProps> = ({
   project,
   activeTokenId,
+  currentSign,
   isPlaying = false,
   onTogglePlay,
   onReplay,
@@ -86,6 +88,9 @@ export const TranscriptPanel: React.FC<TranscriptPanelProps> = ({
     return translateEnglishToISLGloss(editableTranscript);
   }, [editableTranscript]);
 
+  const islGlossText = islResult.islGloss || project.glossTokens.map((t) => t.gloss).join(' ');
+  const islGlossWords = useMemo(() => islGlossText.split(/\s+/).filter(Boolean), [islGlossText]);
+
   // Word-level sync between the transcript and the gloss token the avatar is signing
   const transcriptParts = useMemo(() => editableTranscript.split(/(\s+)/), [editableTranscript]);
   const tokenWordIndex = useMemo(
@@ -103,8 +108,28 @@ export const TranscriptPanel: React.FC<TranscriptPanelProps> = ({
 
   const activeTokenIndex = project.glossTokens.findIndex((t) => t.id === activeTokenId);
   const activeToken = activeTokenIndex >= 0 ? project.glossTokens[activeTokenIndex] : undefined;
-  const activeWordIndex = activeTokenId ? tokenWordIndex.get(activeTokenId) : undefined;
-  const activeHasMotion = activeToken ? hasSignMotion(activeToken.gloss) : false;
+
+  const displayActiveGloss = (currentSign || activeToken?.gloss || project.glossTokens[0]?.gloss || 'WELCOME').toUpperCase();
+  const displayActiveWord = activeToken?.word || (currentSign ? currentSign.toLowerCase() : '');
+  const displayHasMotion = hasSignMotion(displayActiveGloss);
+  const activeHasMotion = displayHasMotion;
+
+  // Reliable word index mapping with robust fallback
+  const activeWordIndex = useMemo(() => {
+    if (activeTokenId && tokenWordIndex.has(activeTokenId)) {
+      return tokenWordIndex.get(activeTokenId);
+    }
+    const cleanTarget = (displayActiveWord || displayActiveGloss).toLowerCase().replace(/[^a-z0-9]/g, '');
+    if (cleanTarget) {
+      const idx = transcriptParts.findIndex((p) => {
+        const cleanP = p.toLowerCase().replace(/[^a-z0-9]/g, '');
+        return cleanP === cleanTarget || (cleanTarget.length >= 4 && cleanP.startsWith(cleanTarget));
+      });
+      if (idx >= 0) return idx;
+    }
+    return undefined;
+  }, [activeTokenId, tokenWordIndex, displayActiveWord, displayActiveGloss, transcriptParts]);
+
   const signedWordIndexes = useMemo(() => {
     const signed = new Set<number>();
     project.glossTokens.slice(0, Math.max(0, activeTokenIndex)).forEach((t) => {
@@ -119,10 +144,9 @@ export const TranscriptPanel: React.FC<TranscriptPanelProps> = ({
     const container = transcriptScrollRef.current;
     const word = activeWordRef.current;
     if (!container || !word) return;
-    // The container is position: relative, so offsetTop is measured from its top edge
     const top = word.offsetTop;
     if (top < container.scrollTop || top + word.offsetHeight > container.scrollTop + container.clientHeight) {
-      container.scrollTo({ top: top - container.clientHeight / 2, behavior: 'smooth' });
+      container.scrollTo({ top: Math.max(0, top - container.clientHeight / 2), behavior: 'smooth' });
     }
   }, [activeWordIndex]);
 
@@ -217,6 +241,54 @@ export const TranscriptPanel: React.FC<TranscriptPanelProps> = ({
       {/* Content Body */}
       {activeTab === 'transcript' ? (
         <div className="space-y-3.5">
+          {/* SIMULTANEOUS LIVE SIGNING ACTION BANNER */}
+          <div className={`p-3 rounded-xl border transition-all duration-200 flex items-center justify-between ${
+            isPlaying
+              ? 'bg-gradient-to-r from-[#22D3EE]/20 via-[#151D40] to-[#101735] border-[#22D3EE]/70 shadow-[0_0_16px_rgba(34,211,238,0.3)]'
+              : 'bg-[#101735] border-[#273154]'
+          }`}>
+            <div className="flex items-center gap-3">
+              <div className="relative flex items-center justify-center">
+                <span className={`w-3 h-3 rounded-full ${isPlaying ? 'bg-[#22D3EE] animate-ping' : 'bg-[#6B7A99]'}`} />
+                <span className={`absolute w-2 h-2 rounded-full ${isPlaying ? 'bg-[#22D3EE]' : 'bg-[#6B7A99]'}`} />
+              </div>
+              <div>
+                <div className="text-[10px] uppercase font-bold tracking-wider text-[#A8B2D1] flex items-center gap-1.5">
+                  <span>ACTIVE SIGNING ACTION</span>
+                  {isPlaying && (
+                    <span className="text-[9px] bg-[#22D3EE]/20 text-[#22D3EE] px-1.5 py-0.5 rounded border border-[#22D3EE]/40 font-mono font-bold">
+                      LIVE
+                    </span>
+                  )}
+                </div>
+                <div className="flex items-baseline gap-2 pt-0.5">
+                  <span className="text-base font-mono font-black text-[#22D3EE] tracking-wide">
+                    {displayActiveGloss}
+                  </span>
+                  {displayActiveWord && displayActiveWord.toUpperCase() !== displayActiveGloss.toUpperCase() && (
+                    <span className="text-xs text-[#A8B2D1] italic">
+                      ("{displayActiveWord}")
+                    </span>
+                  )}
+                </div>
+              </div>
+            </div>
+
+            <div className="text-right">
+              {displayHasMotion ? (
+                <span className="inline-flex items-center gap-1.5 text-[11px] font-semibold text-[#22D3EE] bg-[#22D3EE]/15 border border-[#22D3EE]/40 px-2.5 py-1 rounded-lg">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#22D3EE]" />
+                  3D Motion Active
+                </span>
+              ) : (
+                <span className="inline-flex items-center gap-1.5 text-[11px] font-semibold text-amber-300 bg-amber-400/15 border border-amber-400/30 px-2.5 py-1 rounded-lg">
+                  <span className="w-1.5 h-1.5 rounded-full bg-amber-400" />
+                  No Sign Motion (Skipped)
+                </span>
+              )}
+            </div>
+          </div>
+
           {/* 1. English Source */}
           <div className="space-y-1.5">
             <div className="flex items-center justify-between text-[11px]">
@@ -267,27 +339,22 @@ export const TranscriptPanel: React.FC<TranscriptPanelProps> = ({
               >
                 {transcriptParts.map((part, index) => {
                   const token = wordTokens.get(index);
-                  if (!token) {
-                    return (
-                      <span key={index} className={isPlaying && part.trim() ? 'text-[#6B7A99]' : undefined}>
-                        {part}
-                      </span>
-                    );
-                  }
-
-                  const isActive = index === activeWordIndex;
+                  const isDirectMatch = (activeToken?.word && part.toLowerCase().trim() === activeToken.word.toLowerCase().trim()) ||
+                                        (part.toLowerCase().trim() === displayActiveGloss.toLowerCase());
+                  const isActive = index === activeWordIndex || (activeWordIndex === undefined && isDirectMatch);
                   const isSigned = signedWordIndexes.has(index);
+
                   return (
                     <span
                       key={index}
                       ref={isActive ? activeWordRef : undefined}
-                      onClick={() => onSelectToken?.(token)}
-                      title={hasSignMotion(token.gloss) ? `ISL: ${token.gloss}` : `ISL: ${token.gloss} (no sign motion yet)`}
+                      onClick={() => token && onSelectToken?.(token)}
+                      title={token ? (hasSignMotion(token.gloss) ? `ISL: ${token.gloss}` : `ISL: ${token.gloss} (no sign motion yet)`) : undefined}
                       className={`cursor-pointer rounded px-0.5 -mx-0.5 transition-all duration-200 ${
                         isActive
                           ? activeHasMotion
-                            ? 'bg-[#22D3EE]/25 text-[#22D3EE] font-bold shadow-[0_0_12px_rgba(34,211,238,0.55)]'
-                            : 'bg-amber-400/20 text-amber-300 font-bold shadow-[0_0_10px_rgba(251,191,36,0.4)]'
+                            ? 'bg-[#22D3EE] text-[#0A0F24] font-black px-1.5 py-0.5 rounded shadow-[0_0_14px_rgba(34,211,238,0.8)] ring-2 ring-[#22D3EE]'
+                            : 'bg-amber-400 text-[#0A0F24] font-black px-1.5 py-0.5 rounded shadow-[0_0_12px_rgba(251,191,36,0.8)] ring-2 ring-amber-400'
                           : isPlaying && !isSigned
                           ? 'text-[#A8B2D1] hover:text-white'
                           : 'text-white hover:text-[#22D3EE]'
@@ -300,13 +367,13 @@ export const TranscriptPanel: React.FC<TranscriptPanelProps> = ({
               </div>
             )}
 
-            {activeToken && activeWordIndex !== undefined && !isEditing && (
-              <div className="flex items-center gap-2 text-[10px] font-mono">
+            {!isEditing && (
+              <div className="flex items-center gap-2 text-[11px] font-mono pt-1">
                 <span className="text-[#6B7A99]">Signing:</span>
                 <span className={activeHasMotion ? 'text-[#22D3EE] font-bold' : 'text-amber-300 font-bold'}>
-                  {activeToken.gloss}
+                  {displayActiveGloss}
                 </span>
-                {!activeHasMotion && <span className="text-[#6B7A99]">no sign motion available, skipped</span>}
+                {!activeHasMotion && <span className="text-amber-400/80 font-medium">(no sign motion available, skipped)</span>}
               </div>
             )}
           </div>
@@ -323,22 +390,44 @@ export const TranscriptPanel: React.FC<TranscriptPanelProps> = ({
               </span>
             </div>
 
-            <p className="text-sm font-mono font-bold text-[#22D3EE] tracking-wide pt-1">
-              {islResult.islGloss || project.glossTokens.map(t => t.gloss).join(' ')}
-            </p>
+            {/* Synchronized ISL Gloss Sentence Highlight */}
+            <div className="text-sm font-mono font-bold tracking-wide pt-1 flex flex-wrap gap-1.5">
+              {islGlossWords.map((w, idx) => {
+                const isWActive = w.toUpperCase() === displayActiveGloss.toUpperCase();
+                return (
+                  <span
+                    key={idx}
+                    className={`px-1.5 py-0.5 rounded transition-all duration-150 ${
+                      isWActive
+                        ? 'bg-[#22D3EE] text-[#0A0F24] font-black shadow-[0_0_12px_rgba(34,211,238,0.8)] scale-105 ring-1 ring-[#22D3EE]'
+                        : 'text-[#22D3EE]'
+                    }`}
+                  >
+                    {w}
+                  </span>
+                );
+              })}
+            </div>
 
-            {/* Grammar Tag Breakdown Chips */}
+            {/* Grammar Tag Breakdown Chips with Live Active Highlight */}
             {islResult.tokens.length > 0 && (
               <div className="flex flex-wrap gap-1.5 pt-2 border-t border-[#273154]/60">
-                {islResult.tokens.map((t) => (
-                  <span
-                    key={t.id}
-                    className="inline-flex items-center gap-1 text-[10px] px-2 py-0.5 rounded bg-[#151D40] border border-[#273154] text-white font-mono"
-                  >
-                    <span className="text-[#A8B2D1] text-[8px] uppercase">{t.tag}:</span>
-                    <strong className="text-[#22D3EE]">{t.gloss}</strong>
-                  </span>
-                ))}
+                {islResult.tokens.map((t) => {
+                  const isChipActive = t.gloss?.toUpperCase() === displayActiveGloss.toUpperCase();
+                  return (
+                    <span
+                      key={t.id}
+                      className={`inline-flex items-center gap-1 text-[10px] px-2 py-0.5 rounded transition-all duration-150 font-mono ${
+                        isChipActive
+                          ? 'bg-[#22D3EE]/25 border-[#22D3EE] text-white ring-2 ring-[#22D3EE] shadow-[0_0_12px_rgba(34,211,238,0.55)] scale-105'
+                          : 'bg-[#151D40] border border-[#273154] text-white'
+                      }`}
+                    >
+                      <span className={`${isChipActive ? 'text-[#22D3EE]' : 'text-[#A8B2D1]'} text-[8px] uppercase font-bold`}>{t.tag}:</span>
+                      <strong className={isChipActive ? 'text-[#22D3EE] font-black' : 'text-[#22D3EE]'}>{t.gloss}</strong>
+                    </span>
+                  );
+                })}
               </div>
             )}
           </div>

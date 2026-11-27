@@ -822,6 +822,7 @@ export const SignAvatarStudioView: React.FC<SignAvatarStudioViewProps> = ({
               <TranscriptPanel
                 project={project}
                 activeTokenId={activeToken.id}
+                currentSign={currentSignName || activeToken?.gloss}
                 onSelectToken={handleSelectToken}
                 isPlaying={isTimelinePlaying}
                 onTogglePlay={handleToggleTranscriptPlayback}
