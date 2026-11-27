@@ -108,6 +108,8 @@ Thumbs.db
 *.tar.gz
 *.zip
 *.db
+*.db-shm
+*.db-wal
 *.sqlite
 *.sqlite3
 

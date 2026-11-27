@@ -1,0 +1,727 @@
+{
+  "dataset": "Group M - New Words",
+  "count": 103,
+  "words": {
+    "m_rna": {
+      "frames": 45,
+      "fps": 25.0,
+      "file": "m_rna.npz",
+      "label": "M-Rna",
+      "video": null
+    },
+    "machin_field_efficiency": {
+      "frames": 481,
+      "fps": 25.0,
+      "file": "machin_field_efficiency.npz",
+      "label": "Machin Field Efficiency",
+      "video": null
+    },
+    "magnesium": {
+      "frames": 904,
+      "fps": 24.0,
+      "file": "magnesium.npz",
+      "label": "Magnesium",
+      "video": null
+    },
+    "magnetic_field": {
+      "frames": 1215,
+      "fps": 25.0,
+      "file": "magnetic_field.npz",
+      "label": "Magnetic Field",
+      "video": null
+    },
+    "mainiature_garden": {
+      "frames": 398,
+      "fps": 25.0,
+      "file": "mainiature_garden.npz",
+      "label": "Mainiature Garden",
+      "video": null
+    },
+    "mala_praxis": {
+      "frames": 936,
+      "fps": 25.0,
+      "file": "mala_praxis.npz",
+      "label": "Mala Praxis",
+      "video": null
+    },
+    "malayalam": {
+      "frames": 110,
+      "fps": 25.0,
+      "file": "malayalam.npz",
+      "label": "Malayalam",
+      "video": null
+    },
+    "male_plug": {
+      "frames": 389,
+      "fps": 25.0,
+      "file": "male_plug.npz",
+      "label": "Male Plug",
+      "video": null
+    },
+    "malpractice": {
+      "frames": 1155,
+      "fps": 25.0,
+      "file": "malpractice.npz",
+      "label": "Malpractice",
+      "video": null
+    },
+    "manifesto": {
+      "frames": 538,
+      "fps": 25.0,
+      "file": "manifesto.npz",
+      "label": "Manifesto",
+      "video": null
+    },
+    "manual": {
+      "frames": 910,
+      "fps": 29.970062255859375,
+      "file": "manual.npz",
+      "label": "Manual",
+      "video": null
+    },
+    "margin_call": {
+      "frames": 682,
+      "fps": 30.0,
+      "file": "margin_call.npz",
+      "label": "Margin Call",
+      "video": null
+    },
+    "margin_or_profit_margin": {
+      "frames": 882,
+      "fps": 24.0,
+      "file": "margin_or_profit_margin.npz",
+      "label": "Margin Or Profit Margin",
+      "video": null
+    },
+    "marginal_weeds_deep_water_rooted_plants": {
+      "frames": 379,
+      "fps": 24.0,
+      "file": "marginal_weeds_deep_water_rooted_plants.npz",
+      "label": "Marginal Weeds Deep Water Rooted Plants",
+      "video": null
+    },
+    "market_economy": {
+      "frames": 1298,
+      "fps": 24.000019073486328,
+      "file": "market_economy.npz",
+      "label": "Market Economy",
+      "video": null
+    },
+    "market_value_capitalisation": {
+      "frames": 1422,
+      "fps": 30.0,
+      "file": "market_value_capitalisation.npz",
+      "label": "Market Value Capitalisation",
+      "video": null
+    },
+    "marking_scheme": {
+      "frames": 823,
+      "fps": 24.0,
+      "file": "marking_scheme.npz",
+      "label": "Marking Scheme",
+      "video": null
+    },
+    "markup": {
+      "frames": 891,
+      "fps": 25.0,
+      "file": "markup.npz",
+      "label": "Markup",
+      "video": null
+    },
+    "martial_law": {
+      "frames": 611,
+      "fps": 25.0,
+      "file": "martial_law.npz",
+      "label": "Martial Law",
+      "video": null
+    },
+    "mash": {
+      "frames": 569,
+      "fps": 25.0,
+      "file": "mash.npz",
+      "label": "Mash",
+      "video": null
+    },
+    "mass_and_weight": {
+      "frames": 830,
+      "fps": 25.0,
+      "file": "mass_and_weight.npz",
+      "label": "Mass And Weight",
+      "video": null
+    },
+    "mastitis": {
+      "frames": 414,
+      "fps": 24.0,
+      "file": "mastitis.npz",
+      "label": "Mastitis",
+      "video": null
+    },
+    "masturbation": {
+      "frames": 129,
+      "fps": 24.0,
+      "file": "masturbation.npz",
+      "label": "Masturbation (Males)",
+      "video": null
+    },
+    "match_cut": {
+      "frames": 549,
+      "fps": 24.0,
+      "file": "match_cut.npz",
+      "label": "Match Cut",
+      "video": null
+    },
+    "mattress": {
+      "frames": 201,
+      "fps": 25.0,
+      "file": "mattress.npz",
+      "label": "Mattress",
+      "video": null
+    },
+    "mausi": {
+      "frames": 79,
+      "fps": 25.0,
+      "file": "mausi.npz",
+      "label": "Mausi",
+      "video": null
+    },
+    "maximum_temperature": {
+      "frames": 675,
+      "fps": 23.976024627685547,
+      "file": "maximum_temperature.npz",
+      "label": "Maximum Temperature",
+      "video": null
+    },
+    "measles_virus": {
+      "frames": 195,
+      "fps": 25.0,
+      "file": "measles_virus.npz",
+      "label": "Measles Virus",
+      "video": null
+    },
+    "measuring_wheel": {
+      "frames": 594,
+      "fps": 25.0,
+      "file": "measuring_wheel.npz",
+      "label": "Measuring Wheel",
+      "video": null
+    },
+    "mechanical_wear": {
+      "frames": 666,
+      "fps": 25.0,
+      "file": "mechanical_wear.npz",
+      "label": "Mechanical Wear",
+      "video": null
+    },
+    "median": {
+      "frames": 1140,
+      "fps": 25.0,
+      "file": "median.npz",
+      "label": "Median",
+      "video": null
+    },
+    "medical_model_of_disability": {
+      "frames": 972,
+      "fps": 25.0,
+      "file": "medical_model_of_disability.npz",
+      "label": "Medical Model Of Disability",
+      "video": null
+    },
+    "medieval_history": {
+      "frames": 468,
+      "fps": 25.0,
+      "file": "medieval_history.npz",
+      "label": "Medieval History",
+      "video": null
+    },
+    "medium_size_crops": {
+      "frames": 828,
+      "fps": 24.0,
+      "file": "medium_size_crops.npz",
+      "label": "Medium Size Crops",
+      "video": null
+    },
+    "meeting_point": {
+      "frames": 175,
+      "fps": 24.0,
+      "file": "meeting_point.npz",
+      "label": "Meeting Point",
+      "video": null
+    },
+    "meeting_template": {
+      "frames": 753,
+      "fps": 24.0,
+      "file": "meeting_template.npz",
+      "label": "Meeting Template",
+      "video": null
+    },
+    "mega_byte": {
+      "frames": 516,
+      "fps": 25.0,
+      "file": "mega_byte.npz",
+      "label": "Mega Byte",
+      "video": null
+    },
+    "meibomian_gland": {
+      "frames": 211,
+      "fps": 25.0,
+      "file": "meibomian_gland.npz",
+      "label": "Meibomian Gland",
+      "video": null
+    },
+    "melanin": {
+      "frames": 93,
+      "fps": 25.0,
+      "file": "melanin.npz",
+      "label": "Melanin",
+      "video": null
+    },
+    "melatonin": {
+      "frames": 640,
+      "fps": 25.0,
+      "file": "melatonin.npz",
+      "label": "Melatonin",
+      "video": null
+    },
+    "meningitis": {
+      "frames": 384,
+      "fps": 25.0,
+      "file": "meningitis.npz",
+      "label": "Meningitis",
+      "video": null
+    },
+    "mental_processes": {
+      "frames": 1125,
+      "fps": 25.0,
+      "file": "mental_processes.npz",
+      "label": "Mental Processes",
+      "video": null
+    },
+    "meow": {
+      "frames": 148,
+      "fps": 24.0,
+      "file": "meow.npz",
+      "label": "Meow",
+      "video": null
+    },
+    "metamorphic_rocks": {
+      "frames": 896,
+      "fps": 25.0,
+      "file": "metamorphic_rocks.npz",
+      "label": "Metamorphic Rocks (Sign 2)",
+      "video": null
+    },
+    "meteor_and_meteorite": {
+      "frames": 947,
+      "fps": 25.0,
+      "file": "meteor_and_meteorite.npz",
+      "label": "Meteor And Meteorite",
+      "video": null
+    },
+    "methods_of_plantation": {
+      "frames": 471,
+      "fps": 25.0,
+      "file": "methods_of_plantation.npz",
+      "label": "Methods Of Plantation",
+      "video": null
+    },
+    "mhrd_explanation": {
+      "frames": 1220,
+      "fps": 24.000019073486328,
+      "file": "mhrd_explanation.npz",
+      "label": "Mhrd - Explanation",
+      "video": null
+    },
+    "mic_microphone": {
+      "frames": 102,
+      "fps": 25.0,
+      "file": "mic_microphone.npz",
+      "label": "Mic Microphone",
+      "video": null
+    },
+    "mickey_mouse": {
+      "frames": 118,
+      "fps": 25.0,
+      "file": "mickey_mouse.npz",
+      "label": "Mickey Mouse",
+      "video": null
+    },
+    "microlith": {
+      "frames": 1497,
+      "fps": 25.0,
+      "file": "microlith.npz",
+      "label": "Microlith (Academic)",
+      "video": null
+    },
+    "microsoft_outlook_plugin": {
+      "frames": 588,
+      "fps": 24.0,
+      "file": "microsoft_outlook_plugin.npz",
+      "label": "Microsoft Outlook Plugin (Sign 2)",
+      "video": null
+    },
+    "microwave_oven": {
+      "frames": 144,
+      "fps": 24.0,
+      "file": "microwave_oven.npz",
+      "label": "Microwave Oven",
+      "video": null
+    },
+    "middle_finger": {
+      "frames": 84,
+      "fps": 25.0,
+      "file": "middle_finger.npz",
+      "label": "Middle Finger",
+      "video": null
+    },
+    "middleman": {
+      "frames": 892,
+      "fps": 24.0,
+      "file": "middleman.npz",
+      "label": "Middleman",
+      "video": null
+    },
+    "midrib_and_veins": {
+      "frames": 371,
+      "fps": 25.0,
+      "file": "midrib_and_veins.npz",
+      "label": "Midrib And Veins",
+      "video": null
+    },
+    "midwives": {
+      "frames": 125,
+      "fps": 25.0,
+      "file": "midwives.npz",
+      "label": "Midwives",
+      "video": null
+    },
+    "migraine": {
+      "frames": 268,
+      "fps": 25.0,
+      "file": "migraine.npz",
+      "label": "Migraine",
+      "video": null
+    },
+    "migration": {
+      "frames": 1574,
+      "fps": 25.0,
+      "file": "migration.npz",
+      "label": "Migration (Academic)",
+      "video": null
+    },
+    "milad_un_nabi_id_e_milad": {
+      "frames": 79,
+      "fps": 25.0,
+      "file": "milad_un_nabi_id_e_milad.npz",
+      "label": "Milad-Un-Nabi Id-E-Milad (Birthday Of Prophet Mohammad)",
+      "video": null
+    },
+    "mild_hearing_loss": {
+      "frames": 375,
+      "fps": 24.0,
+      "file": "mild_hearing_loss.npz",
+      "label": "Mild Hearing Loss",
+      "video": null
+    },
+    "military_power": {
+      "frames": 928,
+      "fps": 24.0,
+      "file": "military_power.npz",
+      "label": "Military Power",
+      "video": null
+    },
+    "milk_secretion": {
+      "frames": 242,
+      "fps": 24.0,
+      "file": "milk_secretion.npz",
+      "label": "Milk Secretion",
+      "video": null
+    },
+    "milk_teeth": {
+      "frames": 1072,
+      "fps": 25.0,
+      "file": "milk_teeth.npz",
+      "label": "Milk Teeth (Academic)",
+      "video": null
+    },
+    "minerals": {
+      "frames": 1636,
+      "fps": 25.0,
+      "file": "minerals.npz",
+      "label": "Minerals",
+      "video": null
+    },
+    "ministry_of_education": {
+      "frames": 121,
+      "fps": 24.0,
+      "file": "ministry_of_education.npz",
+      "label": "Ministry Of Education (Moe)",
+      "video": null
+    },
+    "misbranding": {
+      "frames": 679,
+      "fps": 25.0,
+      "file": "misbranding.npz",
+      "label": "Misbranding",
+      "video": null
+    },
+    "misconcept_about_deafness": {
+      "frames": 474,
+      "fps": 24.0,
+      "file": "misconcept_about_deafness.npz",
+      "label": "Misconcept About Deafness",
+      "video": null
+    },
+    "misogynist": {
+      "frames": 420,
+      "fps": 24.0,
+      "file": "misogynist.npz",
+      "label": "Misogynist",
+      "video": null
+    },
+    "miss_absence_omission": {
+      "frames": 77,
+      "fps": 25.0,
+      "file": "miss_absence_omission.npz",
+      "label": "Miss Absence Omission",
+      "video": null
+    },
+    "mistake_error_inaccuracy": {
+      "frames": 135,
+      "fps": 25.0,
+      "file": "mistake_error_inaccuracy.npz",
+      "label": "Mistake Error Inaccuracy",
+      "video": null
+    },
+    "mobile_banking": {
+      "frames": 914,
+      "fps": 30.0,
+      "file": "mobile_banking.npz",
+      "label": "Mobile Banking",
+      "video": null
+    },
+    "mobile_x_ray_unit": {
+      "frames": 722,
+      "fps": 25.0,
+      "file": "mobile_x_ray_unit.npz",
+      "label": "Mobile X-Ray Unit",
+      "video": null
+    },
+    "mock_ridicule": {
+      "frames": 73,
+      "fps": 25.0,
+      "file": "mock_ridicule.npz",
+      "label": "Mock Ridicule",
+      "video": null
+    },
+    "moderate_hearing_loss": {
+      "frames": 296,
+      "fps": 24.0,
+      "file": "moderate_hearing_loss.npz",
+      "label": "Moderate Hearing Loss",
+      "video": null
+    },
+    "modes_of_linguistic_communication_aural_oral_visual_manual_visual_graphical": {
+      "frames": 1154,
+      "fps": 24.00002098083496,
+      "file": "modes_of_linguistic_communication_aural_oral_visual_manual_visual_graphical.npz",
+      "label": "Modes Of Linguistic Communication Aural-Oral Visual-Manual Visual-Graphical",
+      "video": null
+    },
+    "mohenjodaro": {
+      "frames": 1202,
+      "fps": 25.0,
+      "file": "mohenjodaro.npz",
+      "label": "Mohenjodaro (Academic)",
+      "video": null
+    },
+    "molecular_biology": {
+      "frames": 83,
+      "fps": 25.0,
+      "file": "molecular_biology.npz",
+      "label": "Molecular Biology",
+      "video": null
+    },
+    "momos": {
+      "frames": 123,
+      "fps": 24.0,
+      "file": "momos.npz",
+      "label": "Momos",
+      "video": null
+    },
+    "money_back_policy": {
+      "frames": 804,
+      "fps": 30.0,
+      "file": "money_back_policy.npz",
+      "label": "Money Back Policy",
+      "video": null
+    },
+    "monochromatic_palette": {
+      "frames": 910,
+      "fps": 24.0,
+      "file": "monochromatic_palette.npz",
+      "label": "Monochromatic Palette",
+      "video": null
+    },
+    "monocot_ledoneae": {
+      "frames": 252,
+      "fps": 25.0,
+      "file": "monocot_ledoneae.npz",
+      "label": "Monocot Ledoneae",
+      "video": null
+    },
+    "monthly": {
+      "frames": 110,
+      "fps": 25.0,
+      "file": "monthly.npz",
+      "label": "Monthly",
+      "video": null
+    },
+    "monthly_payment": {
+      "frames": 714,
+      "fps": 30.0,
+      "file": "monthly_payment.npz",
+      "label": "Monthly Payment",
+      "video": null
+    },
+    "mood_board": {
+      "frames": 792,
+      "fps": 25.0,
+      "file": "mood_board.npz",
+      "label": "Mood Board",
+      "video": null
+    },
+    "morally_reprehensible": {
+      "frames": 1111,
+      "fps": 25.0,
+      "file": "morally_reprehensible.npz",
+      "label": "Morally Reprehensible",
+      "video": null
+    },
+    "morning_sickness": {
+      "frames": 366,
+      "fps": 25.0,
+      "file": "morning_sickness.npz",
+      "label": "Morning Sickness",
+      "video": null
+    },
+    "mortar_and_pestle": {
+      "frames": 291,
+      "fps": 25.0,
+      "file": "mortar_and_pestle.npz",
+      "label": "Mortar And Pestle",
+      "video": null
+    },
+    "mortgages": {
+      "frames": 1420,
+      "fps": 30.0,
+      "file": "mortgages.npz",
+      "label": "Mortgages",
+      "video": null
+    },
+    "mosambi": {
+      "frames": 79,
+      "fps": 25.0,
+      "file": "mosambi.npz",
+      "label": "Mosambi",
+      "video": null
+    },
+    "mother_tongue_first_language": {
+      "frames": 171,
+      "fps": 25.0,
+      "file": "mother_tongue_first_language.npz",
+      "label": "Mother Tongue First Language",
+      "video": null
+    },
+    "mould_box": {
+      "frames": 1116,
+      "fps": 25.0,
+      "file": "mould_box.npz",
+      "label": "Mould Box",
+      "video": null
+    },
+    "mountain_range": {
+      "frames": 666,
+      "fps": 25.0,
+      "file": "mountain_range.npz",
+      "label": "Mountain Range",
+      "video": null
+    },
+    "multi_level_marketing": {
+      "frames": 179,
+      "fps": 24.0,
+      "file": "multi_level_marketing.npz",
+      "label": "Multi-Level Marketing",
+      "video": null
+    },
+    "multiplication": {
+      "frames": 317,
+      "fps": 25.0,
+      "file": "multiplication.npz",
+      "label": "Multiplication (Explanation)",
+      "video": null
+    },
+    "multiply": {
+      "frames": 120,
+      "fps": 25.0,
+      "file": "multiply.npz",
+      "label": "Multiply",
+      "video": null
+    },
+    "multitask": {
+      "frames": 612,
+      "fps": 25.0,
+      "file": "multitask.npz",
+      "label": "Multitask",
+      "video": null
+    },
+    "municipality_bonds_munis": {
+      "frames": 1037,
+      "fps": 30.0,
+      "file": "municipality_bonds_munis.npz",
+      "label": "Municipality Bonds Munis",
+      "video": null
+    },
+    "muscular_dystrophy": {
+      "frames": 526,
+      "fps": 25.0,
+      "file": "muscular_dystrophy.npz",
+      "label": "Muscular Dystrophy",
+      "video": null
+    },
+    "muslim_league": {
+      "frames": 607,
+      "fps": 25.0,
+      "file": "muslim_league.npz",
+      "label": "Muslim League",
+      "video": null
+    },
+    "mutualism": {
+      "frames": 1017,
+      "fps": 25.0,
+      "file": "mutualism.npz",
+      "label": "Mutualism",
+      "video": null
+    },
+    "myomectomy": {
+      "frames": 244,
+      "fps": 25.0,
+      "file": "myomectomy.npz",
+      "label": "Myomectomy",
+      "video": null
+    },
+    "myopia": {
+      "frames": 225,
+      "fps": 24.0,
+      "file": "myopia.npz",
+      "label": "Myopia (Myofic Eye)",
+      "video": null
+    },
+    "mystery": {
+      "frames": 394,
+      "fps": 25.0,
+      "file": "mystery.npz",
+      "label": "Mystery (Explanation)",
+      "video": null
+    }
+  }
+}

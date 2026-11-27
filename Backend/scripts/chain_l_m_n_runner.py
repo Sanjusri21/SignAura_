@@ -28,7 +28,7 @@ def main():
     print("AUTONOMOUS MASTER CHAIN RUNNER (L -> M -> N)", flush=True)
     print("=======================================================\n", flush=True)
 
-    letters = ["L", "M", "N"]
+    letters = ["M", "N"]
     for letter in letters:
         print("\n" + "#" * 65, flush=True)
         print(f">>> LAUNCHING AUTONOMOUS GROUP {letter} EXTRACTION <<<", flush=True)
