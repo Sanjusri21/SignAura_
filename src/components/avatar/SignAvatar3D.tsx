@@ -721,7 +721,9 @@ export const SignAvatar3D: React.FC<SignAvatar3DProps> = ({
 
     // 1. Multi-Sign Phrase Sequence Mode (e.g. "GOOD DRINK", "HELP TEACHER")
     const words = rawSign.split(/\s+/).filter(Boolean);
-    const hasMultipleSigns = !motionUrl && words.length > 1;
+    const cleanRaw = rawSign.toLowerCase().replace(/[\s-]+/g, '_').replace(/[^a-z0-9_]/g, '');
+    const isSingleDictSign = playableWordKeys.has(cleanRaw) || playableWordKeys.has(rawSign.toLowerCase());
+    const hasMultipleSigns = !motionUrl && !isSingleDictSign && words.length > 1;
 
     if (hasMultipleSigns) {
       const sequenceKey = `seq:${words.join('_').toLowerCase()}`;
@@ -809,8 +811,9 @@ export const SignAvatar3D: React.FC<SignAvatar3DProps> = ({
     let targetUrl = motionUrl;
 
     if (!targetUrl) {
-      if (!mapped) return;
-      targetUrl = `${SIGNAVATAR_API_URL}/motion/${mapped}`;
+      const motionKey = cleanRaw || mapped.toLowerCase().replace(/[\s-]+/g, '_').replace(/[^a-z0-9_]/g, '');
+      if (!motionKey) return;
+      targetUrl = `${SIGNAVATAR_API_URL}/motion/${motionKey}`;
     }
 
     if (targetUrl.startsWith('/motion/')) {

@@ -106,6 +106,8 @@ export const SignAvatarStudioView: React.FC<SignAvatarStudioViewProps> = ({
   avatarSignRef.current = avatarSign;
   const activeTokenRef = useRef(activeToken);
   activeTokenRef.current = activeToken;
+  const isTimelinePlayingRef = useRef(isTimelinePlaying);
+  isTimelinePlayingRef.current = isTimelinePlaying;
 
   // Eagerly load dictionary playable words and pre-cache all words from the video transcript
   useEffect(() => {
@@ -119,9 +121,8 @@ export const SignAvatarStudioView: React.FC<SignAvatarStudioViewProps> = ({
       precacheSentenceWords(project.transcript)
         .then((res) => {
           console.log(`[SignAvatarStudio] Precached ${res.cached_count}/${res.total_count} words into cache memory`);
-          // Buffer each word directly into frontend memory cache for instant 0ms playback
-          res.cached_words.forEach((w) => {
-            const cleanWord = w.toLowerCase().replace(/[\s-]+/g, '_');
+          res.cached_words?.forEach((w) => {
+            const cleanWord = w.toLowerCase().replace(/[\s-]+/g, '_').replace(/[^a-z0-9_]/g, '');
             const clipUrl = `${SIGNAVATAR_API_URL}/motion/${cleanWord}`;
             if (!motionBufferCache.has(clipUrl)) {
               fetch(clipUrl)
@@ -138,27 +139,37 @@ export const SignAvatarStudioView: React.FC<SignAvatarStudioViewProps> = ({
         })
         .catch((err) => console.warn('[SignAvatarStudio] Precache failed:', err));
     }
-  }, [project?.id, project?.transcript]);
 
-  const startTranscriptPlayback = async (fromIndex: number = 0) => {
+    // Direct prefetch for all tokens in project.glossTokens to ensure 0ms playback
+    if (project?.glossTokens?.length) {
+      project.glossTokens.forEach((t) => {
+        const cleanGloss = (t.gloss || t.word || '').toLowerCase().replace(/[\s-]+/g, '_').replace(/[^a-z0-9_]/g, '');
+        if (cleanGloss) {
+          const clipUrl = `${SIGNAVATAR_API_URL}/motion/${cleanGloss}`;
+          if (!motionBufferCache.has(clipUrl)) {
+            fetch(clipUrl)
+              .then(async (r) => {
+                if (r.ok) {
+                  const buf = await r.arrayBuffer();
+                  const m = processAndNormalizeMotion(buf);
+                  motionBufferCache.set(clipUrl, m);
+                }
+              })
+              .catch(() => {});
+          }
+        }
+      });
+    }
+  }, [project?.id, project?.transcript, project?.glossTokens]);
+
+  const startTranscriptPlayback = (fromIndex: number = 0) => {
     setActiveCaption(project.transcript || '');
     setActiveGlossTokens(project.glossTokens || []);
-
-    // If starting from the beginning and transcript exists, synthesize the full continuous sequence
-    if (fromIndex === 0 && project?.transcript && project.transcript.trim()) {
-      try {
-        await playWordSequence(project.transcript);
-        setIsTimelinePlaying(true);
-        setIsPlaying(true);
-        return;
-      } catch (err) {
-        console.warn('[SignAvatarStudio] Continuous playback synthesis fallback to word-by-word:', err);
-      }
-    }
-
     setGeneratedMotionUrl('');
     setMotionSegments([]);
-    setSequenceIndex(fromIndex);
+    const validIndex = Math.max(0, Math.min(fromIndex, (project.glossTokens?.length || 1) - 1));
+    sequenceStepRef.current = { awaitingMotion: true, loaded: false, maxFrame: 0 };
+    setSequenceIndex(validIndex);
     setIsTimelinePlaying(true);
     setIsPlaying(true);
   };
@@ -175,38 +186,55 @@ export const SignAvatarStudioView: React.FC<SignAvatarStudioViewProps> = ({
   // Apply the current sequence token to the avatar for step-by-step playback
   useEffect(() => {
     if (!isTimelinePlaying || generatedMotionUrl) return;
-    const token = project.glossTokens[sequenceIndex];
-    if (!token) {
+    if (!project.glossTokens || project.glossTokens.length === 0) {
       setIsTimelinePlaying(false);
       return;
     }
 
-    setActiveToken(token);
-    setCurrentTime(token.startTime);
-    if (hasSignMotion(token.gloss)) {
-      const alreadyLoaded = token.gloss.toUpperCase() === avatarSignRef.current.toUpperCase();
-      sequenceStepRef.current = { awaitingMotion: true, loaded: alreadyLoaded, maxFrame: 0 };
-      const cleanWord = token.gloss.toLowerCase().replace(/[\s-]+/g, '_');
-      const targetUrl = `${SIGNAVATAR_API_URL}/motion/${cleanWord}`;
-      setGeneratedMotionUrl(targetUrl);
-      setCurrentSignName(token.gloss);
-    } else {
-      sequenceStepRef.current = { awaitingMotion: false, loaded: false, maxFrame: 0 };
+    if (sequenceIndex >= project.glossTokens.length) {
+      setIsTimelinePlaying(false);
+      setIsPlaying(false);
+      return;
     }
-  }, [isTimelinePlaying, sequenceIndex, project.glossTokens, generatedMotionUrl]);
 
-  // Dwell on words without motion, and guard against clips that never complete
-  useEffect(() => {
-    if (!isTimelinePlaying || !isPlaying || generatedMotionUrl) return;
     const token = project.glossTokens[sequenceIndex];
     if (!token) return;
 
-    const delay = hasSignMotion(token.gloss)
-      ? MOTION_STEP_TIMEOUT_MS / playbackSpeed
-      : MISSING_SIGN_DWELL_MS / playbackSpeed;
+    setActiveToken(token);
+    setCurrentTime(token.startTime);
+
+    if (hasSignMotion(token.gloss)) {
+      const alreadyLoaded = token.gloss.toUpperCase() === currentSignName.toUpperCase();
+      sequenceStepRef.current = { awaitingMotion: true, loaded: alreadyLoaded, maxFrame: 0 };
+      setCurrentSignName(token.gloss);
+    } else {
+      sequenceStepRef.current = { awaitingMotion: false, loaded: false, maxFrame: 0 };
+      setCurrentSignName(token.gloss);
+    }
+  }, [isTimelinePlaying, sequenceIndex, project.glossTokens, generatedMotionUrl, currentSignName]);
+
+  // Dwell on words without motion, and guard against clips that take too long
+  useEffect(() => {
+    if (!isTimelinePlaying || !isPlaying || generatedMotionUrl) return;
+    const token = project.glossTokens?.[sequenceIndex];
+    if (!token) return;
+
+    const hasMotion = hasSignMotion(token.gloss);
+    const delay = hasMotion
+      ? Math.max(3000, MOTION_STEP_TIMEOUT_MS / playbackSpeed)
+      : Math.max(400, MISSING_SIGN_DWELL_MS / playbackSpeed);
+
     const timer = setTimeout(() => {
-      setSequenceIndex((i) => (i === sequenceIndex ? i + 1 : i));
+      setSequenceIndex((i) => {
+        if (i === sequenceIndex) {
+          sequenceStepRef.current.awaitingMotion = false;
+          sequenceStepRef.current.loaded = false;
+          return i + 1;
+        }
+        return i;
+      });
     }, delay);
+
     return () => clearTimeout(timer);
   }, [isTimelinePlaying, isPlaying, sequenceIndex, playbackSpeed, project.glossTokens, generatedMotionUrl]);
 
@@ -218,9 +246,9 @@ export const SignAvatarStudioView: React.FC<SignAvatarStudioViewProps> = ({
 
   // Frame update handler: tracks continuous multi-word segments and wraps single-word clips
   const handleAvatarFrame = useCallback((frame: number, totalFrames?: number, currentGloss?: string) => {
-    // 1. Sync active gloss token when playing a continuous combined motionUrl sequence
-    if (currentGloss) {
-      const match = project.glossTokens.find(
+    // 1. Sync active gloss token when playing a continuous combined motionUrl sequence (Text-to-Sign)
+    if (currentGloss && generatedMotionUrl) {
+      const match = project.glossTokens?.find(
         (t) => t.gloss?.toUpperCase() === currentGloss.toUpperCase() || t.word?.toLowerCase() === currentGloss.toLowerCase()
       );
       if (match && match.id !== activeTokenRef.current?.id) {
@@ -231,15 +259,22 @@ export const SignAvatarStudioView: React.FC<SignAvatarStudioViewProps> = ({
     }
 
     // 2. Wrap single-word clips in step-by-step mode
+    if (!isTimelinePlayingRef.current || generatedMotionUrl) return;
     const step = sequenceStepRef.current;
     if (!step.awaitingMotion || !step.loaded) return;
-    if (frame < step.maxFrame - 2) {
+
+    const hasCompleted = (totalFrames && totalFrames > 8 && frame >= totalFrames - 2) ||
+                         (step.maxFrame > 10 && frame < step.maxFrame - 4);
+
+    if (hasCompleted) {
       step.awaitingMotion = false;
+      step.loaded = false;
       setSequenceIndex((i) => i + 1);
       return;
     }
+
     step.maxFrame = Math.max(step.maxFrame, frame);
-  }, [project.glossTokens]);
+  }, [project.glossTokens, generatedMotionUrl]);
 
   const handleSelectToken = (token: GlossToken) => {
     const index = project.glossTokens.findIndex((t) => t.id === token.id);
