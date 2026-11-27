@@ -1,0 +1,1014 @@
+{
+  "dataset": "Group N - New Words",
+  "count": 144,
+  "words": {
+    "nano_robot": {
+      "frames": 1022,
+      "fps": 24.000022888183594,
+      "file": "nano_robot.npz",
+      "label": "Nano Robot",
+      "video": null
+    },
+    "narco_analysis_test": {
+      "frames": 731,
+      "fps": 25.0,
+      "file": "narco_analysis_test.npz",
+      "label": "Narco Analysis Test",
+      "video": null
+    },
+    "narendra_modi_prime_minister": {
+      "frames": 83,
+      "fps": 25.0,
+      "file": "narendra_modi_prime_minister.npz",
+      "label": "Narendra Modi Prime Minister",
+      "video": null
+    },
+    "narrow_minded": {
+      "frames": 94,
+      "fps": 25.0,
+      "file": "narrow_minded.npz",
+      "label": "Narrow-Minded",
+      "video": null
+    },
+    "nasal_cavity": {
+      "frames": 225,
+      "fps": 25.0,
+      "file": "nasal_cavity.npz",
+      "label": "Nasal Cavity",
+      "video": null
+    },
+    "nasogastric_tube": {
+      "frames": 423,
+      "fps": 25.0,
+      "file": "nasogastric_tube.npz",
+      "label": "Nasogastric Tube",
+      "video": null
+    },
+    "natality": {
+      "frames": 313,
+      "fps": 25.0,
+      "file": "natality.npz",
+      "label": "Natality",
+      "video": null
+    },
+    "national_council_for_vocational_education_and_training": {
+      "frames": 156,
+      "fps": 24.0,
+      "file": "national_council_for_vocational_education_and_training.npz",
+      "label": "National Council For Vocational Education And Training (Ncvet)",
+      "video": null
+    },
+    "national_curriculum_framework": {
+      "frames": 912,
+      "fps": 24.0,
+      "file": "national_curriculum_framework.npz",
+      "label": "National Curriculum Framework (Ncf)",
+      "video": null
+    },
+    "national_curriculum_framework_for_school_education": {
+      "frames": 490,
+      "fps": 24.0,
+      "file": "national_curriculum_framework_for_school_education.npz",
+      "label": "National Curriculum Framework For School Education (Ncfse)",
+      "video": null
+    },
+    "national_curriculum_framework_for_teacher_education": {
+      "frames": 550,
+      "fps": 24.0,
+      "file": "national_curriculum_framework_for_teacher_education.npz",
+      "label": "National Curriculum Framework For Teacher Education (Ncfte)",
+      "video": null
+    },
+    "national_data_centre": {
+      "frames": 548,
+      "fps": 24.0,
+      "file": "national_data_centre.npz",
+      "label": "National Data Centre",
+      "video": null
+    },
+    "national_institution_for_transforming_india": {
+      "frames": 171,
+      "fps": 24.0,
+      "file": "national_institution_for_transforming_india.npz",
+      "label": "National Institution For Transforming India (Niti)",
+      "video": null
+    },
+    "national_sample_survey_office": {
+      "frames": 307,
+      "fps": 24.0,
+      "file": "national_sample_survey_office.npz",
+      "label": "National Sample Survey Office (Nsso)",
+      "video": null
+    },
+    "national_testing_agency": {
+      "frames": 207,
+      "fps": 24.0,
+      "file": "national_testing_agency.npz",
+      "label": "National Testing Agency (Nta)",
+      "video": null
+    },
+    "nationalist_congress_party_ncp": {
+      "frames": 102,
+      "fps": 25.0,
+      "file": "nationalist_congress_party_ncp.npz",
+      "label": "Nationalist Congress Party Ncp",
+      "video": null
+    },
+    "natural_gas": {
+      "frames": 744,
+      "fps": 24.0,
+      "file": "natural_gas.npz",
+      "label": "Natural Gas (Sign 2)",
+      "video": null
+    },
+    "naturalistic_observation": {
+      "frames": 892,
+      "fps": 25.0,
+      "file": "naturalistic_observation.npz",
+      "label": "Naturalistic Observation",
+      "video": null
+    },
+    "naughty_mischievous_rowdy": {
+      "frames": 126,
+      "fps": 25.0,
+      "file": "naughty_mischievous_rowdy.npz",
+      "label": "Naughty Mischievous Rowdy",
+      "video": null
+    },
+    "nausea_and_vomiting": {
+      "frames": 666,
+      "fps": 25.0,
+      "file": "nausea_and_vomiting.npz",
+      "label": "Nausea And Vomiting",
+      "video": null
+    },
+    "nebulization": {
+      "frames": 384,
+      "fps": 25.0,
+      "file": "nebulization.npz",
+      "label": "Nebulization",
+      "video": null
+    },
+    "nectar": {
+      "frames": 635,
+      "fps": 24.0,
+      "file": "nectar.npz",
+      "label": "Nectar",
+      "video": null
+    },
+    "need_of_irrigation": {
+      "frames": 437,
+      "fps": 24.0,
+      "file": "need_of_irrigation.npz",
+      "label": "Need Of Irrigation",
+      "video": null
+    },
+    "needle_file": {
+      "frames": 624,
+      "fps": 25.0,
+      "file": "needle_file.npz",
+      "label": "Needle File",
+      "video": null
+    },
+    "negative_integers": {
+      "frames": 230,
+      "fps": 24.0,
+      "file": "negative_integers.npz",
+      "label": "Negative Integers",
+      "video": null
+    },
+    "negative_number": {
+      "frames": 1476,
+      "fps": 25.0,
+      "file": "negative_number.npz",
+      "label": "Negative Number (Math)",
+      "video": null
+    },
+    "negative_terminal": {
+      "frames": 788,
+      "fps": 25.0,
+      "file": "negative_terminal.npz",
+      "label": "Negative Terminal",
+      "video": null
+    },
+    "negotiable_instrument": {
+      "frames": 1004,
+      "fps": 30.0,
+      "file": "negotiable_instrument.npz",
+      "label": "Negotiable Instrument",
+      "video": null
+    },
+    "negotiate": {
+      "frames": 811,
+      "fps": 24.0,
+      "file": "negotiate.npz",
+      "label": "Negotiate",
+      "video": null
+    },
+    "neigh": {
+      "frames": 150,
+      "fps": 24.0,
+      "file": "neigh.npz",
+      "label": "Neigh",
+      "video": null
+    },
+    "nematicides": {
+      "frames": 730,
+      "fps": 25.0,
+      "file": "nematicides.npz",
+      "label": "Nematicides",
+      "video": null
+    },
+    "neon": {
+      "frames": 616,
+      "fps": 24.0,
+      "file": "neon.npz",
+      "label": "Neon",
+      "video": null
+    },
+    "neonatologist": {
+      "frames": 252,
+      "fps": 25.0,
+      "file": "neonatologist.npz",
+      "label": "Neonatologist",
+      "video": null
+    },
+    "nephrology": {
+      "frames": 109,
+      "fps": 25.0,
+      "file": "nephrology.npz",
+      "label": "Nephrology",
+      "video": null
+    },
+    "net_attendance_ratio": {
+      "frames": 928,
+      "fps": 25.0,
+      "file": "net_attendance_ratio.npz",
+      "label": "Net Attendance Ratio",
+      "video": null
+    },
+    "net_cash_income": {
+      "frames": 615,
+      "fps": 24.0,
+      "file": "net_cash_income.npz",
+      "label": "Net Cash Income",
+      "video": null
+    },
+    "net_domestic_product": {
+      "frames": 832,
+      "fps": 25.0,
+      "file": "net_domestic_product.npz",
+      "label": "Net Domestic Product (Ndp)",
+      "video": null
+    },
+    "net_worth": {
+      "frames": 866,
+      "fps": 24.0,
+      "file": "net_worth.npz",
+      "label": "Net Worth",
+      "video": null
+    },
+    "netting": {
+      "frames": 1466,
+      "fps": 30.0,
+      "file": "netting.npz",
+      "label": "Netting",
+      "video": null
+    },
+    "neurolinguistics": {
+      "frames": 879,
+      "fps": 25.0,
+      "file": "neurolinguistics.npz",
+      "label": "Neurolinguistics",
+      "video": null
+    },
+    "neurologist": {
+      "frames": 346,
+      "fps": 25.0,
+      "file": "neurologist.npz",
+      "label": "Neurologist",
+      "video": null
+    },
+    "neuropsychology": {
+      "frames": 691,
+      "fps": 25.0,
+      "file": "neuropsychology.npz",
+      "label": "Neuropsychology",
+      "video": null
+    },
+    "neutral_conductor": {
+      "frames": 401,
+      "fps": 25.0,
+      "file": "neutral_conductor.npz",
+      "label": "Neutral Conductor",
+      "video": null
+    },
+    "next_day": {
+      "frames": 1662,
+      "fps": 25.0,
+      "file": "next_day.npz",
+      "label": "Next Day",
+      "video": null
+    },
+    "nic_service_desk": {
+      "frames": 585,
+      "fps": 24.0,
+      "file": "nic_service_desk.npz",
+      "label": "Nic Service Desk",
+      "video": null
+    },
+    "nickel": {
+      "frames": 526,
+      "fps": 24.0,
+      "file": "nickel.npz",
+      "label": "Nickel",
+      "video": null
+    },
+    "nightmare_bad_dream": {
+      "frames": 299,
+      "fps": 24.0,
+      "file": "nightmare_bad_dream.npz",
+      "label": "Nightmare Bad Dream",
+      "video": null
+    },
+    "nitrogen_fixation": {
+      "frames": 899,
+      "fps": 24.0,
+      "file": "nitrogen_fixation.npz",
+      "label": "Nitrogen Fixation",
+      "video": null
+    },
+    "no_ball": {
+      "frames": 456,
+      "fps": 25.0,
+      "file": "no_ball.npz",
+      "label": "No Ball",
+      "video": null
+    },
+    "no_dues": {
+      "frames": 1345,
+      "fps": 24.000017166137695,
+      "file": "no_dues.npz",
+      "label": "No Dues",
+      "video": null
+    },
+    "nodules_on_roots": {
+      "frames": 825,
+      "fps": 24.0,
+      "file": "nodules_on_roots.npz",
+      "label": "Nodules On Roots",
+      "video": null
+    },
+    "non_fiction": {
+      "frames": 938,
+      "fps": 25.0,
+      "file": "non_fiction.npz",
+      "label": "Non-Fiction",
+      "video": null
+    },
+    "non_legumes": {
+      "frames": 998,
+      "fps": 24.000024795532227,
+      "file": "non_legumes.npz",
+      "label": "Non Legumes",
+      "video": null
+    },
+    "non_participant_and_participant_observation": {
+      "frames": 1409,
+      "fps": 25.0,
+      "file": "non_participant_and_participant_observation.npz",
+      "label": "Non-Participant And Participant Observation",
+      "video": null
+    },
+    "non_verbal_feedback": {
+      "frames": 928,
+      "fps": 25.0,
+      "file": "non_verbal_feedback.npz",
+      "label": "Non Verbal Feedback",
+      "video": null
+    },
+    "non_volatile": {
+      "frames": 788,
+      "fps": 25.0,
+      "file": "non_volatile.npz",
+      "label": "Non Volatile",
+      "video": null
+    },
+    "noose": {
+      "frames": 148,
+      "fps": 25.0,
+      "file": "noose.npz",
+      "label": "Noose",
+      "video": null
+    },
+    "normal_hearing_sensitivity": {
+      "frames": 271,
+      "fps": 24.0,
+      "file": "normal_hearing_sensitivity.npz",
+      "label": "Normal Hearing Sensitivity",
+      "video": null
+    },
+    "nota": {
+      "frames": 579,
+      "fps": 25.0,
+      "file": "nota.npz",
+      "label": "Nota",
+      "video": null
+    },
+    "notch_layering": {
+      "frames": 913,
+      "fps": 25.0,
+      "file": "notch_layering.npz",
+      "label": "Notch Layering",
+      "video": null
+    },
+    "notebook": {
+      "frames": 88,
+      "fps": 25.0,
+      "file": "notebook.npz",
+      "label": "Notebook",
+      "video": null
+    },
+    "notepad": {
+      "frames": 720,
+      "fps": 25.0,
+      "file": "notepad.npz",
+      "label": "Notepad",
+      "video": null
+    },
+    "notes_master": {
+      "frames": 788,
+      "fps": 25.0,
+      "file": "notes_master.npz",
+      "label": "Notes Master",
+      "video": null
+    },
+    "notice_notification": {
+      "frames": 120,
+      "fps": 25.0,
+      "file": "notice_notification.npz",
+      "label": "Notice Notification",
+      "video": null
+    },
+    "noting": {
+      "frames": 664,
+      "fps": 25.0,
+      "file": "noting.npz",
+      "label": "Noting",
+      "video": null
+    },
+    "now_right_now": {
+      "frames": 100,
+      "fps": 25.0,
+      "file": "now_right_now.npz",
+      "label": "Now Right Now",
+      "video": null
+    },
+    "noxious_gases": {
+      "frames": 530,
+      "fps": 24.0,
+      "file": "noxious_gases.npz",
+      "label": "Noxious Gases",
+      "video": null
+    },
+    "npn_transistor": {
+      "frames": 934,
+      "fps": 25.0,
+      "file": "npn_transistor.npz",
+      "label": "Npn Transistor",
+      "video": null
+    },
+    "nrc_national_register_of_citizens": {
+      "frames": 1378,
+      "fps": 24.000017166137695,
+      "file": "nrc_national_register_of_citizens.npz",
+      "label": "Nrc- National Register Of Citizens",
+      "video": null
+    },
+    "nubilis": {
+      "frames": 657,
+      "fps": 25.0,
+      "file": "nubilis.npz",
+      "label": "Nubilis",
+      "video": null
+    },
+    "number_line": {
+      "frames": 1101,
+      "fps": 25.0,
+      "file": "number_line.npz",
+      "label": "Number Line (Maths)",
+      "video": null
+    },
+    "numerator": {
+      "frames": 911,
+      "fps": 25.0,
+      "file": "numerator.npz",
+      "label": "Numerator (Math)",
+      "video": null
+    },
+    "numerator_and_denominator": {
+      "frames": 365,
+      "fps": 25.0,
+      "file": "numerator_and_denominator.npz",
+      "label": "Numerator And Denominator",
+      "video": null
+    },
+    "nurse_crops": {
+      "frames": 1201,
+      "fps": 25.0,
+      "file": "nurse_crops.npz",
+      "label": "Nurse Crops",
+      "video": null
+    },
+    "nursery_rhymes": {
+      "frames": 680,
+      "fps": 24.0,
+      "file": "nursery_rhymes.npz",
+      "label": "Nursery Rhymes",
+      "video": null
+    },
+    "nurses": {
+      "frames": 75,
+      "fps": 25.0,
+      "file": "nurses.npz",
+      "label": "Nurses",
+      "video": null
+    },
+    "name_plate": {
+      "frames": 179,
+      "fps": 24.0,
+      "file": "name_plate.npz",
+      "label": "Name Plate",
+      "video": null
+    },
+    "nasal_speculum": {
+      "frames": 265,
+      "fps": 25.0,
+      "file": "nasal_speculum.npz",
+      "label": "Nasal Speculum",
+      "video": null
+    },
+    "national_archives": {
+      "frames": 720,
+      "fps": 25.0,
+      "file": "national_archives.npz",
+      "label": "National Archives",
+      "video": null
+    },
+    "national_committee_for_the_integration_of_vocational_education": {
+      "frames": 381,
+      "fps": 24.0,
+      "file": "national_committee_for_the_integration_of_vocational_education.npz",
+      "label": "National Committee For The Integration Of Vocational Education (Ncive)",
+      "video": null
+    },
+    "national_council_for_teacher_education": {
+      "frames": 1369,
+      "fps": 24.000017166137695,
+      "file": "national_council_for_teacher_education.npz",
+      "label": "National Council For Teacher Education (Ncte)",
+      "video": null
+    },
+    "national_crime_records_bureau": {
+      "frames": 560,
+      "fps": 25.0,
+      "file": "national_crime_records_bureau.npz",
+      "label": "National Crime Records Bureau",
+      "video": null
+    },
+    "national_curricular_and_pedagogical_framework_for_early_childhood_care_and_education": {
+      "frames": 271,
+      "fps": 24.0,
+      "file": "national_curricular_and_pedagogical_framework_for_early_childhood_care_and_education.npz",
+      "label": "National Curricular And Pedagogical Framework For Early Childhood Care And Education (Ncpfecce)",
+      "video": null
+    },
+    "national_educational_technology_forum": {
+      "frames": 667,
+      "fps": 24.0,
+      "file": "national_educational_technology_forum.npz",
+      "label": "National Educational Technology Forum (Netf)",
+      "video": null
+    },
+    "national_eligibility_test": {
+      "frames": 251,
+      "fps": 24.0,
+      "file": "national_eligibility_test.npz",
+      "label": "National Eligibility Test (Net)",
+      "video": null
+    },
+    "national_higher_education_regulatory_council": {
+      "frames": 232,
+      "fps": 24.0,
+      "file": "national_higher_education_regulatory_council.npz",
+      "label": "National Higher Education Regulatory Council (Nherc)",
+      "video": null
+    },
+    "national_informatics_centre": {
+      "frames": 469,
+      "fps": 24.0,
+      "file": "national_informatics_centre.npz",
+      "label": "National Informatics Centre",
+      "video": null
+    },
+    "national_institute_of_open_schooling": {
+      "frames": 737,
+      "fps": 24.0,
+      "file": "national_institute_of_open_schooling.npz",
+      "label": "National Institute Of Open Schooling (Nios)",
+      "video": null
+    },
+    "national_institute_of_technology": {
+      "frames": 156,
+      "fps": 24.0,
+      "file": "national_institute_of_technology.npz",
+      "label": "National Institute Of Technology (Nit)",
+      "video": null
+    },
+    "national_professional_standards_for_teachers": {
+      "frames": 170,
+      "fps": 24.0,
+      "file": "national_professional_standards_for_teachers.npz",
+      "label": "National Professional Standards For Teachers (Npst)",
+      "video": null
+    },
+    "national_research_foundation": {
+      "frames": 163,
+      "fps": 24.0,
+      "file": "national_research_foundation.npz",
+      "label": "National Research Foundation (Nrf)",
+      "video": null
+    },
+    "nationalism_incivism": {
+      "frames": 612,
+      "fps": 25.0,
+      "file": "nationalism_incivism.npz",
+      "label": "Nationalism Incivism",
+      "video": null
+    },
+    "natural_disasters": {
+      "frames": 689,
+      "fps": 25.0,
+      "file": "natural_disasters.npz",
+      "label": "Natural Disasters",
+      "video": null
+    },
+    "natural_fibres": {
+      "frames": 1017,
+      "fps": 25.0,
+      "file": "natural_fibres.npz",
+      "label": "Natural Fibres",
+      "video": null
+    },
+    "natural_gas_resources": {
+      "frames": 684,
+      "fps": 24.0,
+      "file": "natural_gas_resources.npz",
+      "label": "Natural Gas Resources",
+      "video": null
+    },
+    "natural_justice": {
+      "frames": 709,
+      "fps": 25.0,
+      "file": "natural_justice.npz",
+      "label": "Natural Justice",
+      "video": null
+    },
+    "natural_number": {
+      "frames": 981,
+      "fps": 25.0,
+      "file": "natural_number.npz",
+      "label": "Natural Number (Maths)",
+      "video": null
+    },
+    "natural_water": {
+      "frames": 79,
+      "fps": 25.0,
+      "file": "natural_water.npz",
+      "label": "Natural Water",
+      "video": null
+    },
+    "nature_tourism": {
+      "frames": 622,
+      "fps": 24.0,
+      "file": "nature_tourism.npz",
+      "label": "Nature Tourism",
+      "video": null
+    },
+    "nauseous": {
+      "frames": 228,
+      "fps": 25.0,
+      "file": "nauseous.npz",
+      "label": "Nauseous",
+      "video": null
+    },
+    "nav_net_assest_value": {
+      "frames": 1237,
+      "fps": 30.0,
+      "file": "nav_net_assest_value.npz",
+      "label": "Nav Net Assest Value",
+      "video": null
+    },
+    "navigation_pane": {
+      "frames": 1200,
+      "fps": 24.000019073486328,
+      "file": "navigation_pane.npz",
+      "label": "Navigation Pane",
+      "video": null
+    },
+    "nazism": {
+      "frames": 1428,
+      "fps": 25.0,
+      "file": "nazism.npz",
+      "label": "Nazism",
+      "video": null
+    },
+    "near_nearby_close_by": {
+      "frames": 95,
+      "fps": 25.0,
+      "file": "near_nearby_close_by.npz",
+      "label": "Near Nearby Close By",
+      "video": null
+    },
+    "negative_integer": {
+      "frames": 946,
+      "fps": 25.0,
+      "file": "negative_integer.npz",
+      "label": "Negative Integer (Math)",
+      "video": null
+    },
+    "neighbor": {
+      "frames": 97,
+      "fps": 25.0,
+      "file": "neighbor.npz",
+      "label": "Neighbor",
+      "video": null
+    },
+    "nemaphose": {
+      "frames": 595,
+      "fps": 25.0,
+      "file": "nemaphose.npz",
+      "label": "Nemaphose",
+      "video": null
+    },
+    "neolithic": {
+      "frames": 953,
+      "fps": 25.0,
+      "file": "neolithic.npz",
+      "label": "Neolithic (Academic)",
+      "video": null
+    },
+    "nervous_system": {
+      "frames": 1094,
+      "fps": 25.0,
+      "file": "nervous_system.npz",
+      "label": "Nervous System (Sign 2)",
+      "video": null
+    },
+    "newly_weds_newly_wed_couple": {
+      "frames": 132,
+      "fps": 25.0,
+      "file": "newly_weds_newly_wed_couple.npz",
+      "label": "Newly Weds Newly Wed Couple",
+      "video": null
+    },
+    "nitrogen": {
+      "frames": 1039,
+      "fps": 24.000022888183594,
+      "file": "nitrogen.npz",
+      "label": "Nitrogen(1)",
+      "video": null
+    },
+    "no_follow": {
+      "frames": 1504,
+      "fps": 24.000015258789062,
+      "file": "no_follow.npz",
+      "label": "No Follow",
+      "video": null
+    },
+    "no_not": {
+      "frames": 96,
+      "fps": 25.0,
+      "file": "no_not.npz",
+      "label": "No Not",
+      "video": null
+    },
+    "no_pain_no_gain": {
+      "frames": 409,
+      "fps": 25.0,
+      "file": "no_pain_no_gain.npz",
+      "label": "No Pain No Gain",
+      "video": null
+    },
+    "noise_din": {
+      "frames": 97,
+      "fps": 25.0,
+      "file": "noise_din.npz",
+      "label": "Noise Din",
+      "video": null
+    },
+    "nomadic_herding": {
+      "frames": 1071,
+      "fps": 25.0,
+      "file": "nomadic_herding.npz",
+      "label": "Nomadic Herding",
+      "video": null
+    },
+    "non_cooperation_movement": {
+      "frames": 1231,
+      "fps": 25.0,
+      "file": "non_cooperation_movement.npz",
+      "label": "Non Cooperation Movement",
+      "video": null
+    },
+    "non_humped": {
+      "frames": 530,
+      "fps": 24.0,
+      "file": "non_humped.npz",
+      "label": "Non Humped",
+      "video": null
+    },
+    "non_manual_expression": {
+      "frames": 915,
+      "fps": 24.0,
+      "file": "non_manual_expression.npz",
+      "label": "Non-Manual Expression",
+      "video": null
+    },
+    "non_official": {
+      "frames": 699,
+      "fps": 25.0,
+      "file": "non_official.npz",
+      "label": "Non Official",
+      "video": null
+    },
+    "non_woven": {
+      "frames": 468,
+      "fps": 25.0,
+      "file": "non_woven.npz",
+      "label": "Non Woven",
+      "video": null
+    },
+    "noncommunicable_disease": {
+      "frames": 612,
+      "fps": 25.0,
+      "file": "noncommunicable_disease.npz",
+      "label": "Noncommunicable Disease",
+      "video": null
+    },
+    "none_nothing": {
+      "frames": 99,
+      "fps": 25.0,
+      "file": "none_nothing.npz",
+      "label": "None Nothing (Sign 2)",
+      "video": null
+    },
+    "none_nothing_empty": {
+      "frames": 99,
+      "fps": 25.0,
+      "file": "none_nothing_empty.npz",
+      "label": "None Nothing Empty",
+      "video": null
+    },
+    "norm": {
+      "frames": 284,
+      "fps": 24.0,
+      "file": "norm.npz",
+      "label": "Norm",
+      "video": null
+    },
+    "norm_group": {
+      "frames": 349,
+      "fps": 24.0,
+      "file": "norm_group.npz",
+      "label": "Norm Group",
+      "video": null
+    },
+    "normal_curve": {
+      "frames": 955,
+      "fps": 24.000024795532227,
+      "file": "normal_curve.npz",
+      "label": "Normal Curve",
+      "video": null
+    },
+    "normal_delivery_and_cesarean": {
+      "frames": 904,
+      "fps": 25.0,
+      "file": "normal_delivery_and_cesarean.npz",
+      "label": "Normal Delivery And Cesarean",
+      "video": null
+    },
+    "north_pole_and_south_pole": {
+      "frames": 641,
+      "fps": 25.0,
+      "file": "north_pole_and_south_pole.npz",
+      "label": "North Pole And South Pole (Magnet)",
+      "video": null
+    },
+    "nostril": {
+      "frames": 111,
+      "fps": 25.0,
+      "file": "nostril.npz",
+      "label": "Nostril",
+      "video": null
+    },
+    "not_operator": {
+      "frames": 638,
+      "fps": 25.0,
+      "file": "not_operator.npz",
+      "label": "Not Operator",
+      "video": null
+    },
+    "noverca": {
+      "frames": 972,
+      "fps": 25.0,
+      "file": "noverca.npz",
+      "label": "Noverca",
+      "video": null
+    },
+    "novus_homo": {
+      "frames": 662,
+      "fps": 25.0,
+      "file": "novus_homo.npz",
+      "label": "Novus Homo",
+      "video": null
+    },
+    "npr_national_population_register": {
+      "frames": 683,
+      "fps": 24.0,
+      "file": "npr_national_population_register.npz",
+      "label": "Npr- National Population Register",
+      "video": null
+    },
+    "nri": {
+      "frames": 888,
+      "fps": 25.0,
+      "file": "nri.npz",
+      "label": "Nri",
+      "video": null
+    },
+    "nuclear_family": {
+      "frames": 123,
+      "fps": 25.0,
+      "file": "nuclear_family.npz",
+      "label": "Nuclear Family (Sign 2)",
+      "video": null
+    },
+    "nudum_factum": {
+      "frames": 928,
+      "fps": 25.0,
+      "file": "nudum_factum.npz",
+      "label": "Nudum Factum",
+      "video": null
+    },
+    "nuisance": {
+      "frames": 633,
+      "fps": 25.0,
+      "file": "nuisance.npz",
+      "label": "Nuisance",
+      "video": null
+    },
+    "number_name": {
+      "frames": 1422,
+      "fps": 25.0,
+      "file": "number_name.npz",
+      "label": "Number Name (Maths)",
+      "video": null
+    },
+    "number_plate": {
+      "frames": 153,
+      "fps": 25.0,
+      "file": "number_plate.npz",
+      "label": "Number Plate",
+      "video": null
+    },
+    "number_punch": {
+      "frames": 1224,
+      "fps": 25.0,
+      "file": "number_punch.npz",
+      "label": "Number Punch",
+      "video": null
+    },
+    "numbering_library": {
+      "frames": 933,
+      "fps": 25.0,
+      "file": "numbering_library.npz",
+      "label": "Numbering Library",
+      "video": null
+    },
+    "numeral": {
+      "frames": 1443,
+      "fps": 25.0,
+      "file": "numeral.npz",
+      "label": "Numeral (Maths)",
+      "video": null
+    },
+    "nutrient": {
+      "frames": 2152,
+      "fps": 25.0,
+      "file": "nutrient.npz",
+      "label": "Nutrient (Academic)",
+      "video": null
+    }
+  }
+}

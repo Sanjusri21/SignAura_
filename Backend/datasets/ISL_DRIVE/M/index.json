@@ -1,6 +1,6 @@
 {
   "dataset": "Group M - New Words",
-  "count": 103,
+  "count": 307,
   "words": {
     "m_rna": {
       "frames": 45,
@@ -721,6 +721,1434 @@
       "fps": 25.0,
       "file": "mystery.npz",
       "label": "Mystery (Explanation)",
+      "video": null
+    },
+    "machin_field_capacity": {
+      "frames": 796,
+      "fps": 25.0,
+      "file": "machin_field_capacity.npz",
+      "label": "Machin Field Capacity",
+      "video": null
+    },
+    "machine_motor_engine": {
+      "frames": 120,
+      "fps": 25.0,
+      "file": "machine_motor_engine.npz",
+      "label": "Machine Motor Engine",
+      "video": null
+    },
+    "machine_screw": {
+      "frames": 276,
+      "fps": 25.0,
+      "file": "machine_screw.npz",
+      "label": "Machine Screw",
+      "video": null
+    },
+    "machine_vice": {
+      "frames": 450,
+      "fps": 25.0,
+      "file": "machine_vice.npz",
+      "label": "Machine Vice",
+      "video": null
+    },
+    "maharashtra": {
+      "frames": 83,
+      "fps": 25.0,
+      "file": "maharashtra.npz",
+      "label": "Maharashtra",
+      "video": null
+    },
+    "mahavir_jayanti": {
+      "frames": 96,
+      "fps": 25.0,
+      "file": "mahavir_jayanti.npz",
+      "label": "Mahavir Jayanti",
+      "video": null
+    },
+    "mahr": {
+      "frames": 645,
+      "fps": 25.0,
+      "file": "mahr.npz",
+      "label": "Mahr",
+      "video": null
+    },
+    "micr_code": {
+      "frames": 892,
+      "fps": 30.0,
+      "file": "micr_code.npz",
+      "label": "Micr Code",
+      "video": null
+    },
+    "macros": {
+      "frames": 851,
+      "fps": 25.0,
+      "file": "macros.npz",
+      "label": "Macros",
+      "video": null
+    },
+    "mafia_don": {
+      "frames": 1219,
+      "fps": 25.0,
+      "file": "mafia_don.npz",
+      "label": "Mafia Don",
+      "video": null
+    },
+    "mahendra_singh_dhoni": {
+      "frames": 77,
+      "fps": 25.0,
+      "file": "mahendra_singh_dhoni.npz",
+      "label": "Mahendra Singh Dhoni",
+      "video": null
+    },
+    "maiden_over": {
+      "frames": 323,
+      "fps": 25.0,
+      "file": "maiden_over.npz",
+      "label": "Maiden Over (Explanation 2)",
+      "video": null
+    },
+    "majority_and_opposition": {
+      "frames": 1090,
+      "fps": 25.0,
+      "file": "majority_and_opposition.npz",
+      "label": "Majority And Opposition",
+      "video": null
+    },
+    "mammary_gland": {
+      "frames": 276,
+      "fps": 25.0,
+      "file": "mammary_gland.npz",
+      "label": "Mammary Gland",
+      "video": null
+    },
+    "mammography": {
+      "frames": 160,
+      "fps": 25.0,
+      "file": "mammography.npz",
+      "label": "Mammography",
+      "video": null
+    },
+    "manner_behaviour_conduct": {
+      "frames": 91,
+      "fps": 25.0,
+      "file": "manner_behaviour_conduct.npz",
+      "label": "Manner Behaviour Conduct",
+      "video": null
+    },
+    "manure_and_fertilizer": {
+      "frames": 1196,
+      "fps": 25.0,
+      "file": "manure_and_fertilizer.npz",
+      "label": "Manure And Fertilizer",
+      "video": null
+    },
+    "manuscript": {
+      "frames": 354,
+      "fps": 25.0,
+      "file": "manuscript.npz",
+      "label": "Manuscript",
+      "video": null
+    },
+    "marble_engraving_machine": {
+      "frames": 477,
+      "fps": 24.0,
+      "file": "marble_engraving_machine.npz",
+      "label": "Marble Engraving Machine",
+      "video": null
+    },
+    "margin_difference": {
+      "frames": 324,
+      "fps": 24.0,
+      "file": "margin_difference.npz",
+      "label": "Margin Difference (Numbers)",
+      "video": null
+    },
+    "marine_fisheries": {
+      "frames": 414,
+      "fps": 24.0,
+      "file": "marine_fisheries.npz",
+      "label": "Marine Fisheries",
+      "video": null
+    },
+    "mark_entry": {
+      "frames": 1079,
+      "fps": 25.0,
+      "file": "mark_entry.npz",
+      "label": "Mark Entry",
+      "video": null
+    },
+    "market_challenger": {
+      "frames": 718,
+      "fps": 24.0,
+      "file": "market_challenger.npz",
+      "label": "Market Challenger",
+      "video": null
+    },
+    "market_data": {
+      "frames": 1271,
+      "fps": 30.0,
+      "file": "market_data.npz",
+      "label": "Market Data",
+      "video": null
+    },
+    "marriage_registration_certificate": {
+      "frames": 718,
+      "fps": 24.0,
+      "file": "marriage_registration_certificate.npz",
+      "label": "Marriage Registration Certificate",
+      "video": null
+    },
+    "mars_or_red_planet": {
+      "frames": 1603,
+      "fps": 24.000030517578125,
+      "file": "mars_or_red_planet.npz",
+      "label": "Mars Or Red Planet",
+      "video": null
+    },
+    "master_trainer": {
+      "frames": 1195,
+      "fps": 24.00002098083496,
+      "file": "master_trainer.npz",
+      "label": "Master Trainer",
+      "video": null
+    },
+    "maths_line": {
+      "frames": 2310,
+      "fps": 25.0,
+      "file": "maths_line.npz",
+      "label": "Maths-Line (Math)",
+      "video": null
+    },
+    "maths_line_segment": {
+      "frames": 2600,
+      "fps": 25.0,
+      "file": "maths_line_segment.npz",
+      "label": "Maths-Line Segment (Math)",
+      "video": null
+    },
+    "matriarchal": {
+      "frames": 701,
+      "fps": 25.0,
+      "file": "matriarchal.npz",
+      "label": "Matriarchal",
+      "video": null
+    },
+    "meander_and_ox_bow_lake": {
+      "frames": 1371,
+      "fps": 25.0,
+      "file": "meander_and_ox_bow_lake.npz",
+      "label": "Meander And Ox Bow Lake",
+      "video": null
+    },
+    "measuring_box": {
+      "frames": 471,
+      "fps": 25.0,
+      "file": "measuring_box.npz",
+      "label": "Measuring Box",
+      "video": null
+    },
+    "measuring_instruments": {
+      "frames": 636,
+      "fps": 25.0,
+      "file": "measuring_instruments.npz",
+      "label": "Measuring Instruments",
+      "video": null
+    },
+    "mechanical_methods": {
+      "frames": 687,
+      "fps": 25.0,
+      "file": "mechanical_methods.npz",
+      "label": "Mechanical Methods",
+      "video": null
+    },
+    "medical_equipment": {
+      "frames": 1050,
+      "fps": 25.0,
+      "file": "medical_equipment.npz",
+      "label": "Medical Equipment",
+      "video": null
+    },
+    "medical_examination": {
+      "frames": 385,
+      "fps": 24.0,
+      "file": "medical_examination.npz",
+      "label": "Medical Examination",
+      "video": null
+    },
+    "meeting_reactions": {
+      "frames": 550,
+      "fps": 25.0,
+      "file": "meeting_reactions.npz",
+      "label": "Meeting Reactions",
+      "video": null
+    },
+    "megalith": {
+      "frames": 1784,
+      "fps": 25.0,
+      "file": "megalith.npz",
+      "label": "Megalith (Academic)",
+      "video": null
+    },
+    "melanoma": {
+      "frames": 104,
+      "fps": 25.0,
+      "file": "melanoma.npz",
+      "label": "Melanoma",
+      "video": null
+    },
+    "members_of_legislative_assembly": {
+      "frames": 632,
+      "fps": 25.0,
+      "file": "members_of_legislative_assembly.npz",
+      "label": "Members Of Legislative Assembly (Mla)",
+      "video": null
+    },
+    "members_of_parliament": {
+      "frames": 337,
+      "fps": 25.0,
+      "file": "members_of_parliament.npz",
+      "label": "Members Of Parliament (Mp)",
+      "video": null
+    },
+    "memorandum_of_association": {
+      "frames": 792,
+      "fps": 25.0,
+      "file": "memorandum_of_association.npz",
+      "label": "Memorandum Of Association",
+      "video": null
+    },
+    "memorandum_of_understanding": {
+      "frames": 415,
+      "fps": 24.0,
+      "file": "memorandum_of_understanding.npz",
+      "label": "Memorandum Of Understanding (Mou)",
+      "video": null
+    },
+    "memory_loss": {
+      "frames": 107,
+      "fps": 25.0,
+      "file": "memory_loss.npz",
+      "label": "Memory Loss",
+      "video": null
+    },
+    "menarche_menstruation_cycle_and_menopause": {
+      "frames": 1767,
+      "fps": 25.0,
+      "file": "menarche_menstruation_cycle_and_menopause.npz",
+      "label": "Menarche Menstruation Cycle And Menopause",
+      "video": null
+    },
+    "mens_rea_actus_reus": {
+      "frames": 1248,
+      "fps": 25.0,
+      "file": "mens_rea_actus_reus.npz",
+      "label": "Mens Rea Actus Reus",
+      "video": null
+    },
+    "menstruation_menses_menstrual_cycle_periods": {
+      "frames": 69,
+      "fps": 25.0,
+      "file": "menstruation_menses_menstrual_cycle_periods.npz",
+      "label": "Menstruation Menses Menstrual Cycle Periods",
+      "video": null
+    },
+    "mental_age_gifted_children": {
+      "frames": 789,
+      "fps": 24.0,
+      "file": "mental_age_gifted_children.npz",
+      "label": "Mental Age Gifted Children",
+      "video": null
+    },
+    "menubar": {
+      "frames": 480,
+      "fps": 25.0,
+      "file": "menubar.npz",
+      "label": "Menubar",
+      "video": null
+    },
+    "mercantile": {
+      "frames": 416,
+      "fps": 25.0,
+      "file": "mercantile.npz",
+      "label": "Mercantile",
+      "video": null
+    },
+    "messages": {
+      "frames": 140,
+      "fps": 24.0,
+      "file": "messages.npz",
+      "label": "Messages (Videos)",
+      "video": null
+    },
+    "metabolism": {
+      "frames": 564,
+      "fps": 25.0,
+      "file": "metabolism.npz",
+      "label": "Metabolism",
+      "video": null
+    },
+    "metallic_minerals": {
+      "frames": 729,
+      "fps": 24.0,
+      "file": "metallic_minerals.npz",
+      "label": "Metallic Minerals",
+      "video": null
+    },
+    "metamorphosis": {
+      "frames": 927,
+      "fps": 25.0,
+      "file": "metamorphosis.npz",
+      "label": "Metamorphosis",
+      "video": null
+    },
+    "methods_of_disposal": {
+      "frames": 988,
+      "fps": 25.0,
+      "file": "methods_of_disposal.npz",
+      "label": "Methods Of Disposal",
+      "video": null
+    },
+    "methods_of_planting_lawn": {
+      "frames": 419,
+      "fps": 25.0,
+      "file": "methods_of_planting_lawn.npz",
+      "label": "Methods Of Planting Lawn",
+      "video": null
+    },
+    "metropolitan_development_authority": {
+      "frames": 576,
+      "fps": 24.0,
+      "file": "metropolitan_development_authority.npz",
+      "label": "Metropolitan Development Authority",
+      "video": null
+    },
+    "microbiology": {
+      "frames": 67,
+      "fps": 25.0,
+      "file": "microbiology.npz",
+      "label": "Microbiology",
+      "video": null
+    },
+    "microsoft_edge": {
+      "frames": 513,
+      "fps": 24.0,
+      "file": "microsoft_edge.npz",
+      "label": "Microsoft Edge",
+      "video": null
+    },
+    "middle_layer_b_horizon": {
+      "frames": 999,
+      "fps": 25.0,
+      "file": "middle_layer_b_horizon.npz",
+      "label": "Middle Layer B-Horizon",
+      "video": null
+    },
+    "middle_office": {
+      "frames": 1241,
+      "fps": 30.0,
+      "file": "middle_office.npz",
+      "label": "Middle Office",
+      "video": null
+    },
+    "middle_term_math": {
+      "frames": 1156,
+      "fps": 25.0,
+      "file": "middle_term_math.npz",
+      "label": "Middle Term Math",
+      "video": null
+    },
+    "military_robot": {
+      "frames": 516,
+      "fps": 24.0,
+      "file": "military_robot.npz",
+      "label": "Military Robot",
+      "video": null
+    },
+    "milk_cream_malai": {
+      "frames": 204,
+      "fps": 25.0,
+      "file": "milk_cream_malai.npz",
+      "label": "Milk Cream Malai",
+      "video": null
+    },
+    "mimicry_weeds": {
+      "frames": 1200,
+      "fps": 24.000019073486328,
+      "file": "mimicry_weeds.npz",
+      "label": "Mimicry Weeds",
+      "video": null
+    },
+    "mind_your_language_watch_your_language": {
+      "frames": 669,
+      "fps": 24.0,
+      "file": "mind_your_language_watch_your_language.npz",
+      "label": "Mind Your Language Watch Your Language",
+      "video": null
+    },
+    "minimum_support_price": {
+      "frames": 745,
+      "fps": 25.0,
+      "file": "minimum_support_price.npz",
+      "label": "Minimum Support Price",
+      "video": null
+    },
+    "minimum_temperature": {
+      "frames": 782,
+      "fps": 23.976024627685547,
+      "file": "minimum_temperature.npz",
+      "label": "Minimum Temperature",
+      "video": null
+    },
+    "ministry_of_women_and_child_development": {
+      "frames": 320,
+      "fps": 24.0,
+      "file": "ministry_of_women_and_child_development.npz",
+      "label": "Ministry Of Women And Child Development (Mwcd)",
+      "video": null
+    },
+    "minutes_of_meeting": {
+      "frames": 540,
+      "fps": 25.0,
+      "file": "minutes_of_meeting.npz",
+      "label": "Minutes Of Meeting (Mom)",
+      "video": null
+    },
+    "miscarriage_and_abortion": {
+      "frames": 985,
+      "fps": 25.0,
+      "file": "miscarriage_and_abortion.npz",
+      "label": "Miscarriage And Abortion",
+      "video": null
+    },
+    "mistake_error": {
+      "frames": 58,
+      "fps": 25.0,
+      "file": "mistake_error.npz",
+      "label": "Mistake Error",
+      "video": null
+    },
+    "misunderstand_misconstrue": {
+      "frames": 81,
+      "fps": 25.0,
+      "file": "misunderstand_misconstrue.npz",
+      "label": "Misunderstand Misconstrue",
+      "video": null
+    },
+    "mixed_crops": {
+      "frames": 818,
+      "fps": 25.0,
+      "file": "mixed_crops.npz",
+      "label": "Mixed Crops",
+      "video": null
+    },
+    "mixed_fraction": {
+      "frames": 732,
+      "fps": 24.0,
+      "file": "mixed_fraction.npz",
+      "label": "Mixed Fraction",
+      "video": null
+    },
+    "mockup": {
+      "frames": 1040,
+      "fps": 24.000022888183594,
+      "file": "mockup.npz",
+      "label": "Mockup",
+      "video": null
+    },
+    "model_answer": {
+      "frames": 846,
+      "fps": 24.0,
+      "file": "model_answer.npz",
+      "label": "Model Answer",
+      "video": null
+    },
+    "moderately_severe_hearing_loss": {
+      "frames": 324,
+      "fps": 24.0,
+      "file": "moderately_severe_hearing_loss.npz",
+      "label": "Moderately Severe Hearing Loss",
+      "video": null
+    },
+    "modern_history": {
+      "frames": 687,
+      "fps": 25.0,
+      "file": "modern_history.npz",
+      "label": "Modern History",
+      "video": null
+    },
+    "molecules": {
+      "frames": 378,
+      "fps": 24.0,
+      "file": "molecules.npz",
+      "label": "Molecules",
+      "video": null
+    },
+    "monastery": {
+      "frames": 1206,
+      "fps": 25.0,
+      "file": "monastery.npz",
+      "label": "Monastery (Academic)",
+      "video": null
+    },
+    "monitor": {
+      "frames": 468,
+      "fps": 25.0,
+      "file": "monitor.npz",
+      "label": "Monitor",
+      "video": null
+    },
+    "monk": {
+      "frames": 1511,
+      "fps": 25.0,
+      "file": "monk.npz",
+      "label": "Monk (Academic)",
+      "video": null
+    },
+    "monocot_weeds": {
+      "frames": 393,
+      "fps": 24.0,
+      "file": "monocot_weeds.npz",
+      "label": "Monocot Weeds",
+      "video": null
+    },
+    "monoculture": {
+      "frames": 596,
+      "fps": 25.0,
+      "file": "monoculture.npz",
+      "label": "Monoculture",
+      "video": null
+    },
+    "monopoly": {
+      "frames": 688,
+      "fps": 25.0,
+      "file": "monopoly.npz",
+      "label": "Monopoly",
+      "video": null
+    },
+    "monthly_interest": {
+      "frames": 1273,
+      "fps": 30.0,
+      "file": "monthly_interest.npz",
+      "label": "Monthly Interest",
+      "video": null
+    },
+    "monument": {
+      "frames": 1109,
+      "fps": 25.0,
+      "file": "monument.npz",
+      "label": "Monument (Explanation)",
+      "video": null
+    },
+    "moo_low": {
+      "frames": 138,
+      "fps": 24.0,
+      "file": "moo_low.npz",
+      "label": "Moo Low",
+      "video": null
+    },
+    "mood": {
+      "frames": 182,
+      "fps": 25.0,
+      "file": "mood.npz",
+      "label": "Mood",
+      "video": null
+    },
+    "mortuary": {
+      "frames": 261,
+      "fps": 25.0,
+      "file": "mortuary.npz",
+      "label": "Mortuary",
+      "video": null
+    },
+    "motion_capture": {
+      "frames": 745,
+      "fps": 24.0,
+      "file": "motion_capture.npz",
+      "label": "Motion Capture",
+      "video": null
+    },
+    "motor_skills": {
+      "frames": 800,
+      "fps": 25.0,
+      "file": "motor_skills.npz",
+      "label": "Motor Skills",
+      "video": null
+    },
+    "motor_vehicle_act": {
+      "frames": 709,
+      "fps": 25.0,
+      "file": "motor_vehicle_act.npz",
+      "label": "Motor Vehicle Act",
+      "video": null
+    },
+    "mou_memorandum_of_understanding_moa_memorandum_of_agreement": {
+      "frames": 979,
+      "fps": 24.000024795532227,
+      "file": "mou_memorandum_of_understanding_moa_memorandum_of_agreement.npz",
+      "label": "Mou- Memorandum Of Understanding Moa- Memorandum Of Agreement",
+      "video": null
+    },
+    "mount_layering": {
+      "frames": 890,
+      "fps": 25.0,
+      "file": "mount_layering.npz",
+      "label": "Mount Layering",
+      "video": null
+    },
+    "mouse_pointer": {
+      "frames": 357,
+      "fps": 25.0,
+      "file": "mouse_pointer.npz",
+      "label": "Mouse Pointer",
+      "video": null
+    },
+    "ms_office": {
+      "frames": 610,
+      "fps": 25.0,
+      "file": "ms_office.npz",
+      "label": "Ms Office",
+      "video": null
+    },
+    "mulching": {
+      "frames": 1068,
+      "fps": 25.0,
+      "file": "mulching.npz",
+      "label": "Mulching",
+      "video": null
+    },
+    "multilingualism": {
+      "frames": 403,
+      "fps": 24.0,
+      "file": "multilingualism.npz",
+      "label": "Multilingualism",
+      "video": null
+    },
+    "multipal_cropping": {
+      "frames": 953,
+      "fps": 24.000024795532227,
+      "file": "multipal_cropping.npz",
+      "label": "Multipal Cropping",
+      "video": null
+    },
+    "mumbai_underworld": {
+      "frames": 514,
+      "fps": 25.0,
+      "file": "mumbai_underworld.npz",
+      "label": "Mumbai Underworld",
+      "video": null
+    },
+    "mummification": {
+      "frames": 1686,
+      "fps": 25.0,
+      "file": "mummification.npz",
+      "label": "Mummification",
+      "video": null
+    },
+    "mushroom_rocks_loess_and_sand_dunes": {
+      "frames": 2633,
+      "fps": 25.0,
+      "file": "mushroom_rocks_loess_and_sand_dunes.npz",
+      "label": "Mushroom Rocks Loess And Sand Dunes",
+      "video": null
+    },
+    "must_should": {
+      "frames": 99,
+      "fps": 25.0,
+      "file": "must_should.npz",
+      "label": "Must Should",
+      "video": null
+    },
+    "mutual_fund": {
+      "frames": 822,
+      "fps": 30.0,
+      "file": "mutual_fund.npz",
+      "label": "Mutual Fund",
+      "video": null
+    },
+    "my_gov": {
+      "frames": 457,
+      "fps": 24.0,
+      "file": "my_gov.npz",
+      "label": "My Gov",
+      "video": null
+    },
+    "m5_m30": {
+      "frames": 1371,
+      "fps": 24.000017166137695,
+      "file": "m5_m30.npz",
+      "label": "M5 M30",
+      "video": null
+    },
+    "machine_control_unit": {
+      "frames": 360,
+      "fps": 25.0,
+      "file": "machine_control_unit.npz",
+      "label": "Machine Control Unit",
+      "video": null
+    },
+    "machine_language": {
+      "frames": 911,
+      "fps": 25.0,
+      "file": "machine_language.npz",
+      "label": "Machine Language",
+      "video": null
+    },
+    "mafroor": {
+      "frames": 508,
+      "fps": 25.0,
+      "file": "mafroor.npz",
+      "label": "Mafroor",
+      "video": null
+    },
+    "magnetic_resonance_imaging": {
+      "frames": 324,
+      "fps": 25.0,
+      "file": "magnetic_resonance_imaging.npz",
+      "label": "Magnetic Resonance Imaging (Mri)",
+      "video": null
+    },
+    "magnetic_vice": {
+      "frames": 541,
+      "fps": 25.0,
+      "file": "magnetic_vice.npz",
+      "label": "Magnetic Vice",
+      "video": null
+    },
+    "mahrana": {
+      "frames": 493,
+      "fps": 25.0,
+      "file": "mahrana.npz",
+      "label": "Mahrana",
+      "video": null
+    },
+    "main_objectives_of_lawn": {
+      "frames": 602,
+      "fps": 25.0,
+      "file": "main_objectives_of_lawn.npz",
+      "label": "Main Objectives Of Lawn",
+      "video": null
+    },
+    "main_specialities_of_lawn": {
+      "frames": 1791,
+      "fps": 25.0,
+      "file": "main_specialities_of_lawn.npz",
+      "label": "Main Specialities Of Lawn",
+      "video": null
+    },
+    "male_masculine": {
+      "frames": 84,
+      "fps": 25.0,
+      "file": "male_masculine.npz",
+      "label": "Male Masculine",
+      "video": null
+    },
+    "malleability_and_brittleness": {
+      "frames": 726,
+      "fps": 25.0,
+      "file": "malleability_and_brittleness.npz",
+      "label": "Malleability And Brittleness",
+      "video": null
+    },
+    "mammals": {
+      "frames": 924,
+      "fps": 25.0,
+      "file": "mammals.npz",
+      "label": "Mammals",
+      "video": null
+    },
+    "manage_administer_handle_operate_supervise": {
+      "frames": 93,
+      "fps": 25.0,
+      "file": "manage_administer_handle_operate_supervise.npz",
+      "label": "Manage Administer Handle Operate Supervise",
+      "video": null
+    },
+    "mania": {
+      "frames": 288,
+      "fps": 25.0,
+      "file": "mania.npz",
+      "label": "Mania",
+      "video": null
+    },
+    "many_numerous": {
+      "frames": 83,
+      "fps": 25.0,
+      "file": "many_numerous.npz",
+      "label": "Many Numerous",
+      "video": null
+    },
+    "marginalization": {
+      "frames": 1035,
+      "fps": 25.0,
+      "file": "marginalization.npz",
+      "label": "Marginalization",
+      "video": null
+    },
+    "marinade": {
+      "frames": 383,
+      "fps": 24.0,
+      "file": "marinade.npz",
+      "label": "Marinade",
+      "video": null
+    },
+    "maritime_warfare": {
+      "frames": 503,
+      "fps": 25.0,
+      "file": "maritime_warfare.npz",
+      "label": "Maritime Warfare",
+      "video": null
+    },
+    "mark_to_market_margin": {
+      "frames": 802,
+      "fps": 30.0,
+      "file": "mark_to_market_margin.npz",
+      "label": "Mark To Market Margin",
+      "video": null
+    },
+    "marriage_officer_witnesses_by_declaration": {
+      "frames": 1071,
+      "fps": 24.000022888183594,
+      "file": "marriage_officer_witnesses_by_declaration.npz",
+      "label": "Marriage Officer Witnesses By Declaration",
+      "video": null
+    },
+    "marry_wed": {
+      "frames": 119,
+      "fps": 25.0,
+      "file": "marry_wed.npz",
+      "label": "Marry Wed",
+      "video": null
+    },
+    "marsh_plant": {
+      "frames": 1067,
+      "fps": 24.000022888183594,
+      "file": "marsh_plant.npz",
+      "label": "Marsh Plant",
+      "video": null
+    },
+    "mary_virgin_mary": {
+      "frames": 81,
+      "fps": 25.0,
+      "file": "mary_virgin_mary.npz",
+      "label": "Mary Virgin Mary",
+      "video": null
+    },
+    "mask": {
+      "frames": 264,
+      "fps": 25.0,
+      "file": "mask.npz",
+      "label": "Mask",
+      "video": null
+    },
+    "mass_tourism": {
+      "frames": 587,
+      "fps": 24.0,
+      "file": "mass_tourism.npz",
+      "label": "Mass Tourism",
+      "video": null
+    },
+    "master_of_education": {
+      "frames": 187,
+      "fps": 24.0,
+      "file": "master_of_education.npz",
+      "label": "Master Of Education (M Ed)",
+      "video": null
+    },
+    "master_of_philosophy": {
+      "frames": 374,
+      "fps": 24.0,
+      "file": "master_of_philosophy.npz",
+      "label": "Master Of Philosophy (M Phil)",
+      "video": null
+    },
+    "mastermind": {
+      "frames": 1304,
+      "fps": 24.000019073486328,
+      "file": "mastermind.npz",
+      "label": "Mastermind",
+      "video": null
+    },
+    "maternity": {
+      "frames": 153,
+      "fps": 25.0,
+      "file": "maternity.npz",
+      "label": "Maternity",
+      "video": null
+    },
+    "maternity_leave": {
+      "frames": 988,
+      "fps": 25.0,
+      "file": "maternity_leave.npz",
+      "label": "Maternity Leave",
+      "video": null
+    },
+    "mauryas": {
+      "frames": 940,
+      "fps": 25.0,
+      "file": "mauryas.npz",
+      "label": "Mauryas (Academic)",
+      "video": null
+    },
+    "maxilla": {
+      "frames": 216,
+      "fps": 25.0,
+      "file": "maxilla.npz",
+      "label": "Maxilla",
+      "video": null
+    },
+    "maximize": {
+      "frames": 396,
+      "fps": 25.0,
+      "file": "maximize.npz",
+      "label": "Maximize",
+      "video": null
+    },
+    "maya": {
+      "frames": 414,
+      "fps": 24.0,
+      "file": "maya.npz",
+      "label": "Maya",
+      "video": null
+    },
+    "means_of_production": {
+      "frames": 1248,
+      "fps": 25.0,
+      "file": "means_of_production.npz",
+      "label": "Means Of Production",
+      "video": null
+    },
+    "meat_product": {
+      "frames": 850,
+      "fps": 24.0,
+      "file": "meat_product.npz",
+      "label": "Meat Product",
+      "video": null
+    },
+    "mechanical_control": {
+      "frames": 935,
+      "fps": 25.0,
+      "file": "mechanical_control.npz",
+      "label": "Mechanical Control",
+      "video": null
+    },
+    "mechanical_edging": {
+      "frames": 634,
+      "fps": 25.0,
+      "file": "mechanical_edging.npz",
+      "label": "Mechanical Edging",
+      "video": null
+    },
+    "media_release_or_press_release_or_press_statement": {
+      "frames": 689,
+      "fps": 25.0,
+      "file": "media_release_or_press_release_or_press_statement.npz",
+      "label": "Media Release Or Press Release Or Press Statement",
+      "video": null
+    },
+    "medical_certificate": {
+      "frames": 948,
+      "fps": 24.0,
+      "file": "medical_certificate.npz",
+      "label": "Medical Certificate",
+      "video": null
+    },
+    "medical_robot": {
+      "frames": 580,
+      "fps": 24.0,
+      "file": "medical_robot.npz",
+      "label": "Medical Robot",
+      "video": null
+    },
+    "mediocre_average": {
+      "frames": 736,
+      "fps": 25.0,
+      "file": "mediocre_average.npz",
+      "label": "Mediocre Average",
+      "video": null
+    },
+    "medium": {
+      "frames": 271,
+      "fps": 25.0,
+      "file": "medium.npz",
+      "label": "Medium",
+      "video": null
+    },
+    "melanocyte": {
+      "frames": 82,
+      "fps": 25.0,
+      "file": "melanocyte.npz",
+      "label": "Melanocyte",
+      "video": null
+    },
+    "memory_bank": {
+      "frames": 583,
+      "fps": 24.0,
+      "file": "memory_bank.npz",
+      "label": "Memory Bank",
+      "video": null
+    },
+    "menopause": {
+      "frames": 492,
+      "fps": 25.0,
+      "file": "menopause.npz",
+      "label": "Menopause",
+      "video": null
+    },
+    "mercedes_benz": {
+      "frames": 125,
+      "fps": 25.0,
+      "file": "mercedes_benz.npz",
+      "label": "Mercedes-Benz",
+      "video": null
+    },
+    "mercerized_cotton": {
+      "frames": 720,
+      "fps": 25.0,
+      "file": "mercerized_cotton.npz",
+      "label": "Mercerized Cotton",
+      "video": null
+    },
+    "mesolithic": {
+      "frames": 1437,
+      "fps": 25.0,
+      "file": "mesolithic.npz",
+      "label": "Mesolithic (Academic)",
+      "video": null
+    },
+    "message_send": {
+      "frames": 66,
+      "fps": 24.0,
+      "file": "message_send.npz",
+      "label": "Message Send",
+      "video": null
+    },
+    "metallic_and_non_metallic_minerals": {
+      "frames": 948,
+      "fps": 25.0,
+      "file": "metallic_and_non_metallic_minerals.npz",
+      "label": "Metallic And Non-Metallic Minerals",
+      "video": null
+    },
+    "metamerism": {
+      "frames": 756,
+      "fps": 25.0,
+      "file": "metamerism.npz",
+      "label": "Metamerism",
+      "video": null
+    },
+    "metaphor": {
+      "frames": 1018,
+      "fps": 25.0,
+      "file": "metaphor.npz",
+      "label": "Metaphor",
+      "video": null
+    },
+    "meteors_meteorites": {
+      "frames": 1724,
+      "fps": 24.000028610229492,
+      "file": "meteors_meteorites.npz",
+      "label": "Meteors Meteorites",
+      "video": null
+    },
+    "methods_of_canning": {
+      "frames": 424,
+      "fps": 24.0,
+      "file": "methods_of_canning.npz",
+      "label": "Methods Of Canning",
+      "video": null
+    },
+    "metropolitan_area_network": {
+      "frames": 386,
+      "fps": 24.0,
+      "file": "metropolitan_area_network.npz",
+      "label": "Metropolitan Area Network",
+      "video": null
+    },
+    "micro_sd": {
+      "frames": 232,
+      "fps": 25.0,
+      "file": "micro_sd.npz",
+      "label": "Micro Sd",
+      "video": null
+    },
+    "microeconomics_and_macroeconomics": {
+      "frames": 882,
+      "fps": 25.0,
+      "file": "microeconomics_and_macroeconomics.npz",
+      "label": "Microeconomics And Macroeconomics",
+      "video": null
+    },
+    "microscope": {
+      "frames": 482,
+      "fps": 25.0,
+      "file": "microscope.npz",
+      "label": "Microscope(1)",
+      "video": null
+    },
+    "microsoft_teams": {
+      "frames": 397,
+      "fps": 24.0,
+      "file": "microsoft_teams.npz",
+      "label": "Microsoft Teams",
+      "video": null
+    },
+    "mild_steel": {
+      "frames": 749,
+      "fps": 25.0,
+      "file": "mild_steel.npz",
+      "label": "Mild Steel",
+      "video": null
+    },
+    "militarize": {
+      "frames": 674,
+      "fps": 25.0,
+      "file": "militarize.npz",
+      "label": "Militarize",
+      "video": null
+    },
+    "milling_machine": {
+      "frames": 888,
+      "fps": 25.0,
+      "file": "milling_machine.npz",
+      "label": "Milling Machine",
+      "video": null
+    },
+    "mince": {
+      "frames": 262,
+      "fps": 25.0,
+      "file": "mince.npz",
+      "label": "Mince",
+      "video": null
+    },
+    "mini_draft": {
+      "frames": 1218,
+      "fps": 25.0,
+      "file": "mini_draft.npz",
+      "label": "Mini Draft",
+      "video": null
+    },
+    "minimum_least_lowest": {
+      "frames": 98,
+      "fps": 25.0,
+      "file": "minimum_least_lowest.npz",
+      "label": "Minimum Least Lowest",
+      "video": null
+    },
+    "ministry_of_health_and_family_welfare": {
+      "frames": 237,
+      "fps": 24.0,
+      "file": "ministry_of_health_and_family_welfare.npz",
+      "label": "Ministry Of Health And Family Welfare (Mhfw)",
+      "video": null
+    },
+    "ministry_of_human_resource_development": {
+      "frames": 650,
+      "fps": 24.0,
+      "file": "ministry_of_human_resource_development.npz",
+      "label": "Ministry Of Human Resource Development (Mhrd)",
+      "video": null
+    },
+    "mode": {
+      "frames": 880,
+      "fps": 25.0,
+      "file": "mode.npz",
+      "label": "Mode",
+      "video": null
+    },
+    "moderates": {
+      "frames": 565,
+      "fps": 24.0,
+      "file": "moderates.npz",
+      "label": "Moderates",
+      "video": null
+    },
+    "moisture_loving_plantor_bog_plants": {
+      "frames": 538,
+      "fps": 25.0,
+      "file": "moisture_loving_plantor_bog_plants.npz",
+      "label": "Moisture Loving Plantor Bog Plants",
+      "video": null
+    },
+    "mole_birthmark": {
+      "frames": 119,
+      "fps": 24.0,
+      "file": "mole_birthmark.npz",
+      "label": "Mole Birthmark",
+      "video": null
+    },
+    "molecular": {
+      "frames": 75,
+      "fps": 25.0,
+      "file": "molecular.npz",
+      "label": "Molecular",
+      "video": null
+    },
+    "monarchy": {
+      "frames": 438,
+      "fps": 25.0,
+      "file": "monarchy.npz",
+      "label": "Monarchy",
+      "video": null
+    },
+    "monohybrid_cross": {
+      "frames": 518,
+      "fps": 25.0,
+      "file": "monohybrid_cross.npz",
+      "label": "Monohybrid Cross",
+      "video": null
+    },
+    "morocco": {
+      "frames": 80,
+      "fps": 25.0,
+      "file": "morocco.npz",
+      "label": "Morocco",
+      "video": null
+    },
+    "morphology": {
+      "frames": 972,
+      "fps": 25.0,
+      "file": "morphology.npz",
+      "label": "Morphology",
+      "video": null
+    },
+    "mould_board_plough": {
+      "frames": 715,
+      "fps": 25.0,
+      "file": "mould_board_plough.npz",
+      "label": "Mould Board Plough",
+      "video": null
+    },
+    "mould_sand": {
+      "frames": 1572,
+      "fps": 25.0,
+      "file": "mould_sand.npz",
+      "label": "Mould Sand",
+      "video": null
+    },
+    "mouth_spray_breath_freshener": {
+      "frames": 86,
+      "fps": 25.0,
+      "file": "mouth_spray_breath_freshener.npz",
+      "label": "Mouth Spray Breath Freshener",
+      "video": null
+    },
+    "mouthing": {
+      "frames": 472,
+      "fps": 24.0,
+      "file": "mouthing.npz",
+      "label": "Mouthing",
+      "video": null
+    },
+    "moving_walkway_autowalk_travelator": {
+      "frames": 307,
+      "fps": 25.0,
+      "file": "moving_walkway_autowalk_travelator.npz",
+      "label": "Moving Walkway Autowalk Travelator",
+      "video": null
+    },
+    "ms_visual_studio": {
+      "frames": 468,
+      "fps": 25.0,
+      "file": "ms_visual_studio.npz",
+      "label": "Ms Visual Studio",
+      "video": null
+    },
+    "mughal_rulers": {
+      "frames": 601,
+      "fps": 24.0,
+      "file": "mughal_rulers.npz",
+      "label": "Mughal Rulers",
+      "video": null
+    },
+    "mukhbir": {
+      "frames": 427,
+      "fps": 25.0,
+      "file": "mukhbir.npz",
+      "label": "Mukhbir",
+      "video": null
+    },
+    "mulberry_silk_moth": {
+      "frames": 220,
+      "fps": 24.0,
+      "file": "mulberry_silk_moth.npz",
+      "label": "Mulberry Silk Moth",
+      "video": null
+    },
+    "multi_tasking": {
+      "frames": 552,
+      "fps": 25.0,
+      "file": "multi_tasking.npz",
+      "label": "Multi Tasking",
+      "video": null
+    },
+    "multicellular_and_unicellular": {
+      "frames": 954,
+      "fps": 25.0,
+      "file": "multicellular_and_unicellular.npz",
+      "label": "Multicellular And Unicellular",
+      "video": null
+    },
+    "multidisciplinary_education_and_research_universities": {
+      "frames": 161,
+      "fps": 24.0,
+      "file": "multidisciplinary_education_and_research_universities.npz",
+      "label": "Multidisciplinary Education And Research Universities (Meru)",
+      "video": null
+    },
+    "municipal_corporation": {
+      "frames": 1309,
+      "fps": 25.0,
+      "file": "municipal_corporation.npz",
+      "label": "Municipal Corporation",
+      "video": null
+    },
+    "municipal_waste": {
+      "frames": 780,
+      "fps": 25.0,
+      "file": "municipal_waste.npz",
+      "label": "Municipal Waste",
+      "video": null
+    },
+    "murder_and_murderer": {
+      "frames": 368,
+      "fps": 25.0,
+      "file": "murder_and_murderer.npz",
+      "label": "Murder And Murderer",
+      "video": null
+    },
+    "muscle": {
+      "frames": 1344,
+      "fps": 25.0,
+      "file": "muscle.npz",
+      "label": "Muscle (Academic)",
+      "video": null
+    },
+    "mustache": {
+      "frames": 110,
+      "fps": 24.0,
+      "file": "mustache.npz",
+      "label": "Mustache",
+      "video": null
+    },
+    "mutiny": {
+      "frames": 615,
+      "fps": 25.0,
+      "file": "mutiny.npz",
+      "label": "Mutiny",
+      "video": null
+    },
+    "mutual_inductance": {
+      "frames": 652,
+      "fps": 25.0,
+      "file": "mutual_inductance.npz",
+      "label": "Mutual Inductance",
+      "video": null
+    },
+    "myrtus_communis": {
+      "frames": 555,
+      "fps": 25.0,
+      "file": "myrtus_communis.npz",
+      "label": "Myrtus Communis",
       "video": null
     }
   }
