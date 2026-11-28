@@ -1,0 +1,1728 @@
+{
+  "dataset": "Group MHSL - New Words",
+  "count": 246,
+  "words": {
+    "activities_of_daily_living": {
+      "frames": 986,
+      "fps": 30.0,
+      "file": "activities_of_daily_living.npz",
+      "label": "Activities Of Daily Living",
+      "video": null
+    },
+    "additional_help": {
+      "frames": 885,
+      "fps": 30.0,
+      "file": "additional_help.npz",
+      "label": "Additional Help",
+      "video": null
+    },
+    "after_care_services": {
+      "frames": 948,
+      "fps": 30.0,
+      "file": "after_care_services.npz",
+      "label": "After-Care Services",
+      "video": null
+    },
+    "agitated": {
+      "frames": 861,
+      "fps": 30.0,
+      "file": "agitated.npz",
+      "label": "Agitated",
+      "video": null
+    },
+    "altered_mental_status": {
+      "frames": 1354,
+      "fps": 30.0,
+      "file": "altered_mental_status.npz",
+      "label": "Altered Mental Status",
+      "video": null
+    },
+    "arts_based_therapy": {
+      "frames": 662,
+      "fps": 25.0,
+      "file": "arts_based_therapy.npz",
+      "label": "Arts Based Therapy",
+      "video": null
+    },
+    "associated": {
+      "frames": 920,
+      "fps": 30.0,
+      "file": "associated.npz",
+      "label": "Associated",
+      "video": null
+    },
+    "autism_spectrum_disorders": {
+      "frames": 1956,
+      "fps": 30.0,
+      "file": "autism_spectrum_disorders.npz",
+      "label": "Autism Spectrum Disorders",
+      "video": null
+    },
+    "avoid_situations": {
+      "frames": 787,
+      "fps": 30.0,
+      "file": "avoid_situations.npz",
+      "label": "Avoid Situations",
+      "video": null
+    },
+    "awareness": {
+      "frames": 1170,
+      "fps": 30.0,
+      "file": "awareness.npz",
+      "label": "Awareness",
+      "video": null
+    },
+    "awkwardness": {
+      "frames": 1476,
+      "fps": 30.0,
+      "file": "awkwardness.npz",
+      "label": "Awkwardness",
+      "video": null
+    },
+    "behavioural_activation": {
+      "frames": 950,
+      "fps": 30.0,
+      "file": "behavioural_activation.npz",
+      "label": "Behavioural Activation",
+      "video": null
+    },
+    "behavioural_disorders": {
+      "frames": 2017,
+      "fps": 30.0,
+      "file": "behavioural_disorders.npz",
+      "label": "Behavioural Disorders",
+      "video": null
+    },
+    "body_positive": {
+      "frames": 874,
+      "fps": 30.0,
+      "file": "body_positive.npz",
+      "label": "Body Positive",
+      "video": null
+    },
+    "brain_fog": {
+      "frames": 1019,
+      "fps": 25.0,
+      "file": "brain_fog.npz",
+      "label": "Brain Fog",
+      "video": null
+    },
+    "brain_s_function": {
+      "frames": 931,
+      "fps": 30.0,
+      "file": "brain_s_function.npz",
+      "label": "Brain S Function",
+      "video": null
+    },
+    "breaking_yourself": {
+      "frames": 930,
+      "fps": 30.0,
+      "file": "breaking_yourself.npz",
+      "label": "Breaking Yourself",
+      "video": null
+    },
+    "bulimia_nervosa": {
+      "frames": 1708,
+      "fps": 30.0,
+      "file": "bulimia_nervosa.npz",
+      "label": "Bulimia Nervosa",
+      "video": null
+    },
+    "burnout": {
+      "frames": 842,
+      "fps": 30.0,
+      "file": "burnout.npz",
+      "label": "Burnout",
+      "video": null
+    },
+    "capacity_building": {
+      "frames": 560,
+      "fps": 30.0,
+      "file": "capacity_building.npz",
+      "label": "Capacity Building",
+      "video": null
+    },
+    "catatonia": {
+      "frames": 1621,
+      "fps": 30.0,
+      "file": "catatonia.npz",
+      "label": "Catatonia",
+      "video": null
+    },
+    "certainty": {
+      "frames": 792,
+      "fps": 30.0,
+      "file": "certainty.npz",
+      "label": "Certainty",
+      "video": null
+    },
+    "chest_pain": {
+      "frames": 1010,
+      "fps": 30.0,
+      "file": "chest_pain.npz",
+      "label": "Chest Pain",
+      "video": null
+    },
+    "childhood": {
+      "frames": 801,
+      "fps": 30.0,
+      "file": "childhood.npz",
+      "label": "Childhood",
+      "video": null
+    },
+    "chronic_pain": {
+      "frames": 671,
+      "fps": 30.0,
+      "file": "chronic_pain.npz",
+      "label": "Chronic Pain",
+      "video": null
+    },
+    "claustrophobia": {
+      "frames": 1654,
+      "fps": 30.0,
+      "file": "claustrophobia.npz",
+      "label": "Claustrophobia",
+      "video": null
+    },
+    "clinical_skills": {
+      "frames": 663,
+      "fps": 30.0,
+      "file": "clinical_skills.npz",
+      "label": "Clinical Skills",
+      "video": null
+    },
+    "cognitive": {
+      "frames": 693,
+      "fps": 30.0,
+      "file": "cognitive.npz",
+      "label": "Cognitive",
+      "video": null
+    },
+    "comorbidity": {
+      "frames": 900,
+      "fps": 30.0,
+      "file": "comorbidity.npz",
+      "label": "Comorbidity",
+      "video": null
+    },
+    "compliments": {
+      "frames": 740,
+      "fps": 30.0,
+      "file": "compliments.npz",
+      "label": "Compliments",
+      "video": null
+    },
+    "consequences": {
+      "frames": 943,
+      "fps": 30.0,
+      "file": "consequences.npz",
+      "label": "Consequences",
+      "video": null
+    },
+    "constant_fear": {
+      "frames": 907,
+      "fps": 30.0,
+      "file": "constant_fear.npz",
+      "label": "Constant Fear",
+      "video": null
+    },
+    "constant_worry": {
+      "frames": 1249,
+      "fps": 30.0,
+      "file": "constant_worry.npz",
+      "label": "Constant Worry",
+      "video": null
+    },
+    "consultation": {
+      "frames": 574,
+      "fps": 30.0,
+      "file": "consultation.npz",
+      "label": "Consultation",
+      "video": null
+    },
+    "convulsive_movement": {
+      "frames": 1080,
+      "fps": 30.0,
+      "file": "convulsive_movement.npz",
+      "label": "Convulsive Movement (Convulsion)",
+      "video": null
+    },
+    "coping": {
+      "frames": 812,
+      "fps": 30.0,
+      "file": "coping.npz",
+      "label": "Coping",
+      "video": null
+    },
+    "creative": {
+      "frames": 922,
+      "fps": 30.0,
+      "file": "creative.npz",
+      "label": "Creative",
+      "video": null
+    },
+    "critical": {
+      "frames": 874,
+      "fps": 30.0,
+      "file": "critical.npz",
+      "label": "Critical",
+      "video": null
+    },
+    "delirium": {
+      "frames": 1380,
+      "fps": 30.0,
+      "file": "delirium.npz",
+      "label": "Delirium",
+      "video": null
+    },
+    "denying_emotions": {
+      "frames": 1453,
+      "fps": 30.0,
+      "file": "denying_emotions.npz",
+      "label": "Denying Emotions",
+      "video": null
+    },
+    "despair": {
+      "frames": 789,
+      "fps": 30.0,
+      "file": "despair.npz",
+      "label": "Despair",
+      "video": null
+    },
+    "developmental_disorder": {
+      "frames": 1800,
+      "fps": 30.0,
+      "file": "developmental_disorder.npz",
+      "label": "Developmental Disorder",
+      "video": null
+    },
+    "disorganized_disordered_thinking": {
+      "frames": 634,
+      "fps": 30.0,
+      "file": "disorganized_disordered_thinking.npz",
+      "label": "Disorganized Disordered Thinking",
+      "video": null
+    },
+    "dissociation": {
+      "frames": 970,
+      "fps": 30.0,
+      "file": "dissociation.npz",
+      "label": "Dissociation",
+      "video": null
+    },
+    "distress": {
+      "frames": 907,
+      "fps": 30.0,
+      "file": "distress.npz",
+      "label": "Distress",
+      "video": null
+    },
+    "early_death": {
+      "frames": 597,
+      "fps": 30.0,
+      "file": "early_death.npz",
+      "label": "Early Death",
+      "video": null
+    },
+    "effect": {
+      "frames": 1006,
+      "fps": 30.0,
+      "file": "effect.npz",
+      "label": "Effect",
+      "video": null
+    },
+    "elevated_mood": {
+      "frames": 738,
+      "fps": 30.0,
+      "file": "elevated_mood.npz",
+      "label": "Elevated Mood",
+      "video": null
+    },
+    "emergency_medical_services": {
+      "frames": 719,
+      "fps": 30.0,
+      "file": "emergency_medical_services.npz",
+      "label": "Emergency Medical Services",
+      "video": null
+    },
+    "emotional_breakdown": {
+      "frames": 1009,
+      "fps": 30.0,
+      "file": "emotional_breakdown.npz",
+      "label": "Emotional Breakdown",
+      "video": null
+    },
+    "emotional_intelligence": {
+      "frames": 968,
+      "fps": 30.0,
+      "file": "emotional_intelligence.npz",
+      "label": "Emotional Intelligence",
+      "video": null
+    },
+    "emotional_manipulation": {
+      "frames": 1719,
+      "fps": 30.0,
+      "file": "emotional_manipulation.npz",
+      "label": "Emotional Manipulation",
+      "video": null
+    },
+    "emotional_numbness": {
+      "frames": 891,
+      "fps": 30.0,
+      "file": "emotional_numbness.npz",
+      "label": "Emotional Numbness",
+      "video": null
+    },
+    "emotional_support": {
+      "frames": 626,
+      "fps": 30.0,
+      "file": "emotional_support.npz",
+      "label": "Emotional Support",
+      "video": null
+    },
+    "emotions": {
+      "frames": 553,
+      "fps": 30.0,
+      "file": "emotions.npz",
+      "label": "Emotions",
+      "video": null
+    },
+    "excessive_planning_organizing": {
+      "frames": 944,
+      "fps": 30.0,
+      "file": "excessive_planning_organizing.npz",
+      "label": "Excessive Planning & Organizing",
+      "video": null
+    },
+    "excessive_touching": {
+      "frames": 901,
+      "fps": 30.0,
+      "file": "excessive_touching.npz",
+      "label": "Excessive Touching",
+      "video": null
+    },
+    "exist": {
+      "frames": 631,
+      "fps": 30.0,
+      "file": "exist.npz",
+      "label": "Exist",
+      "video": null
+    },
+    "exposed": {
+      "frames": 783,
+      "fps": 30.0,
+      "file": "exposed.npz",
+      "label": "Exposed",
+      "video": null
+    },
+    "extremely_aware": {
+      "frames": 1004,
+      "fps": 30.0,
+      "file": "extremely_aware.npz",
+      "label": "Extremely Aware",
+      "video": null
+    },
+    "factitious_disorder": {
+      "frames": 1530,
+      "fps": 30.0,
+      "file": "factitious_disorder.npz",
+      "label": "Factitious Disorder",
+      "video": null
+    },
+    "familiar": {
+      "frames": 1155,
+      "fps": 30.0,
+      "file": "familiar.npz",
+      "label": "Familiar",
+      "video": null
+    },
+    "family_problems": {
+      "frames": 593,
+      "fps": 30.0,
+      "file": "family_problems.npz",
+      "label": "Family Problems",
+      "video": null
+    },
+    "fear_of_judgement": {
+      "frames": 1213,
+      "fps": 30.0,
+      "file": "fear_of_judgement.npz",
+      "label": "Fear Of Judgement",
+      "video": null
+    },
+    "fear_of_offending_others": {
+      "frames": 1230,
+      "fps": 30.0,
+      "file": "fear_of_offending_others.npz",
+      "label": "Fear Of Offending Others",
+      "video": null
+    },
+    "fearful": {
+      "frames": 535,
+      "fps": 30.0,
+      "file": "fearful.npz",
+      "label": "Fearful",
+      "video": null
+    },
+    "forgetfulness": {
+      "frames": 565,
+      "fps": 30.0,
+      "file": "forgetfulness.npz",
+      "label": "Forgetfulness",
+      "video": null
+    },
+    "furious": {
+      "frames": 554,
+      "fps": 30.0,
+      "file": "furious.npz",
+      "label": "Furious",
+      "video": null
+    },
+    "generational_trauma": {
+      "frames": 1560,
+      "fps": 30.0,
+      "file": "generational_trauma.npz",
+      "label": "Generational Trauma",
+      "video": null
+    },
+    "grief": {
+      "frames": 788,
+      "fps": 30.0,
+      "file": "grief.npz",
+      "label": "Grief",
+      "video": null
+    },
+    "healthy_boundaries": {
+      "frames": 780,
+      "fps": 30.0,
+      "file": "healthy_boundaries.npz",
+      "label": "Healthy Boundaries",
+      "video": null
+    },
+    "helpless": {
+      "frames": 982,
+      "fps": 30.0,
+      "file": "helpless.npz",
+      "label": "Helpless",
+      "video": null
+    },
+    "highly_sensitive": {
+      "frames": 631,
+      "fps": 30.0,
+      "file": "highly_sensitive.npz",
+      "label": "Highly Sensitive",
+      "video": null
+    },
+    "hyper": {
+      "frames": 1017,
+      "fps": 30.0,
+      "file": "hyper.npz",
+      "label": "Hyper",
+      "video": null
+    },
+    "hyperfixation": {
+      "frames": 1050,
+      "fps": 30.0,
+      "file": "hyperfixation.npz",
+      "label": "Hyperfixation",
+      "video": null
+    },
+    "inner_child": {
+      "frames": 796,
+      "fps": 25.0,
+      "file": "inner_child.npz",
+      "label": "Inner Child",
+      "video": null
+    },
+    "insomnia": {
+      "frames": 1380,
+      "fps": 30.0,
+      "file": "insomnia.npz",
+      "label": "Insomnia",
+      "video": null
+    },
+    "legal_aid_services": {
+      "frames": 738,
+      "fps": 30.0,
+      "file": "legal_aid_services.npz",
+      "label": "Legal Aid Services",
+      "video": null
+    },
+    "lethargy": {
+      "frames": 1222,
+      "fps": 30.0,
+      "file": "lethargy.npz",
+      "label": "Lethargy",
+      "video": null
+    },
+    "lifestyle": {
+      "frames": 834,
+      "fps": 30.0,
+      "file": "lifestyle.npz",
+      "label": "Lifestyle",
+      "video": null
+    },
+    "medication": {
+      "frames": 615,
+      "fps": 30.0,
+      "file": "medication.npz",
+      "label": "Medication",
+      "video": null
+    },
+    "mental_health": {
+      "frames": 780,
+      "fps": 30.0,
+      "file": "mental_health.npz",
+      "label": "Mental Health",
+      "video": null
+    },
+    "mental_health_professional": {
+      "frames": 588,
+      "fps": 30.0,
+      "file": "mental_health_professional.npz",
+      "label": "Mental Health Professional",
+      "video": null
+    },
+    "mental_health_promotion": {
+      "frames": 479,
+      "fps": 30.0,
+      "file": "mental_health_promotion.npz",
+      "label": "Mental Health Promotion",
+      "video": null
+    },
+    "mood_swings": {
+      "frames": 796,
+      "fps": 30.0,
+      "file": "mood_swings.npz",
+      "label": "Mood Swings",
+      "video": null
+    },
+    "mourning": {
+      "frames": 830,
+      "fps": 30.0,
+      "file": "mourning.npz",
+      "label": "Mourning",
+      "video": null
+    },
+    "naturopathy": {
+      "frames": 1109,
+      "fps": 30.0,
+      "file": "naturopathy.npz",
+      "label": "Naturopathy",
+      "video": null
+    },
+    "organise": {
+      "frames": 763,
+      "fps": 30.0,
+      "file": "organise.npz",
+      "label": "Organise",
+      "video": null
+    },
+    "palliative": {
+      "frames": 1228,
+      "fps": 30.0,
+      "file": "palliative.npz",
+      "label": "Palliative",
+      "video": null
+    },
+    "paralyzing": {
+      "frames": 1025,
+      "fps": 30.0,
+      "file": "paralyzing.npz",
+      "label": "Paralyzing",
+      "video": null
+    },
+    "peer_support": {
+      "frames": 959,
+      "fps": 30.0,
+      "file": "peer_support.npz",
+      "label": "Peer Support",
+      "video": null
+    },
+    "personality_traits": {
+      "frames": 817,
+      "fps": 30.0,
+      "file": "personality_traits.npz",
+      "label": "Personality Traits",
+      "video": null
+    },
+    "physical_abuse": {
+      "frames": 1410,
+      "fps": 30.0,
+      "file": "physical_abuse.npz",
+      "label": "Physical Abuse",
+      "video": null
+    },
+    "physical_symptoms": {
+      "frames": 600,
+      "fps": 30.0,
+      "file": "physical_symptoms.npz",
+      "label": "Physical Symptoms",
+      "video": null
+    },
+    "positive_mental_health": {
+      "frames": 578,
+      "fps": 30.0,
+      "file": "positive_mental_health.npz",
+      "label": "Positive Mental Health",
+      "video": null
+    },
+    "postnatal": {
+      "frames": 1066,
+      "fps": 30.0,
+      "file": "postnatal.npz",
+      "label": "Postnatal",
+      "video": null
+    },
+    "postpatrum_depression": {
+      "frames": 1501,
+      "fps": 30.0,
+      "file": "postpatrum_depression.npz",
+      "label": "Postpatrum Depression",
+      "video": null
+    },
+    "prenatal": {
+      "frames": 1081,
+      "fps": 30.0,
+      "file": "prenatal.npz",
+      "label": "Prenatal",
+      "video": null
+    },
+    "prenatal_counselling": {
+      "frames": 1411,
+      "fps": 30.0,
+      "file": "prenatal_counselling.npz",
+      "label": "Prenatal Counselling",
+      "video": null
+    },
+    "psychosis": {
+      "frames": 1621,
+      "fps": 30.0,
+      "file": "psychosis.npz",
+      "label": "Psychosis",
+      "video": null
+    },
+    "psychosocial_support": {
+      "frames": 456,
+      "fps": 30.0,
+      "file": "psychosocial_support.npz",
+      "label": "Psychosocial Support",
+      "video": null
+    },
+    "red_flag": {
+      "frames": 1015,
+      "fps": 30.0,
+      "file": "red_flag.npz",
+      "label": "Red Flag",
+      "video": null
+    },
+    "referrals": {
+      "frames": 848,
+      "fps": 30.0,
+      "file": "referrals.npz",
+      "label": "Referrals",
+      "video": null
+    },
+    "self_awareness": {
+      "frames": 619,
+      "fps": 30.0,
+      "file": "self_awareness.npz",
+      "label": "Self Awareness",
+      "video": null
+    },
+    "self_care": {
+      "frames": 818,
+      "fps": 30.0,
+      "file": "self_care.npz",
+      "label": "Self-Care",
+      "video": null
+    },
+    "self_esteem": {
+      "frames": 609,
+      "fps": 30.0,
+      "file": "self_esteem.npz",
+      "label": "Self Esteem",
+      "video": null
+    },
+    "self_harm_suicide": {
+      "frames": 900,
+      "fps": 30.0,
+      "file": "self_harm_suicide.npz",
+      "label": "Self-Harm Suicide",
+      "video": null
+    },
+    "sensitive": {
+      "frames": 1321,
+      "fps": 30.0,
+      "file": "sensitive.npz",
+      "label": "Sensitive",
+      "video": null
+    },
+    "sexual_abuse": {
+      "frames": 817,
+      "fps": 30.0,
+      "file": "sexual_abuse.npz",
+      "label": "Sexual Abuse",
+      "video": null
+    },
+    "short_stay_home": {
+      "frames": 769,
+      "fps": 30.0,
+      "file": "short_stay_home.npz",
+      "label": "Short-Stay Home",
+      "video": null
+    },
+    "slurred_speech": {
+      "frames": 890,
+      "fps": 30.0,
+      "file": "slurred_speech.npz",
+      "label": "Slurred Speech",
+      "video": null
+    },
+    "substance_use": {
+      "frames": 630,
+      "fps": 30.0,
+      "file": "substance_use.npz",
+      "label": "Substance Use",
+      "video": null
+    },
+    "suicidal_thoughts_ideation_behaviour": {
+      "frames": 1590,
+      "fps": 30.0,
+      "file": "suicidal_thoughts_ideation_behaviour.npz",
+      "label": "Suicidal Thoughts Ideation Behaviour",
+      "video": null
+    },
+    "suicide_attempt": {
+      "frames": 1934,
+      "fps": 30.0,
+      "file": "suicide_attempt.npz",
+      "label": "Suicide Attempt",
+      "video": null
+    },
+    "symptoms": {
+      "frames": 825,
+      "fps": 30.0,
+      "file": "symptoms.npz",
+      "label": "Symptoms",
+      "video": null
+    },
+    "tantrums": {
+      "frames": 697,
+      "fps": 30.0,
+      "file": "tantrums.npz",
+      "label": "Tantrums",
+      "video": null
+    },
+    "tele_counselling": {
+      "frames": 674,
+      "fps": 30.0,
+      "file": "tele_counselling.npz",
+      "label": "Tele - Counselling",
+      "video": null
+    },
+    "temper_tantrum": {
+      "frames": 1008,
+      "fps": 30.0,
+      "file": "temper_tantrum.npz",
+      "label": "Temper Tantrum",
+      "video": null
+    },
+    "temporary_relief": {
+      "frames": 1011,
+      "fps": 30.0,
+      "file": "temporary_relief.npz",
+      "label": "Temporary Relief",
+      "video": null
+    },
+    "thoughts": {
+      "frames": 474,
+      "fps": 30.0,
+      "file": "thoughts.npz",
+      "label": "Thoughts",
+      "video": null
+    },
+    "traditional_healing": {
+      "frames": 888,
+      "fps": 30.0,
+      "file": "traditional_healing.npz",
+      "label": "Traditional Healing",
+      "video": null
+    },
+    "trauma": {
+      "frames": 887,
+      "fps": 30.0,
+      "file": "trauma.npz",
+      "label": "Trauma",
+      "video": null
+    },
+    "trigger": {
+      "frames": 950,
+      "fps": 30.0,
+      "file": "trigger.npz",
+      "label": "Trigger (Event , Person, Situation)",
+      "video": null
+    },
+    "unfamiliar": {
+      "frames": 608,
+      "fps": 30.0,
+      "file": "unfamiliar.npz",
+      "label": "Unfamiliar",
+      "video": null
+    },
+    "wandering": {
+      "frames": 1201,
+      "fps": 30.0,
+      "file": "wandering.npz",
+      "label": "Wandering (By Those With Dementia)",
+      "video": null
+    },
+    "well_being": {
+      "frames": 499,
+      "fps": 30.0,
+      "file": "well_being.npz",
+      "label": "Well Being",
+      "video": null
+    },
+    "ability": {
+      "frames": 588,
+      "fps": 30.0,
+      "file": "ability.npz",
+      "label": "Ability",
+      "video": null
+    },
+    "acknowledge": {
+      "frames": 652,
+      "fps": 30.0,
+      "file": "acknowledge.npz",
+      "label": "Acknowledge",
+      "video": null
+    },
+    "active_listening": {
+      "frames": 990,
+      "fps": 30.0,
+      "file": "active_listening.npz",
+      "label": "Active Listening",
+      "video": null
+    },
+    "address_risk_factors": {
+      "frames": 940,
+      "fps": 30.0,
+      "file": "address_risk_factors.npz",
+      "label": "Address Risk Factors",
+      "video": null
+    },
+    "age_regression": {
+      "frames": 1102,
+      "fps": 30.0,
+      "file": "age_regression.npz",
+      "label": "Age Regression (Childlike Behaviour)",
+      "video": null
+    },
+    "alcohol_and_drug_dependence": {
+      "frames": 910,
+      "fps": 30.0,
+      "file": "alcohol_and_drug_dependence.npz",
+      "label": "Alcohol And Drug Dependence",
+      "video": null
+    },
+    "annoyed": {
+      "frames": 1456,
+      "fps": 30.0,
+      "file": "annoyed.npz",
+      "label": "Annoyed",
+      "video": null
+    },
+    "anorexia_nervosa": {
+      "frames": 1400,
+      "fps": 30.0,
+      "file": "anorexia_nervosa.npz",
+      "label": "Anorexia Nervosa",
+      "video": null
+    },
+    "apathy": {
+      "frames": 883,
+      "fps": 30.0,
+      "file": "apathy.npz",
+      "label": "Apathy",
+      "video": null
+    },
+    "assessment_tool": {
+      "frames": 719,
+      "fps": 30.0,
+      "file": "assessment_tool.npz",
+      "label": "Assessment Tool",
+      "video": null
+    },
+    "attention_seeking": {
+      "frames": 1423,
+      "fps": 30.0,
+      "file": "attention_seeking.npz",
+      "label": "Attention Seeking",
+      "video": null
+    },
+    "authentic_self": {
+      "frames": 919,
+      "fps": 30.0,
+      "file": "authentic_self.npz",
+      "label": "Authentic Self",
+      "video": null
+    },
+    "awful": {
+      "frames": 1020,
+      "fps": 30.0,
+      "file": "awful.npz",
+      "label": "Awful",
+      "video": null
+    },
+    "bereavement": {
+      "frames": 967,
+      "fps": 30.0,
+      "file": "bereavement.npz",
+      "label": "Bereavement",
+      "video": null
+    },
+    "bipolar_disorder": {
+      "frames": 1699,
+      "fps": 30.0,
+      "file": "bipolar_disorder.npz",
+      "label": "Bipolar Disorder",
+      "video": null
+    },
+    "body_dysmorphia": {
+      "frames": 1371,
+      "fps": 30.0,
+      "file": "body_dysmorphia.npz",
+      "label": "Body Dysmorphia",
+      "video": null
+    },
+    "capability": {
+      "frames": 1087,
+      "fps": 30.0,
+      "file": "capability.npz",
+      "label": "Capability",
+      "video": null
+    },
+    "cbt_cognitive_behavioural_therapy": {
+      "frames": 1161,
+      "fps": 30.0,
+      "file": "cbt_cognitive_behavioural_therapy.npz",
+      "label": "Cbt- Cognitive Behavioural Therapy",
+      "video": null
+    },
+    "childhood_trauma": {
+      "frames": 849,
+      "fps": 30.0,
+      "file": "childhood_trauma.npz",
+      "label": "Childhood Trauma",
+      "video": null
+    },
+    "codependency": {
+      "frames": 1111,
+      "fps": 30.0,
+      "file": "codependency.npz",
+      "label": "Codependency",
+      "video": null
+    },
+    "comforting": {
+      "frames": 1533,
+      "fps": 30.0,
+      "file": "comforting.npz",
+      "label": "Comforting",
+      "video": null
+    },
+    "communicable_diseases": {
+      "frames": 1012,
+      "fps": 30.0,
+      "file": "communicable_diseases.npz",
+      "label": "Communicable Diseases",
+      "video": null
+    },
+    "community_participation": {
+      "frames": 1175,
+      "fps": 30.0,
+      "file": "community_participation.npz",
+      "label": "Community Participation",
+      "video": null
+    },
+    "complex_trauma": {
+      "frames": 1765,
+      "fps": 30.0,
+      "file": "complex_trauma.npz",
+      "label": "Complex Trauma",
+      "video": null
+    },
+    "complicated_grief": {
+      "frames": 1972,
+      "fps": 30.0,
+      "file": "complicated_grief.npz",
+      "label": "Complicated Grief",
+      "video": null
+    },
+    "compulsions": {
+      "frames": 1275,
+      "fps": 30.0,
+      "file": "compulsions.npz",
+      "label": "Compulsions",
+      "video": null
+    },
+    "conditioned": {
+      "frames": 940,
+      "fps": 30.0,
+      "file": "conditioned.npz",
+      "label": "Conditioned",
+      "video": null
+    },
+    "confused_thoughts": {
+      "frames": 810,
+      "fps": 30.0,
+      "file": "confused_thoughts.npz",
+      "label": "Confused Thoughts",
+      "video": null
+    },
+    "connection": {
+      "frames": 1349,
+      "fps": 30.0,
+      "file": "connection.npz",
+      "label": "Connection",
+      "video": null
+    },
+    "counselling": {
+      "frames": 409,
+      "fps": 30.0,
+      "file": "counselling.npz",
+      "label": "Counselling",
+      "video": null
+    },
+    "cptsd": {
+      "frames": 1680,
+      "fps": 30.0,
+      "file": "cptsd.npz",
+      "label": "Cptsd",
+      "video": null
+    },
+    "daily_routine": {
+      "frames": 1011,
+      "fps": 30.0,
+      "file": "daily_routine.npz",
+      "label": "Daily Routine",
+      "video": null
+    },
+    "deep_breaths": {
+      "frames": 615,
+      "fps": 30.0,
+      "file": "deep_breaths.npz",
+      "label": "Deep Breaths",
+      "video": null
+    },
+    "defensive": {
+      "frames": 671,
+      "fps": 30.0,
+      "file": "defensive.npz",
+      "label": "Defensive",
+      "video": null
+    },
+    "deserve": {
+      "frames": 1128,
+      "fps": 30.0,
+      "file": "deserve.npz",
+      "label": "Deserve",
+      "video": null
+    },
+    "disappointment": {
+      "frames": 1722,
+      "fps": 30.0,
+      "file": "disappointment.npz",
+      "label": "Disappointment",
+      "video": null
+    },
+    "disgusted": {
+      "frames": 792,
+      "fps": 30.0,
+      "file": "disgusted.npz",
+      "label": "Disgusted",
+      "video": null
+    },
+    "disorganized_behaviour": {
+      "frames": 806,
+      "fps": 30.0,
+      "file": "disorganized_behaviour.npz",
+      "label": "Disorganized Behaviour",
+      "video": null
+    },
+    "down_hearted": {
+      "frames": 1038,
+      "fps": 30.0,
+      "file": "down_hearted.npz",
+      "label": "Down Hearted",
+      "video": null
+    },
+    "drama_therapy": {
+      "frames": 842,
+      "fps": 30.0,
+      "file": "drama_therapy.npz",
+      "label": "Drama Therapy",
+      "video": null
+    },
+    "dysregulated": {
+      "frames": 852,
+      "fps": 30.0,
+      "file": "dysregulated.npz",
+      "label": "Dysregulated",
+      "video": null
+    },
+    "early_identification": {
+      "frames": 715,
+      "fps": 30.0,
+      "file": "early_identification.npz",
+      "label": "Early Identification",
+      "video": null
+    },
+    "email_counselling": {
+      "frames": 618,
+      "fps": 30.0,
+      "file": "email_counselling.npz",
+      "label": "Email Counselling",
+      "video": null
+    },
+    "embarrassing_yourself": {
+      "frames": 726,
+      "fps": 30.0,
+      "file": "embarrassing_yourself.npz",
+      "label": "Embarrassing Yourself",
+      "video": null
+    },
+    "emotional_management": {
+      "frames": 887,
+      "fps": 30.0,
+      "file": "emotional_management.npz",
+      "label": "Emotional Management",
+      "video": null
+    },
+    "emotionally_unavailable": {
+      "frames": 1165,
+      "fps": 30.0,
+      "file": "emotionally_unavailable.npz",
+      "label": "Emotionally Unavailable",
+      "video": null
+    },
+    "emotionally_vulnerable": {
+      "frames": 720,
+      "fps": 30.0,
+      "file": "emotionally_vulnerable.npz",
+      "label": "Emotionally Vulnerable",
+      "video": null
+    },
+    "entire_identity": {
+      "frames": 740,
+      "fps": 30.0,
+      "file": "entire_identity.npz",
+      "label": "Entire Identity",
+      "video": null
+    },
+    "excessive_crying": {
+      "frames": 748,
+      "fps": 30.0,
+      "file": "excessive_crying.npz",
+      "label": "Excessive Crying",
+      "video": null
+    },
+    "factitious": {
+      "frames": 720,
+      "fps": 30.0,
+      "file": "factitious.npz",
+      "label": "Factitious",
+      "video": null
+    },
+    "family_history": {
+      "frames": 777,
+      "fps": 30.0,
+      "file": "family_history.npz",
+      "label": "Family History",
+      "video": null
+    },
+    "family_therapy": {
+      "frames": 997,
+      "fps": 30.0,
+      "file": "family_therapy.npz",
+      "label": "Family Therapy",
+      "video": null
+    },
+    "fear_of_rejection": {
+      "frames": 1315,
+      "fps": 30.0,
+      "file": "fear_of_rejection.npz",
+      "label": "Fear Of Rejection",
+      "video": null
+    },
+    "feel_safe": {
+      "frames": 1382,
+      "fps": 30.0,
+      "file": "feel_safe.npz",
+      "label": "Feel Safe",
+      "video": null
+    },
+    "feeling_empty": {
+      "frames": 1269,
+      "fps": 30.0,
+      "file": "feeling_empty.npz",
+      "label": "Feeling Empty",
+      "video": null
+    },
+    "feeling_unworthy": {
+      "frames": 1162,
+      "fps": 30.0,
+      "file": "feeling_unworthy.npz",
+      "label": "Feeling Unworthy",
+      "video": null
+    },
+    "first_responders": {
+      "frames": 1022,
+      "fps": 30.0,
+      "file": "first_responders.npz",
+      "label": "First Responders",
+      "video": null
+    },
+    "generalized_anxiety_disorder": {
+      "frames": 968,
+      "fps": 30.0,
+      "file": "generalized_anxiety_disorder.npz",
+      "label": "Generalized Anxiety Disorder",
+      "video": null
+    },
+    "group_therapy": {
+      "frames": 866,
+      "fps": 30.0,
+      "file": "group_therapy.npz",
+      "label": "Group Therapy",
+      "video": null
+    },
+    "hallucinations_types": {
+      "frames": 1576,
+      "fps": 30.0,
+      "file": "hallucinations_types.npz",
+      "label": "Hallucinations- Types",
+      "video": null
+    },
+    "healing": {
+      "frames": 712,
+      "fps": 30.0,
+      "file": "healing.npz",
+      "label": "Healing",
+      "video": null
+    },
+    "healthy_lifestyle": {
+      "frames": 854,
+      "fps": 30.0,
+      "file": "healthy_lifestyle.npz",
+      "label": "Healthy Lifestyle",
+      "video": null
+    },
+    "healthy_stress": {
+      "frames": 1494,
+      "fps": 30.0,
+      "file": "healthy_stress.npz",
+      "label": "Healthy Stress (Eustress)",
+      "video": null
+    },
+    "hesitant": {
+      "frames": 1394,
+      "fps": 30.0,
+      "file": "hesitant.npz",
+      "label": "Hesitant",
+      "video": null
+    },
+    "home_visit": {
+      "frames": 884,
+      "fps": 30.0,
+      "file": "home_visit.npz",
+      "label": "Home Visit",
+      "video": null
+    },
+    "humiliated": {
+      "frames": 1038,
+      "fps": 30.0,
+      "file": "humiliated.npz",
+      "label": "Humiliated",
+      "video": null
+    },
+    "hyper_responsibility": {
+      "frames": 968,
+      "fps": 30.0,
+      "file": "hyper_responsibility.npz",
+      "label": "Hyper-Responsibility",
+      "video": null
+    },
+    "hyperactivity": {
+      "frames": 2100,
+      "fps": 30.0,
+      "file": "hyperactivity.npz",
+      "label": "Hyperactivity",
+      "video": null
+    },
+    "hypochondria": {
+      "frames": 1860,
+      "fps": 30.0,
+      "file": "hypochondria.npz",
+      "label": "Hypochondria",
+      "video": null
+    },
+    "impulsive": {
+      "frames": 969,
+      "fps": 30.0,
+      "file": "impulsive.npz",
+      "label": "Impulsive",
+      "video": null
+    },
+    "intellectual_disability": {
+      "frames": 1708,
+      "fps": 30.0,
+      "file": "intellectual_disability.npz",
+      "label": "Intellectual Disability",
+      "video": null
+    },
+    "irritability_irritable_mood": {
+      "frames": 913,
+      "fps": 25.0,
+      "file": "irritability_irritable_mood.npz",
+      "label": "Irritability- Irritable Mood",
+      "video": null
+    },
+    "judgemental": {
+      "frames": 625,
+      "fps": 30.0,
+      "file": "judgemental.npz",
+      "label": "Judgemental",
+      "video": null
+    },
+    "lack_of_communication": {
+      "frames": 783,
+      "fps": 30.0,
+      "file": "lack_of_communication.npz",
+      "label": "Lack Of Communication",
+      "video": null
+    },
+    "lifeskills": {
+      "frames": 489,
+      "fps": 30.0,
+      "file": "lifeskills.npz",
+      "label": "Lifeskills",
+      "video": null
+    },
+    "long_stay_homes": {
+      "frames": 1021,
+      "fps": 30.0,
+      "file": "long_stay_homes.npz",
+      "label": "Long-Stay Homes",
+      "video": null
+    },
+    "manipulation": {
+      "frames": 1233,
+      "fps": 30.0,
+      "file": "manipulation.npz",
+      "label": "Manipulation",
+      "video": null
+    },
+    "mental_disorders": {
+      "frames": 1122,
+      "fps": 30.0,
+      "file": "mental_disorders.npz",
+      "label": "Mental Disorders",
+      "video": null
+    },
+    "mental_health_aid": {
+      "frames": 427,
+      "fps": 30.0,
+      "file": "mental_health_aid.npz",
+      "label": "Mental Health Aid",
+      "video": null
+    },
+    "mental_health_legislation": {
+      "frames": 674,
+      "fps": 30.0,
+      "file": "mental_health_legislation.npz",
+      "label": "Mental Health Legislation",
+      "video": null
+    },
+    "mental_health_policy": {
+      "frames": 652,
+      "fps": 30.0,
+      "file": "mental_health_policy.npz",
+      "label": "Mental Health Policy",
+      "video": null
+    },
+    "mental_health_services": {
+      "frames": 682,
+      "fps": 30.0,
+      "file": "mental_health_services.npz",
+      "label": "Mental Health Services",
+      "video": null
+    },
+    "non_judgemental": {
+      "frames": 711,
+      "fps": 30.0,
+      "file": "non_judgemental.npz",
+      "label": "Non - Judgemental",
+      "video": null
+    },
+    "obsessive_compulsive_disorder": {
+      "frames": 1410,
+      "fps": 30.0,
+      "file": "obsessive_compulsive_disorder.npz",
+      "label": "Obsessive-Compulsive Disorder",
+      "video": null
+    },
+    "obsessive_thoughts": {
+      "frames": 991,
+      "fps": 30.0,
+      "file": "obsessive_thoughts.npz",
+      "label": "Obsessive Thoughts",
+      "video": null
+    },
+    "outpatient": {
+      "frames": 1110,
+      "fps": 30.0,
+      "file": "outpatient.npz",
+      "label": "Outpatient",
+      "video": null
+    },
+    "outpatient_services": {
+      "frames": 931,
+      "fps": 30.0,
+      "file": "outpatient_services.npz",
+      "label": "Outpatient Services",
+      "video": null
+    },
+    "overwhelmed": {
+      "frames": 912,
+      "fps": 30.0,
+      "file": "overwhelmed.npz",
+      "label": "Overwhelmed",
+      "video": null
+    },
+    "palliative_care_and_hospice_care": {
+      "frames": 851,
+      "fps": 30.0,
+      "file": "palliative_care_and_hospice_care.npz",
+      "label": "Palliative Care And Hospice Care",
+      "video": null
+    },
+    "panic_attacks": {
+      "frames": 1080,
+      "fps": 30.0,
+      "file": "panic_attacks.npz",
+      "label": "Panic Attacks",
+      "video": null
+    },
+    "paranoia": {
+      "frames": 1860,
+      "fps": 30.0,
+      "file": "paranoia.npz",
+      "label": "Paranoia",
+      "video": null
+    },
+    "parenting": {
+      "frames": 839,
+      "fps": 30.0,
+      "file": "parenting.npz",
+      "label": "Parenting",
+      "video": null
+    },
+    "performance_anxiety": {
+      "frames": 998,
+      "fps": 30.0,
+      "file": "performance_anxiety.npz",
+      "label": "Performance Anxiety",
+      "video": null
+    },
+    "play_therapy": {
+      "frames": 1038,
+      "fps": 30.0,
+      "file": "play_therapy.npz",
+      "label": "Play Therapy",
+      "video": null
+    },
+    "psychoeducation": {
+      "frames": 609,
+      "fps": 30.0,
+      "file": "psychoeducation.npz",
+      "label": "Psychoeducation",
+      "video": null
+    },
+    "psychological_first_aid": {
+      "frames": 1045,
+      "fps": 30.0,
+      "file": "psychological_first_aid.npz",
+      "label": "Psychological First Aid (Pfa)",
+      "video": null
+    },
+    "psychosocial_disabilities": {
+      "frames": 1261,
+      "fps": 30.0,
+      "file": "psychosocial_disabilities.npz",
+      "label": "Psychosocial Disabilities",
+      "video": null
+    },
+    "psychotherapy": {
+      "frames": 1230,
+      "fps": 30.0,
+      "file": "psychotherapy.npz",
+      "label": "Psychotherapy",
+      "video": null
+    },
+    "reciprocation": {
+      "frames": 1280,
+      "fps": 30.0,
+      "file": "reciprocation.npz",
+      "label": "Reciprocation",
+      "video": null
+    },
+    "reckless_behaviour": {
+      "frames": 1094,
+      "fps": 30.0,
+      "file": "reckless_behaviour.npz",
+      "label": "Reckless Behaviour",
+      "video": null
+    },
+    "regulate_emotions": {
+      "frames": 948,
+      "fps": 30.0,
+      "file": "regulate_emotions.npz",
+      "label": "Regulate Emotions",
+      "video": null
+    },
+    "relapse": {
+      "frames": 1021,
+      "fps": 30.0,
+      "file": "relapse.npz",
+      "label": "Relapse",
+      "video": null
+    },
+    "relaxation_training": {
+      "frames": 1147,
+      "fps": 30.0,
+      "file": "relaxation_training.npz",
+      "label": "Relaxation Training",
+      "video": null
+    },
+    "repeated_intrusive_thoughts": {
+      "frames": 908,
+      "fps": 30.0,
+      "file": "repeated_intrusive_thoughts.npz",
+      "label": "Repeated Intrusive Thoughts",
+      "video": null
+    },
+    "respite_care": {
+      "frames": 855,
+      "fps": 30.0,
+      "file": "respite_care.npz",
+      "label": "Respite Care",
+      "video": null
+    },
+    "schizophrenia": {
+      "frames": 1291,
+      "fps": 30.0,
+      "file": "schizophrenia.npz",
+      "label": "Schizophrenia",
+      "video": null
+    },
+    "sedation": {
+      "frames": 1291,
+      "fps": 30.0,
+      "file": "sedation.npz",
+      "label": "Sedation",
+      "video": null
+    },
+    "self_help_groups": {
+      "frames": 568,
+      "fps": 30.0,
+      "file": "self_help_groups.npz",
+      "label": "Self-Help Groups",
+      "video": null
+    },
+    "sickness": {
+      "frames": 591,
+      "fps": 30.0,
+      "file": "sickness.npz",
+      "label": "Sickness",
+      "video": null
+    },
+    "social_network": {
+      "frames": 455,
+      "fps": 30.0,
+      "file": "social_network.npz",
+      "label": "Social Network",
+      "video": null
+    },
+    "social_wellbeing": {
+      "frames": 501,
+      "fps": 30.0,
+      "file": "social_wellbeing.npz",
+      "label": "Social Wellbeing",
+      "video": null
+    },
+    "social_withdrawal": {
+      "frames": 691,
+      "fps": 30.0,
+      "file": "social_withdrawal.npz",
+      "label": "Social Withdrawal",
+      "video": null
+    },
+    "somatoform_disorder": {
+      "frames": 1470,
+      "fps": 30.0,
+      "file": "somatoform_disorder.npz",
+      "label": "Somatoform Disorder",
+      "video": null
+    },
+    "stress_management_techniques": {
+      "frames": 1091,
+      "fps": 30.0,
+      "file": "stress_management_techniques.npz",
+      "label": "Stress Management Techniques",
+      "video": null
+    },
+    "suicide_prevention_centres": {
+      "frames": 1051,
+      "fps": 30.0,
+      "file": "suicide_prevention_centres.npz",
+      "label": "Suicide Prevention Centres",
+      "video": null
+    },
+    "suspicious": {
+      "frames": 751,
+      "fps": 30.0,
+      "file": "suspicious.npz",
+      "label": "Suspicious",
+      "video": null
+    },
+    "validate": {
+      "frames": 673,
+      "fps": 30.0,
+      "file": "validate.npz",
+      "label": "Validate",
+      "video": null
+    },
+    "video_counselling": {
+      "frames": 825,
+      "fps": 30.0,
+      "file": "video_counselling.npz",
+      "label": "Video Counselling",
+      "video": null
+    },
+    "vulnerable": {
+      "frames": 1021,
+      "fps": 30.0,
+      "file": "vulnerable.npz",
+      "label": "Vulnerable",
+      "video": null
+    },
+    "withdrawn": {
+      "frames": 357,
+      "fps": 30.0,
+      "file": "withdrawn.npz",
+      "label": "Withdrawn",
+      "video": null
+    }
+  }
+}

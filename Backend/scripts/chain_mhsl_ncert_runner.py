@@ -26,7 +26,7 @@ def main():
     print("AUTONOMOUS MASTER CHAIN RUNNER (MHSL -> NCERT)", flush=True)
     print("=======================================================\n", flush=True)
 
-    groups = ["MHSL", "NCERT"]
+    groups = ["NCERT"]
     for group in groups:
         print("\n" + "#" * 65, flush=True)
         print(f">>> LAUNCHING AUTONOMOUS GROUP {group} EXTRACTION <<<", flush=True)
@@ -53,3 +53,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
