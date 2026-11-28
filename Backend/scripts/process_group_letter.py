@@ -306,12 +306,12 @@ def process_archive(archive_name: str, exact_index: dict, base_index: dict, lett
 
 
 def process_entire_letter(letter: str, workers: int = 4):
-    letter = letter.upper()
+    letter_upper = letter.upper()
     print("=======================================================")
     print(f"STARTING FULL RUN FOR GROUP {letter} ARCHIVES")
     letter_zips = sorted([
         f for f in os.listdir(SRC_DIR)
-        if (f.startswith(f"{letter}-") or f.startswith(f"{letter} ") or f.startswith(f"{letter}_")) and f.endswith(".zip")
+        if (f.upper().startswith(f"{letter_upper}-") or f.upper().startswith(f"{letter_upper} ") or f.upper().startswith(f"{letter_upper}_")) and f.endswith(".zip")
     ])
     print(f"Archives found ({len(letter_zips)}): {letter_zips}")
     print("=======================================================\n")
