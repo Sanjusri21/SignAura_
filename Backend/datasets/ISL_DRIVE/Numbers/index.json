@@ -1,0 +1,258 @@
+{
+  "dataset": "Group Numbers - New Words",
+  "count": 36,
+  "words": {
+    "10000000_one_crore": {
+      "frames": 114,
+      "fps": 25.0,
+      "file": "10000000_one_crore.npz",
+      "label": "10000000 One Crore",
+      "video": null
+    },
+    "100000_one_lakh": {
+      "frames": 117,
+      "fps": 25.0,
+      "file": "100000_one_lakh.npz",
+      "label": "100000 One Lakh",
+      "video": null
+    },
+    "10000_ten_thousand": {
+      "frames": 141,
+      "fps": 25.0,
+      "file": "10000_ten_thousand.npz",
+      "label": "10000 Ten Thousand",
+      "video": null
+    },
+    "1000_thousand": {
+      "frames": 117,
+      "fps": 25.0,
+      "file": "1000_thousand.npz",
+      "label": "1000 Thousand",
+      "video": null
+    },
+    "100_hundred": {
+      "frames": 99,
+      "fps": 25.0,
+      "file": "100_hundred.npz",
+      "label": "100 Hundred",
+      "video": null
+    },
+    "10_ten": {
+      "frames": 75,
+      "fps": 25.0,
+      "file": "10_ten.npz",
+      "label": "10 Ten",
+      "video": null
+    },
+    "11_eleven": {
+      "frames": 84,
+      "fps": 25.0,
+      "file": "11_eleven.npz",
+      "label": "11 Eleven",
+      "video": null
+    },
+    "120_volt": {
+      "frames": 429,
+      "fps": 25.0,
+      "file": "120_volt.npz",
+      "label": "120 Volt",
+      "video": null
+    },
+    "12_twelve": {
+      "frames": 84,
+      "fps": 25.0,
+      "file": "12_twelve.npz",
+      "label": "12 Twelve",
+      "video": null
+    },
+    "13_thirteen": {
+      "frames": 84,
+      "fps": 25.0,
+      "file": "13_thirteen.npz",
+      "label": "13 Thirteen",
+      "video": null
+    },
+    "14_fourteen": {
+      "frames": 84,
+      "fps": 25.0,
+      "file": "14_fourteen.npz",
+      "label": "14 Fourteen",
+      "video": null
+    },
+    "15_fifteen": {
+      "frames": 108,
+      "fps": 25.0,
+      "file": "15_fifteen.npz",
+      "label": "15 Fifteen",
+      "video": null
+    },
+    "16_sixteen": {
+      "frames": 92,
+      "fps": 25.0,
+      "file": "16_sixteen.npz",
+      "label": "16 Sixteen",
+      "video": null
+    },
+    "17_seventeen": {
+      "frames": 92,
+      "fps": 25.0,
+      "file": "17_seventeen.npz",
+      "label": "17 Seventeen",
+      "video": null
+    },
+    "18_eighteen": {
+      "frames": 110,
+      "fps": 25.0,
+      "file": "18_eighteen.npz",
+      "label": "18 Eighteen",
+      "video": null
+    },
+    "19_nineteen": {
+      "frames": 95,
+      "fps": 25.0,
+      "file": "19_nineteen.npz",
+      "label": "19 Nineteen",
+      "video": null
+    },
+    "1_one": {
+      "frames": 79,
+      "fps": 25.0,
+      "file": "1_one.npz",
+      "label": "1 One",
+      "video": null
+    },
+    "2000_two_thousand": {
+      "frames": 111,
+      "fps": 25.0,
+      "file": "2000_two_thousand.npz",
+      "label": "2000 Two Thousand",
+      "video": null
+    },
+    "20_twenty": {
+      "frames": 95,
+      "fps": 25.0,
+      "file": "20_twenty.npz",
+      "label": "20 Twenty",
+      "video": null
+    },
+    "21_twenty_one": {
+      "frames": 107,
+      "fps": 25.0,
+      "file": "21_twenty_one.npz",
+      "label": "21 Twenty One",
+      "video": null
+    },
+    "240_volt": {
+      "frames": 1121,
+      "fps": 25.0,
+      "file": "240_volt.npz",
+      "label": "240 Volt",
+      "video": null
+    },
+    "2_two": {
+      "frames": 53,
+      "fps": 25.0,
+      "file": "2_two.npz",
+      "label": "2 Two",
+      "video": null
+    },
+    "30_thirty": {
+      "frames": 121,
+      "fps": 25.0,
+      "file": "30_thirty.npz",
+      "label": "30 Thirty",
+      "video": null
+    },
+    "3_three": {
+      "frames": 90,
+      "fps": 25.0,
+      "file": "3_three.npz",
+      "label": "3 Three",
+      "video": null
+    },
+    "404_error": {
+      "frames": 717,
+      "fps": 24.0,
+      "file": "404_error.npz",
+      "label": "404 Error",
+      "video": null
+    },
+    "4_four": {
+      "frames": 109,
+      "fps": 25.0,
+      "file": "4_four.npz",
+      "label": "4 Four",
+      "video": null
+    },
+    "500_five_hundred": {
+      "frames": 89,
+      "fps": 25.0,
+      "file": "500_five_hundred.npz",
+      "label": "500 Five Hundred",
+      "video": null
+    },
+    "50_fifty": {
+      "frames": 99,
+      "fps": 25.0,
+      "file": "50_fifty.npz",
+      "label": "50 Fifty",
+      "video": null
+    },
+    "5_five": {
+      "frames": 100,
+      "fps": 25.0,
+      "file": "5_five.npz",
+      "label": "5 Five",
+      "video": null
+    },
+    "60_sixty": {
+      "frames": 118,
+      "fps": 25.0,
+      "file": "60_sixty.npz",
+      "label": "60 Sixty",
+      "video": null
+    },
+    "6_six": {
+      "frames": 81,
+      "fps": 25.0,
+      "file": "6_six.npz",
+      "label": "6 Six",
+      "video": null
+    },
+    "70_seventy": {
+      "frames": 96,
+      "fps": 25.0,
+      "file": "70_seventy.npz",
+      "label": "70 Seventy",
+      "video": null
+    },
+    "7_seven": {
+      "frames": 81,
+      "fps": 25.0,
+      "file": "7_seven.npz",
+      "label": "7 Seven",
+      "video": null
+    },
+    "8_eight": {
+      "frames": 95,
+      "fps": 25.0,
+      "file": "8_eight.npz",
+      "label": "8 Eight",
+      "video": null
+    },
+    "9_nine": {
+      "frames": 95,
+      "fps": 25.0,
+      "file": "9_nine.npz",
+      "label": "9 Nine",
+      "video": null
+    },
+    "numbers_1_10": {
+      "frames": 979,
+      "fps": 25.0,
+      "file": "numbers_1_10.npz",
+      "label": "Numbers 1-10 (Thiruvananthapuram Kerala)",
+      "video": null
+    }
+  }
+}
