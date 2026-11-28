@@ -1,0 +1,489 @@
+{
+  "dataset": "Group NCERT - New Words",
+  "count": 69,
+  "words": {
+    "ancient_india": {
+      "frames": 1342,
+      "fps": 25.0,
+      "file": "ancient_india.npz",
+      "label": "Ancient India",
+      "video": null
+    },
+    "arable": {
+      "frames": 1140,
+      "fps": 25.0,
+      "file": "arable.npz",
+      "label": "Arable (Land)",
+      "video": null
+    },
+    "asteroid": {
+      "frames": 1308,
+      "fps": 25.0,
+      "file": "asteroid.npz",
+      "label": "Asteroid",
+      "video": null
+    },
+    "baoli": {
+      "frames": 2313,
+      "fps": 25.0,
+      "file": "baoli.npz",
+      "label": "Baoli",
+      "video": null
+    },
+    "cash_crop": {
+      "frames": 1230,
+      "fps": 25.0,
+      "file": "cash_crop.npz",
+      "label": "Cash Crop",
+      "video": null
+    },
+    "celestial_bodies": {
+      "frames": 962,
+      "fps": 25.0,
+      "file": "celestial_bodies.npz",
+      "label": "Celestial Bodies",
+      "video": null
+    },
+    "chronicle": {
+      "frames": 800,
+      "fps": 25.0,
+      "file": "chronicle.npz",
+      "label": "Chronicle",
+      "video": null
+    },
+    "clan": {
+      "frames": 1784,
+      "fps": 25.0,
+      "file": "clan.npz",
+      "label": "Clan",
+      "video": null
+    },
+    "commercial_farming": {
+      "frames": 2670,
+      "fps": 25.0,
+      "file": "commercial_farming.npz",
+      "label": "Commercial Farming",
+      "video": null
+    },
+    "cooperative_industries": {
+      "frames": 1691,
+      "fps": 25.0,
+      "file": "cooperative_industries.npz",
+      "label": "Cooperative Industries",
+      "video": null
+    },
+    "crop": {
+      "frames": 1434,
+      "fps": 25.0,
+      "file": "crop.npz",
+      "label": "Crop",
+      "video": null
+    },
+    "dandi_march": {
+      "frames": 2946,
+      "fps": 25.0,
+      "file": "dandi_march.npz",
+      "label": "Dandi March",
+      "video": null
+    },
+    "epicenter": {
+      "frames": 1315,
+      "fps": 25.0,
+      "file": "epicenter.npz",
+      "label": "Epicenter",
+      "video": null
+    },
+    "garrison_town": {
+      "frames": 1441,
+      "fps": 25.0,
+      "file": "garrison_town.npz",
+      "label": "Garrison Town",
+      "video": null
+    },
+    "gonds": {
+      "frames": 2306,
+      "fps": 25.0,
+      "file": "gonds.npz",
+      "label": "Gonds",
+      "video": null
+    },
+    "kaveri_river": {
+      "frames": 915,
+      "fps": 25.0,
+      "file": "kaveri_river.npz",
+      "label": "Kaveri River",
+      "video": null
+    },
+    "large_scale_industries": {
+      "frames": 2167,
+      "fps": 25.0,
+      "file": "large_scale_industries.npz",
+      "label": "Large Scale Industries",
+      "video": null
+    },
+    "local_winds": {
+      "frames": 1185,
+      "fps": 25.0,
+      "file": "local_winds.npz",
+      "label": "Local Winds",
+      "video": null
+    },
+    "loess": {
+      "frames": 1071,
+      "fps": 25.0,
+      "file": "loess.npz",
+      "label": "Loess",
+      "video": null
+    },
+    "military_campaign": {
+      "frames": 1652,
+      "fps": 25.0,
+      "file": "military_campaign.npz",
+      "label": "Military Campaign",
+      "video": null
+    },
+    "mughals": {
+      "frames": 3639,
+      "fps": 25.0,
+      "file": "mughals.npz",
+      "label": "Mughals",
+      "video": null
+    },
+    "nation_state": {
+      "frames": 1957,
+      "fps": 25.0,
+      "file": "nation_state.npz",
+      "label": "Nation State",
+      "video": null
+    },
+    "national_park": {
+      "frames": 1735,
+      "fps": 25.0,
+      "file": "national_park.npz",
+      "label": "National Park",
+      "video": null
+    },
+    "non_renewable_resources": {
+      "frames": 1751,
+      "fps": 25.0,
+      "file": "non_renewable_resources.npz",
+      "label": "Non-Renewable Resources",
+      "video": null
+    },
+    "nuclear_power_nuclear_energy": {
+      "frames": 1993,
+      "fps": 25.0,
+      "file": "nuclear_power_nuclear_energy.npz",
+      "label": "Nuclear Power Nuclear Energy",
+      "video": null
+    },
+    "organic_farming": {
+      "frames": 1260,
+      "fps": 25.0,
+      "file": "organic_farming.npz",
+      "label": "Organic Farming",
+      "video": null
+    },
+    "pallava_kings": {
+      "frames": 1781,
+      "fps": 25.0,
+      "file": "pallava_kings.npz",
+      "label": "Pallava Kings",
+      "video": null
+    },
+    "physical": {
+      "frames": 1399,
+      "fps": 25.0,
+      "file": "physical.npz",
+      "label": "Physical",
+      "video": null
+    },
+    "poaching": {
+      "frames": 3066,
+      "fps": 25.0,
+      "file": "poaching.npz",
+      "label": "Poaching",
+      "video": null
+    },
+    "population_distribution": {
+      "frames": 4336,
+      "fps": 25.0,
+      "file": "population_distribution.npz",
+      "label": "Population Distribution",
+      "video": null
+    },
+    "renewable_resources": {
+      "frames": 2359,
+      "fps": 25.0,
+      "file": "renewable_resources.npz",
+      "label": "Renewable Resources",
+      "video": null
+    },
+    "satellite": {
+      "frames": 2737,
+      "fps": 25.0,
+      "file": "satellite.npz",
+      "label": "Satellite",
+      "video": null
+    },
+    "shifting_cultivation": {
+      "frames": 1720,
+      "fps": 25.0,
+      "file": "shifting_cultivation.npz",
+      "label": "Shifting Cultivation",
+      "video": null
+    },
+    "small_scale_industries": {
+      "frames": 3094,
+      "fps": 25.0,
+      "file": "small_scale_industries.npz",
+      "label": "Small Scale Industries",
+      "video": null
+    },
+    "tide": {
+      "frames": 1534,
+      "fps": 25.0,
+      "file": "tide.npz",
+      "label": "Tide (High Tide Low Tide)",
+      "video": null
+    },
+    "tsunami": {
+      "frames": 5031,
+      "fps": 25.0,
+      "file": "tsunami.npz",
+      "label": "Tsunami",
+      "video": null
+    },
+    "viticulture": {
+      "frames": 776,
+      "fps": 25.0,
+      "file": "viticulture.npz",
+      "label": "Viticulture",
+      "video": null
+    },
+    "weathering": {
+      "frames": 1461,
+      "fps": 25.0,
+      "file": "weathering.npz",
+      "label": "Weathering",
+      "video": null
+    },
+    "biosphere": {
+      "frames": 2048,
+      "fps": 29.970029830932617,
+      "file": "biosphere.npz",
+      "label": "Biosphere",
+      "video": null
+    },
+    "birthright": {
+      "frames": 1851,
+      "fps": 25.0,
+      "file": "birthright.npz",
+      "label": "Birthright",
+      "video": null
+    },
+    "canal": {
+      "frames": 1574,
+      "fps": 25.0,
+      "file": "canal.npz",
+      "label": "Canal",
+      "video": null
+    },
+    "community_land": {
+      "frames": 1490,
+      "fps": 25.0,
+      "file": "community_land.npz",
+      "label": "Community Land",
+      "video": null
+    },
+    "conventional_sources_of_energy": {
+      "frames": 1626,
+      "fps": 25.0,
+      "file": "conventional_sources_of_energy.npz",
+      "label": "Conventional Sources Of Energy",
+      "video": null
+    },
+    "core": {
+      "frames": 1853,
+      "fps": 29.970029830932617,
+      "file": "core.npz",
+      "label": "Core",
+      "video": null
+    },
+    "crust": {
+      "frames": 1413,
+      "fps": 29.970029830932617,
+      "file": "crust.npz",
+      "label": "Crust",
+      "video": null
+    },
+    "deposition": {
+      "frames": 1144,
+      "fps": 25.0,
+      "file": "deposition.npz",
+      "label": "Deposition",
+      "video": null
+    },
+    "full_moon": {
+      "frames": 1005,
+      "fps": 25.0,
+      "file": "full_moon.npz",
+      "label": "Full Moon",
+      "video": null
+    },
+    "glacial_moraine": {
+      "frames": 1717,
+      "fps": 25.0,
+      "file": "glacial_moraine.npz",
+      "label": "Glacial Moraine",
+      "video": null
+    },
+    "global_warming": {
+      "frames": 3441,
+      "fps": 25.0,
+      "file": "global_warming.npz",
+      "label": "Global Warming",
+      "video": null
+    },
+    "humayun": {
+      "frames": 1307,
+      "fps": 25.0,
+      "file": "humayun.npz",
+      "label": "Humayun",
+      "video": null
+    },
+    "hydrosphere": {
+      "frames": 3047,
+      "fps": 29.970029830932617,
+      "file": "hydrosphere.npz",
+      "label": "Hydrosphere",
+      "video": null
+    },
+    "jahangir": {
+      "frames": 956,
+      "fps": 25.0,
+      "file": "jahangir.npz",
+      "label": "Jahangir",
+      "video": null
+    },
+    "magma": {
+      "frames": 1497,
+      "fps": 25.0,
+      "file": "magma.npz",
+      "label": "Magma",
+      "video": null
+    },
+    "mantle": {
+      "frames": 1268,
+      "fps": 29.970029830932617,
+      "file": "mantle.npz",
+      "label": "Mantle",
+      "video": null
+    },
+    "microbe": {
+      "frames": 2635,
+      "fps": 25.0,
+      "file": "microbe.npz",
+      "label": "Microbe",
+      "video": null
+    },
+    "mining": {
+      "frames": 1120,
+      "fps": 25.0,
+      "file": "mining.npz",
+      "label": "Mining",
+      "video": null
+    },
+    "non_biodegradable": {
+      "frames": 1679,
+      "fps": 25.0,
+      "file": "non_biodegradable.npz",
+      "label": "Non-Biodegradable",
+      "video": null
+    },
+    "north_star_pole_star": {
+      "frames": 1059,
+      "fps": 25.0,
+      "file": "north_star_pole_star.npz",
+      "label": "North Star Pole Star",
+      "video": null
+    },
+    "organism": {
+      "frames": 2026,
+      "fps": 25.0,
+      "file": "organism.npz",
+      "label": "Organism",
+      "video": null
+    },
+    "population_density": {
+      "frames": 2818,
+      "fps": 25.0,
+      "file": "population_density.npz",
+      "label": "Population Density",
+      "video": null
+    },
+    "primogeniture": {
+      "frames": 1886,
+      "fps": 25.0,
+      "file": "primogeniture.npz",
+      "label": "Primogeniture",
+      "video": null
+    },
+    "rashtrakuta": {
+      "frames": 1545,
+      "fps": 25.0,
+      "file": "rashtrakuta.npz",
+      "label": "Rashtrakuta",
+      "video": null
+    },
+    "rotation": {
+      "frames": 1748,
+      "fps": 25.0,
+      "file": "rotation.npz",
+      "label": "Rotation (Of Earth)",
+      "video": null
+    },
+    "sedimentary_rocks": {
+      "frames": 1823,
+      "fps": 25.0,
+      "file": "sedimentary_rocks.npz",
+      "label": "Sedimentary Rocks",
+      "video": null
+    },
+    "seismograph": {
+      "frames": 788,
+      "fps": 25.0,
+      "file": "seismograph.npz",
+      "label": "Seismograph",
+      "video": null
+    },
+    "shaft_mininig": {
+      "frames": 1305,
+      "fps": 25.0,
+      "file": "shaft_mininig.npz",
+      "label": "Shaft Mininig",
+      "video": null
+    },
+    "subsistence_farming": {
+      "frames": 2671,
+      "fps": 25.0,
+      "file": "subsistence_farming.npz",
+      "label": "Subsistence Farming",
+      "video": null
+    },
+    "sustainable_deveplopment": {
+      "frames": 2456,
+      "fps": 25.0,
+      "file": "sustainable_deveplopment.npz",
+      "label": "Sustainable Deveplopment",
+      "video": null
+    },
+    "tipu_sultan": {
+      "frames": 2343,
+      "fps": 25.0,
+      "file": "tipu_sultan.npz",
+      "label": "Tipu Sultan",
+      "video": null
+    }
+  }
+}
